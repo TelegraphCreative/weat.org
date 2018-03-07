@@ -1,0 +1,33 @@
+{% macro simple(link, class) %}
+	{% spaceless %}
+		{%- if link -%}
+		<a href="{{ link.url }}" class="{{ class | default('') }}" target="{{link.target}}">{{ link.text | raw}} 
+			{% if link.target is not empty -%} 
+			{%- endif -%} </a>
+		{%- endif -%}
+	{% endspaceless %}
+{% endmacro %}
+
+{% macro button(link, class) %}
+	{% spaceless %}
+		{%- if link -%}
+			<a href="{{ link.url }}" class="{{ class | default('btn') }}" target="{{link.target}}">
+				{{ link.text | raw}} 
+			</a>
+		{%- endif -%}
+	{% endspaceless %}
+{% endmacro %}
+
+{% macro is_active(segment, class) %}
+	{% set secondSeg = craft.request.getSegment(2) %}
+	{% if secondSeg == segment%}
+	 	{{ class | default('is-active')}}
+	{% endif %}
+{% endmacro %}
+
+{% macro is_not_active(segment, class) %}
+	{% set secondSeg = craft.request.getSegment(2) %}
+	{% if secondSeg != segment%}
+		{{ class | default('is-not-active')}}
+	{% endif %}
+{% endmacro %}

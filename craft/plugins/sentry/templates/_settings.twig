@@ -1,0 +1,72 @@
+{% import "_includes/forms" as forms %}
+
+<style> .sentry-settings-notice { font-style: italic; margin-bottom: 12px; } </style>
+
+{% if craft.sentry.isDsnSpecifiedByEnv %}
+    <div class="sentry-settings-notice">
+        {{ "Your DSN is specified by your environment. Please ask your server administrator to configure the value if you need to change it."|t}}
+    </div>
+{% else %}
+    {{ forms.textField({
+        first:        true,
+        label:        "DSN"|t,
+        id:           'dsn',
+        name:         'dsn',
+        instructions: "Sentry project DSN (aka Client Key). NOTE: This is overriden by your environment's SENTRY_DSN value if it is specified."|t,
+        value:        settings.dsn,
+        autofocus:    true,
+        errors:       settings.getErrors('dsn')
+    }) }}
+{% endif %}
+
+{% if craft.sentry.isPublicDsnSpecifiedByEnv %}
+    <div class="sentry-settings-notice">
+        {{ "Your public DSN is specified by your environment. Please ask your server administrator to configure the value if you need to change it."|t}}
+    </div>
+{% else %}
+    {{ forms.textField({
+        label:        "Public DSN"|t,
+        id:           'publicDsn',
+        name:         'publicDsn',
+        instructions: "You need a public DSN if you plan on reporting client-side javascript errors. You can get your public DSN by logging-into Sentry and going to th integrations page. NOTE: This is overriden by your environment's SENTRY_PUBLIC_DSN value if it is specified."|t,
+        value:        settings.publicDsn,
+        errors:       settings.getErrors('publicDsn')
+    }) }}
+{% endif %}
+
+{{ forms.lightswitchField({
+    label:        "Enable Javascript Error Reporting?"|t,
+    instructions: "If enabled, the plugin will report javascript errors. You must have a public DSN specified for this to work."|t,
+    id:           'reportJsErrors',
+    name:         'reportJsErrors',
+    on:           settings.reportJsErrors,
+    errors:       settings.getErrors('reportJsErrors')
+}) }}
+
+{{ forms.textField({
+    label:        "Javascript Error Reporting Page Filter"|t,
+    instructions: "If javascript error reporting is enabled, this will act as a case-insensitive filter to only load the JS
+    reporting (raven-js) on pages that match this expression. If the filter is a valid perl-style regular expression then it will be used as such."|t,
+    id:           'jsRegexFilter',
+    name:         'jsRegexFilter',
+    value:        settings.jsRegexFilter,
+    errors:       settings.getErrors('jsRegexFilter')
+}) }}
+
+{{ forms.lightswitchField({
+	label:        "Report in devMode?"|t,
+    instructions: "If enabled, the plugin will send events to the Sentry server even though the config devMode option is enabled (usually enabled for developer environments)."|t,
+	id:           'reportInDevMode',
+	name:         'reportInDevMode',
+	on:           settings.reportInDevMode,
+	errors:       settings.getErrors('reportInDevMode')
+}) }}
+
+{{ forms.textField({
+    label:        "Ignore These HTTP Error Codes"|t,
+    instructions: "Enter a comma separated list of HTTP error codes that should NOT be sent to sentry if encountered (default: report all errors)"|t,
+    id:           'ignoredErrorCodes',
+    name:         'ignoredErrorCodes',
+    value:        settings.ignoredErrorCodes,
+    errors:       settings.getErrors('ignoredErrorCodes')
+}) }}

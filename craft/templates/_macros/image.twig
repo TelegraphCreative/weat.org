@@ -1,0 +1,30 @@
+{% macro tag(images, transform, class) %}
+	{% for image in images.limit(1) %}	
+		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
+	{% endfor %}
+{% endmacro %}
+
+{% macro tagLink(link, images, transform, class) %}
+	{%- if link -%}
+		<a href="{{ link.url }}" target="{{link.target}}">
+	{%- endif -%}
+	{% for image in images.limit(1) %}	
+		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
+	{% endfor %}
+	{%- if link -%}
+	</a>
+	{%- endif -%}
+
+{% endmacro %}
+
+{% macro tags(images, transform, class, limit) %}
+	{% for image in images.limit(limit) %}	
+		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
+	{% endfor %}
+{% endmacro %}
+
+{% macro url(images,transform) %}
+    {%- for image in images.limit(1) -%}	
+		{{- image.getUrl(transform) -}}
+	{%- endfor -%}
+{% endmacro %}
