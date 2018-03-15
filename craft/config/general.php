@@ -22,6 +22,6 @@ return array(
  	'.test' => array(
         'devMode' => true,
         'cache' => false,
-        'siteUrl' => 'http://chairking.test/'
+        'siteUrl' => 'http://weat.test/'
     ),
 );

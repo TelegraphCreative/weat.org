@@ -1,0 +1,42 @@
+// ============================================================================
+// Buttons
+// ============================================================================
+
+//
+// 
+//
+.btn {
+	// Default
+	@apply .bg-blue .text-white .text-sm .no-underline .text-center .py-4 .px-6 .rounded-full;
+	min-width: 9rem;
+	
+	// Default Hover
+	&:hover {
+		@apply .bg-blue-light;
+	}
+
+	// // Green
+	// &.--green {
+	// 	&:hover {}
+	// }
+
+	// // Blue Light
+	// &.--blue-light {
+	// 	&:hover {}
+	// }
+
+	// // Navy
+	// &.--blue-dark {
+	// 	&:hover {}
+	// }
+
+	// // Grey
+	// &.--grey {
+	// 	&:hover {}
+	// }
+
+	// // Grey LIght
+	// &.--grey-light {
+	// 	&:hover {}
+	// }
+}

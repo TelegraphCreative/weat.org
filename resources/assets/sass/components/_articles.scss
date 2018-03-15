@@ -1,0 +1,106 @@
+// ============================================================================
+//                                   Articles
+// ============================================================================
+
+//
+// Landing
+//
+// .landing {}
+
+// ----------------------------------------------------------------------------
+//	Block: Text 
+.landing__text {
+
+	h2,h3 {
+		@apply .max-w-xs .ml-auto .mr-auto;
+	}
+
+	h3 {
+		@apply .text-center .text-blue  .text-2md .mt-10 .mb-8;
+
+	}
+
+	h4 {
+		@apply .text-left .text-blue  .text-md .mt-10 .mb-4;
+	}
+	
+	p {
+		@apply .mt-4;
+
+		&:last-child {
+			@apply .mb-0;
+		}
+	}
+
+	p, 
+	ul, 
+	blockquote {
+		@apply .text-base .leading-normal;
+	}
+
+	ul {
+		@apply .my-10 .px-6 .list-reset;
+
+		li {
+			@apply .relative .pl-6;
+
+			&:before {
+				@apply .absolute .pin-l;
+				content: '.';
+				font-size: 1.75rem;
+				line-height: 10px;
+			}
+		}
+	}
+
+	blockquote {
+		@apply .text-blue-light .text-md .my-10  .border-blue-light .border-l-3 .pl-6 .ml-4;
+	}
+
+	.btn {
+		@apply .mr-auto .ml-auto .block;
+		max-width: 12rem; //192
+	}
+
+
+	
+	//
+	// Above Small
+	//
+	@screen sm {
+		h2,h3 {
+			@apply .max-w-md;
+		}
+
+		h3 {
+			@apply .text-lg .mt-12;
+		}
+
+		h4 {
+			@apply .text-2md;
+		}
+
+		p, 
+		ul, 
+		blockquote {
+			@apply .text-md;
+		}
+
+		blockquote {
+			@apply  .text-lg .my-18 .pl-8 .ml-10;
+		}
+
+	}
+
+}
+
+
+// ----------------------------------------------------------------------------
+//	Block: Slider
+.landing__slider {
+	@apply .mt-16 .mb-18;
+
+	@screen sm {
+		@apply .mt-18 .mb-lg;
+	}
+}

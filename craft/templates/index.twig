@@ -1,5 +1,128 @@
 {% extends "_layout" %}
 
 {% block content %}
-	homepage
+
+{# Page Header #}
+<header class="page-header bg-blue">
+	<div class="md:max-w-2xl m-auto md:px-6 md:pt-12 md:pb-14 sm:pt-12 sm:pb-10 py-10 px-4">
+		{# Landing Page Title: #}
+		<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">Title of Landing Page</h1>
+	</div>
+</header>
+
+{# Landing Complex #}
+<section class="landing sm:mb-lg mb-lg">
+	
+	{# Block: Rich Text #}
+	<div class="landing__text    m-auto md:w-3/5 w-full md:px-0 px-4">
+		
+		{# Landing Page SubTitle (only once!) #}
+		<h2 class="md:text-2xl md:mt-xl md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">A secondary Heading Here Only If Needed</h2>
+
+		<p>From 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+
+		<blockquote>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature.</blockquote>
+
+		<h4>Agenda:</h4>
+		<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+
+		<ul>
+			<li>Interior Heading</li>
+			<li>Lead-In Statement</li>
+			<li>1 col Article with Embed </li>
+			<li>2 col Callout (Text &amp; Image) </li>
+			<li>2 col Featured Article Card  </li>
+			<li>Blockquote</li>
+			<li>Image Gallery/Slider</li>
+		</ul>
+
+	</div>
+	
+
+
+	{# Block: Image Slider #}
+	<div class="landing__slider slider    m-auto md:w-3/5 w-full" data-module="slider">
+		
+    <ul class="js-slider list-reset" >
+      <li class="js_slide">
+        <div class="img">
+          <img src="/assets/img/placeholder_01.jpg" alt="">
+        </div>
+      </li>
+
+      <li class="js_slide">
+        <div class="img">
+          <img src="/assets/img/placeholder_02.jpg" alt="">
+        </div>
+      </li>   
+
+      <li class="js_slide">
+        <div class="img">
+          <img src="/assets/img/placeholder_03.jpg" alt="">
+        </div>
+      </li>   
+    </ul>
+
+	</div>
+
+	
+	<div class="hud   m-auto container flex flex-justify md:px-6 md:pt-12 md:pb-14 sm:pt-12 sm:pb-10 py-10 px-4">
+		<div class="hud__group   block text-center flex-1">
+			<span class="text-4xl block text-blue .mb-6">34</span>
+			<span class="text-2md text-blue-light">Committees</span>
+		</div>
+
+		<div class="hud__group   block text-center flex-1">
+			<span class="text-4xl block text-blue .mb-6">34</span>
+			<span class="text-2md text-blue-light">Committees</span>
+		</div>
+
+		<div class="hud__group   block text-center flex-1">
+			<span class="text-4xl block text-blue .mb-6">34</span>
+			<span class="text-2md text-blue-light">Committees</span>
+		</div>
+	</div>
+
+
+	{# Block: Rich Text #}
+	<div class="landing__text    m-auto md:w-3/5 w-full md:px-0 px-4">
+		
+		<h3>Don't Forget!</h3>
+		<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+
+		<ul>
+			<li>Interior Heading</li>
+			<li>Lead-In Statement</li>
+			<li>1 col Article with Embed </li>
+			<li>2 col Callout (Text &amp; Image) </li>
+			<li>2 col Featured Article Card  </li>
+			<li>Blockquote</li>
+			<li>Image Gallery/Slider</li>
+		</ul>
+
+		<a href="#" class="btn">Download Forms</a>
+
+	</div>
+
+</section>
+
+{# Sign Up Form #}
+<div class="bg-blue-lighter text-blue">
+	<div class="max-w-xl m-auto py-8 px-4 sm:pt-10 sm:pb-12 md:flex md:items-center md:justify-between">
+		
+		<header class="w-full md:w-1/2">
+			<h4 class="text-2md mb-4 md:mb-0 sm:text-lg">Get our Updates</h4>
+		</header>
+		
+		<div class="signup w-full md:w-1/2">
+			<form action="#" class="flex">
+				<input type="email" class="flex-1 rounded-full bg-white text-black mr-1 text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" placeholder="Email Address">
+				<a href="#" class="btn text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6">Register</a>
+			</form>
+			
+		</div>
+
+	</div>
+</div>
+
 {% endblock %}

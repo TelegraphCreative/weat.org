@@ -1,6 +1,28 @@
+//
+// WEAT 
+//
+
 @tailwind preflight;
-@tailwind screens;
+
 
 [v-cloak] {display: none;}
 
+@import 'base/settings';
+@import 'base/minireset';
+// @import 'base/utils';
+// @import 'components/images';
+@import 'components/buttons';
+// @import 'components/forms';
+// @import 'components/icons';
+
+@import 'components/articles';
+// @import 'components/headers';
+// @import 'components/tabs';
+
+@import 'plugins/flickity';
+@import 'components/sliders';
+
+// @import 'components/site-footer';
+
 @tailwind utilities;
+@tailwind screens;

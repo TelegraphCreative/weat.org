@@ -1,0 +1,51 @@
+// ----------------------------------------------------------------------------
+// Sliders
+// ----------------------------------------------------------------------------
+// $indicator-dims: rem(60);
+// #slide_timer_indicator {
+// 	height: $indicator-dims;
+// 	width: $indicator-dims;
+// 	position: relative;
+	
+//     top: -2px;
+//     left: -2px;
+// }
+
+//
+// Slider Layout
+//
+.js-slider {
+	opacity: 0;
+	transition: opacity 200ms ease-in-out;
+
+	&.flickity-enabled {
+		opacity: 1;
+	}
+}
+
+
+
+//
+// Slides
+//
+.js_slide {
+	width: 100%;
+	position: relative;
+  display: inline-block;
+
+	.img {
+		position: relative;
+		padding-top: 63.34%;
+	}
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 0;
+		object-fit: cover;
+	}
+}

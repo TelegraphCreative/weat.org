@@ -14,10 +14,10 @@ return array(
 		'database' => 'charking_craft_local',
     ),
 
-    'charking.com' => array(
+    'weat.com' => array(
     	'user' => '',
-		'password' => '',
-		'database' => '',
+			'password' => '',
+			'database' => '',
     )	
 
 );
