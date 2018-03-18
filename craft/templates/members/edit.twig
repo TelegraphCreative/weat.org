@@ -1,0 +1,37 @@
+{% extends "_layout" %}
+{% block content %}
+{% if currentUser %}
+<form method="post" accept-charset="UTF-8">
+    {{ getCsrfInput() }}
+    <input type="hidden" name="action" value="users/saveUser">
+    {#
+    <input type="hidden" name="redirect" value="users/{{ currentUser.username }}">
+    #}
+    <input type="hidden" name="redirect" value="members/view">
+    <input type="hidden" name="userId" value="{{ currentUser.id }}">
+
+    {#
+    <label for="location">Location</label>
+    <input type="text" id="location" name="fields[location]" value="{{ currentUser.location }}">
+
+    <label for="bio">Bio</label>
+    <textarea id="bio" name="fields[bio]">{{ currentUser.bio }}</textarea>
+    #}
+
+    <label for="firstName">First name</label>
+    <input type="text" id="firstName" name="firstName" value="{{ currentUser.firstName }}">
+
+    <label for="lastName">Last name</label>
+    <input type="text" id="lastName" name="lastName" value="{{ currentUser.lastName }}">
+
+    <input type="submit" value="Save Profile">
+</form>
+
+<p>
+
+  <a href="{{ logoutUrl }}">Logout {{ currentUser.friendlyName }}</a>
+</p>
+{% else %}
+You need to login first
+{% endif %}
+{% endblock %}

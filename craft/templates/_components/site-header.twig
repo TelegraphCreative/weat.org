@@ -1,1 +1,11 @@
+{% if currentUser %}
+<a href="/members/edit">  {{ currentUser.friendlyName }}</a>
+<a href="/members/subscribe">Subscribe</a>
+{% else %}
+<a href="{{ loginUrl }}">Login</a>
+{% endif %}
+{#% set customer = craft.charge.customer %}
+{{ customer.name }}
+{% set subscription = craft.subscription %}
+{{ subscription.status }#}
 <h1>Site Header</h1>
