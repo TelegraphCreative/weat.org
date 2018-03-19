@@ -3,18 +3,31 @@
 // ============================================================================
 
 //
-// 
+// Button
 //
 .btn {
 	// Default
-	@apply .bg-blue .text-white .text-sm .no-underline .text-center .py-4 .px-6 .rounded-full;
-	min-width: 9rem;
+	@apply .bg-blue .inline-block .max-w-1xs .w-full .text-white .text-sm .no-underline .text-center .py-4 .px-6 .rounded-full;
 	
 	// Default Hover
 	&:hover {
 		@apply .bg-blue-light;
 	}
 
+	// Text
+	&.--text {
+		@apply .bg-transparent .text-blue-light .relative;
+
+		&:hover {
+			@apply .text-blue;
+		}
+	}
+
+	// Icon
+	.--sm.icon {
+		position: relative;
+		top:2px;
+	}
 	// // Green
 	// &.--green {
 	// 	&:hover {}
