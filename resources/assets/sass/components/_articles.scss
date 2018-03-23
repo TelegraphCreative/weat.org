@@ -8,11 +8,17 @@
 // .landing {}
 
 // ----------------------------------------------------------------------------
-//	Block: Text 
+//
+// Article (standard)
+//
 .article {
 
 	h2,h3 {
 		@apply .max-w-xs .ml-auto .mr-auto;
+	}
+
+	h2 {
+		@apply .mt-12 .mb-10 .text-center .text-2md .text-blue;
 	}
 
 	h3 {
@@ -35,6 +41,7 @@
 			@apply .mb-0;
 		}
 	}
+
 
 	p, 
 	ul, 
@@ -74,6 +81,9 @@
 		h2,h3 {
 			@apply .max-w-md;
 		}
+		h2 {
+			@apply .text-lg;
+		}
 
 		h3 {
 			@apply .text-lg .mt-12;
@@ -94,6 +104,36 @@
 		}
 
 	}
+
+	//
+	// Above Medium
+	//
+	@screen md {
+		h2 {
+			@apply .text-2xl .mb-14;
+		}
+	}
+
+
+
+	//
+	// Article (info)
+	//
+	&.--info {
+		p {
+			@apply .text-xs .mb-6 .text-grey-dark .leading-normal;
+
+			&:last-child {
+				@apply .mb-0;
+			}
+		}
+		h1,h2,h3,h4,h5,h6 {
+			@apply .uppercase .tracking-wide .text-2xs .text-blue-light .mb-3;
+		}
+
+	
+	}
+
 
 }
 

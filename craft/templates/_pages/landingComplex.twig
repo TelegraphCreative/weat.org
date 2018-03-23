@@ -1,0 +1,71 @@
+{# Landing Complex #}
+{% block content %}
+
+	{% set Title = entry.pageTitle %}
+	{% set Builder = entry.complexContentBuilder %}
+	
+
+	{# Page Header #}
+	{% include '_components/headers' with {'type': 'page-header--standard'} %}
+
+	<section class="landing mb-lg" data-module="accordion">
+		
+		{# Content Builder #}
+		{% for block in Builder %}
+			{% switch block.type %}
+				
+				{# Hero Slider #}
+				{% case "heroSlider" %}
+					{% include '_components/slider--hero' %}
+				
+				{# Standard Slider #}
+				{% case "standardSlider" %}
+					{% include '_components/slider--standard' %}
+
+				{# Article #}
+				{% case "article" %}
+					{% include '_components/article' %}
+
+				{# Resources List #}
+				{% case "resourcesList" %}
+					{% include '_components/list--resources' %}
+
+				{# Feature List #}
+				{% case "featureList" %}
+					{% include '_components/list--features' %}
+
+				{# Portrait List #}
+				{% case "portraitList" %}
+					{% include '_components/list--portraits' %}
+
+				{# Stat List #}
+				{% case "statList" %}
+					{% include '_components/list--stats' %}
+
+				{# Entries List #}
+				{% case "entriesList" %}
+					{% include '_components/list--entries' %} {# == #}
+
+				{# Feature Cards #}
+				{% case "featureCards" %}
+					{% include '_components/cards--features' %}
+
+				{# Feature Hero #}
+				{% case "featureHero" %}
+					{% include '_components/hero--feature' %}
+
+				{# CTA Hero #}
+				{% case "ctaHero" %}
+					{% include '_components/hero--cta' %}
+				
+			
+				{% default %}
+				
+			
+			{% endswitch %}
+			
+		{% endfor %}
+
+	</section>
+
+{% endblock %}

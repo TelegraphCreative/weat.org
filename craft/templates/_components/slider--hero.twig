@@ -1,0 +1,28 @@
+{# Block: Hero Slider #}
+{% set block = block.heroSlider %}
+<div class="slider --hero    m-auto max-w-2xl mb-8 -mt-6 px-6 sm:px-0 sm:mb-0 sm:-mt-8">
+	<ul class="js-slider list-reset" >
+		
+		{% for asset in block %}
+			
+			<li class="js_slide bg-blue-lighter">
+	      <figure class="img bg-grey-lightest">
+	        {{image.single_simple(asset,'')}}	
+	      </figure>
+				
+				
+	      {% if asset.caption %}
+	      
+		      <figcaption class="px-6 py-8 sm:px-10 content-fades-in tr-all-3">
+		      	<a class="hover:text-blue-light no-underline max-w-lg block sm:mt-14 sm:mb-16" href="#">
+			      	<h4 class="text-md sm:text-lg">{{asset.caption}}</h4>
+			      </a>
+		      </figcaption>
+
+	      {% endif %}
+
+	    </li>
+		{% endfor %}
+
+	</ul>
+</div>

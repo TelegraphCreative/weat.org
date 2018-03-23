@@ -813,16 +813,14 @@ textarea {
   height: 1rem;
 }
 
+.icon.\--md {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 svg {
   width: 100%;
   height: 100%;
-}
-
-@media (min-width: 576px) {
-  .icon.\--md {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
 }
 
 .article h2,
@@ -830,6 +828,14 @@ svg {
   max-width: 20rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.article h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #2466cc;
 }
 
 .article h3 {
@@ -917,6 +923,10 @@ svg {
     max-width: 40rem;
   }
 
+  .article h2 {
+    font-size: 2rem;
+  }
+
   .article h3 {
     font-size: 2rem;
     margin-top: 2.5rem;
@@ -941,6 +951,37 @@ svg {
   }
 }
 
+@media (min-width: 768px) {
+  .article h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.article.\--info p {
+  font-size: .875rem;
+  margin-bottom: 1.5rem;
+  color: #86949c;
+  line-height: 1.6;
+}
+
+.article.\--info p:last-child {
+  margin-bottom: 0;
+}
+
+.article.\--info h1,
+.article.\--info h2,
+.article.\--info h3,
+.article.\--info h4,
+.article.\--info h5,
+.article.\--info h6 {
+  text-transform: uppercase;
+  letter-spacing: .075em;
+  font-size: .6875rem;
+  color: #5fc3e2;
+  margin-bottom: .75rem;
+}
+
 .landing__slider {
   margin-top: 3.25rem;
   margin-bottom: 4rem;
@@ -955,6 +996,14 @@ svg {
 
 .border-list .border__item:last-child {
   border: none;
+}
+
+.portraits-list .portrait__group:last-child {
+  margin-bottom: 0;
+}
+
+.stat-list .stat__group:last-child {
+  margin-bottom: 0;
 }
 
 .list-accordion header:hover h4 {

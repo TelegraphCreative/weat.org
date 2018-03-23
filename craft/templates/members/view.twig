@@ -1,0 +1,19 @@
+{% extends "_layout" %}
+{% block content %}
+{% if currentUser %}
+
+
+    <label for="firstName">First name</label>
+    {{ currentUser.firstName }}
+
+    <label for="lastName">Last name</label>
+    {{ currentUser.lastName }}
+
+<p>
+
+  <a href="{{ logoutUrl }}">Logout {{ currentUser.friendlyName }}</a>
+</p>
+{% else %}
+You need to login first
+{% endif %}
+{% endblock %}

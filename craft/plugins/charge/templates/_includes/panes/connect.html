@@ -1,0 +1,25 @@
+{% if account %}
+<div class="pane">
+    <h2>Destination </h2>
+    <p><em>This charge was sent to a connected stripe account</em></p>
+
+    <table class="fullwidth data">
+        <thead>
+        <tr>
+            <th scope="col">Account Id</th>
+            <th scope="col">Parent Element</th>
+            <th scope="col">Application Fee</th>
+            <th scope="col">Stripe Account</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><a href="{{ cpUrl('charge/connect/' ~ account.id) }}">{{ account.id }}</a></td>
+            <td><a href="{{ account.parentElement.getCpEditUrl() }}">{{ account.title }}</a></td>
+            <td>{{ charge.applicationFeeFormatted }}</td>
+            <td><a class="go" href="{{ account.stripeLink }}" target="_blank">{{ account.stripeId }}</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}

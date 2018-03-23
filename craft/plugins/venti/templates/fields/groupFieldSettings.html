@@ -1,0 +1,39 @@
+{% import "_includes/forms" as forms %}
+
+{% macro checkboxField(locale, name, label, sources, values) %}
+
+    {% import "_includes/forms" as forms %}
+    {% set input %}
+        {{ forms.checkboxSelectField({
+            label: label,
+            instructions: "Select the groups of events the user can choose from."|t,
+            id: name,
+            name: name,
+            options: sources,
+            values: values
+        }) }}
+    {% endset %}
+
+    {{ forms.field({
+        id: name~'-'~locale,
+        required: false,
+    }, input) }}
+
+{% endmacro %}
+
+{% macro errorOnly(label, fill) %}
+    {% import "_includes/forms" as forms %}
+
+    {{ forms.field({
+        label: label,
+    }, '<p class="error">' ~ fill ~ '</p>') }}
+
+{% endmacro %}
+
+{% from _self import checkboxField, errorOnly %}
+
+{% if sources|length %}
+    {{ checkboxField(craft.locale, "calendarGroups", "Event Groups"|t, sources, settings['calendarGroups'], true) }}
+{% else %}
+    {{ errorOnly("Event Groups"|t, "No event groups currently exist."|t, true) }}
+{% endif %}

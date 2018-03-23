@@ -9,6 +9,26 @@
 	.border__item:last-child {
 		border: none;
 	}
+	
+}
+
+//
+// Portrait List
+//
+.portraits-list {
+	.portrait__group:last-child {
+		@apply .mb-0;
+	}
+}
+
+
+//
+// Stat List
+//
+.stat-list {
+	.stat__group:last-child {
+		@apply .mb-0;
+	}
 }
 
 //

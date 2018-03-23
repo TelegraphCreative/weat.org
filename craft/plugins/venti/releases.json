@@ -1,0 +1,68 @@
+[{
+        "version": "2.0.34",
+        "downloadUrl": "https://venticalendar.io/plugin/JzDi9qNWvjdvyh32UWR9/venti_2.0.34.zip",
+        "date": "2017-09-28T2:00:00-08:00",
+        "notes": [
+            "[Fixed] cpTrigger reference in group template.",
+            "[Fixed] Fixed locale default status toggles.",
+            "[Fixed] Fixed permissions ui.",
+        ]
+    }, {
+        "version": "2.0.30",
+        "downloadUrl": "https://venticalendar.io/plugin/3g2lP13Ch5qrnm9310Wl/venti_2.0.26.zip",
+        "date": "2017-07-21T09:02:00-08:00",
+        "notes": [
+            "[Added] Group Field Type. This gives you an input to select any calendar group.",
+            "[Fixed] Fixed new event enabled on default where CMS is not multi-locale.",
+            "[Fixed] Fixed new event creation where Craft.CpUrl is not default (admin).",
+        ]
+    },
+    {
+        "version": "2.0.26",
+        "downloadUrl": "https://venticalendar.io/plugin/4r84dx32c61mT7241BLw/venti_2.0.26.zip",
+        "date": "2017-02-21T13:02:00-08:00",
+        "notes": [
+            "[Fixed] Fixed issue where CP calendar not outputting events when cpTrigger set.",
+        ]
+    },
+    {
+        "version": "2.0.25",
+        "downloadUrl": "https://venticalendar.io/plugin/7cy4we34c6j1xw62AE5o/venti_2.0.25.zip",
+        "date": "2017-01-19T13:02:00-08:00",
+        "notes": [
+            "[Fixed] Fixed issue when disabling plugin.",
+            "[Fixed] Fixed issue where ICS file outputting all events instead of specific group.",
+            "[Fixed] Various bug fixes."
+        ]
+    },
+    {
+        "version": "2.0.20",
+        "downloadUrl": "https://venticalendar.io/plugin/YvnKYEyRG9yLVVyuzrsf/venti_2.0.20.zip",
+        "date": "2016-13-12T14:00:00-08:00",
+        "notes": [
+            "[Added] Settings to hide both location & registration fields",
+            "[Added] Default field layout in group settings. Use for any number of groups.",
+            "[Added] Registration text field.",
+            "[Updated] Design of registration type selctors.",
+            "[Updated] When selecting different group fields updated to group's field layout.",
+            "[Fixed] Field layout tabs not displaying correctly.",
+            "[Fixed] Various bugs."
+        ]
+    },
+    {
+        "version": "2.0.1",
+        "downloadUrl": "https://venticalendar.io/plugin/5cIpKeRKc6LbCM62A8cJ/venti_2.0.1.zip",
+        "date": "2016-09-21T9:00:00-08:00",
+        "notes": [
+            "[Fixed] Fixed Location button that was not visible even with the correct permissions."
+        ]
+    },
+    {
+        "version": "2.0.0",
+        "downloadUrl": "https://venticalendar.io/plugin/7CdjKNwKc4ObCM62AtcV/venti_2.0.0.zip",
+        "date": "2016-09-19T15:00:00-08:00",
+        "notes": [
+            "[Added] Initial release"
+        ]
+    }
+]

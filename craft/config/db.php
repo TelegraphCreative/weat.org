@@ -11,7 +11,7 @@ return array(
 	'.test' => array(
 		'user' => 'root',
 		'password' => '',
-		'database' => 'charking_craft_local',
+		'database' => 'weat_craft_local',
     ),
 
     'weat.com' => array(

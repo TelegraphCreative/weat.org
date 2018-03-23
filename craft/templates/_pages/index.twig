@@ -1,0 +1,26 @@
+{# 
+	Pages Router
+#}
+{% spaceless %}
+	
+	{% extends '_layouts/standard'%}
+
+	{# Variables #}
+	{% set entryType = entry.type %}
+	{% set title = entry.pageTitle %}
+	{% set status = entry.status %}
+	{% set ancestors = entry.ancestors|length %}
+	
+	{% set seomaticMeta = seomaticMeta | merge({
+	   seoTitle: title
+	}) %}
+	
+{% endspaceless %}
+{% block content %}
+	{% if status == 'live' %}
+		{% include '_pages/'~entryType with {ancestors:ancestors} %}
+		{# Hello world! #}
+	{% else %}
+		{% exit 404 %}
+	{% endif %}	
+{% endblock %}

@@ -1,0 +1,33 @@
+{# Resource: Download #}
+
+{# Link Item #}
+<div class="border-b border-grey-lightest pt-8 pb-8">
+	
+	{# Header #}
+	<header class="item__header">
+
+		<a href="{{block.linkurl.url}}" target="{{block.linkurl.target}}" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+			<h4 class="text-blue text-1md sm:text-2md tr-all">
+				{{block.heading}}
+			</h4>
+			
+			{# Icon by Type#}
+			{% if block.type == 'download' %}
+				<div class="cursor-pointer relative">
+					<span class="icon --attachment --md ml-1 ">
+						<svg><use xlink:href="/assets/svg/symbols.svg#attachment"></use></svg>
+					</span>
+				</div>
+
+			{% else %}
+
+				<div class="cursor-pointer relative">
+				<span class="icon --link --md ml-1 ">
+					<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+				</span>
+			</div>
+			{% endif %}
+		
+		</a>
+	</header>
+</div>

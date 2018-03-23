@@ -1,0 +1,84 @@
+{% extends "venti/settings/_layout" %}
+{% import "_includes/forms" as forms %}
+
+
+{% macro checkboxField(settings, attribute, field) %}
+
+	{% import "_includes/forms" as forms %}
+	{% set input %}
+		{{ forms.checkbox({
+			id: 		attribute,
+			name: 		'settings['~ attribute ~']',
+			checked: 	settings.getAttribute(attribute)
+		}) }}
+	{% endset %}
+
+	{{ forms.field({
+		id:       		  	attribute,
+		label:            	field['label'],
+        instructions:     	field['instructions'],
+		required: 			false,
+		errors: 			settings.getErrors(attribute)
+	}, input) }}
+
+{% endmacro %}
+
+{% macro selectField(settings, attribute, field) %}
+
+	{% import "_includes/forms" as forms %}
+	{% set input %}
+		{{ forms.selectField({
+			id: 		attribute,
+			name: 		'settings['~ attribute ~']',
+			options: 	settings[attribute ~"s"],
+			value: 		settings[attribute]
+		}) }}
+	{% endset %}
+
+	{{ forms.field({
+		id: 			attribute,
+		label:  		field['label'],
+		instructions: 	field['instructions'],
+		errors: 		settings.getErrors(attribute)
+	}, input) }}
+
+{% endmacro %}
+
+{% from _self import  checkboxField, selectField %}
+
+{% set tField = {
+    "label":        "Translate"|t,
+    "instructions": "Venti inputs are translatable."|t,
+} %}
+
+{% set durationField = {
+    "label":        "Default Event Duration"|t,
+    "instructions": "Duration of event when start date is set."|t,
+} %}
+
+{% set timeIntField = {
+    "label":        "Time Select Interval"|t,
+    "instructions": "Event date time interval amounts."|t,
+} %}
+
+{% block content %}
+    <h2>{{ "Event Settings"|t }}</h2>
+
+	<form action="" method="post" accept-charset="UTF-8">
+	    <input type="hidden" name="action" value="venti/settings/saveSettings">
+	    <input type="hidden" name="redirect" value="venti/settings/events">
+
+	    {{ getCsrfInput() }}
+
+		{{ selectField(settings, 'eventDuration', durationField) }}
+
+		{{ selectField(settings, 'timeInterval', timeIntField) }}
+
+		{% if craft.isLocalized() %}
+			<hr/>
+			{{ checkboxField(settings, 'translate', tField) }}
+		{% endif %}
+
+		<input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+	</form>
+{% endblock %}
