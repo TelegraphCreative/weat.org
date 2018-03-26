@@ -1,0 +1,383 @@
+{% extends "_layouts/cp" %}
+
+{% includeCssResource "venti/css/venti.css" %}
+{% includeCssResource "lib/redactor/redactor.css" %}
+{% includeJsResource "lib/redactor/redactor.js" %}
+{% includeJsFile "https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js" %}
+
+{% import "_includes/forms" as forms %}
+
+{% macro checkboxField(field) %}
+
+	{% import "_includes/forms" as forms %}
+	{% set input %}
+		{{ forms.checkbox({
+			id: 		field['name'],
+			name: 		field['name'],
+			checked: 	field['checked'],
+			reverseToggle:     field['reverseToggle']
+		}) }}
+	{% endset %}
+
+	{{ forms.field({
+		id:       		  	field['name'],
+		label:            	field['label'],
+        instructions:     	field['instructions'],
+		required: 			false,
+	}, input) }}
+
+{% endmacro %}
+
+{% macro clrField(group) %}
+	{% from "_includes/forms" import colorField %}
+
+	{{ colorField({
+		label: "Color"|t,
+		instructions: "Select color for group organization."|t,
+		id: 'color',
+		class: 'clr',
+		name: 'color',
+		value: group.color,
+		errors: group.getErrors('color')
+	}) }}
+{% endmacro %}
+
+{% macro urlFormatText(groupType, locale, group, name, value) %}
+	{% from "_includes/forms" import text, errorList %}
+	{% set errors = group.getErrors(name~'-'~locale.id) %}
+
+	<div class="input{% if errors %} errors{% endif %}">
+		{{ text({
+			id: groupType~'-'~name~'-'~locale.id,
+			class: 'code ltr',
+			name: 'groups['~name~']['~locale.id~']',
+			value: (value != '__home__' ? value : null),
+			errors: errors
+		}) }}
+	</div>
+
+	{{ errorList(errors) }}
+{% endmacro %}
+
+{% macro textAreaField(group, name) %}
+	{% from "_includes/forms" import textareaField, errorList %}
+
+	{{ textareaField({
+	   label: "Description"|t,
+	   instructions: "Description of this group."|t,
+	   id: "descrption",
+	   name: 'description',
+	   class: 'group-description-richtext',
+	   value: group.description,
+	   rows: 8,
+	   errors: group.getErrors('description'),
+	   required: false
+   }) }}
+{% endmacro %}
+
+{% macro  selectRoute(groupType, locale, group, name, value) %}
+	{% set options = [
+		{
+			'label' : 'event/{slug}/{eid}',
+			'value' : 'event/{slug}/{eid}',
+			'disabled': false
+		},
+		{
+			'label' : 'event/{slug}/{startDate|date("Y-m-d")}',
+			'value' : 'event/{slug}/{startDate|date("Y-m-d")}',
+			'disabled': false
+		}
+	]%}
+	{% include "_includes/forms/select" with {
+			id:       groupType~'-'~name~'-'~locale.id,
+			name:     'groups['~name~']['~locale.id~']',
+			options:  options,
+			value:    (value != '__home__' ? value : null)
+		} only %}
+{% endmacro %}
+
+
+{% macro hiddenField(groupType, locale, group, name, value) %}
+	{% import "_includes/forms" as forms %}
+	{% set input %}
+		{{ forms.hidden({
+			id: 		groupType~'-'~name~'-'~locale.id,
+			locale:     locale.id,
+			value: 		value,
+			name: 		'groups['~name~']['~locale.id~']'
+		}) }}
+	{% endset %}
+
+	{{ forms.field({
+		required: false,
+		locale: locale.id ? locale.id : null,
+	}, input) }}
+{% endmacro %}
+
+
+{% macro urlFormatInput(groupType, brandNewGroup, group) %}
+	{% if craft.isLocalized() %}
+		<table class="data fullwidth">
+
+			<tbody>
+				{% for locale in craft.i18n.getSiteLocales() %}
+					<tr class="for-locale-{{ locale.id }}{% if craft.isLocalized() and not brandNewGroup and group.locales[locale.id] is not defined %} hidden{% endif %}">
+						{% if craft.isLocalized() %}
+							<th class="thin nowrap">{{ locale.id }}</th>
+						{% endif %}
+						<td class="topalign">
+							{% set value = (group.locales[locale.id] is defined ? group.locales[locale.id].urlFormat : null) %}
+							{# _self.selectRoute(groupType, locale, group, 'urlFormat', value) #}
+							{% set staticValue = '/event/{slug}/{startDate|date("Y-m-d")}' %}
+							{{ _self.hiddenField(groupType, locale, group, 'urlFormat', staticValue) }}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		{% set locale = craft.i18n.getPrimarySiteLocale() %}
+		{% set value = (group.locales[locale.id] is defined ? group.locales[locale.id].urlFormat : null) %}
+		{# _self.urlFormatText(groupType, locale, group, 'urlFormat', value) #}
+		{% set staticValue = 'event/{slug}/{startDate|date("Y-m-d")}' %}
+		{{ _self.hiddenField(groupType, locale, group, 'urlFormat', staticValue) }}
+	{% endif %}
+{% endmacro %}
+
+{% macro hasUrlsField(groupType, group) %}
+	{% from "_includes/forms" import checkboxField %}
+
+	{{ checkboxField({
+		label: "Events in this group have their own URLs"|t,
+		id: groupType~'-hasUrls',
+		name: 'groups[hasUrls]',
+		checked: group.hasUrls,
+		toggle: 'venti-url-settings'
+	}) }}
+{% endmacro %}
+
+{% macro templateField(groupType, group) %}
+	{% from "_includes/forms" import textField %}
+
+	{{ textField({
+		label: "Entry Template"|t,
+		instructions: (groupType == 'single' ? "The template to use when the event’s URL is requested."|t : "The template to use when an event’s URL is requested."|t),
+		id: groupType~'-template',
+		class: 'ltr',
+		name: 'groups[template]',
+		value: group.template,
+		placeholder: "event/_entry",
+		errors: group.getErrors('template')
+	}) }}
+{% endmacro %}
+
+{% from _self import  clrField, urlFormatInput, hasUrlsField, templateField, selectRoute, hiddenField, textAreaField, checkboxField %}
+
+{% block content %}
+	<form method="post" accept-charset="UTF-8" data-saveshortcut="1">
+		<input type="hidden" name="action" value="venti/groups/savegroup">
+		<input type="hidden" name="redirect" value="venti/groups">
+		{% if group.id %}<input type="hidden" name="groupId" value="{{ group.id }}">{% endif %}
+		{{ getCsrfInput() }}
+
+		{{ forms.textField({
+			first: true,
+			label: "Name"|t,
+			instructions: "What this group will be called in the CP."|t,
+			id: 'name',
+			name: 'name',
+			value: group.name,
+			errors: group.getErrors('name'),
+			autofocus: true,
+			required: true,
+			translatable: true
+		}) }}
+
+		{{ forms.textField({
+			label: "Handle"|t,
+			instructions: "How you’ll refer to this group in the templates."|t,
+			id: 'handle',
+			class: 'code',
+			name: 'handle',
+			value: group.handle,
+			errors: group.getErrors('handle'),
+			required: true
+		}) }}
+
+		{{ clrField(group) }}
+
+		{{ textAreaField(group,"description") }}
+
+		{# ICS url link field & copy button #}
+		<div class="field">
+			<div class="heading">
+				<label id="descrption-label" for="descrption">ICS</label>
+				<div class="instructions"><p>{{ "Groups' url to calendar ics file."|t }}</p></div>
+			</div>
+			<div class="input ltr">
+				<div class="text url-text">
+					<span>{{ group.getICSUrl()|raw }}</span>
+				</div>
+
+				<div class='btn copy-url' data-clipboard-text="{{ group.getICSUrl()|raw }}">{{ "Copy to clipboard"|t }}</div>
+				<a class="btn icon down" href="{{ group.getICSUrl()|raw }}" target="_blank">{{ "Download"|t }}</a>
+			</div>
+		</div>
+
+		<hr>
+
+		{% if craft.isLocalized() %}
+			{% set localesInput %}
+				<table class="data" style="width: auto;">
+					<thead>
+						<tr>
+							<td></td>
+							<th scope="col">{{ "Locale"|t }}</th>
+							<th scope="col">{{ "Default Status"|t }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for locale in craft.i18n.getSiteLocales() %}
+							{% set localeSelected = (brandNewGroup or group.locales[locale.id] is defined) %}
+							<tr>
+								<td>
+									{{ forms.checkbox({
+										id: 'locale-'~locale.id,
+										name: 'locales[]',
+										value: locale.id,
+										checked: localeSelected,
+										toggle: '.for-locale-'~locale.id
+									}) }}
+								</td>
+								<td><label for="locale-{{ locale.id }}">{{ locale.name }} ({{ locale.id }})</label></td>
+								
+								<td class="centeralign">
+									<div class="for-locale-{{ locale.id }}{% if not localeSelected %} hidden{% endif %}">
+										{{ forms.lightswitch({
+											name: 'defaultLocaleStatuses_'~locale.id,
+											on:   (brandNewGroup or not group.locales[locale.id] is defined or group.locales[locale.id].enabledByDefault),
+											small: true
+										}) }}
+									</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endset %}
+
+			{{ forms.field({
+				label: "Which locales should events in this group target?"|t,
+				errors: group.getErrors('localeErrors'),
+			}, localesInput) }}
+
+		{% endif %}
+
+		{% set urlFormatParams = {
+			label: "Event URL Format"|t,
+			instructions: "What the event URLs should look like. You can include tags that output entry properties, such as {ex1} or {ex2}."|t({ ex1: '<code>{slug}</code>', ex2: '<code>{startDate|date("Y")}</code>' }),
+			required: true,
+			errors: group.getErrors('urlFormat'),
+		} %}
+
+		<div id="type-group" class="field">
+			<div class='hidden'>{{ hasUrlsField('venti', group) }}</div>
+			{# Always hidden forcing to use default URL FORMAT #}
+			<div id="venti-url-settings" class="nested-fields {% if not group.hasUrls %}{% endif %}">
+				<div class='hidden'>{{ forms.field(urlFormatParams, urlFormatInput('venti', brandNewGroup, group)) }}</div>
+
+				{{ templateField('venti', group) }}
+			</div>
+		</div>
+		<hr>
+
+		<h2>{{ "Event Field Layout"|t }}</h2>
+
+		{% set fieldLayout = group.getFieldLayout() %}
+		{% set defaultLayoutCheckbox = {
+		    label: "Default Field Layout"|t,
+		    instructions: "Use default field layout from the [group settings](/admin/venti/settings/groups)."|t,
+			name: "defaultFieldLayout",
+			checked: (fieldLayout and fieldLayout.type == "Venti_Event_Default") ? true : false,
+			reverseToggle: "layout-design-wrapper"
+		} %}
+
+		{{ checkboxField(defaultLayoutCheckbox) }}
+
+		<div class='field {% if fieldLayout and fieldLayout.type == "Venti_Event_Default" %}hidden{% endif %}' id="layout-design-wrapper">
+			{# If using default field layout don't load it in layout designer if they choose to do custom #}
+			{% if fieldLayout and fieldLayout.type == "Venti_Event_Default" %}
+				{% include "_includes/fieldlayoutdesigner" with { fieldLayout: null} only %}
+			{% else %}
+				{% include "_includes/fieldlayoutdesigner" with {
+					fieldLayout: group.getFieldLayout()
+				} only %}
+			{% endif %}
+		</div>
+		<hr>
+
+		<div class="buttons">
+			<input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+		</div>
+	</form>
+{% endblock %}
+
+
+{% includejs %}
+	{% if not group.handle %}new Craft.HandleGenerator('#name', '#handle');{% endif %}
+	{% for locale in craft.i18n.getSiteLocales() %}
+		{% if group.locales[locale.id] is not defined or not group.locales[locale.id].urlFormat %}
+			new Craft.EntryUrlFormatGenerator('#name', '#group-urlFormat-{{ locale.id }}',   { suffix: '/{slug}/{eid}' });
+		{% endif %}
+	{% endfor %}
+
+	{% if brandNewGroup %}
+		new Craft.EntryUrlFormatGenerator('#name', '#group-template',   { suffix: '/_entry' });
+	{% endif %}
+
+	(function() {
+	    $('.group-description-richtext').redactor({
+			buttons: ['source','format','bold','italic','lists','link'],
+			plugins: ['fullscreen','source'],
+			toolbarFixedBox: true
+	    });
+	})();
+
+	// Tooltip
+	var btns = document.querySelectorAll('.copy-url');
+	for (var i = 0; i < btns.length; i++) {
+	    btns[i].addEventListener('mouseleave', function(e) {
+	        e.currentTarget.setAttribute('class', 'btn');
+	        e.currentTarget.removeAttribute('aria-label');
+	    });
+	}
+
+	function showTooltip(elem, msg) {
+	    elem.setAttribute('class', 'btn tooltipped tooltipped-s');
+	    elem.setAttribute('aria-label', msg);
+	}
+
+	function fallbackMessage(action) {
+	    var actionMsg = '';
+	    var actionKey = (action === 'cut' ? 'X' : 'C');
+	    if (/iPhone|iPad/i.test(navigator.userAgent)) {
+	        actionMsg = Craft.t('No support');
+	    } else if (/Mac/i.test(navigator.userAgent)) {
+	        actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
+	    } else {
+	        actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
+	    }
+	    return actionMsg;
+	}
+
+	var clipboard = new Clipboard('.copy-url');
+	clipboard.on('success', function(e) {
+	    e.clearSelection();
+	    showTooltip(e.trigger, Craft.t('Copied!'));
+	});
+	clipboard.on('error', function(e) {
+	    //console.error('Action:', e.action);
+	    //console.error('Trigger:', e.trigger);
+	    showTooltip(e.trigger, fallbackMessage(e.action));
+	});
+{% endincludejs %}

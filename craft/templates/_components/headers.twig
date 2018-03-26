@@ -1,0 +1,20 @@
+{# Headers #}
+
+{% switch type %}
+
+	{# Standard Blue #}
+	{% case "page-header--standard" %}
+	
+		<header class="page-header bg-blue">
+			<div class="md:max-w-2xl m-auto md:px-6 py-10 px-4">
+				{# Landing Page Title: #}
+				<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{Title}}</h1>
+			</div>
+		</header>
+	
+
+	{% default %}
+		other
+
+{% endswitch %}
+

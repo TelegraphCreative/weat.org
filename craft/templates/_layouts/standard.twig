@@ -1,0 +1,47 @@
+{# == Layout == #}
+
+{# Macros #}
+{# {% import '_utilities/macros' as utils %} #}
+{% import '_macros/forms' as forms %}
+{% import '_macros/stripe' as stripe %}
+{% import '_macros/image' as image %}
+{% import '_macros/date' as date %}
+{% import '_macros/link' as link %}
+
+
+{# Content #}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	{% include '_components/doc-start-assets' %}
+	{# {% include '_components/app-icons' %} #}
+
+</head>
+
+<body class="font-sans text-base text-black">
+
+	{% include '_components/site-header' %}
+	<main role="main" class="js-app-wrap">
+		{# {% block content %}{% endblock %} #}
+	</main>
+	{% include '_components/form-updates' %}
+	{% include '_components/site-footer' %}
+	{% include '_components/doc-end-assets' %}
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	{% includeJsResource('charge/js/jquery.charge.js') %}
+	{% includeJsResource('charge/js/stripe_v2.min.js') %}
+	{% includejs %}
+	    $(this).charge();
+	{% endincludejs %}
+
+</html>
+</body>
+</html>
+{# Note:
+In Prod, with Minify plugin installed, wrap this template in these tags:
+{% minify %}{% endminify %}
+#}

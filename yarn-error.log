@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/lbradford/.nvm/versions/node/v8.10.0/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js update
+  /Users/lbradford/.nvm/versions/node/v8.10.0/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js start
 
 PATH: 
   /Users/lbradford/.nvm/versions/node/v8.10.0/bin:/Users/lbradford/.rvm/gems/ruby-2.3.0/bin:/Users/lbradford/.rvm/gems/ruby-2.3.0@global/bin:/Users/lbradford/.rvm/rubies/ruby-2.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.composer/vendor/bin:/usr/local/git/bin:/Users/lbradford/.rvm/bin:/Users/lbradford/.rvm/bin:/usr/local/Cellar/yarn/0.24.6/bin:'yarn global bin'
@@ -18,6 +18,7 @@ npm manifest:
     "dependencies": {
       "babel-preset-es2015": "^6.24.1",
       "cross-env": "^5.1.3",
+      "flickity": "^2.0.11",
       "lodash": "^4.17.5",
       "moment": "^2.20.1",
       "qs": "^6.5.1",
@@ -2221,6 +2222,10 @@ Lockfile:
       inherits "^2.0.1"
       minimalistic-assert "^1.0.0"
   
+  desandro-matches-selector@^2.0.0:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/desandro-matches-selector/-/desandro-matches-selector-2.0.2.tgz#717beed4dc13e7d8f3762f707a6d58a6774218e1"
+  
   destroy@~1.0.4:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
@@ -2629,6 +2634,10 @@ Lockfile:
     version "1.8.1"
     resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   
+  ev-emitter@^1.0.1, ev-emitter@^1.0.2:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/ev-emitter/-/ev-emitter-1.1.1.tgz#8f18b0ce5c76a5d18017f71c0a795c65b9138f2a"
+  
   event-emitter@~0.3.5:
     version "0.3.5"
     resolved "https://registry.yarnpkg.com/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
@@ -2974,9 +2983,26 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/first-chunk-stream/-/first-chunk-stream-1.0.0.tgz#59bfb50cd905f60d7c394cd3d9acaab4e6ad934e"
   
+  fizzy-ui-utils@^2.0.0:
+    version "2.0.7"
+    resolved "https://registry.yarnpkg.com/fizzy-ui-utils/-/fizzy-ui-utils-2.0.7.tgz#7df45dcc4eb374a08b65d39bb9a4beedf7330505"
+    dependencies:
+      desandro-matches-selector "^2.0.0"
+  
   flatten@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
+  
+  flickity@^2.0.11:
+    version "2.0.11"
+    resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.0.11.tgz#cc31d6d3481972a4da3d8ae58ffa0f9c4c8cc0d0"
+    dependencies:
+      desandro-matches-selector "^2.0.0"
+      ev-emitter "^1.0.2"
+      fizzy-ui-utils "^2.0.0"
+      get-size "^2.0.0"
+      tap-listener "^2.0.0"
+      unidragger "^2.2.3"
   
   flush-write-stream@^1.0.0:
     version "1.0.2"
@@ -3157,6 +3183,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/get-proxy/-/get-proxy-1.1.0.tgz#894854491bc591b0f147d7ae570f5c678b7256eb"
     dependencies:
       rc "^1.1.2"
+  
+  get-size@^2.0.0:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/get-size/-/get-size-2.0.2.tgz#555ea98ab8732e0c021e9e23e2219adcbe398e98"
   
   get-stdin@^4.0.1:
     version "4.0.1"
@@ -7371,6 +7401,12 @@ Lockfile:
       postcss "^6.0.9"
       postcss-functions "^3.0.0"
   
+  tap-listener@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/tap-listener/-/tap-listener-2.0.0.tgz#d2e11d0d8e7c92b26a56ae4f35538a248b44ad63"
+    dependencies:
+      unipointer "^2.1.0"
+  
   tapable@^0.2.7:
     version "0.2.8"
     resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.2.8.tgz#99372a5c999bf2df160afc0d74bed4f47948cd22"
@@ -7750,6 +7786,12 @@ Lockfile:
     dependencies:
       debug "^2.2.0"
   
+  unidragger@^2.2.3:
+    version "2.2.3"
+    resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.2.3.tgz#a618801b9b629e1045e3d3793713e7add0a1e16b"
+    dependencies:
+      unipointer "^2.2.0"
+  
   union-value@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/union-value/-/union-value-1.0.0.tgz#5c71c34cb5bad5dcebe3ea0cd08207ba5aa1aea4"
@@ -7758,6 +7800,12 @@ Lockfile:
       get-value "^2.0.6"
       is-extendable "^0.1.1"
       set-value "^0.4.3"
+  
+  unipointer@^2.1.0, unipointer@^2.2.0:
+    version "2.2.1"
+    resolved "https://registry.yarnpkg.com/unipointer/-/unipointer-2.2.1.tgz#05f9adaac92c0e6e6ed41ce85adab26166b03ee6"
+    dependencies:
+      ev-emitter "^1.0.1"
   
   uniq@^1.0.1:
     version "1.0.1"
@@ -8440,7 +8488,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
 Trace: 
-  Error: Command "update" not found.
+  Error: Command "start" not found.
       at new MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
       at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87307:17
       at Generator.next (<anonymous>)

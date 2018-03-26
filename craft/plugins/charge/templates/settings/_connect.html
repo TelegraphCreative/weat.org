@@ -1,0 +1,126 @@
+{% extends "charge/_layouts/settings" %}
+{% set selectedTab = 'settings' %}
+{% set title = "Settings"|t %}
+
+
+{% block content %}
+    <h1>Stripe Connect</h1>
+
+    {% if isPro %}
+
+    <form method="post" accept-charset="UTF-8" data-saveshortcut>
+        {{ getCsrfInput() }}
+        {{ forms.hidden({ name: 'action', value: 'charge/settings/saveConnect' }) }}
+        {{ forms.hidden({ name: 'pluginClass', value: 'Charge' }) }}
+        {{ forms.hidden({ name: 'redirect', value: 'charge/settings/connect' }) }}
+
+        {{ forms.lightswitchField({
+            first: true,
+            label: "Connect Enabled"|t,
+            id: 'enabled',
+            name: 'connect[enabled]',
+            instructions: "Is Connect enabled for this site? Disabling will prevent all account usage, but not remove the details. You can reactivate later without loss of connected accounts."|t,
+            on: (connect.enabled is defined ? connect.enabled ),
+            autofocus: true,
+            toggle: 'connectoptions',
+            readonly: not settingsEditable,
+            warning: (not settingsEditable ? 'Set in your config as \'connect > enabled\'' )
+        }) }}
+
+        <div class="dependant {%- if (connect.enabled is not defined) or (not connect.enabled) %} hidden{% endif %}"
+             id="connectoptions">
+
+            <hr/>
+
+            <h3>FieldType Setup</h3>
+            <p>Charge uses a fieldtype - <strong>Charge_ConnectFieldType</strong> to associate elements to Stripe Connect sub accounts.</p>
+            <p>The most common setup is to attach the <strong>Charge_ConnectFieldType</strong> to the <em>User</em> element type, but you can attach it to <em>any valid element type</em> as best makes sense for your implementation requirments.</p>
+            <p>Once attached to an element you can use the built in Craft permissions to control who has control over the connected account for specific elements.</p>
+            <p><em>Set the fieldtype up from the Craft > Settings > Fields area as for any other Craft field.</em></p>
+
+
+            <hr/>
+            <h3>Platform Ids</h3>
+            {{ forms.textField({
+                label: "Development Client ID"|t,
+                id: 'devClientId',
+                name: 'connect[devClientId]',
+                instructions: ""|t,
+                value: (connect.devClientId is defined ? connect.devClientId ),
+                instructions: "Your development connect application id, as found in your Stripe Connect platform settings",
+                placeholder: 'ca_000000000000000'
+            }) }}
+
+
+            {{ forms.textField({
+                label: "Production Client ID"|t,
+                id: 'prodClientId',
+                name: 'connect[prodClientId]',
+                instructions: ""|t,
+                value: (connect.prodClientId is defined ? connect.prodClientId ),
+                instructions: "Your productionconnect application id, as found in your Stripe Connect platform settings",
+                placeholder: 'ca_000000000000000'
+            }) }}
+
+            <hr/>
+            <h3>Redirect Urls</h3>
+
+            <p>As part of the Connect flow you must define the redirect url for the application on the Stripe dashboard
+                settings.</p>
+
+            <p><em>You can specify multiple redirect urls in the Stripe settings by separating multiple urls with a
+                    comma (,). <br/>Be sure to include all the urls for the various environment domains this will be
+                    running on.</em></p>
+
+            <p><em>Production redirect urls must be HTTPS only.</em></p>
+
+
+            {{ forms.textField({
+                name: 'webhookUrl',
+                readonly: true,
+                value: callbackUrl,
+                label: 'Redirect Url',
+                instructions: 'Use the same endpoint for both production and development callbacks.'
+            }) }}
+
+            <hr/>
+{#
+            <h3>Connect Behaviour</h3>
+
+            <p>Stripe Connect has two options for charging the accounts. <strong>Destination</strong> and <strong>Direct</strong>.</p>
+
+            <p><strong>Destination</strong> means all charges are routed through your main account first, before being passed down to the connected accounts. This makes overall bookkeeping and refunds simpler. The platform account pays any Stripe fees (but these can be absorbed into any percentage fee you might apply to payments).</p>
+            <p><strong>Direct</strong> charges the connected account directly, and only the fee collected is sent to your account. The connected account pays any Stripe fees.</p>
+
+
+            {{ forms.selectField({
+                name: 'connect[behaviour]',
+                value: (connect.behaviour is defined ? connect.behaviour : 'destination' ),
+                options: [
+                    {
+                        label: 'Destination (recommended)',
+                        value: 'destination'
+                    },
+                    {
+                        label: 'Direct',
+                        value: 'direct'
+                    }
+                ],
+                label: 'Connect Behaviour'
+            }) }}
+
+            <hr/>
+#}
+        </div>
+
+        <div class="buttons">
+            <input type="submit" class="btn submit" value="Update Connect Settings"/>
+        </div>
+
+    </form>
+
+    {% else %}
+        {% include 'charge/_includes/upgradePrompt' %}
+    {% endif %}
+
+{% endblock %}

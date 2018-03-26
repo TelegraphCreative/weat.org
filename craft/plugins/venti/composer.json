@@ -1,0 +1,6 @@
+{
+    "require": {
+        "simshaun/recurr": ">=0.3",
+        "mexitek/phpcolors": "dev-master"
+    }
+}

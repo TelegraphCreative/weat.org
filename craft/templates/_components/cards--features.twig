@@ -1,0 +1,32 @@
+{# 2 Col Feature Card #}
+<div class="feature-cards border-list     m-auto max-w-2xl   sm:pt-10 sm:mb-10"> 
+	<div class="md:flex md:flex-wrap md:flex-justify px-4  pt-10 sm:pt-16 border-t border-b border-grey-lightest">
+		
+		{% for block in block.children %}
+
+			<div class="
+				feature__card mb-lg md:mb-lg border__item w-full block text-center md:w-1/2 md:mb-0 
+				{% if loop.index == '1' %}md:border-r border-b pb-10 md:border-b-0 {% else %} mb-10 border-grey-lightest  {% endif %}
+			">
+
+					<h4 class="text-blue text-2md mb-6 sm:text-lg md:w-4/5 m-auto">{{block.header}}</h4>
+
+					<div class="text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md">
+						{{block.textBarebones}}
+					</div>
+					
+					{% if block.button|length %}
+						{% if block.buttonType == 'standard' %}
+							{{link.simple(block.button, 'btn')}}
+						{% else %}
+							{{link.icon(block.button, 'btn --text', 'arrow-right')}}
+						{% endif %}
+
+					{% endif %}
+					
+			</div>
+
+		{% endfor %}
+		
+	</div>
+</div>

@@ -1,0 +1,23 @@
+
+{% extends "charge/_layouts/settings" %}
+
+{% set title = "Compatibilty" %}
+
+{% block content %}
+    <h1>Compatibility</h1>
+    <p>Charge automatically checks for known compatibility issues.</p>
+
+
+    <hr/>
+    {% if messages %}
+        {% for message in messages %}
+        <ul id="alerts" class="charge-messages-alert {{ message.level }}">
+            <li>{{ message.message }} <a href="{{ url(message.action) }}">More info</a></li>
+        </ul>
+        {% endfor %}
+    {% else %}
+    <p class="success"><strong>Great News!</strong> Charge detected no known issues with your installation or server configuration. You're good to go.</p>
+    {% endif %}
+
+
+{% endblock %}

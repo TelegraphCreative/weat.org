@@ -1,0 +1,19 @@
+{# Standard Slider #}
+{% set block = block.simpleSlider %}
+<div class="slider    m-auto md:w-3/5 w-full     sm:pt-10 sm:mb-10" data-module="slider">
+	
+  <ul class="js-slider list-reset" >
+  	
+  	{% for asset in block %}
+
+	    <li class="js_slide">
+	      <div class="img">
+	        {{image.single_simple(asset,'')}}	
+	      </div>
+	    </li>
+
+    {% endfor %}
+    
+  </ul>
+
+</div>
