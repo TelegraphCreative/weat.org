@@ -1,6 +1,18 @@
 //
 // Utils
 //
+//
+// Simple Container (single breakpoint)
+//
+.simple-container {
+    max-width: 77rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    @apply .w-full;
+}
+//
+// Transitions
+//
 
 .tr-all {
 	transition: all $tr1;
