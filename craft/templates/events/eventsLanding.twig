@@ -1,6 +1,17 @@
 {% extends "_layouts/standard" %}
 
 {% block content %}
+
+{# Events Assets #}
+{# {% includeCssFile '/assets/css/venti/venti.css' %} #}
+{% includeJsFile 'https://cdn.polyfill.io/v2/polyfill.js?features=default,es6,fetch&flags=gated' %}
+{% includeJsFile '/assets/js/venti/grapnel.js' %}
+{% includeJsFile '/assets/js/venti/remodal.js' %}
+{% includeJsFile '/assets/js/venti/venti.min.js' %}
+
+
+
+{# Filter #}
 <div class="push-y-3">
     {% include 'events/components/_filter' %}
 </div>
@@ -45,5 +56,7 @@
     </div>
 </div>
 
+{# Groups #}
 {% include 'events/components/_modal-calendar-groups' %}
+
 {% endblock %}

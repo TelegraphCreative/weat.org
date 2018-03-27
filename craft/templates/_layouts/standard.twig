@@ -1,4 +1,4 @@
-{# == Layout == #}
+ {# == Layout == #}
 
 {# Macros #}
 {# {% import '_utilities/macros' as utils %} #}
@@ -18,11 +18,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	{% include '_components/doc-start-assets' %}
 	{# {% include '_components/app-icons' %} #}
-
+	
 </head>
 
 <body class="font-sans text-base text-black">
-
+	
 	{% include '_components/site-header' %}
 	<main role="main" class="js-app-wrap">
 		{% block content %}{% endblock %}
@@ -31,7 +31,8 @@
 	{% include '_components/site-footer' %}
 	{% include '_components/doc-end-assets' %}
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	{# <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> #}
+	{% includeJsFile 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js' %}
 	{% includeJsResource('charge/js/jquery.charge.js') %}
 	{% includeJsResource('charge/js/stripe_v2.min.js') %}
 	{% includejs %}
@@ -43,5 +44,5 @@
 </html>
 {# Note:
 In Prod, with Minify plugin installed, wrap this template in these tags:
-{% minify %}{% endminify %}
+{% minify %}{% endminify %} 
 #}
