@@ -1,3 +1,32 @@
+{# Single, Simple #}
+{% macro single_simple(image, class) %}
+	<img src="{{ image.url }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}" height="{{ image.height }}" width="{{ image.width }}">
+{% endmacro %}
+
+
+{# Multiple, Simple #}
+{% macro multiple_simple(images, class) %}
+	{% for image in images %}	
+		<img src="{{ image.url }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}" height="{{ image.height }}" width="{{ image.width }}">
+	{% endfor %}
+{% endmacro %}
+
+{# Multiple, Transform #}
+{% macro multiple_transform(images, transform, class) %}
+	{% for image in images %}	
+		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
+	{% endfor %}
+{% endmacro %}
+
+
+
+{# == Sprite == #}
+{% macro sprite(id, classes) %}
+	<span class='sprite-{{id}} sprite'>
+	    <svg viewBox="0 0 1 1" class="{{classes}}"><use xlink:href='/assets/images/icons.svg#{{id}}'></use></svg>
+	</span>
+{% endmacro %}
+
 {% macro tag(images, transform, class) %}
 	{% for image in images.limit(1) %}	
 		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
@@ -28,3 +57,5 @@
 		{{- image.getUrl(transform) -}}
 	{%- endfor -%}
 {% endmacro %}
+
+

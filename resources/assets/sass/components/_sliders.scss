@@ -23,8 +23,6 @@
 	}
 }
 
-
-
 //
 // Slides
 //
@@ -48,4 +46,43 @@
 		z-index: 0;
 		object-fit: cover;
 	}
+
+	.content-fades-in {
+		@apply .opacity-25;
+		transition-delay:300ms;
+		transform:translate(0,1rem);
+	}
+
+	&.is-selected {
+		.content-fades-in {
+			@apply .opacity-100;
+			transform:translate(0,0);
+		}
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Hero Slider
+//
+@screen sm {
+	
+	.slider {
+		&.--hero {
+			.flickity-page-dots {
+				bottom: 30px;
+				right: 30px;
+				left: inherit;
+				width: auto;
+				z-index: 10;
+
+				.dot {
+			    display: block;
+			    margin: 12px 0;
+			    bottom: 12px;
+					right: 12px;
+				}
+			}
+		}
+	}
+
 }

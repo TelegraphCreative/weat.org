@@ -8,6 +8,20 @@
 	{% endspaceless %}
 {% endmacro %}
 
+{% macro icon(link, class, icon) %}
+	{% spaceless %}
+		{%- if link -%}
+		<a href="{{ link.url }}" class="{{ class | default('') }}" target="{{link.target}}">{{ link.text | raw}} 
+			{% if link.target is not empty -%} 
+			{%- endif -%} 
+			<span class="icon --sm ml-1">
+				<svg><use xlink:href="/assets/svg/symbols.svg#{{icon}}"></use></svg>
+			</span>
+		</a>
+		{%- endif -%}
+	{% endspaceless %}
+{% endmacro %}
+
 {% macro button(link, class) %}
 	{% spaceless %}
 		{%- if link -%}

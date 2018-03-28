@@ -1,0 +1,54 @@
+{% extends "_layouts/elementindex" %}
+
+{% includeCssResource "venti/css/venti.css" %}
+{% includeJsResource "venti/js/venti.js" %}
+
+{% set title = "Events"|t %}
+{% set elementType = 'Venti_Event' %}
+
+{% set tabs = {
+	events: { label: "Events"|t, url: url('venti') },
+	calendar: { label: "Calendar"|t, url: url('venti/calendar') }
+} %}
+
+{% if currentUser.can('ventiSettings') %}
+	{% set tabs = tabs|merge({groups: { label: "Groups"|t, url: url('venti/groups') }}) %}
+{% endif %}
+
+{% if currentUser.can('ventiEditLocations') %}
+	{% set tabs = tabs|merge({locations: { label: "Locations"|t, url: url('venti/locations') }}) %}
+{% endif %}
+
+{% if currentUser.can('ventiSettings') %}
+	{% set tabs = tabs|merge({settings: { label: "Settings"|t, url: url('venti/settings') }}) %}
+{% endif %}
+
+{% set extraPageHeaderHtml %}
+	{% if groups|length %}
+		<div class="buttons right">
+			{% if groups|length > 1 %}
+				<div class="btngroup submit">
+					<a class="btn submit add icon" href="{{ url('/'~craft.config.cpTrigger~'/venti/'~groups[0].handle~'/new') }}">{{ "New Event"|t }}</a>
+					<div class="btn submit menubtn"></div>
+					<div class="menu">
+						<ul>
+							{% for group in groups %}
+								<li><a href="{{ url('/'~craft.config.cpTrigger~'/venti/'~group.handle~'/new') }}"><span>{{ group.name|t }}</span><span class="menu-label-color" style='background-color:{{group.color}};'></span></a></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			{% else %}
+				<a class="btn submit add icon" href="{{ url('/'~craft.config.cpTrigger~'/venti/'~groups[0].handle~'/new') }}">{{ "New Event"|t }}</a>
+			{% endif %}
+		</div>
+	{% endif %}
+{% endset %}
+
+{% block sidebar %}
+	{# parent() #}
+	{% include "venti/events/_sidebar" with {groups:groups} %}
+{% endblock %}
+{% includejs %}
+	new VentiEvents();
+{% endincludejs %}

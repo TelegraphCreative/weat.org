@@ -9,17 +9,28 @@
 
 @import 'base/settings';
 @import 'base/minireset';
-// @import 'base/utils';
-// @import 'components/images';
+
+@import 'components/main-menu';
+@import 'components/menu-toggle';
+
+
+@import 'base/utils';
+@import 'components/images';
 @import 'components/buttons';
 // @import 'components/forms';
-// @import 'components/icons';
+@import 'components/icons';
+
+
 
 @import 'components/articles';
+@import 'components/lists';
+@import 'components/tooltip-lean';
+@import 'components/calendar';
 // @import 'components/headers';
 // @import 'components/tabs';
 
-@import 'plugins/flickity';
+@import 'vendor/flickity/_all';
+@import 'vendor/choices/_all';
 @import 'components/sliders';
 
 // @import 'components/site-footer';

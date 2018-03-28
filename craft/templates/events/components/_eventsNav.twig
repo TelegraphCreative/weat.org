@@ -1,0 +1,25 @@
+<div class="eventsNav   mb-6 flex justify-between pt-8 border-t border-grey-lightest lg:mt-16 text-center">
+    {%- set prev -%}
+        #cal/{{ prev|date('Y') }}/{{ prev|date('n') }}/{{ ids|length ? ids|join(','): "*" }}
+    {%- endset -%}
+
+    {%- set next -%}
+        #cal/{{ next|date('Y') }}/{{ next|date('n') }}/{{ ids|length ? ids|join(','): "*" }}
+    {%- endset -%}
+
+    {# Previous month arrow button #}
+
+    <a class="arrow prev text-grey-dark hover:text-green"  href="{{ prev }}" title="Previous Month">
+        <span class="icon --arrow --sm mr-3 top-2 relative tr-all">
+            <svg><use xlink:href="/assets/svg/symbols.svg#arrow-left"></use></svg>
+        </span>
+    </a>
+
+    <h2  class="text-1md text-grey-dark">{{ current|date('M Y') }}</h2>
+
+    <a class="arrow next text-grey-dark hover:text-green"  href="{{ next }}" title="Next Month">
+        <span class="icon --arrow --sm mr-3 top-2 relative tr-all">
+            <svg><use xlink:href="/assets/svg/symbols.svg#arrow-right"></use></svg>
+        </span>
+    </a>
+</div>

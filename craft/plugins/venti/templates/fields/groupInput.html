@@ -1,0 +1,24 @@
+{% import "_includes/forms" as forms %}
+
+{% macro checkboxField(locale, name, settings, sources, values) %}
+
+    {% import "_includes/forms" as forms %}
+    {% set input %}
+        {{ forms.checkboxSelectField({
+            id: name,
+            name: name,
+            options: sources,
+            values: values != null ? values : ''
+        }) }}
+    {% endset %}
+
+    {{ forms.field({
+        id: name~'-'~locale,
+        required: false,
+    }, input) }}
+
+{% endmacro %}
+
+{% from _self import checkboxField %}
+
+ {{ checkboxField(craft.locale, name, settings, sources, values, true) }} 

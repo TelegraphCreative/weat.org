@@ -1,0 +1,93 @@
+{% extends "_layouts/cp" %}
+{% hook 'charge.prepCpTemplate' %}
+{% set selectedSubnavItem = 'connect' %}
+
+{% import "_includes/forms" as forms %}
+
+{% set title %}
+    Connect Account Details
+{% endset %}
+
+
+{% set crumbs = [
+{ label: "Charge"|t, url: url('charge') },
+{ label: "Account"|t, url: url('charge/connect/'~account.id) }
+] %}
+
+
+
+
+{% set itemElementType = craft.elements.getElementType('Charge') %}
+{% set itemElementAttr = {
+    elementType : itemElementType,
+    disabledElementIds : null,
+    attributes : {
+        'id' : { 0 :  'id', 1 : { label: 'Charge Id'}},
+        'mode' : { 0 :  'mode', 1 : { label: 'Mode'}},
+        'amount' : { 0 :  'amount', 1 : { label: 'Amount'}},
+        'type' : { 0 :  'type', 1 : { label: 'Type'}},
+        'customerId' : { 0 :  'customerId', 1 : { label: 'Customer'}},
+        'status' : { 0 :  'status', 1 : { label: 'Status'}},
+        'timestamp' : { 0 :  'timestamp', 1 : { label: 'Date'}},
+    },
+    elements : listItems,
+    showCheckboxes : false} %}
+
+{% block main %}
+
+    {% if not account.livemode %}
+        <p><strong>This is a test mode account</strong></p>
+    {% endif %}
+
+    <div class="pane">
+        <h2>Info</h2>
+        <table class="data">
+            <tbody>
+                <tr>
+                    <td class="light">Account</td>
+                    <td><strong>{{ account.id }}</strong></td>
+                </tr>
+                {% if account.parentElement %}
+                <tr>
+                    <td class="light">Parent Element</td>
+                    <td><a href="{{ account.parentElement.getCpEditUrl() }}">{{ account.parentElement.title }}</a></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td class="light">Mode</td>
+                    <td>
+                        {% if account.livemode %}
+                            <span class="status green"></span> <span class="title">Live</span>
+                        {% else %}
+                            <span class="status yellow"></span> <span class="title">Test</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="light">Stripe Account</td>
+                    <td><a href="{{ account.stripeLink }}" target="_blank"><span class="go nowrap">{{ account.stripeUserId }}</span></a></td>
+                </tr>
+                <tr>
+                    <td class="light">Date Connected</td>
+                    <td>{{ account.dateCreated }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pane">
+            <h2>Associated Charges</h2>
+            {% if listItems is empty %}
+                <p><em>There have been no charges to this account.</em></p>
+            {% else %}
+                <div class="elementindex">
+                    {% include "_elements/tableview/container" with itemElementAttr %}
+                </div>
+            {% endif %}
+        </div>
+
+{% endblock %}
+
+{% includejs %}
+    new Craft.ElevatedSessionForm('.charge-refund-action');
+    new Craft.ElevatedSessionForm('.charge-recur-cancel-action');
+{% endincludejs %}

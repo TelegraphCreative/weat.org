@@ -1,0 +1,20 @@
+//
+// Icons
+//
+.icon {
+	@apply .items-center .inline-flex .justify-center;
+
+	// Small
+	&.--sm {
+		@apply .w-4 .h-4;
+	}
+	// Medium
+	&.--md {
+		@apply .w-6 .h-6;
+	}
+}
+
+svg {
+  @apply .w-full .h-full;
+}
+

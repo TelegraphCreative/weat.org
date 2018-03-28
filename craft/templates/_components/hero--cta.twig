@@ -1,0 +1,26 @@
+{# CTA Hero #}
+<div class="cta-banner sm:pt-10 ">
+
+
+	<div class="
+		m-auto max-w-2xl     px-4   py-10 sm:py-12  
+		{% if block.spacing == 'bottom' %}sm:mb-lg mb-18{% endif %}
+		{% if block.spacing == 'top' %}sm:mt-12 mt-10{% endif %}   
+		bg-blue-dark text-white text-center
+	"> 
+
+		<header class="text-lg sm:text-xl mb-6">
+			<h4>{{block.header}}</h4>
+		</header>
+
+		<div class="content text-md text-blue-light max-w-lg m-auto mb-12 leading-normal">
+
+			{{block.textBarebones}}
+
+		</div>
+
+		{{link.simple(block.button, 'btn m-auto block max-w-1xs')}}
+		
+		</div>
+	</div>
+</div>

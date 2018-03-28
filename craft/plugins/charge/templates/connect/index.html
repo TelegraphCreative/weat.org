@@ -1,0 +1,56 @@
+{% extends "charge/_layouts/cp" %}
+
+{% set title %}
+    Connected Accounts
+{% endset %}
+
+{% set selectedSubnavItem = 'connect' %}
+
+{% block content %}
+
+    <div id="noaccounts"{% if accounts %} class="hidden"{% endif %}>
+        <p>{{ "No accounts exist yet."|t }}</p>
+    </div>
+
+    {% if accounts|length %}
+        <table id="accounts" class="data fullwidth">
+            <thead>
+            <th scope="col">{{ "Id"|t }}</th>
+            <th scope="col">{{ "Parent Element"|t }}</th>
+            <th scope="col">{{ "Mode"|t }}</th>
+            <th scope="col">{{ "Stripe User"|t }}</th>
+            <th class="col">{{ "Connected Date"|t }}</th>
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+
+                <tr data-id="{{ account.id }}">
+                    <td><a href="{{ url('charge/connect/'~account.id) }}">{{ account.id }}</a></td>
+                    <td><a href="{{ account.parentElement.getCpEditUrl() }}">{{ account.parentElement.title }}</a></td>
+                    <td>
+                        {% if account.livemode %}
+                            <span class="status green"></span> <span class="title">Live</span>
+                        {% else %}
+                            <span class="status yellow"></span> <span class="title">Test</span>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ account.stripeLink }}" target="_blank"><span class="go nowrap">{{ account.stripeUserId }}</span></a></td>
+                    <td>{{ account.dateCreated }}</td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}
+
+
+{% set js %}
+    new Craft.AdminTable({
+    tableSelector: '#accounts',
+    noObjectsSelector: '#noaccounts',
+    deleteAction: 'charge/account/deleteAccount'
+    });
+{% endset %}
+{% includeJs js %}

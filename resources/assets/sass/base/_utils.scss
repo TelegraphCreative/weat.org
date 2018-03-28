@@ -1,0 +1,42 @@
+//
+// Utils
+//
+//
+// Simple Container (single breakpoint)
+//
+.simple-container {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+@screen md {
+	.simple-container {
+	    max-width: 70rem;
+	    // padding-right: 1rem;
+	    // padding-left: 1rem;
+	    @apply .w-full .m-auto;
+	}
+}
+//
+// Transitions
+//
+
+.tr-all {
+	transition: all $tr1;
+}
+.tr-all-2 {
+	transition: all $tr2;
+}
+.tr-all-3 {
+	transition: all $tr3;
+}
+
+
+//
+// Relative Positioning
+//
+.top-1 {
+	top: 1px;
+}
+.top-2 {
+	top: 2px;
+}
