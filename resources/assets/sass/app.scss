@@ -21,12 +21,16 @@
 @import 'components/icons';
 
 
+
 @import 'components/articles';
 @import 'components/lists';
+@import 'components/tooltip-lean';
+@import 'components/calendar';
 // @import 'components/headers';
 // @import 'components/tabs';
 
-@import 'plugins/flickity';
+@import 'vendor/flickity/_all';
+@import 'vendor/choices/_all';
 @import 'components/sliders';
 
 // @import 'components/site-footer';

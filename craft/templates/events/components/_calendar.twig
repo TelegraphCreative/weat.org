@@ -8,13 +8,13 @@
 
 {% calendar calendarParams as days %}
     <div class='table-box'>
-        <table>
+        <table class="w-full m-0 text-center">
             <thead>
                 <tr>
                     {% for weekDay in calendar.head %}
                         <th>
-                            <span class="tri">{{ weekDay.abbr|t }}</span>
-                            <span class="single">{{ weekDay.narrow|t }}</span>
+                            {# <span class="tri">{{ weekDay.abbr|t }}</span> #}
+                            <span class="single text-sm text-grey-dark">{{ weekDay.narrow|t }}</span>
                         </th>
                     {% endfor %}
                 </tr>
@@ -34,15 +34,18 @@
                         <td class="calendar_day {% if item.today %} calendar_day-current{% endif %}">
                             {# Day with number and title. If 1st add month name abbr #}
                             <div>
-                                <span class="calendar_day-num">
-                                    {% if item.day == 1 %}
-                                        {{ item.date|date("M") }}
-                                    {% endif %}
+                                {% if item.events|length %}
+                                {% set d = item.events[0] %}
+                                {% set color = d.event.getColor() %}
+                                <a href="{{ d.event.url }}" data-tooltip="{{ d.event.title }}" class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:{{ color }};">{{ item.day }}</a>
+                                {% else %}                                    
+                                <span class="calendar_day-num text-1xs text-grey-dark">
                                     {{ item.day }}
                                 </span>
+                                {% endif %}
 
-                                {# Event output for day #}
-                                {% if item.events|length %}
+                                {# Event output for day (full list output #}
+                                {# {% if item.events|length %}
                                     <ul>
                                         {% for d in item.events %}
                                             <li>
@@ -54,18 +57,18 @@
                                             </li>
                                         {% endfor %}
                                     </ul>
-                                {% endif %}
+                                {% endif %} #}
                             </div>
                         </td>
 
                     {% else %}
 
                         {# Days of previous or next month #}
-                        <td class="calendar_day calendar_day-other">
+                        <td class="calendar_day calendar_day-other opacity-0">
                             <span class="calendar_day-num">
-                                {% if item.day == 1 %}
+                                {# {% if item.day == 1 %}
                                     {{ item.date|date("M") }}
-                                {% endif %}
+                                {% endif %} #}
                                 {{ item.day }}
                             </span>
                         </td>

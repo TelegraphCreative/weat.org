@@ -7,23 +7,56 @@
 //
 .btn {
 	// Default
-	@apply .bg-blue .inline-block .max-w-1xs .w-full .text-white .text-sm .no-underline .text-center .py-4 .px-6 .rounded-full;
+	@apply .bg-blue .inline-block .max-w-1xs .w-full .text-white .text-sm .no-underline .text-center .py-4 .px-6 .rounded-full .cursor-pointer .tr-all;
 	
 	// Default Hover
 	&:hover {
-		@apply .bg-blue-light;
+		@apply .bg-green;
 	}
 
+	//
 	// Text
+	//
 	&.--text {
-		@apply .bg-transparent .text-blue-light .relative;
+		@apply .bg-transparent .text-blue-light .relative .w-auto; 
+		max-width: inherit;
 
 		&:hover {
-			@apply .text-blue;
+			@apply .text-green;
 		}
 	}
 
+	//
+	// Auto Width
+	//
+	&.--auto-w {
+		@apply .w-auto; 
+	}
+
+	//
+	// Width
+	//
+	&.--full-w {
+		@apply .w-full; 
+		max-width: inherit;
+	}
+
+
+	//
+	// Outline
+	//
+	&.--outline {
+		@apply .bg-transparent .border .border-grey-light .text-grey-dark;
+
+		&:hover {
+			@apply .bg-green .text-white .border-green;
+		}
+
+	}
+
+	//
 	// Icon
+	//
 	.--sm.icon {
 		position: relative;
 		top:2px;

@@ -8,14 +8,17 @@
 	}
 
 	// Ratio
-  &.is1by1
+  &.is1by1,
   // &.is4by3,
   // &.is3by2,
-  // &.is16by9,
+  &.is16by9
   // &.is2by1
   {
+    overflow: hidden;
+    
     img {
-    	@apply .h-full .w-full;
+    	@apply .h-full .w-full .pin-t .pin-l;
+      object-fit: cover;
     }
   }
 

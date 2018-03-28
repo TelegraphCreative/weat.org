@@ -715,10 +715,6 @@ textarea {
   width: 100%;
 }
 
-.menu__utility-bar .icon.search {
-  top: 1px;
-}
-
 .main-menu__toggle {
   width: 1.75rem;
   height: 1.75rem;
@@ -779,10 +775,16 @@ textarea {
 }
 
 .simple-container {
-  max-width: 77rem;
   padding-right: 1rem;
   padding-left: 1rem;
-  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .simple-container {
+    max-width: 70rem;
+    width: 100%;
+    margin: auto;
+  }
 }
 
 .tr-all {
@@ -800,6 +802,14 @@ textarea {
   transition: all 400ms cubic-bezier(.42, 0, .58, 1);
 }
 
+.top-1 {
+  top: 1px;
+}
+
+.top-2 {
+  top: 2px;
+}
+
 .img {
   display: block;
   position: relative;
@@ -811,9 +821,19 @@ textarea {
   width: 100%;
 }
 
-.img.is1by1 img {
+.img.is1by1,
+.img.is16by9 {
+  overflow: hidden;
+}
+
+.img.is1by1 img,
+.img.is16by9 img {
   height: 100%;
   width: 100%;
+  top: 0;
+  left: 0;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .img.is1by1 {
@@ -850,20 +870,47 @@ textarea {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   border-radius: 9999px;
+  cursor: pointer;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
 }
 
 .btn:hover {
-  background-color: #5fc3e2;
+  background-color: #22c79a;
 }
 
 .btn.\--text {
   background-color: transparent;
   color: #5fc3e2;
   position: relative;
+  width: auto;
+  max-width: inherit;
 }
 
 .btn.\--text:hover {
-  color: #2466cc;
+  color: #22c79a;
+}
+
+.btn.\--auto-w {
+  width: auto;
+}
+
+.btn.\--full-w {
+  width: 100%;
+  max-width: inherit;
+}
+
+.btn.\--outline {
+  background-color: transparent;
+  border-width: 1px;
+  border-color: #d0d6d9;
+  color: #86949c;
+}
+
+.btn.\--outline:hover {
+  background-color: #22c79a;
+  color: #fff;
+  border-color: #22c79a;
 }
 
 .btn .\--sm.icon {
@@ -1109,6 +1156,84 @@ svg {
   opacity: 1;
 }
 
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+[data-tooltip]:before,
+[data-tooltip]:after {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 150ms ease-in-out;
+  transition: opacity 150ms ease-in-out;
+}
+
+[data-tooltip]:before {
+  position: absolute;
+  top: 140%;
+  left: 50%;
+  margin-bottom: 5px;
+  margin-left: -100px;
+  width: 200px;
+  padding: 6px;
+  background-color: #2466cc;
+  color: #fff;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+[data-tooltip]:after {
+  position: absolute;
+  top: 140%;
+  left: 50%;
+  margin-top: -5px;
+  margin-left: -5px;
+  width: 0;
+  border-bottom: 5px solid #2466cc;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  opacity: 1;
+}
+
+.calendar table {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.calendar table th,
+.calendar table td {
+  padding-bottom: 20px;
+}
+
+.calendar_day-num.\--has-event {
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+  text-decoration: none;
+  position: relative;
+}
+
+.calendar_day-num.\--has-event:hover {
+  background: #22c79a !important;
+}
+
 /*! Flickity v2.0.11
 http://flickity.metafizzy.co
 ---------------------------------------------- */
@@ -1256,6 +1381,413 @@ http://flickity.metafizzy.co
   background: #2466cc;
 }
 
+/*===============================
+=            Choices            =
+===============================*/
+
+.choices {
+  position: relative;
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.choices:focus {
+  outline: none;
+}
+
+.choices:last-child {
+  margin-bottom: 0;
+}
+
+.choices.is-disabled .choices__inner,
+.choices.is-disabled .choices__input {
+  background-color: #d0d6d9;
+  cursor: not-allowed;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.choices.is-disabled .choices__item {
+  cursor: not-allowed;
+}
+
+.choices[data-type*="select-one"] {
+  cursor: pointer;
+}
+
+.choices[data-type*="select-one"] .choices__inner {
+  padding-bottom: 7.5px;
+}
+
+.choices[data-type*="select-one"] .choices__input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #d1d4d7;
+  background-color: #fff;
+  margin: 0;
+}
+
+.choices[data-type*="select-one"] .choices__button {
+  background-image: url("../../icons/cross-inverse.svg");
+  padding: 0;
+  background-size: 8px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -10px;
+  margin-right: 25px;
+  height: 20px;
+  width: 20px;
+  border-radius: 100em;
+  opacity: .5;
+}
+
+.choices[data-type*="select-one"] .choices__button:hover,
+.choices[data-type*="select-one"] .choices__button:focus {
+  opacity: 1;
+}
+
+.choices[data-type*="select-one"] .choices__button:focus {
+  -webkit-box-shadow: 0 0 0 2px #444b4f;
+          box-shadow: 0 0 0 2px #444b4f;
+}
+
+.choices[data-type*="select-one"]:after {
+  content: "";
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-color: #aaa transparent transparent transparent;
+  border-width: 5px;
+  position: absolute;
+  right: 11.5px;
+  top: 50%;
+  margin-top: -2.5px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.choices[data-type*="select-one"]:before {
+  content: "";
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+  border-width: 5px;
+  position: absolute;
+  right: 11.5px;
+  top: 50%;
+  z-index: 1;
+  margin-top: -3.5px;
+  pointer-events: none;
+}
+
+.choices[data-type*="select-one"].is-open:after {
+  border-color: transparent transparent #aaa transparent;
+  margin-top: -7.5px;
+}
+
+.choices[data-type*="select-one"].is-open:before {
+  border-color: transparent transparent #fff transparent;
+  margin-top: -6.5px;
+}
+
+.choices[data-type*="select-one"][dir="rtl"]:after {
+  left: 11.5px;
+  right: auto;
+}
+
+.choices[data-type*="select-one"][dir="rtl"] .choices__button {
+  right: auto;
+  left: 0;
+  margin-left: 25px;
+  margin-right: 0;
+}
+
+.choices[data-type*="select-multiple"] .choices__inner,
+.choices[data-type*="text"] .choices__inner {
+  cursor: text;
+}
+
+.choices[data-type*="select-multiple"] .choices__button,
+.choices[data-type*="text"] .choices__button {
+  position: relative;
+  display: inline-block;
+  margin-top: 0;
+  margin-right: -4px;
+  margin-bottom: 0;
+  margin-left: 8px;
+  padding-left: 16px;
+  border-left: 1px solid #2c3134;
+  background-image: url("../../icons/cross.svg");
+  background-size: 8px;
+  width: 8px;
+  line-height: 1;
+  opacity: .75;
+}
+
+.choices[data-type*="select-multiple"] .choices__button:hover,
+.choices[data-type*="select-multiple"] .choices__button:focus,
+.choices[data-type*="text"] .choices__button:hover,
+.choices[data-type*="text"] .choices__button:focus {
+  opacity: 1;
+}
+
+.choices__inner {
+  -webkit-transition: background 150ms, border 150ms, border-radius 150ms;
+  transition: background 150ms, border 150ms, border-radius 150ms;
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  padding: 7.5px 7.5px 3.75px;
+  border: 1px solid transparent;
+  border: 1px solid #d1d4d7;
+  border-radius: 20px;
+  font-size: .8125rem;
+  min-height: 44px;
+  overflow: hidden;
+}
+
+.is-focused .choices__inner,
+.is-open .choices__inner {
+  border-color: #d1d4d7;
+}
+
+.is-open .choices__inner {
+  border-color: transparent !important;
+}
+
+.is-flipped.is-open .choices__inner {
+  border-radius: 0 0 2.5px 2.5px;
+}
+
+.choices__list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.choices__list--single {
+  display: inline-block;
+  padding: 4px 16px 4px 4px;
+  width: 100%;
+}
+
+[dir="rtl"] .choices__list--single {
+  padding-right: 4px;
+  padding-left: 16px;
+}
+
+.choices__list--single .choices__item {
+  width: 100%;
+}
+
+.choices__list--multiple {
+  display: inline;
+}
+
+.choices__list--multiple .choices__item {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 3.75px;
+  margin-bottom: 3.75px;
+  background-color: #444b4f;
+  border: 1px solid #383e41;
+  color: #fff;
+  word-break: break-all;
+}
+
+.choices__list--multiple .choices__item[data-deletable] {
+  padding-right: 5px;
+}
+
+[dir="rtl"] .choices__list--multiple .choices__item {
+  margin-right: 0;
+  margin-left: 3.75px;
+}
+
+.choices__list--multiple .choices__item.is-highlighted {
+  background-color: #383e41;
+  border: 1px solid #2c3134;
+}
+
+.is-disabled .choices__list--multiple .choices__item {
+  background-color: #6a6a6a;
+  border: 1px solid #515151;
+}
+
+.choices__list--dropdown {
+  display: none;
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #d1d4d7;
+  top: 100%;
+  margin-top: -1px;
+  border-bottom-left-radius: 2.5px;
+  border-bottom-right-radius: 2.5px;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.choices__list--dropdown.is-active {
+  display: block;
+}
+
+.is-open .choices__list--dropdown {
+  border-color: #d1d4d7;
+}
+
+.is-flipped .choices__list--dropdown {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: -1px;
+  border-radius: .25rem .25rem 0 0;
+}
+
+.choices__list--dropdown .choices__list {
+  position: relative;
+  max-height: 300px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+}
+
+.choices__list--dropdown .choices__item {
+  position: relative;
+  padding: 10px;
+  font-size: .8125rem;
+}
+
+[dir="rtl"] .choices__list--dropdown .choices__item {
+  text-align: right;
+}
+
+@media (min-width: 640px) {
+  .choices__list--dropdown .choices__item--selectable {
+    padding-right: 100px;
+  }
+
+  .choices__list--dropdown .choices__item--selectable:after {
+    content: attr(data-select-text);
+    font-size: 12px;
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+  }
+
+  [dir="rtl"] .choices__list--dropdown .choices__item--selectable {
+    text-align: right;
+    padding-left: 100px;
+    padding-right: 10px;
+  }
+
+  [dir="rtl"] .choices__list--dropdown .choices__item--selectable:after {
+    right: auto;
+    left: 10px;
+  }
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+  background-color: #22c79a;
+  color: #fff;
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted:after {
+  opacity: .5;
+}
+
+.choices__item {
+  cursor: default;
+}
+
+.choices__item--selectable {
+  cursor: pointer;
+}
+
+.choices__item--disabled {
+  cursor: not-allowed;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  opacity: .5;
+}
+
+.choices__heading {
+  font-weight: 600;
+  font-size: 12px;
+  padding: 10px;
+  border-bottom: 1px solid #eceeef;
+  color: #807f7f;
+}
+
+.choices__button {
+  text-indent: -9999px;
+  -webkit-appearance: none;
+          -moz-appearance: none;
+       appearance: none;
+  border: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.choices__button:focus {
+  outline: none;
+}
+
+.choices__input {
+  display: inline-block;
+  vertical-align: baseline;
+  background-color: #f9f9f9;
+  font-size: .8125rem;
+  margin-bottom: 5px;
+  border: 0;
+  border-radius: 0;
+  max-width: 100%;
+  padding: 4px 0 4px 2px;
+}
+
+.choices__input:focus {
+  outline: 0;
+}
+
+[dir="rtl"] .choices__input {
+  padding-right: 2px;
+  padding-left: 0;
+}
+
+.choices__placeholder {
+  opacity: .5;
+}
+
+/*=====  End of Choices  ======*/
+
+.form-group .choices {
+  margin: .75rem 0;
+}
+
+.is-active .choices__inner,
+.is-open.is-focused .choices__inner,
+.is-open .choices__inner {
+  border-color: #d1d4d7;
+}
+
 .js-slider {
   opacity: 0;
   -webkit-transition: opacity 200ms ease-in-out;
@@ -1383,6 +1915,10 @@ http://flickity.metafizzy.co
   background-color: #86949c;
 }
 
+.bg-grey {
+  background-color: #7f8fa4;
+}
+
 .bg-grey-light {
   background-color: #d0d6d9;
 }
@@ -1425,6 +1961,10 @@ http://flickity.metafizzy.co
 
 .hover\:bg-grey-dark:hover {
   background-color: #86949c;
+}
+
+.hover\:bg-grey:hover {
+  background-color: #7f8fa4;
 }
 
 .hover\:bg-grey-light:hover {
@@ -1531,6 +2071,10 @@ http://flickity.metafizzy.co
   border-color: #86949c;
 }
 
+.border-grey {
+  border-color: #7f8fa4;
+}
+
 .border-grey-light {
   border-color: #d0d6d9;
 }
@@ -1573,6 +2117,10 @@ http://flickity.metafizzy.co
 
 .hover\:border-grey-dark:hover {
   border-color: #86949c;
+}
+
+.hover\:border-grey:hover {
+  border-color: #7f8fa4;
 }
 
 .hover\:border-grey-light:hover {
@@ -3784,6 +4332,10 @@ http://flickity.metafizzy.co
   color: #86949c;
 }
 
+.text-grey {
+  color: #7f8fa4;
+}
+
 .text-grey-light {
   color: #d0d6d9;
 }
@@ -3826,6 +4378,10 @@ http://flickity.metafizzy.co
 
 .hover\:text-grey-dark:hover {
   color: #86949c;
+}
+
+.hover\:text-grey:hover {
+  color: #7f8fa4;
 }
 
 .hover\:text-grey-light:hover {
@@ -4276,6 +4832,10 @@ http://flickity.metafizzy.co
     background-color: #86949c;
   }
 
+  .sm\:bg-grey {
+    background-color: #7f8fa4;
+  }
+
   .sm\:bg-grey-light {
     background-color: #d0d6d9;
   }
@@ -4318,6 +4878,10 @@ http://flickity.metafizzy.co
 
   .sm\:hover\:bg-grey-dark:hover {
     background-color: #86949c;
+  }
+
+  .sm\:hover\:bg-grey:hover {
+    background-color: #7f8fa4;
   }
 
   .sm\:hover\:bg-grey-light:hover {
@@ -4424,6 +4988,10 @@ http://flickity.metafizzy.co
     border-color: #86949c;
   }
 
+  .sm\:border-grey {
+    border-color: #7f8fa4;
+  }
+
   .sm\:border-grey-light {
     border-color: #d0d6d9;
   }
@@ -4466,6 +5034,10 @@ http://flickity.metafizzy.co
 
   .sm\:hover\:border-grey-dark:hover {
     border-color: #86949c;
+  }
+
+  .sm\:hover\:border-grey:hover {
+    border-color: #7f8fa4;
   }
 
   .sm\:hover\:border-grey-light:hover {
@@ -6669,6 +7241,10 @@ http://flickity.metafizzy.co
     color: #86949c;
   }
 
+  .sm\:text-grey {
+    color: #7f8fa4;
+  }
+
   .sm\:text-grey-light {
     color: #d0d6d9;
   }
@@ -6711,6 +7287,10 @@ http://flickity.metafizzy.co
 
   .sm\:hover\:text-grey-dark:hover {
     color: #86949c;
+  }
+
+  .sm\:hover\:text-grey:hover {
+    color: #7f8fa4;
   }
 
   .sm\:hover\:text-grey-light:hover {
@@ -7162,6 +7742,10 @@ http://flickity.metafizzy.co
     background-color: #86949c;
   }
 
+  .md\:bg-grey {
+    background-color: #7f8fa4;
+  }
+
   .md\:bg-grey-light {
     background-color: #d0d6d9;
   }
@@ -7204,6 +7788,10 @@ http://flickity.metafizzy.co
 
   .md\:hover\:bg-grey-dark:hover {
     background-color: #86949c;
+  }
+
+  .md\:hover\:bg-grey:hover {
+    background-color: #7f8fa4;
   }
 
   .md\:hover\:bg-grey-light:hover {
@@ -7310,6 +7898,10 @@ http://flickity.metafizzy.co
     border-color: #86949c;
   }
 
+  .md\:border-grey {
+    border-color: #7f8fa4;
+  }
+
   .md\:border-grey-light {
     border-color: #d0d6d9;
   }
@@ -7352,6 +7944,10 @@ http://flickity.metafizzy.co
 
   .md\:hover\:border-grey-dark:hover {
     border-color: #86949c;
+  }
+
+  .md\:hover\:border-grey:hover {
+    border-color: #7f8fa4;
   }
 
   .md\:hover\:border-grey-light:hover {
@@ -9555,6 +10151,10 @@ http://flickity.metafizzy.co
     color: #86949c;
   }
 
+  .md\:text-grey {
+    color: #7f8fa4;
+  }
+
   .md\:text-grey-light {
     color: #d0d6d9;
   }
@@ -9597,6 +10197,10 @@ http://flickity.metafizzy.co
 
   .md\:hover\:text-grey-dark:hover {
     color: #86949c;
+  }
+
+  .md\:hover\:text-grey:hover {
+    color: #7f8fa4;
   }
 
   .md\:hover\:text-grey-light:hover {
@@ -10048,6 +10652,10 @@ http://flickity.metafizzy.co
     background-color: #86949c;
   }
 
+  .lg\:bg-grey {
+    background-color: #7f8fa4;
+  }
+
   .lg\:bg-grey-light {
     background-color: #d0d6d9;
   }
@@ -10090,6 +10698,10 @@ http://flickity.metafizzy.co
 
   .lg\:hover\:bg-grey-dark:hover {
     background-color: #86949c;
+  }
+
+  .lg\:hover\:bg-grey:hover {
+    background-color: #7f8fa4;
   }
 
   .lg\:hover\:bg-grey-light:hover {
@@ -10196,6 +10808,10 @@ http://flickity.metafizzy.co
     border-color: #86949c;
   }
 
+  .lg\:border-grey {
+    border-color: #7f8fa4;
+  }
+
   .lg\:border-grey-light {
     border-color: #d0d6d9;
   }
@@ -10238,6 +10854,10 @@ http://flickity.metafizzy.co
 
   .lg\:hover\:border-grey-dark:hover {
     border-color: #86949c;
+  }
+
+  .lg\:hover\:border-grey:hover {
+    border-color: #7f8fa4;
   }
 
   .lg\:hover\:border-grey-light:hover {
@@ -12441,6 +13061,10 @@ http://flickity.metafizzy.co
     color: #86949c;
   }
 
+  .lg\:text-grey {
+    color: #7f8fa4;
+  }
+
   .lg\:text-grey-light {
     color: #d0d6d9;
   }
@@ -12483,6 +13107,10 @@ http://flickity.metafizzy.co
 
   .lg\:hover\:text-grey-dark:hover {
     color: #86949c;
+  }
+
+  .lg\:hover\:text-grey:hover {
+    color: #7f8fa4;
   }
 
   .lg\:hover\:text-grey-light:hover {
@@ -12934,6 +13562,10 @@ http://flickity.metafizzy.co
     background-color: #86949c;
   }
 
+  .xl\:bg-grey {
+    background-color: #7f8fa4;
+  }
+
   .xl\:bg-grey-light {
     background-color: #d0d6d9;
   }
@@ -12976,6 +13608,10 @@ http://flickity.metafizzy.co
 
   .xl\:hover\:bg-grey-dark:hover {
     background-color: #86949c;
+  }
+
+  .xl\:hover\:bg-grey:hover {
+    background-color: #7f8fa4;
   }
 
   .xl\:hover\:bg-grey-light:hover {
@@ -13082,6 +13718,10 @@ http://flickity.metafizzy.co
     border-color: #86949c;
   }
 
+  .xl\:border-grey {
+    border-color: #7f8fa4;
+  }
+
   .xl\:border-grey-light {
     border-color: #d0d6d9;
   }
@@ -13124,6 +13764,10 @@ http://flickity.metafizzy.co
 
   .xl\:hover\:border-grey-dark:hover {
     border-color: #86949c;
+  }
+
+  .xl\:hover\:border-grey:hover {
+    border-color: #7f8fa4;
   }
 
   .xl\:hover\:border-grey-light:hover {
@@ -15327,6 +15971,10 @@ http://flickity.metafizzy.co
     color: #86949c;
   }
 
+  .xl\:text-grey {
+    color: #7f8fa4;
+  }
+
   .xl\:text-grey-light {
     color: #d0d6d9;
   }
@@ -15369,6 +16017,10 @@ http://flickity.metafizzy.co
 
   .xl\:hover\:text-grey-dark:hover {
     color: #86949c;
+  }
+
+  .xl\:hover\:text-grey:hover {
+    color: #7f8fa4;
   }
 
   .xl\:hover\:text-grey-light:hover {
