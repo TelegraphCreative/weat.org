@@ -2,8 +2,11 @@
 
 {% block content %}
 {% requireLogin %}
-<section class="landing mb-lg">
-  <div class="article    m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
+<div class="m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-10">
+
+	{# Group #}
+	<section class="group mb-lg">
+    <h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Subscribe</h2>
     <form class="form-horizontal"
           id="charge-form"
           method="post"
@@ -52,6 +55,6 @@
         {% include '_components/charge--payment-button' %}
 
     </form>
-  </div>
-</section>
+  </section>
+</div>
 {% endblock %}

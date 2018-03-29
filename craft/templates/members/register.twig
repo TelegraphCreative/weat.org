@@ -1,12 +1,16 @@
 {% extends "_layouts/standard" %}
 {% block content %}
 
-<section class="landing mb-lg">
-  <div class="article    m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
+
+<div class="m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-10">
+
+	{# Group #}
+	<section class="group mb-lg">
+    <h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Register</h2>
     <form method="post" accept-charset="UTF-8">
         {{ getCsrfInput() }}
         <input type="hidden" name="action" value="users/saveUser">
-        <input type="hidden" name="redirect" value="">
+        <input type="hidden" name="redirect" value="members/join">
 
         {% macro errorList(errors) %}
             {% if errors %}
@@ -43,7 +47,7 @@
             {{ errorList(account.getErrors('password')) }}
         {% endif %}
 
-        <input type="submit" class="btn text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" value="Register">
+        <input type="submit" class="btn --full-w --lg" value="Register">
     </form>
   </div>
 </section>
