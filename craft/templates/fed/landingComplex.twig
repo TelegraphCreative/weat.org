@@ -122,15 +122,14 @@
 			
 			{# Header #}
 			<header class="js-accordion-toggle  text-grey-dark hover:text-blue-light cursor-pointer flex justify-between  item__header items-center">
-				<h4 class="text-blue text-1md sm:text-2md tr-all">Committee Name Here</h4>
+				<h4 class="text-blue text-1md sm:text-2md tr-all">Committee Name Here test</h4>
 				
 				<div class="relative">
-					<span class="icon --add --md ml-1 tr-all-3">
-						<svg><use xlink:href="/assets/svg/symbols.svg#add"></use></svg>
-					</span>
-					<span class="icon --subtract --md ml-1 absolute pin-t tr-all-3">
-						<svg><use xlink:href="/assets/svg/symbols.svg#subtract"></use></svg>
-					</span>
+					
+					{{svg.icon('icon --add --md ml-1 tr-all-3', 'add')}}
+					
+					{{svg.icon('icon --subtract --md ml-1 absolute pin-t tr-all-3', 'subtract')}}
+					
 				</div>
 			</header>
 			
@@ -168,12 +167,8 @@
 				<h4 class="text-blue text-1md sm:text-2md tr-all">Committee Name Here</h4>
 				
 				<div class="relative">
-					<span class="icon --add --md ml-1 tr-all-3">
-						<svg><use xlink:href="/assets/svg/symbols.svg#add"></use></svg>
-					</span>
-					<span class="icon --subtract --md ml-1 absolute pin-t tr-all-3">
-						<svg><use xlink:href="/assets/svg/symbols.svg#subtract"></use></svg>
-					</span>
+					{{svg.icon('icon --add --md ml-1 tr-all-3', 'add')}}
+					{{svg.icon('icon --subtract --md ml-1 absolute pin-t tr-all-3', 'subtract')}}
 				</div>
 			</header>
 			
@@ -221,9 +216,7 @@
 					</h4>
 					
 					<div class="cursor-pointer relative">
-						<span class="icon --attachment --md ml-1 ">
-							<svg><use xlink:href="/assets/svg/symbols.svg#attachment"></use></svg>
-						</span>
+						{{svg.icon('icon --attachment --md ml-1', 'attachment')}}
 					</div>
 				</a>
 			</header>
@@ -283,9 +276,7 @@
 					</h4>
 					
 					<div class="cursor-pointer relative">
-						<span class="icon --link --md ml-1 ">
-							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
-						</span>
+						{{svg.icon('icon --link --md ml-1', 'link')}}
 					</div>
 				</a>
 			</header>
@@ -450,9 +441,7 @@
 
 					<a href="#" class="btn --text">
 						Text Link
-						<span class="icon --sm ml-1">
-							<svg><use xlink:href="/assets/svg/symbols.svg#arrow-right"></use></svg>
-						</span>
+						{{svg.icon('icon --sm ml-1', 'arrow-right')}}
 					</a>
 			</div>
 

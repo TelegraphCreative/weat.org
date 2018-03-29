@@ -1,0 +1,130 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{% include '_components/fed/nav--breadcrumbs' %}
+
+{# Container #}
+<div class="simple-container">
+
+	<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
+
+		{# Main #}
+		<section class="main-content lg:w-2/3 md:px-4 ">
+
+			{# Header #}
+			<header class="event-detail__header   mb-10 sm:items-center mb-10 mt-12 sm:flex sm:justify-between">
+				<time class="mb-2 block md:pr-8 sm:pr-8 sm:mb-0 text-blue">
+					<span class="text-md sm:text-2md sm:block">Mar</span>
+					<span class="text-md sm:text-lg lg:text-3xl sm:block">09</span>
+				</time>
+				
+				<div class="featured-event__content sm:flex-1 sm:pl-6 md:pl-8">
+					<a class="no-underline hover:text-green" href="#">
+						<h4 class="text-2md sm:text-xl">2018 Odors and Air Pollutants Conference</h4>
+					</a>
+			</header>
+
+			{# Image #}
+			<figure class="img is16by9 bg-grey-lightest md:mb-4">
+        <img src="/assets/img/placeholder_03.jpg" class="absolute pin-t pin-l">
+      </figure>
+			
+			{# Article #}
+      <article class="event-detail__article article mb-16">
+      	<h1>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature.</h1>
+
+				<p>From 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+
+				<h4>Agenda:</h4>
+
+				<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+
+				<blockquote>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature.</blockquote>
+
+				<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+
+				<ul>
+					<li>Interior Heading</li>
+					<li>Lead-In Statement</li>
+					<li>1 col Article with Embed </li>
+					<li>2 col Callout (Text &amp; Image) </li>
+					<li>2 col Featured Article Card  </li>
+					<li>Blockquote</li>
+					<li>Image Gallery/Slider</li>
+				</ul>
+
+			</article>
+
+			<figure class="img is16by9 bg-grey-lightest  md:mb-4">
+        <img src="/assets/img/placeholder_05.jpg" class="absolute pin-t pin-l">
+      </figure>
+      
+
+      
+			
+		</section>
+
+		
+		{# Aside : Register Info #}
+		<aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-lg md:px-4 clearfix ">
+			<div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right border-b border-grey-lightest pb-8">
+				
+				{# <a href="#" class="btn --full-w --lg">Register</a> #}
+
+				{# If disabled: #}
+				<a href="#" class="btn --full-w --lg --disabled">Register</a>
+			
+			</div>
+			
+			{# Info #}
+			<div class="aside__info   max-w-sm lg:max-w-xs w-full m-auto lg:float-right py-8 text-xs text-grey-dark">
+				
+				<div class="content mb-10">
+					<h6 class="text-black text-xs mb-2">Date &amp; Time:</h6>
+
+					<time  class="leading-normal mb-6 block">
+						Wednesday March 14, 2018
+						<br>
+						4:15 - 5:00pm
+					</time>
+
+					<h6 class="text-black text-xs mb-2">Location</h6>
+
+					<p  class="leading-normal mb-6">
+						Gerald D. Fischbach Auditorium
+						<br>
+						160 5th Ave 
+						<br>
+						New York, NY 10010 United States
+					</p>
+
+					<h6 class="text-black text-xs mb-2">Sponsor</h6>
+
+					<a href="#" class="block leading-normal mb-6 text-grey-dark hover:text-green">
+						WEF
+					</a>
+
+					<h6 class="text-black text-xs mb-2">Event Type</h6>
+
+					<p  class="leading-normal mb-6">
+						Conference
+					</p>
+				</div>
+
+				<a href="#" class="btn --full-w --outline-blue flex justify-center items-center">
+					Download Brochure
+					{{svg.icon('icon --md ml-2', 'attachment')}}
+				</a>
+
+			</div>
+
+		</aside>
+
+	</div>
+
+</div>
+
+
+{% endblock %}
