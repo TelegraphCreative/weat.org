@@ -15,6 +15,7 @@
 	{# List: Accordion Link/Doc/Info #}
 	{# Template note: only include data-module="accordion" 1x per page #}
 	<div class="list-accordion  md:px-0 px-6 m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-10" data-module="accordion">
+		
 		{# Section Header #}
 		{% include '_components/fed/header--section-divider' with {'title': 'Layouts (Static Front End)'} %}
 
@@ -36,6 +37,11 @@
 				</a>
 
 			</header>
+		</div>
+
+		{# Section Header #}
+		<div class="mt-12">
+			{% include '_components/fed/header--section-divider' with {'title': 'Events'} %}
 		</div>
 
 
@@ -80,14 +86,21 @@
 			</header>
 		</div>
 
+
+		{# Section Header #}
+		<div class="mt-12">
+			{% include '_components/fed/header--section-divider' with {'title': 'Forms'} %}
+		</div>
+
+
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
 			{# Header #}
 			<header class="item__header">
 
-				<a href="/fed/loggedIn--paymentView" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+				<a href="/fed/loggedIn--paymentEdit" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
 					<h4 class="text-blue text-1md sm:text-2md tr-all">
-						Forms: Logged In Payment View
+						Logged In — Payment Edit
 					</h4>
 					
 					<div class="cursor-pointer relative">
@@ -100,6 +113,73 @@
 			</header>
 		</div>
 
+		{# Link Item #}
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/loggedIn--accountEdit" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Logged In — Account Edit
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
+
+
+		{# Link Item #}
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/loggedIn--contactEdit" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Logged In — Contact Edit
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
+
+
+		{# Link Item #}
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/loggedIn--memberEdit" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Logged In — Member Edit
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
+	
+
+		{# Section Header #}
+		<div class="mt-12">
+			{% include '_components/fed/header--section-divider' with {'title': 'Visual Style Guide'} %}
+		</div>
 
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	

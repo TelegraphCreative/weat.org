@@ -355,3 +355,19 @@ $choices-button-offset: 8px !default;
   }
 }
 
+
+
+
+//
+// Choices Select as Box
+//
+.choices-as-boxes {
+  .#{$choices-selector} .choices__inner {
+    @apply .rounded-sm;
+  }
+  .is-open .choices__inner {
+    border: 1px solid $choices-keyline-color !important;
+    border-bottom: 0;
+
+  }
+}

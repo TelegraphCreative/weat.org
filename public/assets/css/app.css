@@ -987,6 +987,43 @@ input.error {
   border-color: #5fc3e2;
 }
 
+.check-radio-input input {
+  position: absolute;
+  left: -9999px;
+}
+
+.check-radio-input .icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.check-radio-input .icon svg {
+  opacity: 0;
+  padding: 3px;
+}
+
+.check-radio-input .icon:before {
+  content: '';
+  border-width: 1px;
+  border-color: #d0d6d9;
+  width: 1.5rem;
+  height: 1.5rem;
+  left: 0;
+  top: 0;
+  position: absolute;
+  border-radius: .125rem;
+}
+
+.check-radio-input input:checked ~ .icon svg {
+  opacity: 1;
+}
+
+.spinner[type=number]::-webkit-inner-spin-button,
+.spinner[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .icon {
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -1863,6 +1900,15 @@ http://flickity.metafizzy.co
 .is-open.is-focused .choices__inner,
 .is-open .choices__inner {
   border-color: #d1d4d7;
+}
+
+.choices-as-boxes .choices .choices__inner {
+  border-radius: .125rem;
+}
+
+.choices-as-boxes .is-open .choices__inner {
+  border: 1px solid #d1d4d7 !important;
+  border-bottom: 0;
 }
 
 .js-slider {

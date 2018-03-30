@@ -1,0 +1,63 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{% include '_components/fed/nav--breadcrumbs'  %}
+
+{# Container #}
+<div class="simple-container">
+	
+	{# Logged In Menu #}
+	{% include '_components/fed/nav--logged-in' %}
+
+	{# Form #}
+	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg choices-as-boxes">
+		
+		<form action="#" class="py-4">
+			
+			{# Field #}
+			<div class="form-row mb-6 border-b border-grey-lightest pb-6">
+				<h4 class="mb-4 text-md">WEAT Annual Membership </h4>
+				<div class="text-xs text-grey-dark leading-normal">
+					<p>Start Date: 01/19/2014</p>
+					<p>Expiry Date: 01/19/2018</p>
+				</div>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="membershipAutoRenew" class="check-radio-input block w-full text-sm flex items-center">
+					<input type="checkbox" id="membershipAutoRenew" class="check-radio__input">
+					{{svg.icon('icon --md text-green', 'checkmark')}}
+					<span class="check-radio__label inline-block ml-3  cursor-pointer">Auto-Renew Membership</span>
+				</label>
+			</div>
+
+			
+
+			{# Buttons #}
+			<div class="form-row mb-6 pt-6 flex items-center">
+					 <input class="submit btn" type="submit" value="Update">
+					<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
+			</div>
+
+
+
+		</form>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}

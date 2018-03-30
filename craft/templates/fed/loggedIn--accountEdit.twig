@@ -18,28 +18,30 @@
 			
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="name" class="field-label block w-full">Name</label>
-				<input required name="name" type="text" class="input-field block w-full" placeholder="Your Name">
+				<label for="fullName" class="field-label block w-full">Name</label>
+				<input required name="fullName" id="fullName" type="text" class="input-field block w-full" placeholder="Your Name">
 			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="name" class="field-label block w-full">Email</label>
-				<input required type="email" class="input-field block w-full" placeholder="hello@mail.com">
+				<label for="email" class="field-label block w-full">Email</label>
+				<input required name="email" id="email" type="email" class="input-field block w-full" placeholder="hello@mail.com">
 			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="name" class="field-label block w-full">Username</label>
-				<input type="text" class="input-field block w-full" placeholder="lonegunmen">
+				<label for="username" class="field-label block w-full">Username</label>
+				<input type="text" name="username" id="username" class="input-field block w-full" placeholder="lonegunmen">
 			</div>
+
+			
 
 			{# Field / split #}
 			<div class="form-row mb-6 flex justify-center items-center">
 
 				<div class="w-1/2">
-					<label for="name" class="field-label block w-full">Password</label>
-					<input type="password" class="input-field block w-full">
+					<label for="password" class="field-label block w-full">Password</label>
+					<input type="password" name="password" id="password" class="input-field block w-full">
 				</div>
 
 				<div class="w-1/2">
@@ -51,8 +53,7 @@
 
 			{# Buttons #}
 			<div class="form-row mb-6 pt-6 flex items-center">
-					 <input class="submit btn" type="submit" value="Submit">
-					{# <a href="#" class="btn --text text-grey-dark ml-6">Update</a> #}
+					 <input class="submit btn" type="submit" value="Update">
 					<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
 			</div>
 
