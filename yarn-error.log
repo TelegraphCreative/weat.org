@@ -8497,7 +8497,7 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 1
+  Exit signal: SIGABRT
   Command: sh
   Arguments: -c NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js
   Directory: /Users/lbradford/Sites/Client_Work/WEAT/weat.com

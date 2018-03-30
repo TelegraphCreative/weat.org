@@ -1,0 +1,22 @@
+//
+// Forms
+//
+.input-field {
+	@apply .border .border-grey-light .p-3 .text-black .text-sm .rounded-sm;
+}
+
+.field-label {
+	@apply .text-grey-dark .text-xs .pb-1;
+}
+
+//
+// Errors
+//
+label.error {
+	@apply .text-sm .mt-1 .text-blue-light .block;
+}
+input.error {
+	@apply .border-blue-light;
+}
+
+
