@@ -9,43 +9,39 @@
     <h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Register</h2>
     <form method="post" accept-charset="UTF-8">
         {{ getCsrfInput() }}
-        <input type="hidden" name="action" value="users/saveUser">
-        <input type="hidden" name="redirect" value="members/join">
-
-        {% macro errorList(errors) %}
-            {% if errors %}
-                <ul class="errors">
-                    {% for error in errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endmacro %}
-
-        {% from _self import errorList %}
-
-        <label for="username">Username</label>
-        <input id="username" type="text" name="username"
-            {%- if account is defined %} value="{{ account.username }}"{% endif -%}>
-
-        {% if account is defined %}
-            {{ errorList(account.getErrors('username')) }}
+        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+        {{ forms.hidden({ name : 'redirect', value: 'members/join' }) }}
+        {% if allErrors is defined %}
+            {{ forms.errorBlock(allErrors) }}
         {% endif %}
 
-        <label for="email">Email</label>
-        <input id="email" type="text" name="email"
-            {%- if account is defined %} value="{{ account.email }}"{% endif %}>
+        <div id="payment-errors" class="alert alert-error"></div>
 
-        {% if account is defined %}
-            {{ errorList(account.getErrors('email')) }}
-        {% endif %}
 
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password">
+        {{ forms.textField({
+            label: 'Username',
+            name: 'username',
+            id: 'username',
+            placeholder: 'eg. jsmith',
+            value: (account is defined ? account.username ),
+            errors: (account is defined ? account.getErrors('username'))
+        }) }}
 
-        {% if account is defined %}
-            {{ errorList(account.getErrors('password')) }}
-        {% endif %}
+        {{ forms.textField({
+            label: 'Email',
+            name: 'email',
+            id: 'email',
+            placeholder: 'eg. jsmith@company.org',
+            value: (account is defined ? account.email ),
+            errors: (account is defined ? account.getErrors('email'))
+        }) }}
+
+        {{ forms.passwordField({
+            label: 'Password',
+            name: 'password',
+            id: 'password',
+            errors: (account is defined ? account.getErrors('password'))
+        }) }}
 
         <input type="submit" class="btn --full-w --lg" value="Register">
     </form>
