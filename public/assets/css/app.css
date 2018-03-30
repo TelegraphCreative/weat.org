@@ -961,6 +961,32 @@ textarea {
   top: 2px;
 }
 
+.input-field {
+  border-width: 1px;
+  border-color: #d0d6d9;
+  padding: .75rem;
+  color: #444b4f;
+  font-size: .9375rem;
+  border-radius: .125rem;
+}
+
+.field-label {
+  color: #86949c;
+  font-size: .875rem;
+  padding-bottom: .25rem;
+}
+
+label.error {
+  font-size: .9375rem;
+  margin-top: .25rem;
+  color: #5fc3e2;
+  display: block;
+}
+
+input.error {
+  border-color: #5fc3e2;
+}
+
 .icon {
   -webkit-box-align: center;
       -ms-flex-align: center;
