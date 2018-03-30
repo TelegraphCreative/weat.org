@@ -54,35 +54,42 @@
 
 	}
 
+	&.--outline-blue {
+		@apply .bg-transparent .border .border-blue-light .text-blue;
+
+		&:hover {
+			@apply .bg-green .text-white .border-green;
+		}
+
+	}
+
+	//
+	// Disabled
+	//
+	&.--disabled {
+		@apply .bg-grey-light .text-grey .pointer-events-none;
+	}
+
+	//
+	// Large
+	//
+	@screen lg {
+
+		// Large Buton (matches height of button that has md icon)
+		&.--lg {
+			padding-top: 1.25rem;
+			padding-bottom: 1.25rem;
+		}
+		
+	}
+
 	//
 	// Icon
 	//
-	.--sm.icon {
+	.icon {
 		position: relative;
 		top:2px;
 	}
-	// // Green
-	// &.--green {
-	// 	&:hover {}
-	// }
 
-	// // Blue Light
-	// &.--blue-light {
-	// 	&:hover {}
-	// }
 
-	// // Navy
-	// &.--blue-dark {
-	// 	&:hover {}
-	// }
-
-	// // Grey
-	// &.--grey {
-	// 	&:hover {}
-	// }
-
-	// // Grey LIght
-	// &.--grey-light {
-	// 	&:hover {}
-	// }
 }

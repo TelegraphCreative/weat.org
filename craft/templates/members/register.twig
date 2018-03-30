@@ -1,45 +1,55 @@
 {% extends "_layouts/standard" %}
 {% block content %}
-<form method="post" accept-charset="UTF-8">
-    {{ getCsrfInput() }}
-    <input type="hidden" name="action" value="users/saveUser">
-    <input type="hidden" name="redirect" value="charge/register">
 
-    {% macro errorList(errors) %}
-        {% if errors %}
-            <ul class="errors">
-                {% for error in errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
+
+<div class="m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-10">
+
+	{# Group #}
+	<section class="group mb-lg">
+    <h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Register</h2>
+    <form method="post" accept-charset="UTF-8">
+        {{ getCsrfInput() }}
+        <input type="hidden" name="action" value="users/saveUser">
+        <input type="hidden" name="redirect" value="members/join">
+
+        {% macro errorList(errors) %}
+            {% if errors %}
+                <ul class="errors">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endmacro %}
+
+        {% from _self import errorList %}
+
+        <label for="username">Username</label>
+        <input id="username" type="text" name="username"
+            {%- if account is defined %} value="{{ account.username }}"{% endif -%}>
+
+        {% if account is defined %}
+            {{ errorList(account.getErrors('username')) }}
         {% endif %}
-    {% endmacro %}
 
-    {% from _self import errorList %}
+        <label for="email">Email</label>
+        <input id="email" type="text" name="email"
+            {%- if account is defined %} value="{{ account.email }}"{% endif %}>
 
-    <h3><label for="username">Username</label></h3>
-    <input id="username" type="text" name="username"
-        {%- if account is defined %} value="{{ account.username }}"{% endif -%}>
+        {% if account is defined %}
+            {{ errorList(account.getErrors('email')) }}
+        {% endif %}
 
-    {% if account is defined %}
-        {{ errorList(account.getErrors('username')) }}
-    {% endif %}
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password">
 
-    <h3><label for="email">Email</label></h3>
-    <input id="email" type="text" name="email"
-        {%- if account is defined %} value="{{ account.email }}"{% endif %}>
+        {% if account is defined %}
+            {{ errorList(account.getErrors('password')) }}
+        {% endif %}
 
-    {% if account is defined %}
-        {{ errorList(account.getErrors('email')) }}
-    {% endif %}
+        <input type="submit" class="btn --full-w --lg" value="Register">
+    </form>
+  </div>
+</section>
 
-    <h3><label for="password">Password</label></h3>
-    <input id="password" type="password" name="password">
-
-    {% if account is defined %}
-        {{ errorList(account.getErrors('password')) }}
-    {% endif %}
-
-    <input type="submit" value="Register">
-</form>
 {% endblock %}

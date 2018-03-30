@@ -17,6 +17,10 @@
 		@apply .max-w-xs .ml-auto .mr-auto;
 	}
 
+	h1 {
+		@apply .text-blue-light .text-md .my-10 .text-lg;
+	}
+
 	h2 {
 		@apply .mt-12 .mb-10 .text-center .text-2md .text-blue;
 	}

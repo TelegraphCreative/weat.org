@@ -1,0 +1,21 @@
+//
+// Breadcrumbs
+//
+.site-breadcrumbs {
+
+	@screen sm {
+		a {
+			@apply .relative .inline-block;
+			
+			&:after {
+				@apply .absolute; 
+				content: '\203A';
+				right: 0;
+			}
+		}
+		li:last-child a::after {
+			content: none;
+		}
+	} 
+	
+}

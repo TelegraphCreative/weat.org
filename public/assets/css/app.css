@@ -774,6 +774,23 @@ textarea {
   left: 50%;
 }
 
+@media (min-width: 576px) {
+  .site-breadcrumbs a {
+    position: relative;
+    display: inline-block;
+  }
+
+  .site-breadcrumbs a:after {
+    position: absolute;
+    content: '\203A';
+    right: 0;
+  }
+
+  .site-breadcrumbs li:last-child a::after {
+    content: none;
+  }
+}
+
 .simple-container {
   padding-right: 1rem;
   padding-left: 1rem;
@@ -913,7 +930,33 @@ textarea {
   border-color: #22c79a;
 }
 
-.btn .\--sm.icon {
+.btn.\--outline-blue {
+  background-color: transparent;
+  border-width: 1px;
+  border-color: #5fc3e2;
+  color: #2466cc;
+}
+
+.btn.\--outline-blue:hover {
+  background-color: #22c79a;
+  color: #fff;
+  border-color: #22c79a;
+}
+
+.btn.\--disabled {
+  background-color: #d0d6d9;
+  color: #7f8fa4;
+  pointer-events: none;
+}
+
+@media (min-width: 992px) {
+  .btn.\--lg {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+}
+
+.btn .icon {
   position: relative;
   top: 2px;
 }
@@ -950,6 +993,14 @@ svg {
   max-width: 20rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.article h1 {
+  color: #5fc3e2;
+  font-size: 1.125rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
 }
 
 .article h2 {
