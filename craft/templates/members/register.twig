@@ -1,51 +1,77 @@
 {% extends "_layouts/standard" %}
+
 {% block content %}
 
+{# Container #}
+<div class="simple-container">
 
-<div class="m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-10">
-
-	{# Group #}
-	<section class="group mb-lg">
-    <h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Register</h2>
+	{# Form #}
+	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg choices-as-boxes">
+    {% set message = craft.session.getFlash('notice') %}
+    {{ message }}
     <form method="post" accept-charset="UTF-8">
-        {{ getCsrfInput() }}
-        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
-        {{ forms.hidden({ name : 'redirect', value: 'members/join' }) }}
-        {% if allErrors is defined %}
-            {{ forms.errorBlock(allErrors) }}
-        {% endif %}
+      {{ getCsrfInput() }}
+      {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+      {{ forms.hidden({ name : 'redirect', value: 'members/subscribe' }) }}
+      {% if allErrors is defined %}
+          {{ forms.errorBlock(allErrors) }}
+      {% endif %}
 
-        <div id="payment-errors" class="alert alert-error"></div>
+      <div id="payment-errors" class="alert alert-error"></div>
 
 
-        {{ forms.textField({
+
+
+      {# Field #}
+      <div class="form-row mb-6">
+        <label for="username" class="field-label block w-full">Username</label>
+        {{ forms.text({
             label: 'Username',
             name: 'username',
             id: 'username',
             placeholder: 'eg. jsmith',
             value: (account is defined ? account.username ),
-            errors: (account is defined ? account.getErrors('username'))
+            class: "input-field block w-full"
         }) }}
+        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('username')) } %}
+      </div>
 
-        {{ forms.textField({
+      {# Field #}
+      <div class="form-row mb-6">
+        <label for="email" class="field-label block w-full">Email</label>
+        {{ forms.text({
             label: 'Email',
             name: 'email',
             id: 'email',
             placeholder: 'eg. jsmith@company.org',
             value: (account is defined ? account.email ),
-            errors: (account is defined ? account.getErrors('email'))
+            class: "input-field block w-full"
         }) }}
+        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('email')) } %}
+      </div>
 
-        {{ forms.passwordField({
+      {# Field #}
+      <div class="form-row mb-6">
+        <label for="password" class="field-label block w-full">Password</label>
+
+        {{ forms.password({
             label: 'Password',
             name: 'password',
             id: 'password',
-            errors: (account is defined ? account.getErrors('password'))
+            class: "input-field block w-full"
         }) }}
+        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('password')) } %}
+      </div>
 
-        <input type="submit" class="btn --full-w --lg" value="Register">
-    </form>
-  </div>
-</section>
+			{# Buttons #}
+			<div class="form-row mb-6 pt-6 flex items-center">
+					 <input class="submit btn" type="submit" value="Register">
+			</div>
+
+		</form>
+
+	</section>
+
+</div>
 
 {% endblock %}

@@ -1,13 +1,11 @@
 {# Logged In Menu (fed) #}
 <nav class="logged-in-menu my-12 md:mt-18 md:mb-12">
 	<ul class="sm:flex sm:justify-center list-reset text-center">
-
-		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/account') }}" class="no-underline text-center text-grey-dark hover:text-blue text-base md:text-2md pb-1 md:pb-2">Account</a></li>
-		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/contact') }}" class="no-underline text-center text-grey-dark hover:text-blue text-base md:text-2md pb-1 md:pb-2">Contact</a></li>
-		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/membership') }}" class="no-underline text-center text-grey-dark hover:text-blue text-base md:text-2md pb-1 md:pb-2">Membership</a></li>
-
 		{# Active Classes: + text-blue border-blue border-b-2  - text-grey-dark #}
-		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/payment') }}" class="no-underline text-center text-blue border-blue border-b-2 hover:text-blue text-base md:text-2md pb-1 md:pb-2">Payment</a></li>
+		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/account') }}" class="no-underline text-center {% if craft.request.path == 'members/edit/account' %} text-blue border-blue border-b-2 {% else %} text-grey-dark {% endif %} hover:text-blue text-base md:text-2md pb-1 md:pb-2">Account</a></li>
+		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/contact') }}" class="no-underline text-center {% if craft.request.path == 'members/edit/contact' %} text-blue border-blue border-b-2 {% else %} text-grey-dark {% endif %} hover:text-blue text-base md:text-2md pb-1 md:pb-2">Contact</a></li>
+		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/membership') }}" class="no-underline text-center {% if craft.request.path == 'members/edit/membership' %} text-blue border-blue border-b-2 {% else %} text-grey-dark {% endif %} hover:text-blue text-base md:text-2md pb-1 md:pb-2">Membership</a></li>
+		<li class="inline-block px-2 md:px-6 mb-3"><a href="{{ url('members/edit/payment') }}" class="no-underline text-center {% if craft.request.path == 'members/edit/payment' %} text-blue border-blue border-b-2 {% else %} text-grey-dark {% endif %} hover:text-blue text-base md:text-2md pb-1 md:pb-2">Payment</a></li>
 
 	</ul>
 </nav>

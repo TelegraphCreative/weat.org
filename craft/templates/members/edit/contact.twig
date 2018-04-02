@@ -1,4 +1,5 @@
 {% extends "_layouts/standard" %}
+{% requireLogin %}
 
 {% block content %}
 
@@ -7,43 +8,49 @@
 
 {# Container #}
 <div class="simple-container">
-	
+
 	{# Logged In Menu #}
 	{% include '_components/fed/nav--logged-in' %}
 
 	{# Form #}
 	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg choices-as-boxes">
-		
-		<form action="#" class="py-4">
-			
+
+		<form method="post" accept-charset="UTF-8" class="py-4">
+        {{ getCsrfInput() }}
+        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+        {{ forms.hidden({ name : 'userId', value: currentUser.id }) }}
+        {% if allErrors is defined %}
+            {{ forms.errorBlock(allErrors) }}
+        {% endif %}
+
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="phone" class="field-label block w-full">Phone</label>
-				<input required name="phone" id="phone" type="number" class="input-field --phone-number block w-full" placeholder="Your Name">
+				<label for="fields[userPhoneNumber]" class="field-label block w-full">Phone</label>
+				<input required name="fields[userPhoneNumber]" id="fields-userPhoneNumber" type="number" class="input-field --phone-number block w-full" placeholder="Your Name" value="{{ currentUser.userPhoneNumber }}">
 			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="company" class="field-label block w-full">Company</label>
-				<input required name="company" id="company" type="password" class="input-field block w-full">
+				<label for="fields[userCompanyName]" class="field-label block w-full">Company</label>
+				<input name="fields[userCompanyName]" id="fields-userCompanyName" type="text" class="input-field block w-full" value="{{ currentUser.userCompanyName }}">
 			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="title" class="field-label block w-full">Title</label>
-				<input name="title" id="title" type="password" class="input-field block w-full">
+				<label for="fields[userTitle]" class="field-label block w-full">Title</label>
+				<input name="fields[userTitle]" id="fields-userTitle" type="text" class="input-field block w-full" value="{{ currentUser.userTitle }}">
 			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="streetAddress" class="field-label block w-full">Street Address</label>
-				<input required name="streetAddress" id="streetAddress" type="password" class="input-field block w-full">
+				<label for="fields[userAddressStreet]" class="field-label block w-full">Street Address</label>
+				<input required name="fields[userAddressStreet]" id="fields-userAddressStreet" type="text" class="input-field block w-full" value="{{ currentUser.userAddressStreet }}">
 			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="city" class="field-label block w-full">City</label>
-				<input required name="city" id="city" type="password" class="input-field block w-full">
+				<label for="fields[userAddressCity]" class="field-label block w-full">City</label>
+				<input required name="fields[userAddressCity]" id="fields-userAddressCity" type="text" class="input-field block w-full" value="{{ currentUser.userAddressCity }}">
 			</div>
 
 
@@ -69,7 +76,7 @@
 						<option value="Germany">Germany</option>
 						<option value="Japan">Japan</option>
 					</select>
-				</div>				
+				</div>
 			</div>
 
 			{# Buttons #}
