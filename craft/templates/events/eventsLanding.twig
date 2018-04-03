@@ -5,6 +5,34 @@
   {% includeJsFile '/assets/static/venti-js/grapnel.js' %}
   {% includeJsFile '/assets/static/venti-js/venti.min.js' %}
 
+
+  {# Get the url params for month & year #}
+  {% set currentMonth = "now"|date('n') %}
+  {% set currentYear = "now"|date('Y') %}
+  {# Set the current Year - Month #}
+  {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
+  {# Set previous and next months #}
+  {% set prevMonth = current|date_modify("last day of last month 23:59:00")|date('c') %}
+  {% set nextMonth = current|date_modify("first day of next month 00:00:00")|date('c') %}
+  {#  Get Events for month between prevMonth & nextMonth #}
+  {% set allEvents = craft.venti.events() %}
+  {% set allGroups = craft.venti.groups() %}
+  {% set events = allEvents.between(prevMonth,nextMonth|date_modify('last day of last month')|date('c')) %}
+  
+  {# Fetching Current Group Info #}
+  {% set currentMonth_numeric = "now"|date('n') %}
+  {% set currentYear_numeric = "now"|date('Y') %}
+  {% set activeGroupIds = [] %}
+
+  {% for group in allGroups %}
+      {% set activeEvents = allEvents.groupId(group.id).ids() %}
+      {% if activeEvents|length %}
+          {% set activeGroupIds = activeGroupIds|merge([group.id]) %}
+      {% endif %}
+  {% endfor %}
+
+
+
   {% set Title = 'Events' %}
   {% include '_components/headers' with {'type': 'page-header--standard'} %}
   
@@ -15,25 +43,78 @@
 
       {# Main #}
       <section class="main-content lg:w-2/3 md:px-4 ">
+        {# Header #}
+        <header class="pt-6 sm:py-8 sm:mt-12 sm:flex sm:justify-between sm:mb-0 mb-4">
+          <div class="title md:1/2 md:pr-4">
+            <h1 class="text-2md sm:text-lg md:text-xl">Featured Event</h1>
+          </div>
+        </header>
+        
+        
+
+
+
+        {# Header #}
+        <header class="pt-6 mb-4 sm:py-8 sm:mt-12 sm:flex sm:justify-between">
+          <div class="title md:1/2 mb-3 md:pr-4 sm:mb-0">
+            <h1 class="text-2md sm:text-lg md:text-xl">Upcoming Events</h1>
+          </div>
+          <div class="max-w-1xs w-full">
+            <select data-module="choicesAsLinks" name="" id="">
+              {% for group in allGroups %}
+                {% for id in activeGroupIds %}
+                  {% if group.id == id %}
+                    <option value="{{craft.request.getUrl()}}#cal/{{currentYear_numeric}}/{{currentMonth_numeric}}/{{group.id}}">{{ group.name}}</option>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+
+              <option value="{{craft.request.getUrl()}}#cal/{{currentYear_numeric}}/{{currentMonth_numeric}}/{% for item in activeGroupIds %}{{item}}{% if not loop.last %},{% endif %}{% endfor %}">Show All</option>
+              
+            </select>
+
+          </div>
+        </header>
+<div id="events-list" class="tabs_content" >
+        {# {% include 'events/components/_timeline--og' with { events:events, month:currentMonth, year:currentYear } only %} #}
+        {% include 'events/components/_timeline' with { events:events, month:currentMonth, year:currentYear } only %}
+</div>
+
       </section>
+
 
       {# Aside #}
       <aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-lg md:px-4 clearfix ">
-        <div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right border-b border-grey-lightest pb-6">
-          {# Get the url params for month & year #}
-          {% set currentMonth = "now"|date('n') %}
-          {% set currentYear = "now"|date('Y') %}
-          {# Set the current Year - Month #}
-          {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
-          {# Set previous and next months #}
-          {% set prevMonth = current|date_modify("last day of last month 23:59:00")|date('c') %}
-          {% set nextMonth = current|date_modify("first day of next month 00:00:00")|date('c') %}
-          {#  Get Events for month between prevMonth & nextMonth #}
-          {% set events = craft.venti.events().between(prevMonth,nextMonth|date_modify('last day of last month')|date('c')) %}
-          <div id="events-calendar" class="tabs_content" style="display:block;" >
-            {% include 'events/components/_eventsNav' with { prev:prevMonth, next:nextMonth, current:current, ids:[] } only %}
-            {% include 'events/components/_calendar' with { events:events, month:currentMonth, year:currentYear } only %}
+        <div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
+          <div class="border-b border-grey-lightest pb-6">
+
+            <div id="events-calendar" class="tabs_content" style="display:block;" >
+              {% include 'events/components/_eventsNav' with { prev:prevMonth, next:nextMonth, current:current, ids:[] } only %}
+              {% include 'events/components/_calendar' with { events:events, month:currentMonth, year:currentYear } only %}
+            </div>
+
+            {# Calender Legend #}
+            <div class="calendar-legend pt-6">
+              <ul class="list-reset flex flex-wrap">
+
+                {% for group in allGroups %}
+                  {% for id in activeGroupIds %}
+                    {% if group.id == id %}
+                      <li class="w-1/2 flex items-center mb-3">
+                          <span class="h-2 w-2 inline-block rounded-full" style="background: {{ group.color }};"></span>
+                          <span  class="text-xs ml-2 inline-block" style="color: {{ group.color }};">{{ group.name}}</span>                  
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+
+              </ul>
+            </div>
+
+
           </div>
+
+
         </div>
       </aside>
 
@@ -42,6 +123,9 @@
   </div>
 
 
+
+
+  
 
   {#
   Stuff to hide for now —

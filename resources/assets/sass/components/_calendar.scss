@@ -24,7 +24,7 @@
 		@apply .cursor-pointer .tr-all .no-underline .relative;
 
 		&:hover {
-			background: #22C79A !important;
+			transform: scale(1.05);
 		}
 	}
 }
