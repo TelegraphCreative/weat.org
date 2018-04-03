@@ -18,7 +18,8 @@
 
 		{% if events.total() > 0 %}
 
-
+            {% for day, dayEvents in events|group('startDate|date("M d Y")')  %}
+                
 			  {# Feature Event Article #}
 			  {% include 'events/components/_timeline-item--all' %}  
 				
