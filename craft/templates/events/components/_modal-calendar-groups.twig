@@ -25,6 +25,14 @@
                         <input type="checkbox" id="cal-{{ group.id }}" name="cal[]" value="{{ group.id }}">
                         <label for="cal-{{ group.id }}"><span>{{ group.name}}</span></label>
                     </li>
+                    {# broke-ass plugin: 
+
+                        {% set currentMonth_numeric = "now"|date('m') %}
+                    {% set currentYear_numeric = "now"|date('y') %}
+                    <a href="{{craft.request.getUrl()}}#cal/{{currentMonth_numeric}}/{{currentYear_numeric}}/{{group.id}}" style="color:{{ group.color }}" href=""><span>{{ group.name}}</span></a>
+                    <hr>
+
+                    #}
                 {% endfor %}
             </ul>
         </div>
