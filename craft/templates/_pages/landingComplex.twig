@@ -20,11 +20,11 @@
 				
 				{# Standard Slider #}
 				{% case "standardSlider" %}
-					{% include '_components/slider--standard' %}
+					{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 sm:mb-10'} %}
 
 				{# Article #}
 				{% case "article" %}
-					{% include '_components/article' %}
+					{% include '_components/article' with {classes: 'm-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10'} %}
 
 				{# Resources List #}
 				{% case "resourcesList" %}

@@ -5,7 +5,7 @@
 //  Add this attribute to the element that needs a tooltip
 [data-tooltip] {
   position: relative;
-  z-index: 2;
+  z-index: 0;
   cursor: pointer;
 }
 
@@ -24,6 +24,7 @@
   position: absolute;
   top: 140%;
   left: 50%;
+  z-index: 100;
   margin-bottom: 5px;
   margin-left: -100px;
   width: 200px;

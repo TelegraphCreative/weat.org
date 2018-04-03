@@ -1160,6 +1160,11 @@ svg {
   max-width: 12.5rem;
 }
 
+.article.\--btns-left .btn {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 @media (min-width: 576px) {
   .article h2,
   .article h3 {
@@ -1279,7 +1284,7 @@ svg {
 
 [data-tooltip] {
   position: relative;
-  z-index: 2;
+  z-index: 0;
   cursor: pointer;
 }
 
@@ -1296,6 +1301,7 @@ svg {
   position: absolute;
   top: 140%;
   left: 50%;
+  z-index: 100;
   margin-bottom: 5px;
   margin-left: -100px;
   width: 200px;
