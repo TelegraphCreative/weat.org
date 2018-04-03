@@ -31,7 +31,7 @@
 	{% include '_components/form-updates' %}
 	{% include '_components/site-footer' %}
 	{% include '_components/doc-end-assets' %}
-
+	
 	{# <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> #}
 	{% includeJsFile '/assets/static/vendor-js/jquery.3.3.1.min.js' first %}
 	{% includeJsResource('charge/js/jquery.charge.js') %}
@@ -39,8 +39,18 @@
 	{% includejs %}
 	    $(this).charge();
 	{% endincludejs %}
-
-</html>
+	
+	<!--   SmoothScroll   -->
+	<script src="/assets/static/smooth-scroll/smooth-scroll.min.js"></script>
+	<script>
+	var scroll = new SmoothScroll('a[href*="#"]', {
+		speed: 750,
+		offset: 64,
+		easing: 'easeInOutCubic',
+	});
+	</script>
+	<!-- End SmoothScroll -->
+	
 </body>
 </html>
 {# Note:
