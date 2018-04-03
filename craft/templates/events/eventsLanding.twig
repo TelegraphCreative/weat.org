@@ -167,6 +167,6 @@
     </div>
   </div>
   {# {% includeCssFile '/assets/static/venti-css/venti.css' %} #}
-  {# {% includeJsFile 'https://cdn.polyfill.io/v2/polyfill.js?features=default,es6,fetch&flags=gated' %} #}
-  {# {% includeJsFile '/assets/static/venti-js/remodal.js' %} #}
+  {% includeJsFile 'https://cdn.polyfill.io/v2/polyfill.js?features=default,es6,fetch&flags=gated' %}
+  {% includeJsFile '/assets/static/venti-js/remodal.js' %}
 {% endblock %}
