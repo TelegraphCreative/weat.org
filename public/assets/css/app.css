@@ -827,6 +827,13 @@ textarea {
   top: 2px;
 }
 
+@media (min-width: 992px) {
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
 .img {
   display: block;
   position: relative;

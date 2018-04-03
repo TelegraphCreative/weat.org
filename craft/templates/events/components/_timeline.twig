@@ -1,9 +1,35 @@
 <div class="timeline" data-month="{{ month }}" data-year="{{ year }}">
-    {# Group events by day of the month using the event's startDate as a guide #}
-    {% for day, dayEvents in events|group('startDate|date("M d Y")')  %}
 
-    {# Feature Event Article #}
-    {% include 'events/components/_timeline-item--all' %}        
+    {% if events.total() > 0 %}
+        
+          {# Group events by day of the month using the event's startDate as a guide #}
+          {% for day, dayEvents in events|group('startDate|date("M d Y")')  %}
 
-    {% endfor %}
+              {# Feature Event Article #}
+              {% include 'events/components/_timeline-item--all' %}  
+                
+            {% endfor %}
+      
+      {% else %}
+
+        {# None #}
+        <p class="text-sm text-grey mb-8 md:mb-12">No Events for 
+            {% if month == 1 %} January
+            {% elseif month == 2 %} February
+            {% elseif month == 3 %} March
+            {% elseif month == 4 %} April
+            {% elseif month == 5 %} May
+            {% elseif month == 6 %} June
+            {% elseif month == 7 %} July
+            {% elseif month == 8 %} August
+            {% elseif month == 9 %} September
+            {% elseif month == 10 %} October
+            {% elseif month == 11 %} November
+            {% elseif month == 12 %} December
+            {% endif %}
+        </p>
+
+    {% endif %}
+
+
 </div>
