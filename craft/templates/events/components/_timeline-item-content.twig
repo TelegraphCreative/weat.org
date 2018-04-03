@@ -1,0 +1,71 @@
+{# Timeline Event Content/Detail #}
+<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{ event.url }}">
+    <h4 class="text-2md sm:text-lg mb-8 md:mb-12">{{ event.title }}</h4>
+</a>
+
+<div class="featured-event__info   block text-grey-dark">
+    {# Info #}
+    {% if event.location|length %}
+	    <div class="flex sm:mb-2">
+	        <span class="icon --map --sm mr-3 top-2 relative tr-all">
+	            <svg><use xlink:href="/assets/svg/symbols.svg#map"></use></svg>
+	        </span>
+	        <a class="text-xs mb-3 block no-underline text-grey-dark hover:text-blue" target="_blank" href="{{event.location[0].getMapUrl()}}">{{event.location[0]}}</a>
+	    </div>
+    {% endif %}
+    
+    {# Info #}
+    <div class="flex sm:mb-2">
+        <span class="icon --map --sm mr-3 top-2 relative tr-all">
+            <svg><use xlink:href="/assets/svg/symbols.svg#calendar"></use></svg>
+        </span>
+        
+        <div class="text-xs mb-3 block leading-normal">
+            {% if event.eventDays|length %}
+            <p>{{event.eventDays}}
+            {% else %}
+            <p>{{ event.startDate|date('M') }} {{ event.startDate|date('d') }}, 
+            {% endif %}
+            {{ event.startDate|date('Y') }}</p>
+            
+            {% if event.allDay %}
+                All Day
+            {% else %}
+                <p>{{ event.startDate|date("g:i a") }} - {{ event.endDate|date("g:i a") }}</p>
+            {% endif %}
+
+
+
+        </div> 
+    </div>
+
+</div>
+
+<div class="text-right"> 
+    {# Registered Event #}
+    {% if event.registeredEvent > 0 %}
+        
+        {# For Members #}
+        {% if event.membersOnly > 0 %}
+            {% if currentUser and currentUser.isInGroup('subscriber') %}
+              <a href="{{ url('payments/checkout/event') }}/{{event.id}}" class="btn --auto-w text-xs">Register</a>
+            {% else %}
+              <a href="{{ url('members/login') }}" class="btn --auto-w text-xs">Join Now</a>
+            {% endif %}
+        
+        {% else %}
+        {# For everyone #}
+        
+        <a href="{{ url('payments/checkout/event') }}/{{event.id}}" target="_blank" class="btn --auto-w text-xs">Register</a>
+
+        {% endif %}
+        
+
+    {% else %}
+
+        {# Type #}
+        <span style="color:{{ event.getColor() }}" class="text-xs">
+            {{event.groupType }}
+        </span>
+    {% endif %}
+</div>

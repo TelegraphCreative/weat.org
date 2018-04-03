@@ -40,3 +40,15 @@
 .top-2 {
 	top: 2px;
 }
+
+
+
+
+//
+// Sticky
+//
+@screen lg {
+	.sticky {
+		position: sticky;
+	}
+}

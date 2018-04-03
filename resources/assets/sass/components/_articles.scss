@@ -76,6 +76,12 @@
 		@apply .mr-auto .ml-auto .block .max-w-1xs;
 	}
 
+	&.--btns-left {
+		.btn {
+			@apply .mr-0 .ml-0; 
+		}
+	}
+
 
 	
 	//

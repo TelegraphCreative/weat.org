@@ -11,38 +11,42 @@
 {#  Get Events for month between prevMonth & nextMonth #}
 {% set events = craft.venti.events().groupId(groupIds).between(prevMonth,nextMonth) %}
 
-{% include 'events/components/_eventsNav' with { prev:prevMonth, next:nextMonth, current:current, ids:groupIds } only %}
+{# {% include 'events/components/_eventsNav' with { prev:prevMonth, next:nextMonth, current:current, ids:groupIds } only %} #}
 
 {% cache  %}
-<ol class="timeline" data-month="{{ month }}" data-year="{{ year }}">
-    {# Group events by day of the month using the event's startDate as a guide #}
-    {% for day, dayEvents in events|group('startDate|date("M d Y")')  %}
+<div class="timeline" data-month="{{ month }}" data-year="{{ year }}">
 
-        <li class="timeline_stop">
-            <span class="label label-big">{{ day|date('M') }} {{ day|date('d') }}</span>
+		{% if events.total() > 0 %}
 
-            <div class="timeline_items">
-                {% for event in dayEvents %}
 
-                    <a href="{{ event.url }}" class="timeline_item" style="color:{{ event.getColor() }}">
-                        {# {% if event.eventImage is defined and event.eventImage|length %}
-                            <div class="timeline_banner" style="background-image: url({{ event.eventImage.getUrl() }});"></div>
-                        {% endif %} #}
+			  {# Feature Event Article #}
+			  {% include 'events/components/_timeline-item--all' %}  
+				
+			{% endfor %}
+	  
+	  {% else %}
 
-                    <div class="timeline_content">
-                        <h2>{{ event.title }}</h2>
-                        {% if event.allDay %}
-                            All Day
-                        {% else %}
-                            <p>{{ event.startDate|date("g:i a") }} - {{ event.endDate|date("g:i a") }}</p>
-                        {% endif %}
-                    </div>
-                  </a>
+	  	{# None #}
+	    {# None #}
+        <p class="text-sm text-grey mb-8 md:mb-12">No Events for 
+            {% if month == 1 %} January
+            {% elseif month == 2 %} February
+            {% elseif month == 3 %} March
+            {% elseif month == 4 %} April
+            {% elseif month == 5 %} May
+            {% elseif month == 6 %} June
+            {% elseif month == 7 %} July
+            {% elseif month == 8 %} August
+            {% elseif month == 9 %} September
+            {% elseif month == 10 %} October
+            {% elseif month == 11 %} November
+            {% elseif month == 12 %} December
+            {% endif %}
+        </p>
+		  	
 
-              {% endfor %}
-            </div>
-        </li>
+    {% endif %}
+    
+</div>
 
-    {% endfor %}
-</ol>
 {% endcache %}
