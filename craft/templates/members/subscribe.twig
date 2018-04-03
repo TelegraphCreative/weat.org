@@ -7,52 +7,58 @@
 	{# Group #}
 	<section class="group mb-lg">
     <h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Subscribe</h2>
-    <form class="form-horizontal"
-          id="charge-form"
-          method="post"
-          action=""
-          accept-charset="UTF-8"
-          data-publicKey="{{ craft.charge.getPublicKey }}">
-        {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
-        {#{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }#}
-        {{ forms.hidden({ name : 'redirect', value: 'payments/thanks' }) }}
+    <form method="post" accept-charset="UTF-8">
         {{ getCsrfInput() }}
-
-        {% set options = {
-            'planAmount' : 5.99,
-            'planInterval' : 'month',
-            'planIntervalCount' : '1',
-            'actions' : {
-                'onSuccess': {
-                    'subscription' : 'weat'
-                },
-            }}
-        %}
-
-        {{ craft.charge.setPaymentOptions(options) }}
-
+        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+        {{ forms.hidden({ name : 'redirect', value: 'members/subscribe-step-2' }) }}
+        {{ forms.hidden({ name : 'userId', value: currentUser.id }) }}
         {% if allErrors is defined %}
             {{ forms.errorBlock(allErrors) }}
         {% endif %}
 
         <div id="payment-errors" class="alert alert-error"></div>
 
-
         <h4>Customer Details</h4>
-        {#% include '_components/charge-customer-details' with { 'registerGuest' : true }%#}
 
-        {% include '_components/charge--customer-details' %}
-
-        <h4>Plan Details</h4>
-        {{ stripe.amountField({
-            label: 'Amount',
-            value: options.planAmount,
-            readonly: true
+        {{ forms.textField({
+            label: 'First Name',
+            name: 'firstName',
+            id: 'firstName',
+            placeholder: '',
+            value: (currentUser is defined ? currentUser.firstName),
+            errors: (currentUser is defined ? currentUser.getErrors('firstName'))
         }) }}
 
-        <h4>Card Details</h4>
-        {% include '_components/charge--card-details' %}
-        {% include '_components/charge--payment-button' %}
+        {{ forms.textField({
+            label: 'Last Name',
+            name: 'lastName',
+            id: 'lastName',
+            placeholder: '',
+            value: (currentUser is defined ? currentUser.lastName),
+            errors: (currentUser is defined ? currentUser.getErrors('lastName'))
+        }) }}
+
+        {{ forms.textField({
+            label: 'Email',
+            name: 'email',
+            id: 'email',
+            placeholder: 'eg. jsmith@company.org',
+            value: (currentUser is defined ? currentUser.email),
+            errors: (currentUser is defined ? currentUser.getErrors('email'))
+        }) }}
+
+
+        {{ forms.textField({
+            label: 'Phone',
+            name: 'fields[userPhoneNumber]',
+            id: 'fields-userPhoneNumber',
+            placeholder: 'eg. 210-444-1234',
+            value: (currentUser is defined ? currentUser.userPhoneNumber ),
+            errors: (currentUser is defined ? currentUser.getErrors('userPhoneNumber'))
+        }) }}
+
+        <input type="submit" class="btn --full-w --lg" value="Continue">
+
 
     </form>
   </section>
