@@ -2,6 +2,9 @@
 {% block content %}
 <section class="landing mb-lg">
   <div class="article    m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
+    {% if craft.session.returnUrl|lower|indexOf('members/subscribe') > -1 %}
+    Thanks for wanting to join WEAT. To begin visit either login below or setup a new account.
+    {% endif %}
     <form method="post" accept-charset="UTF-8">
       {{ getCsrfInput() }}
       <input type="hidden" name="action" value="users/login">
@@ -25,6 +28,7 @@
       {% endif %}
     </form>
 
+    <p><a href="{{ url('members/register') }}">Create an account</a></p>
     <p><a href="{{ url('forgotpassword') }}">Forget your password?</a></p>
   </div>
 </section>

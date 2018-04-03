@@ -1,0 +1,96 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{% include '_components/fed/nav--breadcrumbs'  %}
+
+{# Container #}
+<div class="simple-container">
+
+	{# Logged In Menu #}
+	{% include '_components/fed/nav--logged-in' %}
+
+	{% set message = craft.session.getFlash('notice') %}
+	{{ message }}
+
+	{# Form #}
+	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+
+		<form method="post" accept-charset="UTF-8" class="py-4">
+        {{ getCsrfInput() }}
+        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+        {{ forms.hidden({ name : 'userId', value: currentUser.id }) }}
+        {% if allErrors is defined %}
+            {{ forms.errorBlock(allErrors) }}
+        {% endif %}
+
+        <div id="payment-errors" class="alert alert-error"></div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="firstName" class="field-label block w-full">First Name</label>
+				<input required name="firstName" id="firstName" type="text" class="input-field block w-full" placeholder="Your First Name" value="{{ currentUser.firstName }}">
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="lastName" class="field-label block w-full">Last Name</label>
+				<input required name="lastName" id="lastName" type="text" class="input-field block w-full" placeholder="Your Last Name" value="{{ currentUser.lastName }}">
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="email" class="field-label block w-full">Email</label>
+				<input required name="email" id="email" type="email" class="input-field block w-full" placeholder="hello@mail.com" value="{{ currentUser.email }}">
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="username" class="field-label block w-full">Username</label>
+				<input type="text" name="username" id="username" class="input-field block w-full" placeholder="lonegunmen" value="{{ currentUser.username }}">
+			</div>
+
+
+
+			{# Field / split #}
+			<div class="form-row mb-6 flex justify-center items-center">
+
+				<div class="w-1/2">
+					<label for="password" class="field-label block w-full">Password</label>
+					<input type="password" name="password" id="password" class="input-field block w-full">
+				</div>
+
+				<div class="w-1/2">
+					<a href="#" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
+				</div>
+			</div>
+
+
+
+			{# Buttons #}
+			<div class="form-row mb-6 pt-6 flex items-center">
+					 <input class="submit btn" type="submit" value="Update">
+					<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
+			</div>
+
+
+
+		</form>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}

@@ -1,6 +1,11 @@
 {% extends "_layouts/standard" %}
 
 {% block content %}
-    <h2>Thanks</h2>
+  {% set charge = craft.charge.getChargeByHash( craft.request.getSegment(3) ) %}
+
+  {% if charge %}
+     Thank you for your payment of {{ charge.amountFormatted }}
+  {% endif %}
+  <h2>Thanks</h2>
 
 {% endblock %}
