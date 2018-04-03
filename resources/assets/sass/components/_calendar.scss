@@ -21,6 +21,8 @@
 		height: 30px;
 		width: 30px;
 		line-height: 30px;
+		margin-right: auto;
+		margin-left: auto;
 		@apply .cursor-pointer .tr-all .no-underline .relative;
 
 		&:hover {

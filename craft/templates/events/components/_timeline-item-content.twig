@@ -21,12 +21,20 @@
         </span>
         
         <div class="text-xs mb-3 block leading-normal">
-            <p>{{ event.startDate|date('M') }} {{ event.startDate|date('d') }}, {{ event.startDate|date('Y') }}</p>
+            {% if event.eventDays|length %}
+            <p>{{event.eventDays}}
+            {% else %}
+            <p>{{ event.startDate|date('M') }} {{ event.startDate|date('d') }}, 
+            {% endif %}
+            {{ event.startDate|date('Y') }}</p>
+            
             {% if event.allDay %}
                 All Day
             {% else %}
                 <p>{{ event.startDate|date("g:i a") }} - {{ event.endDate|date("g:i a") }}</p>
             {% endif %}
+
+
 
         </div> 
     </div>

@@ -1350,6 +1350,8 @@ svg {
   height: 30px;
   width: 30px;
   line-height: 30px;
+  margin-right: auto;
+  margin-left: auto;
   cursor: pointer;
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;

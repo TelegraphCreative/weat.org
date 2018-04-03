@@ -81,7 +81,13 @@
           <h6 class="text-black text-xs mb-2">Date &amp; Time:</h6>
 
           <time  class="leading-normal mb-6 block">
-            {{ event.startDate|date('l') }} {{ event.startDate|date('F') }} {{ event.startDate|date('d') }}, {{ event.startDate|date('Y') }}
+            {% if event.eventDays|length %}
+                {{event.eventDays}}
+            {% else %}
+                {{ event.startDate|date('l') }} {{ event.startDate|date('F') }} {{ event.startDate|date('d') }}
+            {% endif %}
+
+            , {{ event.startDate|date('Y') }}
             <br>
             {% if event.allDay %}
                 All Day
