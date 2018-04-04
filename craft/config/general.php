@@ -10,6 +10,7 @@ return array(
 		'loginPath' => 'login',
 		'loginPath' => 'members/login',
 		'logoutPath' => 'members/logout',
+		'setPasswordPath' => 'members/setpassword',
 		'autoLoginAfterAccountActivation' => true,
 		'siteUrl' => null,
 
