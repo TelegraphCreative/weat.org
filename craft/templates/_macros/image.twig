@@ -1,6 +1,6 @@
 {# Single, Simple #}
 {% macro single_simple(image, class) %}
-	<img src="{{ image.url }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}" height="{{ image.height }}" width="{{ image.width }}">
+	<img data-src="{{ image.url }}" src="{{image.getUrl('lazyload')}}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }} lazyload" height="{{ image.height }}" width="{{ image.width }}">
 {% endmacro %}
 
 

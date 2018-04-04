@@ -1053,6 +1053,13 @@ input.error {
   height: 1.5rem;
 }
 
+@media (min-width: 576px) {
+  .icon.sm\:--md {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
 svg {
   width: 100%;
   height: 100%;

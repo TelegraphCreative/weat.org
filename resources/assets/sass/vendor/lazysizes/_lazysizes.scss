@@ -1,0 +1,13 @@
+
+
+img[data-src] {
+	// transition: opacity $tr1;
+	// opacity: .8;
+	transition: filter $tr1;
+	filter: blur(2px);
+
+	&.lazyloaded {
+		filter: blur(0);
+		// opacity: 1;
+	}
+}
