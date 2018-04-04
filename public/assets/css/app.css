@@ -1087,6 +1087,14 @@ svg {
   height: 100%;
 }
 
+.aside__category-tags li a::after {
+  content: ',';
+}
+
+.aside__category-tags li:last-of-type a::after {
+  content: none;
+}
+
 .article h2,
 .article h3 {
   max-width: 20rem;

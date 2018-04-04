@@ -1,0 +1,102 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{% include '_components/fed/nav--breadcrumbs' %}
+
+{# Container #}
+<div class="simple-container">
+
+	<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
+
+		{# Main #}
+		<section class="main-content lg:w-2/3 md:px-4">
+
+			{# Header #}
+			<header class="article-detail__header   mb-16 mt-12">				
+				<a class="no-underline hover:text-green" href="#">
+					<h4 class="text-2md sm:text-xl">Article Title Here Is Important</h4>
+				</a>
+			</header>
+
+			{# Article #}
+      		<article class="article-detail__article article mb-16">
+      			<h1>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature.</h1>
+
+				<p>From 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+
+				<h4>Agenda:</h4>
+
+				<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+
+				<blockquote>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature.</blockquote>
+
+				<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+
+				<ul>
+					<li>Interior Heading</li>
+					<li>Lead-In Statement</li>
+					<li>1 col Article with Embed </li>
+					<li>2 col Callout (Text &amp; Image) </li>
+					<li>2 col Featured Article Card  </li>
+					<li>Blockquote</li>
+					<li>Image Gallery/Slider</li>
+				</ul>
+
+			</article>
+
+			<figure class="img is16by9 bg-grey-lightest  md:mb-4">
+        		<img src="/assets/img/placeholder_02.jpg" class="absolute pin-t pin-l">
+      		</figure>
+      
+	  		{# Keep Exploring #}
+	  		<h2 class="leading-normal mb-4 mt-16 text-blue text-lg">Keep Exploring</h2>
+			<p class="leading-normal mb-6 text-grey-dark text-md">To learn more about this topic, visit our parent organization’s website.</p>
+			<a class="btn   mb-16" href="">Visit WEF</a>
+			
+			{# Citations #}
+			<div class="border-t border-grey-lightest leading-tight pt-4 text-grey-dark text-xs">
+				<h5 class="leading-loose mb-1 text-xs">Citations</h5>
+				<p class="">Author(s). "Title of Article." Title of Periodical, Day Month Year, pages. Poniewozik, James. "TV Makes a Too-Close Call." Time, 20 Nov. 2000, pp. 70-71. Buchman, Dana. "A Special Education." Good Housekeeping, Mar. 2006, pp. 143-48.</p>
+			</div>
+					
+		</section>
+
+		
+		{# Aside : Article Info #}
+		<aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-xl md:px-4 lg:pt-6 clearfix ">
+			
+			{# Info #}
+			<div class="aside__info   border-t border-grey-lightest max-w-sm lg:max-w-xs w-full m-auto lg:float-right pt-6 text-xs text-grey-dark">
+				
+				<div class="img --1by1   mb-4 w-16">
+					<img src="/assets/img/profile_01.jpg" class="rounded-full">
+				</div>
+					
+				<h6 class="text-md mb-4">Jessica Fisher</h6>
+
+				<time  class="leading-normal block">
+					March 14, 2018
+				</time>
+
+				{# Article Categories #}
+				<ul class="aside__category-tags   leading-normal list-reset mb-6 inline-block">
+					<li class="inline">
+						<a class="no-underline text-blue-light hover:text-blue" href="">Category</a>
+					</li>
+					<li class="inline">
+						<a class="no-underline text-blue-light hover:text-blue" href="">Another Category</a>
+					</li>
+				</ul>
+
+			</div>
+
+		</aside>
+
+	</div>
+
+</div>
+
+
+{% endblock %}
