@@ -2,7 +2,10 @@
 // Icons
 //
 .icon {
+
+
 	@apply .items-center .inline-flex .justify-center;
+
 
 	// Small
 	&.--sm {
@@ -12,6 +15,20 @@
 	&.--md {
 		@apply .w-6 .h-6;
 	}
+
+	
+
+	//
+	// Sizes
+	//
+		
+	@screen sm {
+		&.sm\:--md {
+			@apply .w-6 .h-6;
+		}
+	}
+
+
 }
 
 svg {
