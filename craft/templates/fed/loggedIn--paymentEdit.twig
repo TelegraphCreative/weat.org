@@ -19,13 +19,13 @@
 			{# Field #}
 			<div class="form-row mb-6">
 				<label for="cardName" class="field-label block w-full">Name on Card</label>
-				<input required name="cardName" id="cardName" type="text" class="input-field block w-full" placeholder="Your Name">
+				<input required name="cardName" id="cardName" type="text" autocomplete="cc-name" class="input-field block w-full" placeholder="Your Name">
 			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
 				<label for="cardNum" class="field-label block w-full">Card #</label>
-				<input required name="cardNum" id="cardNum" type="password" class="input-field block w-full">
+				<input required name="cardNum" id="cardNum" autocomplete="cc-number" class="input-field block w-full" data-module="fieldFormats">
 			</div>
 
 
@@ -34,12 +34,12 @@
 
 				<div class="w-1/3 px-4">
 					<label for="ccv" class="field-label block w-full">CCV</label>
-					<input required name="ccv" id="ccv" type="password" class="input-field block w-full">
+					<input required name="ccv" id="ccv" autocomplete="cc-csc" class="input-field block w-full">
 				</div>
 
 				<div class="w-1/3 px-4">
 					<label for="expMo" class="field-label block w-full">Expiration Month</label>
-					<select name="expMo" id="expMo" data-module="choices">
+					<select name="expMo" id="expMo" data-module="choices" autocomplete="cc-exp">
 						<option value="01">01</option>
 						<option value="02">02</option>
 						<option value="03">03</option>
@@ -92,7 +92,19 @@
 
 {# Form Validation #}
 {% set formJs %}
-	$("form").validate();
+	// Checkout Validation:
+	$("form").validate({
+		rules: {
+			cardNum: {
+				creditcard: true,
+				required: true
+			},
+			ccv: {
+				digits: true,
+				required: true
+			}
+		}
+	});
 {% endset %}
 
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
