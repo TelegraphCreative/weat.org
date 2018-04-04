@@ -153,7 +153,8 @@ module.exports = {
 
   fonts: {
     'sans': [
-      'Mark-Book',
+      // 'Mark-Book',
+      'FFMark',
       'system-ui',
       'BlinkMacSystemFont',
       '-apple-system',
