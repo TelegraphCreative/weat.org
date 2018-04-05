@@ -16,6 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh; 
+  overflow-x: hidden;
 }
 .js-app-wrap {
   flex: 1 0 auto; 

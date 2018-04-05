@@ -1,5 +1,48 @@
 {% extends "_layouts/standard" %}
 
+
+
 {% block content %}
-	homepage
+
+	{# Hero #}
+	{% include '_components/headers' with {
+		type: 'page-header--hero',
+		Title: entry.pageTitle,
+		Image: entry.singleImage[0],
+		Button: entry.button,
+		} 
+	%}
+
+
+	{# Events … == #}
+	
+
+	{# CTA Hero #}
+	{% set Spacing = false %}
+	{% set Header = entry.header %}
+	{% set Text = entry.textBarebones %}
+	{% set Button = entry.button2 %}
+		{% include '_components/hero--cta' %}
+
+	{# About #}
+	{% set Header = entry.sectionTitle %}
+	{% set Text = entry.textBarebones2 %}
+		{% include '_components/headers' with {type: 'section-header--hero', class: ' md:mt-20 mt-10 mb-12'} %}
+	
+	{% set Content = entry.listFeature %}
+		{% include '_components/list--features' %}
+
+
+	{# Story #}
+	{% include '_components/hero--feature--quote' with { 
+			class: 'mb-lg', 
+			Tagline: entry.tagline, 
+			Quote: entry.caption, 
+			Cite: entry.subheading, 
+			Image: entry.singleImage2[0] 
+		} 
+	%}
+	
+
+	
 {% endblock %}

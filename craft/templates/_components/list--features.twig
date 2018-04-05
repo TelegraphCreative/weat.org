@@ -1,27 +1,32 @@
 {# Feature List #}
 
 <div class="features-list   m-auto container flex flex-wrap flex-justify px-4 pt-12 mb-18 md:mb-xl md:pt-12 sm:pb-8"> 
-	{% for block in block.children %}
+	{% for block in Content %}
+
+		{% set Image = block.singleImage %}
+		{% set Header = block.header %}
+		{% set Text = block.body %}
+		{% set Button = block.button %}
 
 		<div class="feature__group   w-full block text-center max-w-xs m-auto mb-10 md:w-1/3 md:w-1/3 md:mb-0 sm:px-2">
 			
-			{% if block.singleImage|length %}
+			{% if Image|length %}
 			
-				<div class="m-auto mb-6 w-2/3">
+				<div class="m-auto mb-6 w-1/5">
 					<div class="img is1by1 relative">
-						{{image.single_simple(block.singleImage[0],'rounded-full absolute pin-t pin-l w-full h-full')}}	
+						{{image.single_simple(Image[0],'absolute pin-t pin-l w-full h-full')}}	
 					</div>
 				</div>	
 
 			{% endif %}
 
-			<h4 class="text-blue text-2md mb-6 sm:mb-3">{{block.header}}</h4>
+			<h4 class="text-blue text-2md mb-6 sm:mb-3">{{Header}}</h4>
 			
 			<div class="text-xs text-grey-dark m-auto w-full leading-normal">
-				{{block.body}}
+				{{Text}}
 			</div>
 
-			{{link.icon(block.button, 'mt-6 btn --text', 'arrow-right')}}
+			{{link.icon(Button, 'mt-6 btn --text', 'arrow-right')}}
 			
 		</div>
 		

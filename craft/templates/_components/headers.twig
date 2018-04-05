@@ -12,6 +12,43 @@
 			</div>
 		</header>
 
+	{# Hero Blue #}
+	{% case "page-header--hero" %}
+	
+		<header class="page-header --hero bg-blue-dark relative">
+			<div class="m-auto max-w-md text-center py-8 sm:py-10 relative z-10">
+
+				{# Landing Page Title: #}
+				<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg mb-12">{{Title}}</h1>
+
+				{# Button #}
+				{{link.button(Button, '--light-blue btn')}}
+
+			</div>
+
+			{# Patterns #}
+			{{svg.pattern('dots','dots pin-t absolute pin-l z-10 text-blue-lighter h-48 w-24 block')}}
+			{{svg.pattern('dots','dots pin-b absolute pin-r z-10 text-blue-lighter h-48 w-24 block')}}
+
+			{# Background Image #}
+			<div class="absolute h-full w-full pin-t pin-l overflow-hidden z-0">
+				{{image.single_simple(Image, 'cover-img lazyloaded absolute pin-t pin-l z-0')}}
+			</div>
+		</header>
+
+	{# Section Header -- Hero#}
+	{% case "section-header--hero" %}
+		<header class="text-center {{class}}">	
+			<h4 class="text-blue m-auto max-w-md sm:text-xl text-2md mb-6 sm:text-lg md:w-4/5 m-auto">{{Header}}</h4>
+
+			{% if Text|length %}			
+				<div class="m-auto sm:w-3/5 text-grey leading-normal">
+					{{Text}}
+				</div>
+			{% endif %}
+		</header>
+
+
 	{% default %}
 		other
 

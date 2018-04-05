@@ -32,7 +32,7 @@
 
 				{# Feature List #}
 				{% case "featureList" %}
-					{% include '_components/list--features' %}
+					{% include '_components/list--features' with {Content: block.children} %}
 
 				{# Portrait List #}
 				{% case "portraitList" %}
@@ -44,7 +44,7 @@
 
 				{# Entries List #}
 				{% case "entriesList" %}
-					{% include '_components/list--entries' %} {# == #}
+					{% include '_components/list--entries' %} 
 
 				{# Feature Cards #}
 				{% case "featureCards" %}
@@ -56,7 +56,13 @@
 
 				{# CTA Hero #}
 				{% case "ctaHero" %}
-					{% include '_components/hero--cta' %}
+					{% include '_components/hero--cta' with {
+						Spacing: block.spacing,
+						Heading: block.header,
+						Text: block.textBarebones,
+						Button: block.button
+						} 
+					%}
 				
 			
 				{% default %}

@@ -82,6 +82,13 @@
 	}
 
 	//
+	// Light Blue
+	//
+	&.--light-blue {
+		@apply .bg-blue-light;
+	}
+
+	//
 	// Large
 	//
 	@screen lg {
