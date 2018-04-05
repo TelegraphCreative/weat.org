@@ -41,7 +41,7 @@
     	targetElement: group
 		}) %}
 
-		<div class="js-accordion-item active   tr-all-3  list-accordion__item    border-grey-lightest border-t pt-8 pb-8">
+		<div class="js-accordion-item   tr-all-3  list-accordion__item    border-grey-lightest border-t pt-8 pb-8">
 
 		    {# Header #}
 		    <header class="js-accordion-toggle  text-grey-dark hover:text-blue-light cursor-pointer flex justify-between  item__header items-center">
@@ -74,6 +74,8 @@
 
 		                <div class="text-xs mb-6 text-grey-dark leading-normal">
 												<span class="block">{{entry.committeeChair|nl2br}}</span>
+												<span class="block">{{entry.phone}}</span>
+												<span class="block">{{entry.email}}</span>
 		                    {#}<span class="block">Susan O'Malley, 2016 - 2018</span>
 		                    <span class="block">(512) 972-0083</span>
 		                    <span class="block">heather@dodsongroup.org</span>{#}
