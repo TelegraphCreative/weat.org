@@ -2,6 +2,10 @@
 // WEAT, Built by Telegraph
 //
 
+
+// ## Lazysizes (Images)
+require("./vendor/lazysizes.js");
+
 //
 // # On Call Imports (called with `data-module` attr. as needed)
 //
@@ -15,8 +19,9 @@ import './modules'
 import smooth from './modules/smoothScroll';
 smooth();
 
-// ## Lazysizes (Images)
-require("./vendor/lazysizes.js");
+
+// import fieldFormats from './modules/fieldFormats';
+// fieldFormats();
 
 //
 // # Examples:
