@@ -31,6 +31,7 @@
 	//
 	&.--auto-w {
 		@apply .w-auto; 
+		max-width: inherit;
 	}
 
 	//

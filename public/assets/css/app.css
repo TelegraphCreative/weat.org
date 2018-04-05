@@ -939,6 +939,7 @@ textarea {
 
 .btn.\--auto-w {
   width: auto;
+  max-width: inherit;
 }
 
 .btn.\--full-w {
@@ -1014,6 +1015,12 @@ label.error {
 
 input.error {
   border-color: #5fc3e2;
+}
+
+.spinner[type=number]::-webkit-inner-spin-button,
+.spinner[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .check-radio-input input {
