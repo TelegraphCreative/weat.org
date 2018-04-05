@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% set groups = craft.categories.group('committeeGroup') %}
+
 {# Page Header #}
 <header class="page-header bg-blue">
 	<div class="simple-container py-8 sm:py-10">
@@ -16,18 +18,11 @@
 	<p class="leading-normal mb-12 text-center text-grey-dark   md:mb-18 md:text-md">{{entry.tagline}}</p>
 
 	<div class="flex flex-wrap justify-between -mx-2 pb-4   sm:-mx-3">
+		{% for group in groups %}
 		<div class="mb-4 px-2 w-1/2   sm:mb-0 sm:px-3 sm:w-1/4">
-			<a data-scroll class="bg-blue h-8 inline-block leading-tight no-underline pt-2 rounded text-1xs text-center text-white w-full hover:bg-green   sm:h-10 sm:leading-normal sm:text-sm   md:h-14 md:pt-4 md:text-base" href="#knowledge">Knowledge</a>
+			<a data-scroll class="bg-blue h-8 inline-block leading-tight no-underline pt-2 rounded text-1xs text-center text-white w-full hover:bg-green   sm:h-10 sm:leading-normal sm:text-sm   md:h-14 md:pt-4 md:text-base" href="#{{group.slug}}">{{group.title}}</a>
 		</div>
-		<div class="mb-4 px-2 w-1/2   sm:mb-0 sm:px-3 sm:w-1/4">
-			<a data-scroll class="bg-blue h-8 inline-block leading-tight no-underline pt-2 rounded text-1xs text-center text-white w-full hover:bg-green   sm:h-10 sm:leading-normal sm:text-sm   md:h-14 md:pt-4 md:text-base" href="#delivery">Delivery</a>
-		</div>
-		<div class="mb-4 px-2 w-1/2   sm:mb-0 sm:px-3 sm:w-1/4">
-			<a data-scroll class="bg-blue h-8 inline-block leading-tight no-underline pt-2 rounded text-1xs text-center text-white w-full hover:bg-green   sm:h-10 sm:leading-normal sm:text-sm   md:h-14 md:pt-4 md:text-base" href="#stakeholder">Stakeholder</a>
-		</div>
-		<div class="mb-4 px-2 w-1/2   sm:mb-0 sm:px-3 sm:w-1/4">
-			<a data-scroll class="bg-blue h-8 inline-block leading-tight no-underline pt-2 rounded text-1xs text-center text-white w-full hover:bg-green   sm:h-10 sm:leading-normal sm:text-sm   md:h-14 md:pt-4 md:text-base" href="#management">Management</a>
-		</div>
+		{% endfor %}
 	</div>
 </div>
 
@@ -36,35 +31,15 @@
 {# Template note: only include data-module="accordion" 1x per page #}
 <div class="list-accordion   m-auto max-w-lg px-6   sm:mb-10  lg:px-3" style="margin-bottom: 320px" data-module="accordion">
 
-
-	{% set groups = [
-		{
-			name: 'knowledge',
-			label: 'Knowledge',
-		 	description: "Display/list all committees somehow shown within the four broad groups Knowledge, Delivery, Stakeholder, Management. Each committee should then be linked or anchored to it's mission statement/goal on a page."
-		},
-		{
-			name: 'delivery',
-			label: 'Delivery',
-		 	description: "Display/list all committees somehow shown within the four broad groups Knowledge, Delivery, Stakeholder, Management. Each committee should then be linked or anchored to it's mission statement/goal on a page."
-		},
-		{
-			name: 'stakeholder',
-			label: 'Stakeholder',
-		 	description: "Display/list all committees somehow shown within the four broad groups Knowledge, Delivery, Stakeholder, Management. Each committee should then be linked or anchored to it's mission statement/goal on a page."
-		},
-		{
-			name: 'management',
-			label: 'Management',
-		 	description: "Display/list all committees somehow shown within the four broad groups Knowledge, Delivery, Stakeholder, Management. Each committee should then be linked or anchored to it's mission statement/goal on a page."
-		}
-	] %}
 	{% for group in groups %}
-	<!--   {{group.label}}   -->
-	<h3 class="leading-tight mb-3 mt-10 text-1md text-grey-dark   sm:mt-18 sm:text-2md" id="{{group.name}}">{{group.label}}</h3>
-	<p class="leading-normal mb-4 text-xs text-grey-dark">{{group.description}}</p>
 
-		{% for entry in craft.entries.section('committees').committeeGroup(group.name) %}
+	<!--   {{group.title}}   -->
+	<h3 class="leading-tight mb-3 mt-10 text-1md text-grey-dark   sm:mt-18 sm:text-2md" id="{{group.slug}}">{{group.title}}</h3>
+	<p class="leading-normal mb-4 text-xs text-grey-dark">{{group.description|nl2br}}</p>
+
+		{% for entry in craft.entries.section('committees').relatedTo({
+    	targetElement: group
+		}) %}
 
 		<div class="js-accordion-item active   tr-all-3  list-accordion__item    border-grey-lightest border-t pt-8 pb-8">
 
@@ -111,7 +86,7 @@
 		</div>
 		{% endfor %}
 
-	<!-- End {{group.label}} -->
+	<!-- End {{group.title}} -->
 
 	{% endfor %}
 
