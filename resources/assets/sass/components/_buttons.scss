@@ -11,7 +11,7 @@
 	
 	// Default Hover
 	&:hover {
-		@apply .bg-blue;
+		@apply .bg-green;
 	}
 
 	//
@@ -31,7 +31,7 @@
 		}
 
 		&:hover {
-			@apply .text-white .bg-green;
+			@apply .text-white .bg-blue;
 		}
 
 	}

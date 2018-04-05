@@ -922,7 +922,7 @@ textarea {
 }
 
 .btn:hover {
-  background-color: #2466cc;
+  background-color: #22c79a;
 }
 
 .btn.\--text {
@@ -944,7 +944,7 @@ textarea {
 
 .btn.\--text:hover {
   color: #fff;
-  background-color: #22c79a;
+  background-color: #2466cc;
 }
 
 .btn.\--auto-w {
