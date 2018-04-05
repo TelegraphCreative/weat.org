@@ -21,9 +21,19 @@
 		@apply .bg-transparent .text-blue-light .relative .w-auto; 
 		max-width: inherit;
 
-		&:hover {
-			@apply .text-green;
+		// if icon
+		&.--has-icon {
+			padding-bottom: 1.125rem;
 		}
+		.text {
+			@apply .relative; 
+			top: 1px;
+		}
+
+		&:hover {
+			@apply .text-white .bg-green;
+		}
+
 	}
 
 	//
