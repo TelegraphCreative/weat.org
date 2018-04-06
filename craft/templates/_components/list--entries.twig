@@ -1,6 +1,6 @@
 {# Featured Entries #}
 {# Container for Featured Article #}
-<div class="m-auto md:w-3/5 w-full pt-12 md:px-0 px-6">
+<div class="featured-articles m-auto md:w-3/5 w-full pt-12 md:px-0 px-6">
 
 	{# Section Header #}
 	{% include '_components/header--section-divider' with {'title': block.sectionTitle} %}
@@ -12,50 +12,20 @@
 			{% case "articles" %}
 				{% for block in block.featuredArticles %}
 					
-				
-				{# Featured Article #}
-				<article class="featured-article border-b border-grey-lightest  py-6 mb-6  ">
-					<a class="no-underline hover:text-grey-dark" href="#">
+					{% include '_components/list--entries--article' %}					
 
-						<time class="text-grey-dark text-xs mb-3 block">{{date.simple(block.postDate)}}</time> 
-
-						<h4 class="text-2md sm:text-lg mb-6">{{block.pageTitle}}</h4>
-
-					</a>
-
-					<div class="featured-article__content mb-4">
-						<div class="text-xs text-grey-dark md:w-4/5 w-full leading-normal">
-							{{block.body|hacksaw(limit='1')}}
-						</div>
-					</div>
-					
-					<a href="/articles/{{block.type}}" class="block text-right text-blue-light hover:text-grey-dark no-underline text-sm">
-						{{block.type|capitalize}}
-					</a>
-				</article>
 				{% endfor %}
 		
 			{% case "events" %}
+				{% for block in block.featuredEvents %}
 
-				to do: add events template here (list--entries.twig)
-						
+					{% include '_components/list--entries--event' %}
+
+				{% endfor %}
 		
 		{% endswitch %}
 		
 	{% endfor %}
 	
 	
-	{# Featured Article #}
-	<article class="featured-article border-b border-grey-lightest  py-6 mb-6  ">
-		<a class="no-underline hover:text-grey-dark" href="#">
-			<time class="text-grey-dark text-xs mb-3 block">April 09, 2018</time> 
-			<h4 class="text-2md sm:text-lg mb-6">List of Community Colleges with Environmental Science or Engineering Programs</h4>
-		</a>
-
-		<div class="featured-article__content mb-4">
-			<p class="text-xs text-grey-dark md:w-4/5 w-full leading-normal">Display/list all committees somehow shown within the four broad groups Knowledge, Delivery, Stakeholder, Management. Each committee should then be linked or anchored to it's mission statement/goal on a page.</p>
-		</div>
-
-		<a href="#" class="block text-right text-blue-light hover:text-grey-dark no-underline text-sm">TCEQ’s Rule Log</a>
-	</article>
 </div>

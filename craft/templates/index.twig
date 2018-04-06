@@ -1,7 +1,5 @@
 {% extends "_layouts/standard" %}
 
-
-
 {% block content %}
 
 	{# Hero #}
@@ -18,19 +16,27 @@
 	
 
 	{# CTA Hero #}
-	{% set Spacing = false %}
-	{% set Header = entry.header %}
-	{% set Text = entry.textBarebones %}
-	{% set Button = entry.button2 %}
-		{% include '_components/hero--cta' %}
+		{% include '_components/hero--cta' with {
+			Spacing: false,
+			Header: entry.header,
+			Text: entry.textBarebones,
+			Button: entry.button2
+			} 
+		%}
 
 	{# About #}
-	{% set Header = entry.sectionTitle %}
-	{% set Text = entry.textBarebones2 %}
-		{% include '_components/headers' with {type: 'section-header--hero', class: ' md:mt-20 mt-10 mb-12'} %}
+	{% include '_components/headers' with {
+			type: 'section-header--hero', 
+			class: ' md:mt-20 mt-10 mb-12',
+			Header: entry.sectionTitle,
+			Text: entry.textBarebones2
+		} 
+	%}
 	
-	{% set Content = entry.listFeature %}
-		{% include '_components/list--features' %}
+	{% include '_components/list--features' with {
+			Content: entry.listFeature
+		}
+	%}
 
 
 	{# Story #}
@@ -44,5 +50,4 @@
 	%}
 	
 
-	
 {% endblock %}
