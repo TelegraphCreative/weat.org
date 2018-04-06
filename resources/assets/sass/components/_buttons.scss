@@ -31,7 +31,9 @@
 		}
 
 		&:hover {
-			@apply .text-white .bg-green;
+
+			@apply .text-white .bg-blue;
+
 		}
 
 	}
@@ -79,6 +81,13 @@
 	//
 	&.--disabled {
 		@apply .bg-grey-light .text-grey .pointer-events-none;
+	}
+
+	//
+	// Light Blue
+	//
+	&.--light-blue {
+		@apply .bg-blue-light;
 	}
 
 	//

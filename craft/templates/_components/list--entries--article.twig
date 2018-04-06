@@ -1,0 +1,20 @@
+{# List - Featured Article #}
+<article class="featured-article border-b border-grey-lightest  py-6 mb-6  ">
+	<a class="no-underline hover:text-grey-dark" href="#">
+
+		<time class="text-grey-dark text-xs mb-3 block">{{date.simple(block.postDate)}}</time> 
+
+		<h4 class="text-2md sm:text-lg mb-6">{{block.pageTitle}}</h4>
+
+	</a>
+
+	<div class="featured-article__content mb-4">
+		<div class="text-xs text-grey-dark md:w-4/5 w-full leading-normal">
+			{{block.body|hacksaw(limit='1')}}
+		</div>
+	</div>
+	
+	<a href="/articles/{{block.type}}" class="block text-right text-blue-light hover:text-grey-dark no-underline text-sm">
+		{{block.type|capitalize}}
+	</a>
+</article>

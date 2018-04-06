@@ -7,18 +7,15 @@
     {# Info #}
     {% if event.location|length %}
 	    <div class="flex sm:mb-2">
-	        <span class="icon --map --sm mr-3 top-2 relative tr-all">
-	            <svg><use xlink:href="/assets/svg/symbols.svg#map"></use></svg>
-	        </span>
+	        {{svg.icon('icon --map --sm mr-3 top-2 relative tr-all','map')}}
+            
 	        <a class="text-xs mb-3 block no-underline text-grey-dark hover:text-blue" target="_blank" href="{{event.location[0].getMapUrl()}}">{{event.location[0]}}</a>
 	    </div>
     {% endif %}
     
     {# Info #}
     <div class="flex sm:mb-2">
-        <span class="icon --map --sm mr-3 top-2 relative tr-all">
-            <svg><use xlink:href="/assets/svg/symbols.svg#calendar"></use></svg>
-        </span>
+        {{svg.icon('icon --map --sm mr-3 top-2 relative tr-all','calendar')}}
         
         <div class="text-xs mb-3 block leading-normal">
             {% if event.eventDays|length %}

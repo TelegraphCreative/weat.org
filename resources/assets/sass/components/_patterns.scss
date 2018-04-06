@@ -1,0 +1,19 @@
+//
+// Patterns
+//
+
+// Header
+.page-header .dots {
+	@screen md {
+
+		&.pin-l {
+			left: -2.25rem;
+			top: 1.5rem;
+		}
+		&.pin-r {
+			right: -2.15rem;
+			bottom: -2rem;
+		}
+
+	}
+}

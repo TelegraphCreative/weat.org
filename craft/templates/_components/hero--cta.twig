@@ -1,26 +1,47 @@
 {# CTA Hero #}
-<div class="cta-banner sm:pt-10 ">
-
+<div class="hero--cta {{WrapClass}} ">
 
 	<div class="
 		m-auto max-w-2xl     px-4   py-10 sm:py-12  
-		{% if block.spacing == 'bottom' %}sm:mb-lg mb-18{% endif %}
-		{% if block.spacing == 'top' %}sm:mt-12 mt-10{% endif %}   
-		bg-blue-dark text-white text-center
+		bg-blue-dark text-white text-center relative overflow-hidden
+
+		{{Class}}
+
+		{% if Spacing|length %}
+			{% if Spacing == 'bottom' %}sm:mb-lg mb-18{% endif %}
+			{% if Spacing == 'top' %}sm:mt-12 mt-10{% endif %}   
+		{% endif %}
+		
 	"> 
 
-		<header class="text-lg sm:text-xl mb-6">
-			<h4>{{block.header}}</h4>
-		</header>
+		<div class="content relative z-10">
 
-		<div class="content text-md text-blue-light max-w-lg m-auto mb-12 leading-normal">
+			<header class="text-2md md:text-lg sm:text-xl mb-6">
+				<h4>{{Header}}</h4>
+			</header>
 
-			{{block.textBarebones}}
-
-		</div>
-
-		{{link.simple(block.button, 'btn m-auto block max-w-1xs')}}
+			<div class="text-base md:text-md text-white max-w-lg m-auto mb-12 leading-normal">
+				{{Text}}
+			</div>
 		
+			{{link.simple(Button, 'btn m-auto block max-w-1xs')}}
+
 		</div>
+
+		{# Pattern #}
+		<div 
+			class="background-pattern absolute pin-t pin-l w-full h-full opacity-25 hidden sm:block"
+			style="
+				background-image: url(/assets/svg/pattern_02.svg);
+			  background-repeat: no-repeat;
+			  background-size: 120%;
+			  background-position: 10% -20%;
+		">
+			
+		</div>
+
+
+
+
 	</div>
 </div>

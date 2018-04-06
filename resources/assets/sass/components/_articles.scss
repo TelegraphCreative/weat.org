@@ -18,7 +18,7 @@
 	}
 
 	h1 {
-		@apply .text-blue-light .text-md .my-10 .text-lg;
+		@apply .text-blue-light .text-md .my-10;
 	}
 
 	h2 {
@@ -88,6 +88,9 @@
 	// Above Small
 	//
 	@screen sm {
+		h1 {
+			@apply .text-lg;
+		}
 		h2,h3 {
 			@apply .max-w-md;
 		}

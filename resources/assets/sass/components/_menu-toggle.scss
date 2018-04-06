@@ -1,12 +1,39 @@
+// ============================================================================
+// Active/Inactive Menu
+//
+.main-menu-bar {
 
+  // Active
+  &.active {
 
-  // ----------------------------- active/Close Icon ------------------------------
+    .main-menu,
+    .menu__utility-bar {
+      
+      @apply .block;
+      
+    }
+
+  }
+}
+
+// ============================================================================
+// Active/Inactive Menu
+//
 .main-menu__toggle {
+  
+
+  @apply .absolute;
+  right: 1rem;
+  top: 1.375rem;
+
+
+
+
   width: 1.75rem;
   height: 1.75rem;
   transform: rotate(0deg);
-  @apply .relative;
-  top:3px;
+  
+
 }
 
 .main-menu__toggle span {

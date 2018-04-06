@@ -1,0 +1,88 @@
+{# List - Featured Event  #}
+<article class="featured-event inf-card    border-b border-grey-lightest  py-8 mb-6 ">
+
+	<div class="featured-event__content sm:flex sm:justify-between">
+
+		<time class="featured-event__date sm:border-r sm:border-grey-lightest mb-2 block md:pr-12 sm:pr-8 sm:mb-0 text-blue">
+			<span class="text-md sm:text-lg sm:block">{{block.startDate|date('M')}}</span>
+			<span class="text-md sm:text-lg lg:text-4xl sm:block">{{block.startDate|date('d')}}</span>
+		</time>
+		
+		<div class="featured-event__content sm:flex-1 sm:pl-6 md:pl-8">
+			<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{ block.url }}">
+				<h4 class="text-2md sm:text-lg mb-8 md:mb-12">{{block.title}}</h4>
+			</a>
+			
+			<div class="featured-event__info   block text-grey-dark">
+				{# Info #}
+		    {% if block.location|length %}
+			    <div class="flex sm:mb-2">
+
+			    		{{svg.icon('icon --map --sm mr-3 top-2 relative tr-all','map')}}
+
+			        <a class="text-xs mb-3 block no-underline text-grey-dark hover:text-blue" target="_blank" href="{{block.location[0].getMapUrl()}}">{{block.location[0]}}</a>
+			    </div>
+		    {% endif %}
+		    
+		    {# Info #}
+		    <div class="flex sm:mb-2">
+		        
+		        {{svg.icon('icon --map --sm mr-3 top-2 relative tr-all','calendar')}}
+		        
+		        <div class="text-xs mb-3 block leading-normal">
+		            {% if block.eventDays|length %}
+		            <p>{{block.eventDays}}
+		            {% else %}
+		            <p>{{ block.startDate|date('M') }} {{ block.startDate|date('d') }}, 
+		            {% endif %}
+		            {{ block.startDate|date('Y') }}</p>
+		            
+		            {% if block.allDay %}
+		                All Day
+		            {% else %}
+		                <p>{{ block.startDate|date("g:i a") }} - {{ block.endDate|date("g:i a") }}</p>
+		            {% endif %}
+
+		        </div> 
+		    </div>
+
+			</div>
+
+			<div class="text-right"> 
+		    {# Registered Event #}
+		    {% if block.registeredEvent > 0 %}
+		        
+		        {# For Members #}
+		        {% if block.membersOnly > 0 %}
+		            {% if currentUser and currentUser.isInGroup('subscriber') %}
+		              <a href="{{ url('payments/checkout/event') }}/{{block.id}}" class="btn --auto-w --text text-xs">Register</a>
+		            {% else %}
+		              <a href="{{ url('members/login') }}" class="btn --auto-w --text text-xs">Join Now</a>
+		            {% endif %}
+		        
+		        {% else %}
+		        {# For everyone #}
+		        
+		        <a href="{{ url('payments/checkout/event') }}/{{block.id}}" target="_blank" class="btn --auto-w --text text-xs">Register</a>
+
+		        {% endif %}
+		        
+
+		    {% else %}
+
+		        {# Type #}
+		        <span style="color:{{ block.getColor() }}" class="text-xs">
+		            {{block.groupType }}
+		        </span>
+		    {% endif %}
+		</div>
+
+		</div>
+
+
+
+	</div>
+	
+	
+
+</article>
