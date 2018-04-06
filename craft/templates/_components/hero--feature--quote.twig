@@ -1,19 +1,19 @@
 {# Featured Hero #}
-<div class="feature-card-w-img sm:flex {{class}}">
-	<article class="h-full bg-blue-dark text-blue-light px-6 pt-12  sm:px-8 md:pt-16 pb-10 w-full md:w-1/2 ">
+<div class="hero--feature--quote clearfix {{class}}">
+	<article class="h-full md:float-left bg-blue-dark text-blue-light px-6 pt-12 pb-12 md:pb-16 sm:px-8 md:pt-14  w-full lg:w-1/2 ">
 		<div class="mr-auto ml-auto md:w-5/6 w-full">
 			<header class="mb-12">
 				<h6 class="uppercase text-1xs mb-10 tracking-wide">
 					{{Tagline}}
 				</h6>
 
-				<h3 class="text-white text-lg md:text-xl">
-					<span class="absolute -ml-8">"</span> 
+				<h3 class="text-white text-lg md:text-xl sm:pl-0 pl-6">
+					<span class="absolute sm:-ml-8 -ml-6">"</span> 
 					{{Quote}}
 				</h3>
 			</header>
 
-			<div class="content text-xs pl-4 border-l border-blue-light leading-normal py-4 mb-12">
+			<div class="content text-xs pl-4 border-l border-blue-light leading-normal py-4 mb-10 sm:mb-12">
 
 				{{Cite}}
 
@@ -23,9 +23,9 @@
 		</div>
 	</article>
 
-	<div class="w-full md:w-1/2 md:bg-grey-lightest sm:mt-12 md:mt-lg">
-
-		{{image.single_simple(Image,'block sm:pr-8 md:pr-10 w-full h-auto')}}	
+	<div class="w-full md:float-left lg:w-1/2 md:bg-grey-lightest lg:mt-lg hidden md:block">
+		{# {{image.single_simple(Image,'block sm:pr-8 md:pr-10 w-full h-auto lg:p-0 p-6 m-auto max-w-xs ')}}	 #}
+		{{image.single_simple(Image,'block sm:pr-8 md:pr-10 w-full h-auto lg:block hidden ')}}	
 
 	</div>
 </div>

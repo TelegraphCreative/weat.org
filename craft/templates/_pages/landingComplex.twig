@@ -20,7 +20,7 @@
 				
 				{# Standard Slider #}
 				{% case "standardSlider" %}
-					{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 sm:mb-10'} %}
+					{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 pt-9 mb-14'} %}
 
 				{# Article #}
 				{% case "article" %}
@@ -32,7 +32,11 @@
 
 				{# Feature List #}
 				{% case "featureList" %}
-					{% include '_components/list--features' with {Content: block.children} %}
+					{% include '_components/list--features' with {
+							Content: block.children, 
+							Class: 'mb-18 pt-10 md:pt-12 sm:pb-8'
+						} 
+					%}
 
 				{# Portrait List #}
 				{% case "portraitList" %}
@@ -60,7 +64,9 @@
 						Spacing: block.spacing,
 						Header: block.header,
 						Text: block.textBarebones,
-						Button: block.button
+						Button: block.button,
+						Class: '',
+						WrapClass: 'sm:pt-10'
 						} 
 					%}
 				

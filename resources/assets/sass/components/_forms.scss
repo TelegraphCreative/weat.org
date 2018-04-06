@@ -3,6 +3,7 @@
 //
 .input-field {
 	@apply .border .border-grey-light .p-3 .text-black .text-sm .rounded-sm;
+	-webkit-appearance: none;
 }
 
 .field-label {

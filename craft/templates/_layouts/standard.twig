@@ -25,11 +25,15 @@
 <body class="font-sans text-base text-black">
 	
 	{% include '_components/site-header' %}
-	<main role="main" class="js-app-wrap">
-		{% block content %}{% endblock %}
-	</main>
-	{% include '_components/form-updates' %}
-	{% include '_components/site-footer' %}
+	
+	<div class="app-wrap" data-module="togglesClose">
+		<main role="main" class="js-app-wrap">
+			{% block content %}{% endblock %}
+		</main>
+		{% include '_components/form-updates' %}
+		{% include '_components/site-footer' %}
+	</div>
+	
 	{% include '_components/doc-end-assets' %}
 	
 	{# <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> #}

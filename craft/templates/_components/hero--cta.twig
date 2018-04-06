@@ -1,22 +1,26 @@
 {# CTA Hero #}
-<div class="cta-banner sm:pt-10 ">
+<div class="hero--cta {{WrapClass}} ">
 
 	<div class="
 		m-auto max-w-2xl     px-4   py-10 sm:py-12  
+		bg-blue-dark text-white text-center relative overflow-hidden
+
+		{{Class}}
+
 		{% if Spacing|length %}
 			{% if Spacing == 'bottom' %}sm:mb-lg mb-18{% endif %}
 			{% if Spacing == 'top' %}sm:mt-12 mt-10{% endif %}   
 		{% endif %}
-		bg-blue-dark text-white text-center relative overflow-hidden
+		
 	"> 
 
 		<div class="content relative z-10">
 
-			<header class="text-lg sm:text-xl mb-6">
+			<header class="text-2md md:text-lg sm:text-xl mb-6">
 				<h4>{{Header}}</h4>
 			</header>
 
-			<div class="text-md text-white max-w-lg m-auto mb-12 leading-normal">
+			<div class="text-base md:text-md text-white max-w-lg m-auto mb-12 leading-normal">
 				{{Text}}
 			</div>
 		
@@ -26,7 +30,7 @@
 
 		{# Pattern #}
 		<div 
-			class="background-pattern absolute pin-t pin-l w-full h-full opacity-25"
+			class="background-pattern absolute pin-t pin-l w-full h-full opacity-25 hidden sm:block"
 			style="
 				background-image: url(/assets/svg/pattern_02.svg);
 			  background-repeat: no-repeat;
@@ -37,7 +41,7 @@
 		</div>
 
 
-		</div>
+
 
 	</div>
 </div>

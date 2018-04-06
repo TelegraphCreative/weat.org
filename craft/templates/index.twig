@@ -20,7 +20,9 @@
 			Spacing: false,
 			Header: entry.header,
 			Text: entry.textBarebones,
-			Button: entry.button2
+			Button: entry.button2,
+			Class: 'border-6 border-white',
+			WrapClass: 'md:pt-10'
 			} 
 		%}
 
@@ -34,14 +36,15 @@
 	%}
 	
 	{% include '_components/list--features' with {
-			Content: entry.listFeature
+			Content: entry.listFeature,
+			Class: "mb-18 md:mb-xl md:pt-12 sm:pb-8 pt-8"
 		}
 	%}
 
 
 	{# Story #}
 	{% include '_components/hero--feature--quote' with { 
-			class: 'mb-lg', 
+			class: 'lg:mb-18', 
 			Tagline: entry.tagline, 
 			Quote: entry.caption, 
 			Cite: entry.subheading, 

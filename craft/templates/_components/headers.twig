@@ -16,10 +16,10 @@
 	{% case "page-header--hero" %}
 	
 		<header class="page-header --hero bg-blue-dark relative">
-			<div class="m-auto max-w-md text-center py-8 sm:py-10 relative z-10">
+			<div class="m-auto max-w-md text-center px-4 py-10 sm:py-8 sm:px-0 sm:py-10 relative z-10">
 
 				{# Landing Page Title: #}
-				<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg mb-12">{{Title}}</h1>
+				<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg mb-12 px-4 sm:px-0">{{Title}}</h1>
 
 				{# Button #}
 				{{link.button(Button, '--light-blue btn')}}
@@ -27,8 +27,8 @@
 			</div>
 
 			{# Patterns #}
-			{{svg.pattern('dots','dots pin-t absolute pin-l z-10 text-blue-lighter h-48 w-24 block')}}
-			{{svg.pattern('dots','dots pin-b absolute pin-r z-10 text-blue-lighter h-48 w-24 block')}}
+			{{svg.pattern('dots','dots pin-t absolute pin-l z-10 text-blue-lighter h-48 w-24 hidden md:block')}}
+			{{svg.pattern('dots','dots pin-b absolute pin-r z-10 text-blue-lighter h-48 w-24 hidden md:block')}}
 
 			{# Background Image #}
 			<div class="absolute h-full w-full pin-t pin-l overflow-hidden z-0">
@@ -39,10 +39,10 @@
 	{# Section Header -- Hero#}
 	{% case "section-header--hero" %}
 		<header class="text-center {{class}}">	
-			<h4 class="text-blue m-auto max-w-md sm:text-xl text-2md mb-6 sm:text-lg md:w-4/5 m-auto">{{Header}}</h4>
+			<h4 class="text-blue m-auto max-w-md px-4 sm:px-0 sm:text-xl text-2md mb-6 sm:text-lg md:w-4/5 m-auto">{{Header}}</h4>
 
 			{% if Text|length %}			
-				<div class="m-auto sm:w-3/5 text-grey leading-normal">
+				<div class="m-auto sm:w-3/5 px-4 sm:px-0 text-grey leading-normal">
 					{{Text}}
 				</div>
 			{% endif %}
