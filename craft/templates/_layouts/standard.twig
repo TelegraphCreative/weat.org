@@ -14,6 +14,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
+
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -23,7 +24,8 @@
 </head>
 
 <body class="font-sans text-base text-black">
-	
+
+	{% include '_components/site-notification' %}
 	{% include '_components/site-header' %}
 	
 	<div class="app-wrap" data-module="togglesClose">
