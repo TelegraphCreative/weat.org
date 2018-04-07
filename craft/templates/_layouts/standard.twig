@@ -28,15 +28,15 @@
 
 <body class="font-sans text-base text-black">
 
-	{% include '_components/site-notification' %}
-	{% include '_components/site-header' %}
+	{% include '_components/site--notification' %}
+	{% include '_components/site--header' %}
 	
 	<div class="app-wrap" data-module="togglesClose">
 		<main role="main" class="js-app-wrap">
 			{% block content %}{% endblock %}
 		</main>
-		{% include '_components/form-updates' %}
-		{% include '_components/site-footer' %}
+		{% include '_components/form--updates' %}
+		{% include '_components/site--footer' %}
 	</div>
 	
 	{% include '_components/doc-end-assets' %}
