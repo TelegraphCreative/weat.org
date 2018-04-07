@@ -1,0 +1,70 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+{#% set eventId = craft.request.getSegment(3) %}
+{% set event = craft.venti.events.id(eventId) %#}
+{% set eventSlug = craft.request.getSegment(3) %}
+{% set event = craft.venti.events.slug(eventSlug) %}
+<pre>
+
+  {#{ dump(eventss) }#}
+
+
+  {#% set event = craft.venti.events() %#}
+  {#{ dump(event[0])}#}
+
+  {{ event[0].title }}
+  {{ event[0].membersOnly }}
+  {% for price in event[0].pricing %}
+    {{ price.label }} - {{ price.price }}
+
+    <form class="form-horizontal"
+          id="charge-form"
+          method="post"
+          action=""
+          accept-charset="UTF-8"
+          data-publicKey="{{ craft.charge.getPublicKey }}">
+        {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
+        {{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}
+        {{ getCsrfInput() }}
+
+        {% set options = {
+            'planAmount' : price.price
+          }
+        %}
+
+        {{ craft.charge.setPaymentOptions(options) }}
+
+        {% if allErrors is defined %}
+            {{ forms.errorBlock(allErrors) }}
+        {% endif %}
+
+        <div id="payment-errors" class="alert alert-error"></div>
+
+        {{ forms.hidden({
+            name: 'customerName',
+            id: 'customerName',
+            value: (currentUser is defined ? currentUser.friendlyName),
+            data: { stripe : 'name' }
+        }) }}
+
+        {{ forms.hidden({
+            name: 'customerEmail',
+            id: 'customerEmail',
+            value: (currentUser is defined ? currentUser.email)
+        }) }}
+        {{ stripe.amountField({
+            label: 'Amount',
+            value: options.planAmount,
+            readonly: true
+        }) }}
+
+        {% include '_components/charge--card-details' %}
+        {% include '_components/charge--payment-button' %}
+
+    </form>
+{% endfor %}
+</pre>
+
+{% endblock %}

@@ -1,7 +1,15 @@
 {% extends "_layouts/standard" %}
 {% block content %}
-<section class="landing mb-lg">
-  <div class="article    m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
+
+{# Container #}
+<div class="simple-container">
+
+	{% set message = craft.session.getFlash('notice') %}
+	{{ message }}
+
+	{# Form #}
+	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+    Enter your email and password to log in to WEAT.
     {% if craft.session.returnUrl|lower|indexOf('members/subscribe') > -1 %}
     Thanks for wanting to join WEAT. To begin visit either login below or setup a new account.
     {% endif %}
@@ -9,27 +17,50 @@
       {{ getCsrfInput() }}
       <input type="hidden" name="action" value="users/login">
 
-      <h3><label for="loginName">Username or email</label></h3>
-      <input id="loginName" type="text" name="loginName"
-          value="{{ craft.session.rememberedUsername }}">
+      {# Field #}
+      <div class="form-row mb-6">
+        {{ forms.text({
+            name: 'loginName',
+            id: 'loginName',
+            placeholder: 'Email',
+            value: (craft.session.rememberedUsername),
+            class: "input-field block w-full"
+        }) }}
+        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('loginName')) } %}
+      </div>
 
-      <h3><label for="password">Password</label></h3>
-      <input id="password" type="password" name="password">
+      {# Field #}
+      <div class="form-row mb-6">
+        {{ forms.text({
+            name: 'password',
+            id: 'password',
+            placeholder: 'Password',
+            class: "input-field block w-full"
+        }) }}
 
-      <label>
-          <input type="checkbox" name="rememberMe" value="1">
-          Remember me
-      </label>
+        <p><a href="{{ url('members/forgotpassword') }}">Forgot?</a></p>
+        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('loginName')) } %}
+      </div>
 
-      <input type="submit" value="Login">
+      {# Field #}
+      <div class="form-row mb-6">
+        <label>
+            <input type="checkbox" name="rememberMe" value="1">
+            Remember me
+        </label>
+      </div>
+
+      {# Buttons #}
+      <div class="form-row mb-6 pt-6 flex items-center">
+           <input class="submit btn" type="submit" value="Login">
+      </div>
 
       {% if errorMessage is defined %}
           <p>{{ errorMessage }}</p>
       {% endif %}
     </form>
 
-    <p><a href="{{ url('members/register') }}">Create an account</a></p>
-    <p><a href="{{ url('forgotpassword') }}">Forget your password?</a></p>
-  </div>
-</section>
+    <p>Don't have an account? <a href="{{ url('members/register') }}">Join now</a></p>
+  </section>
+</div>
 {% endblock %}

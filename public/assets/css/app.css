@@ -982,6 +982,27 @@ textarea {
   }
 }
 
+.grow {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-transition: -webkit-transform .25s ease-out;
+  transition: -webkit-transform .25s ease-out;
+  transition: transform .25s ease-out;
+  transition: transform .25s ease-out, -webkit-transform .25s ease-out;
+}
+
+.grow:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.grow:hover .grow:focus {
+  -webkit-transform: none;
+          transform: none;
+}
+
 .img {
   display: block;
   position: relative;
@@ -994,12 +1015,14 @@ textarea {
 }
 
 .img.is1by1,
-.img.is16by9 {
+.img.is16by9,
+.img.is552by716 {
   overflow: hidden;
 }
 
 .img.is1by1 img,
-.img.is16by9 img {
+.img.is16by9 img,
+.img.is552by716 img {
   height: 100%;
   width: 100%;
   top: 0;
@@ -1026,6 +1049,10 @@ textarea {
 
 .img.is2by1 {
   padding-top: 50%;
+}
+
+.img.is552by716 {
+  padding-top: 129.71014493%;
 }
 
 .btn {
@@ -1235,17 +1262,36 @@ svg {
   height: 100%;
 }
 
+.page-header {
+  background-image: url("/assets/svg/pattern_page-header-bg.svg");
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+.page-header.dots {
+  background-image: none;
+}
+
 @media (min-width: 768px) {
-  .page-header .dots.pin-l {
+  .page-header.dots.pin-l {
     left: -2.25rem;
     top: 1.5rem;
   }
 
-  .page-header .dots.pin-r {
+  .page-header.dots.pin-r {
     right: -2.15rem;
     bottom: -2rem;
   }
 }
+
+/*
+.page-header .bg-dots, .blip{
+	background-image: url("/assets/svg/pattern_page-header-bg.svg");
+	background-position: right;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+}*/
 
 .aside__category-tags li a::after {
   content: ',';
@@ -3298,6 +3344,10 @@ http://flickity.metafizzy.co
   margin: 3rem;
 }
 
+.m-15 {
+  margin: 3.75rem;
+}
+
 .m-16 {
   margin: 3.25rem;
 }
@@ -3434,6 +3484,16 @@ http://flickity.metafizzy.co
 .mx-14 {
   margin-left: 3rem;
   margin-right: 3rem;
+}
+
+.my-15 {
+  margin-top: 3.75rem;
+  margin-bottom: 3.75rem;
+}
+
+.mx-15 {
+  margin-left: 3.75rem;
+  margin-right: 3.75rem;
 }
 
 .my-16 {
@@ -3680,6 +3740,22 @@ http://flickity.metafizzy.co
 
 .ml-14 {
   margin-left: 3rem;
+}
+
+.mt-15 {
+  margin-top: 3.75rem;
+}
+
+.mr-15 {
+  margin-right: 3.75rem;
+}
+
+.mb-15 {
+  margin-bottom: 3.75rem;
+}
+
+.ml-15 {
+  margin-left: 3.75rem;
 }
 
 .mt-16 {
@@ -4184,6 +4260,10 @@ http://flickity.metafizzy.co
   padding: 1rem;
 }
 
+.p-5 {
+  padding: 1.25rem;
+}
+
 .p-6 {
   padding: 1.5rem;
 }
@@ -4210,6 +4290,10 @@ http://flickity.metafizzy.co
 
 .p-14 {
   padding: 6rem;
+}
+
+.p-15 {
+  padding: 3.75rem;
 }
 
 .p-16 {
@@ -4276,6 +4360,16 @@ http://flickity.metafizzy.co
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .py-6 {
@@ -4346,6 +4440,16 @@ http://flickity.metafizzy.co
 .px-14 {
   padding-left: 6rem;
   padding-right: 6rem;
+}
+
+.py-15 {
+  padding-top: 3.75rem;
+  padding-bottom: 3.75rem;
+}
+
+.px-15 {
+  padding-left: 3.75rem;
+  padding-right: 3.75rem;
 }
 
 .py-16 {
@@ -4468,6 +4572,22 @@ http://flickity.metafizzy.co
   padding-left: 1rem;
 }
 
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
+.pr-5 {
+  padding-right: 1.25rem;
+}
+
+.pb-5 {
+  padding-bottom: 1.25rem;
+}
+
+.pl-5 {
+  padding-left: 1.25rem;
+}
+
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -4578,6 +4698,22 @@ http://flickity.metafizzy.co
 
 .pl-14 {
   padding-left: 6rem;
+}
+
+.pt-15 {
+  padding-top: 3.75rem;
+}
+
+.pr-15 {
+  padding-right: 3.75rem;
+}
+
+.pb-15 {
+  padding-bottom: 3.75rem;
+}
+
+.pl-15 {
+  padding-left: 3.75rem;
 }
 
 .pt-16 {
@@ -6329,6 +6465,10 @@ http://flickity.metafizzy.co
     margin: 3rem;
   }
 
+  .sm\:m-15 {
+    margin: 3.75rem;
+  }
+
   .sm\:m-16 {
     margin: 3.25rem;
   }
@@ -6465,6 +6605,16 @@ http://flickity.metafizzy.co
   .sm\:mx-14 {
     margin-left: 3rem;
     margin-right: 3rem;
+  }
+
+  .sm\:my-15 {
+    margin-top: 3.75rem;
+    margin-bottom: 3.75rem;
+  }
+
+  .sm\:mx-15 {
+    margin-left: 3.75rem;
+    margin-right: 3.75rem;
   }
 
   .sm\:my-16 {
@@ -6711,6 +6861,22 @@ http://flickity.metafizzy.co
 
   .sm\:ml-14 {
     margin-left: 3rem;
+  }
+
+  .sm\:mt-15 {
+    margin-top: 3.75rem;
+  }
+
+  .sm\:mr-15 {
+    margin-right: 3.75rem;
+  }
+
+  .sm\:mb-15 {
+    margin-bottom: 3.75rem;
+  }
+
+  .sm\:ml-15 {
+    margin-left: 3.75rem;
   }
 
   .sm\:mt-16 {
@@ -7215,6 +7381,10 @@ http://flickity.metafizzy.co
     padding: 1rem;
   }
 
+  .sm\:p-5 {
+    padding: 1.25rem;
+  }
+
   .sm\:p-6 {
     padding: 1.5rem;
   }
@@ -7241,6 +7411,10 @@ http://flickity.metafizzy.co
 
   .sm\:p-14 {
     padding: 6rem;
+  }
+
+  .sm\:p-15 {
+    padding: 3.75rem;
   }
 
   .sm\:p-16 {
@@ -7307,6 +7481,16 @@ http://flickity.metafizzy.co
   .sm\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .sm\:py-5 {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .sm\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .sm\:py-6 {
@@ -7377,6 +7561,16 @@ http://flickity.metafizzy.co
   .sm\:px-14 {
     padding-left: 6rem;
     padding-right: 6rem;
+  }
+
+  .sm\:py-15 {
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+
+  .sm\:px-15 {
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
   }
 
   .sm\:py-16 {
@@ -7499,6 +7693,22 @@ http://flickity.metafizzy.co
     padding-left: 1rem;
   }
 
+  .sm\:pt-5 {
+    padding-top: 1.25rem;
+  }
+
+  .sm\:pr-5 {
+    padding-right: 1.25rem;
+  }
+
+  .sm\:pb-5 {
+    padding-bottom: 1.25rem;
+  }
+
+  .sm\:pl-5 {
+    padding-left: 1.25rem;
+  }
+
   .sm\:pt-6 {
     padding-top: 1.5rem;
   }
@@ -7609,6 +7819,22 @@ http://flickity.metafizzy.co
 
   .sm\:pl-14 {
     padding-left: 6rem;
+  }
+
+  .sm\:pt-15 {
+    padding-top: 3.75rem;
+  }
+
+  .sm\:pr-15 {
+    padding-right: 3.75rem;
+  }
+
+  .sm\:pb-15 {
+    padding-bottom: 3.75rem;
+  }
+
+  .sm\:pl-15 {
+    padding-left: 3.75rem;
   }
 
   .sm\:pt-16 {
@@ -9353,6 +9579,10 @@ http://flickity.metafizzy.co
     margin: 3rem;
   }
 
+  .md\:m-15 {
+    margin: 3.75rem;
+  }
+
   .md\:m-16 {
     margin: 3.25rem;
   }
@@ -9489,6 +9719,16 @@ http://flickity.metafizzy.co
   .md\:mx-14 {
     margin-left: 3rem;
     margin-right: 3rem;
+  }
+
+  .md\:my-15 {
+    margin-top: 3.75rem;
+    margin-bottom: 3.75rem;
+  }
+
+  .md\:mx-15 {
+    margin-left: 3.75rem;
+    margin-right: 3.75rem;
   }
 
   .md\:my-16 {
@@ -9735,6 +9975,22 @@ http://flickity.metafizzy.co
 
   .md\:ml-14 {
     margin-left: 3rem;
+  }
+
+  .md\:mt-15 {
+    margin-top: 3.75rem;
+  }
+
+  .md\:mr-15 {
+    margin-right: 3.75rem;
+  }
+
+  .md\:mb-15 {
+    margin-bottom: 3.75rem;
+  }
+
+  .md\:ml-15 {
+    margin-left: 3.75rem;
   }
 
   .md\:mt-16 {
@@ -10239,6 +10495,10 @@ http://flickity.metafizzy.co
     padding: 1rem;
   }
 
+  .md\:p-5 {
+    padding: 1.25rem;
+  }
+
   .md\:p-6 {
     padding: 1.5rem;
   }
@@ -10265,6 +10525,10 @@ http://flickity.metafizzy.co
 
   .md\:p-14 {
     padding: 6rem;
+  }
+
+  .md\:p-15 {
+    padding: 3.75rem;
   }
 
   .md\:p-16 {
@@ -10331,6 +10595,16 @@ http://flickity.metafizzy.co
   .md\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .md\:py-5 {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .md\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .md\:py-6 {
@@ -10401,6 +10675,16 @@ http://flickity.metafizzy.co
   .md\:px-14 {
     padding-left: 6rem;
     padding-right: 6rem;
+  }
+
+  .md\:py-15 {
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+
+  .md\:px-15 {
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
   }
 
   .md\:py-16 {
@@ -10523,6 +10807,22 @@ http://flickity.metafizzy.co
     padding-left: 1rem;
   }
 
+  .md\:pt-5 {
+    padding-top: 1.25rem;
+  }
+
+  .md\:pr-5 {
+    padding-right: 1.25rem;
+  }
+
+  .md\:pb-5 {
+    padding-bottom: 1.25rem;
+  }
+
+  .md\:pl-5 {
+    padding-left: 1.25rem;
+  }
+
   .md\:pt-6 {
     padding-top: 1.5rem;
   }
@@ -10633,6 +10933,22 @@ http://flickity.metafizzy.co
 
   .md\:pl-14 {
     padding-left: 6rem;
+  }
+
+  .md\:pt-15 {
+    padding-top: 3.75rem;
+  }
+
+  .md\:pr-15 {
+    padding-right: 3.75rem;
+  }
+
+  .md\:pb-15 {
+    padding-bottom: 3.75rem;
+  }
+
+  .md\:pl-15 {
+    padding-left: 3.75rem;
   }
 
   .md\:pt-16 {
@@ -12377,6 +12693,10 @@ http://flickity.metafizzy.co
     margin: 3rem;
   }
 
+  .lg\:m-15 {
+    margin: 3.75rem;
+  }
+
   .lg\:m-16 {
     margin: 3.25rem;
   }
@@ -12513,6 +12833,16 @@ http://flickity.metafizzy.co
   .lg\:mx-14 {
     margin-left: 3rem;
     margin-right: 3rem;
+  }
+
+  .lg\:my-15 {
+    margin-top: 3.75rem;
+    margin-bottom: 3.75rem;
+  }
+
+  .lg\:mx-15 {
+    margin-left: 3.75rem;
+    margin-right: 3.75rem;
   }
 
   .lg\:my-16 {
@@ -12759,6 +13089,22 @@ http://flickity.metafizzy.co
 
   .lg\:ml-14 {
     margin-left: 3rem;
+  }
+
+  .lg\:mt-15 {
+    margin-top: 3.75rem;
+  }
+
+  .lg\:mr-15 {
+    margin-right: 3.75rem;
+  }
+
+  .lg\:mb-15 {
+    margin-bottom: 3.75rem;
+  }
+
+  .lg\:ml-15 {
+    margin-left: 3.75rem;
   }
 
   .lg\:mt-16 {
@@ -13263,6 +13609,10 @@ http://flickity.metafizzy.co
     padding: 1rem;
   }
 
+  .lg\:p-5 {
+    padding: 1.25rem;
+  }
+
   .lg\:p-6 {
     padding: 1.5rem;
   }
@@ -13289,6 +13639,10 @@ http://flickity.metafizzy.co
 
   .lg\:p-14 {
     padding: 6rem;
+  }
+
+  .lg\:p-15 {
+    padding: 3.75rem;
   }
 
   .lg\:p-16 {
@@ -13355,6 +13709,16 @@ http://flickity.metafizzy.co
   .lg\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .lg\:py-5 {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .lg\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .lg\:py-6 {
@@ -13425,6 +13789,16 @@ http://flickity.metafizzy.co
   .lg\:px-14 {
     padding-left: 6rem;
     padding-right: 6rem;
+  }
+
+  .lg\:py-15 {
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+
+  .lg\:px-15 {
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
   }
 
   .lg\:py-16 {
@@ -13547,6 +13921,22 @@ http://flickity.metafizzy.co
     padding-left: 1rem;
   }
 
+  .lg\:pt-5 {
+    padding-top: 1.25rem;
+  }
+
+  .lg\:pr-5 {
+    padding-right: 1.25rem;
+  }
+
+  .lg\:pb-5 {
+    padding-bottom: 1.25rem;
+  }
+
+  .lg\:pl-5 {
+    padding-left: 1.25rem;
+  }
+
   .lg\:pt-6 {
     padding-top: 1.5rem;
   }
@@ -13657,6 +14047,22 @@ http://flickity.metafizzy.co
 
   .lg\:pl-14 {
     padding-left: 6rem;
+  }
+
+  .lg\:pt-15 {
+    padding-top: 3.75rem;
+  }
+
+  .lg\:pr-15 {
+    padding-right: 3.75rem;
+  }
+
+  .lg\:pb-15 {
+    padding-bottom: 3.75rem;
+  }
+
+  .lg\:pl-15 {
+    padding-left: 3.75rem;
   }
 
   .lg\:pt-16 {
@@ -15401,6 +15807,10 @@ http://flickity.metafizzy.co
     margin: 3rem;
   }
 
+  .xl\:m-15 {
+    margin: 3.75rem;
+  }
+
   .xl\:m-16 {
     margin: 3.25rem;
   }
@@ -15537,6 +15947,16 @@ http://flickity.metafizzy.co
   .xl\:mx-14 {
     margin-left: 3rem;
     margin-right: 3rem;
+  }
+
+  .xl\:my-15 {
+    margin-top: 3.75rem;
+    margin-bottom: 3.75rem;
+  }
+
+  .xl\:mx-15 {
+    margin-left: 3.75rem;
+    margin-right: 3.75rem;
   }
 
   .xl\:my-16 {
@@ -15783,6 +16203,22 @@ http://flickity.metafizzy.co
 
   .xl\:ml-14 {
     margin-left: 3rem;
+  }
+
+  .xl\:mt-15 {
+    margin-top: 3.75rem;
+  }
+
+  .xl\:mr-15 {
+    margin-right: 3.75rem;
+  }
+
+  .xl\:mb-15 {
+    margin-bottom: 3.75rem;
+  }
+
+  .xl\:ml-15 {
+    margin-left: 3.75rem;
   }
 
   .xl\:mt-16 {
@@ -16287,6 +16723,10 @@ http://flickity.metafizzy.co
     padding: 1rem;
   }
 
+  .xl\:p-5 {
+    padding: 1.25rem;
+  }
+
   .xl\:p-6 {
     padding: 1.5rem;
   }
@@ -16313,6 +16753,10 @@ http://flickity.metafizzy.co
 
   .xl\:p-14 {
     padding: 6rem;
+  }
+
+  .xl\:p-15 {
+    padding: 3.75rem;
   }
 
   .xl\:p-16 {
@@ -16379,6 +16823,16 @@ http://flickity.metafizzy.co
   .xl\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .xl\:py-5 {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .xl\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .xl\:py-6 {
@@ -16449,6 +16903,16 @@ http://flickity.metafizzy.co
   .xl\:px-14 {
     padding-left: 6rem;
     padding-right: 6rem;
+  }
+
+  .xl\:py-15 {
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+
+  .xl\:px-15 {
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
   }
 
   .xl\:py-16 {
@@ -16571,6 +17035,22 @@ http://flickity.metafizzy.co
     padding-left: 1rem;
   }
 
+  .xl\:pt-5 {
+    padding-top: 1.25rem;
+  }
+
+  .xl\:pr-5 {
+    padding-right: 1.25rem;
+  }
+
+  .xl\:pb-5 {
+    padding-bottom: 1.25rem;
+  }
+
+  .xl\:pl-5 {
+    padding-left: 1.25rem;
+  }
+
   .xl\:pt-6 {
     padding-top: 1.5rem;
   }
@@ -16681,6 +17161,22 @@ http://flickity.metafizzy.co
 
   .xl\:pl-14 {
     padding-left: 6rem;
+  }
+
+  .xl\:pt-15 {
+    padding-top: 3.75rem;
+  }
+
+  .xl\:pr-15 {
+    padding-right: 3.75rem;
+  }
+
+  .xl\:pb-15 {
+    padding-bottom: 3.75rem;
+  }
+
+  .xl\:pl-15 {
+    padding-left: 3.75rem;
   }
 
   .xl\:pt-16 {
