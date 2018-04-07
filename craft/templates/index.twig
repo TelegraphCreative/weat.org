@@ -13,18 +13,24 @@
 
 
 	{# Events … == #}
-	
+
+	{% include '_components/cards--events' with {
+		Content: entry.featuredEvents
+	}
+	%}
+
 
 	{# CTA Hero #}
-		{% include '_components/hero--cta' with {
-			Spacing: false,
-			Header: entry.header,
-			Text: entry.textBarebones,
-			Button: entry.button2,
-			Class: 'border-6 border-white',
-			WrapClass: 'md:pt-10'
-			} 
-		%}
+	{% include '_components/hero--cta' with {
+		Spacing: false,
+		Header: entry.header,
+		Text: entry.textBarebones,
+		Button: entry.button2,
+		Class: 'border-6 border-white',
+		WrapClass: 'md:pt-10'
+		} 
+	%}
+
 
 	{# About #}
 	{% include '_components/headers' with {

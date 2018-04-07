@@ -1,0 +1,26 @@
+{# Site Notification #}
+{% set firstSeg = craft.request.firstSegment %}
+{% if firstSeg  == '' or firstSeg == 'home' %}
+	{% set Visibility = entry.showNotificationBanner %}
+	{% set Text = entry.bannerNotification %}
+	{% set Button = entry.urlLink %}
+	
+	{% if Visibility > 0  %}
+
+		{% if Button|length %}
+
+			<a class="text-center py-3 px-3 block no-underline text-2xs uppercase bg-blue-dark font-bold tracking-wide hover:bg-blue text-blue-light hover:text-white" target="{{Button.target}}" href="{{Button.url}}">
+				{{Text}}
+			</a>
+
+		{% else %}
+			<div class="text-center py-3 px-3 text-blue-light text-2xs uppercase bg-blue-dark font-bold tracking-wide">
+				{{Text}}
+			</div>
+			
+		{% endif %}
+
+	{% endif %}
+
+	
+{% endif %}

@@ -1,0 +1,43 @@
+{# Event Cards #}
+
+{% set Events = craft.venti.events() %}
+  
+<section class="cards--events m-auto max-w-2xl pt-6 mb-6 sm:pt-10 sm:mb-12">
+	<div class="sm:flex sm:flex-wrap sm:justify-center sm:-mx-2 sm:flex-wrap">
+		{% set Contents = Content.count() %}
+
+		{# Featured 2 Events + Card #}
+		{% if Contents > 1 and Contents < 3 %}
+			
+			{% for entry in Content.limit(3) %}
+
+				{% include '_components/cards--events__event' %}
+
+			{% endfor %}
+
+			{% include '_components/cards--events__more' %}
+		
+		{# Featured 3 Events #}
+		{% elseif Contents > 2 %}
+
+			{% for entry in Content.limit(3) %}
+
+				{% include '_components/cards--events__event' %}
+
+			{% endfor %}
+
+		{# Latest 2 Events + Card #}
+		{% else %}
+
+			{% for entry in Events.limit(2) %}
+
+				{% include '_components/cards--events__event' %}
+
+			{% endfor %}
+		
+			{% include '_components/cards--events__more' %}
+		
+
+		{% endif %}
+	</div>
+</section>

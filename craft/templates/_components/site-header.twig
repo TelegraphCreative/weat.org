@@ -1,111 +1,159 @@
-{# Main Site Menu #}
-<section class="site-header    simple-container">
+<footer class="site-footer bg-blue text-blue-light">
+	<div class="container m-auto  pt-9 px-2 pb-4">
+		<div class="flex-wrap md:flex md:flex-justify">
 
-	<div class="main-menu-bar   md:flex md:justify-between items-center py-4 md:py-6">
+			{# Info Group #}
+			<div class="info-group w-full text-center border-b-2 border-blue-light mb-10 lg:border-0 lg:w-1/2 lg:text-left lg:mb-0 pb-6 sm:pb-0">
+				<div class="content">
+					<div class="brand-logo text-blue-light mb-12 sm:mb-4 m-auto lg:ml-0">
+						{% include '_components/svg-weat-brand--simple' %}
+					</div>
 
-		{# Brand #}
-		<div class="main-menu__brand    inline-block w-48 md:w-1/4 lg:w-1/3 sm:mr-2">
-			<div class="brand-logo text-grey">
-				{% include '_components/svg-weat-brand--grad' %}
+					<div class="contact text-1xs lg:pl-16">
+						<a href="tel:#" class="text-white hover:text-blue-light no-underline block mb-2">(512) 693-0060</a>
+
+						<a href="mailto:#" class="text-white hover:text-blue-light no-underline block mb-8">julie@weat.org</a>
+
+						<p class="text-white no-underline block mb-8">
+							<span class="block mb-2">
+								<span class="street">1825 Fort View Road, Suite 108</span>
+							</span>
+							
+							<span class="block">
+								<span class="city">Austin </span>
+								<span class="state">TX </span> 
+								<span class="zipcode">78042</span>
+							</span>
+						</p>
+					</div>
+
+					<div class="social reset-list text-2xs mb-14 sm:mb-18 lg:pl-16">
+						{% include '_components/list--social' %}
+					</div>
+
+					<div class="copyright lg:pl-16">
+						<small class="text-2xs tracking-md">© 2018 Water Environment Association of Texas</small>
+					</div>
+
+				</div>
 			</div>
-		</div>
-
-		{# Main Menu #}
-		<nav class="main-menu  hidden md:block md:flex-1 w-full md:w-auto  ">
-			<ul class="menu__list   list-reset md:flex md:pt-0 pt-6">
-				
-				{# Drop #}
-				<li class="menu__drop   md:inline-block md:px-3 md:py-0 py-2">
-					<a data-module="toggleDrop" href="/" class="drop__toggle     uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">
-						About
-						{{svg.icon('indicator icon sm inline-flex md:hidden','arrow-right')}}
-					</a>
-
-					<ul class="menu__drop-menu   hidden md:block">
-						<li><a href="/">About Weat</a></li>
-						<li><a href="/">Executive Board</a></li>
-						<li><a href="/">Committee Chairs</a></li>
-						<li><a href="/">Contact</a></li>
-					</ul>
-				</li>
-				
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Join</a>
-				</li>
-
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Learn</a>
-				</li>
-
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Engage</a>
-				</li>
-
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Advocate</a>
-				</li>
-			</ul>
-		</nav>
-
-		{# Utility Bar #}
-		<div class="menu__utility-bar hidden md:block">
-			<ul class="utility-menu   list-reset md:py-0 py-4">
-
-				{# Drop #}
-				<li class="menu__drop   md:inline-block md:py-0 py-1 md:px-3 mb-2 md:mb-0">
-					{% if currentUser %}
-						<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs " href="/members/edit">
-								My Account
-								{{svg.icon('indicator icon sm inline-flex md:hidden','arrow-right')}}
-						</a>
-					{% else %}
-						<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs " href="/members/login">
-								Member Login
-								{{svg.icon('indicator icon sm inline-flex md:hidden','arrow-right')}}
-						</a>
-					{% endif %}
-
-					<ul class="menu__drop-menu --right hidden md:block">
-						<li><a href="/">Settings</a></li>
-						<li><a href="/">Events</a></li>
-						<li><a href="/">Committees</a></li>
-						<li><a href="/">Logout</a></li>
-
-						<li class="highlight">
-							<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs" href="/admin">Admin Panel</a>
-						</li>
-					</ul>
-				</li>
-				
-				{# Link #}
-				<li class="has-icon   md:inline-block md:pt-0 pt-2">
-					<a href="/">
-						<span class="icon search top-1 relative --sm tr-all ml-1 text-black hover:text-blue-light">
-							<svg><use xlink:href="/assets/svg/symbols.svg#zoom"></use></svg>
-						</span>
-					</a>
-				</li>
 			
-			</ul>
+
+			{# Info Group #}
+			<div class="info-group w-full lg:w-1/2 flex-wrap flex">
+				{# Column #}
+				<div class="info-group__col w-1/2 md:w-1/3 pr-6">
+					
+					<nav class="footer-list mb-8" role="navigation">
+
+						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">About</h5>
+
+						<ul class="list-reset text-1xs">
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">About WEAT</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+						</ul>
+					
+					</nav>
+
+					<nav class="footer-list mb-8" role="navigation">
+
+						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Join</h5>
+
+						<ul class="list-reset text-1xs">
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Become a Member</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+						</ul>
+					</nav>
+
+				</div>
+
+				{# Column #}
+				<div class="info-group__col w-1/2 md:w-1/3 pr-6">
+					
+					{# Nav #}
+					<nav class="footer-list mb-8" role="navigation">
+						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Learn</h5>
+
+						<ul class="list-reset text-1xs">
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
+						</ul>
+				
+					</nav>
+					
+					{# Nav #}
+					<nav class="footer-list mb-8" role="navigation">
+						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Engage</h5>
+
+						<ul class="list-reset text-1xs">
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Texas Water!</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Events</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Awards</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Scholarships</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Young Professionals</a></li>
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Operators</a></li>
+						</ul>
+					</nav>
+					
+				</div>
+
+
+				{# Column #}
+				<div class="info-group__col w-full flex md:block md:w-1/3 pr-6">
+									
+					{# Nav #}
+					<nav class="footer-list mb-8 md:w-auto w-1/2" role="navigation">
+						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Advocate</h5>
+
+						<ul class="list-reset text-1xs">
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Legislative Issues</a></li>
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Regulatory Affairs</a></li>
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Water Infrastructure</a></li>
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Funding</a></li>
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Executive Director Corner</a></li>
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Press</a></li>
+						</ul>
+					</nav>
+
+					{# Nav #}
+					<nav class="footer-list mb-8 md:w-auto w-1/2" role="navigation">
+						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">More</h5>
+
+						<ul class="list-reset text-1xs">
+
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Login</a></li>
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Search</a></li>
+							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Subscribe</a></li>
+						</ul>
+				
+					</nav>
+					
+				</div>
+
+				
+			</div>
 
 		</div>
-
-
 	</div>
 
-	{# Toggle #}
-	<div class="main-menu__toggle    absolute tr-all-1 cursor-pointer inline-block mt-1 md:hidden" data-module="toggleTarget" data-target="main-menu-bar">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-	</div>
-
-</section>
-
-{# Bo's Stuff #}
-{# {% include '_components/bo-s-site-header' %} #}
+</footer>

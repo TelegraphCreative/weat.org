@@ -1,4 +1,5 @@
 {# Timeline Event Content/Detail #}
+{% import '_macros/svg' as svg %}
 <a class="no-underline hover:text-green mt-8 md:mt-12" href="{{ event.url }}">
     <h4 class="text-2md sm:text-lg mb-8 md:mb-12">{{ event.title }}</h4>
 </a>
@@ -8,7 +9,7 @@
     {% if event.location|length %}
 	    <div class="flex sm:mb-2">
 	        {{svg.icon('icon --map --sm mr-3 top-2 relative tr-all','map')}}
-            
+
 	        <a class="text-xs mb-3 block no-underline text-grey-dark hover:text-blue" target="_blank" href="{{event.location[0].getMapUrl()}}">{{event.location[0]}}</a>
 	    </div>
     {% endif %}

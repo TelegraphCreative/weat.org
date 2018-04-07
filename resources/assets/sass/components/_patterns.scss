@@ -2,8 +2,17 @@
 // Patterns
 //
 
-// Header
-.page-header .dots {
+// Header with Dots Background
+.page-header {
+	background-image: url("/assets/svg/pattern_page-header-bg.svg");
+	background-position: right;
+	background-repeat: no-repeat;
+	background-size: auto 100%;
+}
+
+// Header with Dots Overlay
+.page-header.dots {
+	background-image: none;
 	@screen md {
 
 		&.pin-l {
@@ -17,3 +26,11 @@
 
 	}
 }
+
+/*
+.page-header .bg-dots, .blip{
+	background-image: url("/assets/svg/pattern_page-header-bg.svg");
+	background-position: right;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+}*/

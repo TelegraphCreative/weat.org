@@ -1,0 +1,30 @@
+{# Event Card -- See All Filler Card #}
+
+{% set Header = '
+32 Committees <br>
+4 Annual Conferences <br>
+19 Meetup Groups 
+' %}
+{% set Text = 'That’s a lot of events.<br> Open to non-members. Join us!' %}
+
+{% set Button = 'See All Events' %}
+
+
+<div class="card w-full sm:w-1/2 lg:w-1/3 px-4  mb-4 text-center ">
+	<div class="border-blue border h-full flex flex-col items-center">
+		<div class="sm:w-4/5 m-auto py-10">
+
+			<h2 class="text-2md mb-4 text-blue">
+				{{Header|raw}}
+			</h2>
+
+			<div class="text-base text-grey-dark leading-normal mb-12">
+				{{Text|raw}}
+			</div>
+
+			<a href="#" class="btn w-full">{{Button}}</a>
+
+		</div>
+	</div>
+
+</div>
