@@ -99,13 +99,55 @@
 			</header>
 		</div>
 		
+		{# Link Item #}
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/detailArticle" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Article Detail
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
+		
+		{# Link Item #}
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/indexImage" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Image Index
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
+		
+		
+		
+		
 		{# Section Header #}
 		<div class="mt-12">
 			{% include '_components/header--section-divider' with {'title': 'Checkout'} %}
 
 		</div>
 		
-    
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
 			{# Header #}
@@ -126,49 +168,8 @@
 			</header>
 		</div>
 
-		{# Link Item #}
-		<div class="border-b border-grey-lightest pt-8 pb-8">	
-			{# Header #}
-			<header class="item__header">
 
-				<a href="/fed/detailArticle" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
-					<h4 class="text-blue text-1md sm:text-2md tr-all">
-						Article Detail
-					</h4>
-					
-					<div class="cursor-pointer relative">
-						<span class="icon --link --md ml-1 ">
-							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
-						</span>
-					</div>
-				</a>
 
-			</header>
-		</div>
-
-		
-
-		{# Link Item #}
-		<div class="border-b border-grey-lightest pt-8 pb-8">	
-			{# Header #}
-			<header class="item__header">
-
-				<a href="/fed/detailArticle" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
-					<h4 class="text-blue text-1md sm:text-2md tr-all">
-						Article Detail
-					</h4>
-					
-					<div class="cursor-pointer relative">
-						<span class="icon --link --md ml-1 ">
-							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
-						</span>
-					</div>
-				</a>
-
-			</header>
-		</div>
-
-		
 
 		{# Section Header #}
 		<div class="mt-12">
@@ -218,11 +219,12 @@
 		</div>
 
 
+
+
 		{# Section Header #}
 		<div class="mt-12">
-      {% include '_components/header--section-divider' with {'title': 'Forms'} %}
+      		{% include '_components/header--section-divider' with {'title': 'Forms'} %}
 		</div>
-
 
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
@@ -309,7 +311,7 @@
 
 		{# Section Header #}
 		<div class="mt-12">
-      {% include '_components/header--section-divider' with {'title': 'Visual Style Guide'} %}
+      		{% include '_components/header--section-divider' with {'title': 'Visual Style Guide'} %}
 		</div>
 
 		{# Link Item #}
@@ -331,19 +333,9 @@
 
 			</header>
 		</div>
-
-
-				
-
 		
-
 	</div>
-
-
 	
-
-
-
 </section>
 
 {% endblock %}
