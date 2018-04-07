@@ -1242,17 +1242,36 @@ svg {
   height: 100%;
 }
 
+.page-header {
+  background-image: url("/assets/svg/pattern_page-header-bg.svg");
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+.page-header.dots {
+  background-image: none;
+}
+
 @media (min-width: 768px) {
-  .page-header .dots.pin-l {
+  .page-header.dots.pin-l {
     left: -2.25rem;
     top: 1.5rem;
   }
 
-  .page-header .dots.pin-r {
+  .page-header.dots.pin-r {
     right: -2.15rem;
     bottom: -2rem;
   }
 }
+
+/*
+.page-header .bg-dots, .blip{
+	background-image: url("/assets/svg/pattern_page-header-bg.svg");
+	background-position: right;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+}*/
 
 .aside__category-tags li a::after {
   content: ',';
