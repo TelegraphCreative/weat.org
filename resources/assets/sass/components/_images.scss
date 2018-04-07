@@ -11,8 +11,9 @@
   &.is1by1,
   // &.is4by3,
   // &.is3by2,
-  &.is16by9
+  &.is16by9,
   // &.is2by1
+  &.is552by716
   {
     overflow: hidden;
     
@@ -37,5 +38,9 @@
   }
   &.is2by1 {
     padding-top: 50%
+  }
+  &.is552by716 {
+	  padding-top: 129.71014493%
+	//padding-top: 77.09497207%
   }
 }
