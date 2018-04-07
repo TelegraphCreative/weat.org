@@ -7,6 +7,10 @@
 .simple-container {
   padding-right: 1rem;
   padding-left: 1rem;
+  &.--x-0 {
+  	padding-right: 0;
+	  padding-left: 0;
+  }
 }
 @screen md {
 	.simple-container {

@@ -15,7 +15,7 @@
 
 	// # Links
 	a {
-		@apply .block .text-xs .no-underline .py-3 .px-3 .text-grey-dark;
+		@apply .block .text-xs .no-underline .py-3 .px-3 .text-white;
 		white-space: nowrap;
 		min-width: 12em;
 
@@ -23,8 +23,19 @@
 			@apply .text-blue-light ;
 		}
 	}
+	.highlight {
+		@apply .bg-blue-dark .text-white;
 
+		&:hover {
+			@apply .text-blue-light
+		}
+	}
 	// Above 
+	@screen lg {
+		.highlight {
+			@apply .text-xs
+		}
+	}
 	@screen md {
 
 		@apply .pt-2 .absolute .bg-blue .z-50 .pointer-events-none .opacity-0 .tr-all ; 
@@ -37,7 +48,7 @@
 
 		// # Links
 		a {
-			@apply .text-sm .pt-4 .pb-3 .px-6 .font-light .text-white;
+			@apply .text-sm .pt-4 .pb-3 .px-6 .font-light ;
 			white-space: nowrap;
 			min-width: 12em;
 		}
@@ -52,11 +63,13 @@
 				}
 			}
 			// Highlight
-			&.highlight {
-				a {
-					@apply .bg-blue-dark .pt-4  .mt-3 .text-center;
+			a.highlight {
+
+					@apply  .pt-4  .mt-3 .text-center .tracking-normal .no-underline;
 					padding-bottom: 1.25rem;
-				}
+
+					
+
 			}
 		}			
 	

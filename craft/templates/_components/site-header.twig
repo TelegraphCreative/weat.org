@@ -1,90 +1,130 @@
-{# Main Site Menu #}
-<section class="site-header    simple-container">
+{% set mainMenu = craft.navee.getNav('mainMenu') %}
+{% set memberMenu = craft.navee.getNav('memberLogin') %}
 
-	<div class="main-menu-bar   md:flex md:justify-between items-center py-4 md:py-6">
+{# Main Site Menu #}
+<section class="site-header    simple-container --x-0 relative">
+
+	<div class="main-menu-bar   md:flex md:justify-between items-center pt-4 md:py-6">
 
 		{# Brand #}
-		<div class="main-menu__brand    inline-block w-48 md:w-1/4 lg:w-1/3 sm:mr-2">
-			<div class="brand-logo text-grey">
+		<div class="main-menu__brand    pl-4  inline-block w-48 md:w-1/4 lg:w-1/3 sm:mr-2 md:pb-0 pb-4">
+			<a href="/" class="inline-block brand-logo text-grey hover:text-blue-light">
 				{% include '_components/svg-weat-brand--grad' %}
-			</div>
+			</a>
 		</div>
 
 		{# Main Menu #}
-		<nav class="main-menu  hidden md:block md:flex-1 w-full md:w-auto  ">
-			<ul class="menu__list   list-reset md:flex md:pt-0 pt-6">
+		<nav class="main-menu bg-blue md:bg-transparent hidden md:block md:flex-1 w-full md:w-auto md:px-0 px-4">
+			<ul class="menu__list   list-reset md:flex md:pt-0 pt-4">
+
+
+				{% nav item in mainMenu %}
+		        <li class="
+								md:inline-block 
+
+								{% if item.level == 1 %}
+									md:px-3 py-1 md:py-0 
+								{% endif %}
+
+		        		{% if item.hasChildren %}
+			            menu__drop
+		            {% endif %}
+
+		        		{{ item.class }}
+		        		">
+		            <a 
+		            	{% if item.hasChildren %}
+			            	data-module="toggleDrop"
+		            	{% endif %}
+			            href="{{ item.link }}" target="{{ item.target }}" 
+			            class="
+				            {% if item.level == 1 %}
+				            uppercase font-bold tracking-wide text-blue-light md:text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block pb-2 md:pb-0
+				            {% else %}
+				            	
+			            	{% endif %}
+			            ">
+			            {{ item.title }}
+
+			            {% if item.hasChildren %}
+				            {{svg.icon('indicator icon sm inline-flex md:hidden','arrow-right')}}
+				           {% endif %}
+			          </a>
+
+		            {% ifchildren %}
+		                <ul class="menu__drop-menu   hidden md:block md:pb-0 pb-2">
+			                {% children %}
+			              </ul>
+		            {% endifchildren %}
+		            
+		            
+
+
+		            {# {% if item.hasChildren %}
+		            has children 
+		            {% endif %}
+
+		            {% if item.level == 1 %}
+		            {% else %}
+	            	{% endif %}
+ #}
+		            
+
+		        </li>
+		    {% endnav %}
+
+
 				
-				{# Drop #}
-				<li class="menu__drop   md:inline-block md:px-3 md:py-0 py-2">
-					<a data-module="toggleDrop" href="/" class="drop__toggle     uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">
-						About
-						{{svg.icon('indicator icon sm inline-flex md:hidden','arrow-right')}}
-					</a>
-
-					<ul class="menu__drop-menu   hidden md:block">
-						<li><a href="/">About Weat</a></li>
-						<li><a href="/">Executive Board</a></li>
-						<li><a href="/">Committee Chairs</a></li>
-						<li><a href="/">Contact</a></li>
-					</ul>
-				</li>
-				
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Join</a>
-				</li>
-
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Learn</a>
-				</li>
-
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Engage</a>
-				</li>
-
-				{# Link #}
-				<li class="menu__link   md:inline-block md:px-3 md:py-0 py-2">
-					<a href="/" class="uppercase font-bold tracking-wide text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block mb-2 md:mb-0">Advocate</a>
-				</li>
 			</ul>
 		</nav>
 
 		{# Utility Bar #}
-		<div class="menu__utility-bar hidden md:block">
-			<ul class="utility-menu   list-reset md:py-0 py-4">
+		<div class="menu__utility-bar hidden md:block bg-blue md:bg-transparent md:px-0 px-4 sm:pt-0 pt-3">
+			<ul class="utility-menu   list-reset md:py-0 pb-6 pt-4 pr-0 md:pr-4  md:border-0 border-t-2 border-blue-light md:pt-0 pt-2 ">
 
 				{# Drop #}
 				<li class="menu__drop   md:inline-block md:py-0 py-1 md:px-3 mb-2 md:mb-0">
 					{% if currentUser %}
-						<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs " href="/members/edit">
+						<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue-light md:text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-xs " href="/members/edit">
 								My Account
-								{{svg.icon('indicator icon sm inline-flex md:hidden','arrow-right')}}
+								{{svg.icon('icon h-2 w-2 inline-flex','arrow-down--solid')}}
 						</a>
 					{% else %}
-						<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs " href="/members/login">
+						<a class="tracking-normal text-blue-light md:text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-xs " href="/members/login">
 								Member Login
-								{{svg.icon('indicator icon sm inline-flex md:hidden','arrow-right')}}
 						</a>
 					{% endif %}
 
-					<ul class="menu__drop-menu --right hidden md:block">
+					{% if currentUser %}
+						<ul class="menu__drop-menu --right hidden md:block md:pt-0 pt-4">
+							{% nav item in memberMenu %}
+								<li>
+									<a href="{{ item.link }}" target="{{ item.target }}" class="{{item.class}}">
+			            {{ item.title }}
+				          </a>
+								</li>
+							{%endnav%}
+						</ul>
+					{% endif %}
+					
+
+					{# <ul class="menu__drop-menu --right hidden md:block md:pt-0 pt-4">
 						<li><a href="/">Settings</a></li>
 						<li><a href="/">Events</a></li>
 						<li><a href="/">Committees</a></li>
 						<li><a href="/">Logout</a></li>
 
-						<li class="highlight">
-							<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs" href="/admin">Admin Panel</a>
+						<li>
+							<a class="highlight" href="/admin">Admin Panel</a>
 						</li>
-					</ul>
+					</ul> #}
 				</li>
 				
 				{# Link #}
 				<li class="has-icon   md:inline-block md:pt-0 pt-2">
 					<a href="/">
-						<span class="icon search top-1 relative --sm tr-all ml-1 text-black hover:text-blue-light">
+						<span class="inline-block md:hidden text-blue-light text-xs">Search</span>
+						<span class="icon search top-2 relative --sm tr-all ml-1 text-blue-light md:text-black hover:text-blue-light">
 							<svg><use xlink:href="/assets/svg/symbols.svg#zoom"></use></svg>
 						</span>
 					</a>

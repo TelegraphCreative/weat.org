@@ -755,13 +755,28 @@ textarea {
   padding-bottom: .75rem;
   padding-left: .75rem;
   padding-right: .75rem;
-  color: #86949c;
+  color: #fff;
   white-space: nowrap;
   min-width: 12em;
 }
 
 .menu__drop-menu a:hover {
   color: #5fc3e2;
+}
+
+.menu__drop-menu .highlight {
+  background-color: #10387a;
+  color: #fff;
+}
+
+.menu__drop-menu .highlight:hover {
+  color: #5fc3e2;
+}
+
+@media (min-width: 992px) {
+  .menu__drop-menu .highlight {
+    font-size: .875rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -788,7 +803,6 @@ textarea {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     font-weight: 300;
-    color: #fff;
     white-space: nowrap;
     min-width: 12em;
   }
@@ -797,11 +811,12 @@ textarea {
     padding-bottom: 2rem;
   }
 
-  .menu__drop-menu li.highlight a {
-    background-color: #10387a;
+  .menu__drop-menu li a.highlight {
     padding-top: 1rem;
     margin-top: .75rem;
     text-align: center;
+    letter-spacing: 0;
+    text-decoration: none;
     padding-bottom: 1.25rem;
   }
 }
@@ -922,6 +937,11 @@ textarea {
 .simple-container {
   padding-right: 1rem;
   padding-left: 1rem;
+}
+
+.simple-container.\--x-0 {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 @media (min-width: 768px) {
