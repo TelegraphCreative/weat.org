@@ -14,10 +14,15 @@
 
 	{# List: Accordion Link/Doc/Info #}
 	{# Template note: only include data-module="accordion" 1x per page #}
+
 	<div class="list-accordion  md:px-0 px-6 m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-xl" data-module="accordion">
 		
 		{# Section Header #}
-		{% include '_components/header--section-divider' with {'title': 'Layouts (Static Front End)'} %}
+		{% include '_components/headers' with {
+			type: 'section-header--divider', 
+			'title': 'Layouts (Static Front End)'
+			} 
+		%}
 
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
@@ -142,10 +147,13 @@
 		
 		
 		
-		{# Section Header #}
 		<div class="mt-12">
-			{% include '_components/header--section-divider' with {'title': 'Checkout'} %}
-
+			{# Section Header #}
+			{% include '_components/headers' with {
+				type: 'section-header--divider', 
+				'title': 'Checkout'
+				} 
+			%}
 		</div>
 		
 		{# Link Item #}
@@ -173,7 +181,11 @@
 
 		{# Section Header #}
 		<div class="mt-12">
-			{% include '_components/header--section-divider' with {'title': 'Events'} %}
+			{% include '_components/headers' with {
+				type: 'section-header--divider', 
+				'title': 'Events'
+				} 
+			%}
 		</div>
 
 
@@ -223,7 +235,11 @@
 
 		{# Section Header #}
 		<div class="mt-12">
-      		{% include '_components/header--section-divider' with {'title': 'Forms'} %}
+			{% include '_components/headers' with {
+				type: 'section-header--divider', 
+				'title': 'Forms'
+				} 
+			%}
 		</div>
 
 		{# Link Item #}
@@ -311,7 +327,11 @@
 
 		{# Section Header #}
 		<div class="mt-12">
-      		{% include '_components/header--section-divider' with {'title': 'Visual Style Guide'} %}
+			{% include '_components/headers' with {
+				type: 'section-header--divider', 
+				'title': 'Visual Style Guide'
+				} 
+			%}
 		</div>
 
 		{# Link Item #}

@@ -48,7 +48,13 @@
 			{% endif %}
 		</header>
 
+	{# Section Header -- Divider #}
+	{% case "section-header--divider" %}
+		<header class="section-header text-1md sm:text-2md text-grey-dark py-4 border-b border-grey-lightest ">
+			<h4>{{title}}</h4>
+		</header>
 
+		
 	{% default %}
 		other
 
