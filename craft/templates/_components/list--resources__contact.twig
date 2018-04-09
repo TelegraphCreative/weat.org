@@ -17,11 +17,11 @@
 
 		<div class="text-base text-grey-dark m-auto w-full leading-normal">
 
-			{% if block.phone|length %}
+			{% if block.phone != '(###) ###-####' %}
 				<a href="tel:{{block.phone}}" class="block no-underline text-grey-dark hover:text-blue">{{block.phone}}</a>
 			{% endif %}
 
-			{% if block.phone|length %}
+			{% if block.email|length %}
 				<a href="tel:{{block.phone}}" class="block no-underline text-grey-dark hover:text-blue">{{block.email}}</a>
 			{% endif %}
 
