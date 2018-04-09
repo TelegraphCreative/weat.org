@@ -41,9 +41,9 @@
 		} 
 	%}
 	
-	{% include '_components/list--features' with {
+	{% include '_components/list--features--icons' with {
 			Content: entry.listFeature,
-			Class: "mb-18 md:mb-xl md:pt-12 sm:pb-8 pt-8"
+			Class: "mb-18 md:mb-xl sm:pb-8 pt-8"
 		}
 	%}
 
@@ -54,7 +54,8 @@
 			Tagline: entry.tagline, 
 			Quote: entry.caption, 
 			Cite: entry.subheading, 
-			Image: entry.singleImage2[0] 
+			Image: entry.singleImage2[0],
+			Visibility: entry.showStory
 		} 
 	%}
 	

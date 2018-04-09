@@ -11,13 +11,13 @@
 	{% endfor %}
 {% endmacro %}
 
+
 {# Multiple, Transform #}
 {% macro multiple_transform(images, transform, class) %}
 	{% for image in images %}	
 		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
 	{% endfor %}
 {% endmacro %}
-
 
 
 {# == Sprite == #}
@@ -27,11 +27,13 @@
 	</span>
 {% endmacro %}
 
+
 {% macro tag(images, transform, class) %}
 	{% for image in images.limit(1) %}	
 		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
 	{% endfor %}
 {% endmacro %}
+
 
 {% macro tagLink(link, images, transform, class) %}
 	{%- if link -%}
@@ -46,11 +48,13 @@
 
 {% endmacro %}
 
+
 {% macro tags(images, transform, class, limit) %}
 	{% for image in images.limit(limit) %}	
 		<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}">
 	{% endfor %}
 {% endmacro %}
+
 
 {% macro url(images,transform) %}
     {%- for image in images.limit(1) -%}	
