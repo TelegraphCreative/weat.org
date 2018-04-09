@@ -3,13 +3,16 @@
 		<div class="flex-wrap md:flex md:flex-justify">
 
 			{# Info Group #}
+
 			<div class="info-group w-full text-center border-b-2 border-blue-light mb-10 lg:border-0 lg:w-1/2 lg:text-left lg:mb-0 pb-6 lg:pb-0">
+
 				<div class="content">
 					<div class="brand-logo text-blue-light mb-12 sm:mb-4 m-auto lg:ml-0">
 						{% include '_components/svg--weat-brand--simple' %}
 					</div>
 
 					<div class="contact text-1xs lg:pl-16">
+
 						{% if about.phone %}
 							<a href="tel:{{about.phone}}" class="text-white hover:text-blue-light no-underline block mb-2">{{about.phone}}</a>
 						{% endif %}
@@ -28,6 +31,7 @@
 								<span class="city">{{about.address.parts.locality}} </span>
 								<span class="state">{{about.address.parts.administrative_area_level_1_short}} </span> 
 								<span class="zipcode">{{about.address.parts.postal_code}}</span>
+
 							</span>
 						</p>
 					</div>
@@ -37,7 +41,9 @@
 					</div>
 
 					<div class="copyright lg:pl-16">
-						<small class="text-2xs tracking-md">© {{now.year}} {{siteName}}</small>
+						
+            <small class="text-2xs tracking-md">© {{now.year}} {{siteName}}</small>
+
 					</div>
 
 				</div>
@@ -86,6 +92,7 @@
 					
 					{# Nav #}
 					<nav class="footer-list mb-8" role="navigation">
+
 						{% set footerGroup2 = craft.navee.getNav('footerGroup2') %}
 						{% nav item in footerGroup2 %}
 
@@ -111,6 +118,7 @@
 							{% endifchildren %}
 							
 						{% endnav %}
+
 					</nav>
 					
 				</div>
@@ -121,6 +129,7 @@
 									
 					{# Nav #}
 					<nav class="footer-list mb-8 md:w-auto w-1/2" role="navigation">
+
 						{% set footerGroup3 = craft.navee.getNav('footerGroup3') %}
 						{% nav item in footerGroup3 %}
 
@@ -146,6 +155,7 @@
 							{% endifchildren %}
 							
 						{% endnav %}
+
 					</nav>
 					
 				</div>
