@@ -45,23 +45,33 @@
 
       {# Main #}
       <section class="main-content lg:float-left lg:w-2/3 md:px-4 ">
-        
-        {# Featured Event Header #}
-        <header class="pt-6 sm:py-8 sm:mt-12 sm:flex sm:justify-between sm:mb-0 mb-4">
-          <div class="title md:1/2 md:pr-4">
-            <h1 class="text-2md sm:text-lg md:text-xl">Featured Event</h1>
-          </div>
-        </header>
-        
+
         {# Featured Event #}
         {% for entry in craft.entries.section('eventsLanding') %}
-          {% set event = entry.featuredEvent[0] %}
+          {% set Count = entry.featuredEvent.count() %}
+          
+          
+          {% if Count > 0 %}
+            {% set event = entry.featuredEvent[0] %}
+            {# Featured Event Header #}
+            <header class="pt-6 sm:py-8 sm:mt-12 sm:flex sm:justify-between sm:mb-0 mb-4">
+              <div class="title md:1/2 md:pr-4">
+                <h1 class="text-2md sm:text-lg md:text-xl">Featured Event</h1>
+              </div>
+            </header>
+            
+    
+            <figure class="img is16by9 bg-grey-lightest md:mb-4">
+              {% if event.singleImage|length %}
+                {{image.single_simple(event.singleImage[0],'absolute pin-t pin-l')}}  
+              {% else %}
+                {# Placeholder #}
+                <img src="/assets/img/WEAT-placeholder-img.jpg" class="absolute pin-t pin-l">
+              {% endif %}
+            </figure>
 
-          <figure class="img is16by9 bg-grey-lightest md:mb-4">
-            {{image.single_simple(event.singleImage[0],'absolute pin-t pin-l')}}  
-          </figure>
-
-          {% include 'events/components/_timeline-item--first' %}  
+            {% include 'events/components/_timeline-item--first' %}  
+          {% endif %}
 
         {% endfor %}
         

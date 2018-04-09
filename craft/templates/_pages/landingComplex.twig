@@ -28,7 +28,7 @@
 
 				{# Resources List #}
 				{% case "resourcesList" %}
-					{% include '_components/list--resources' %}
+					{% include '_components/list--resources' with {classes: 'sm:pt-10 sm:mb-10 m-auto md:w-3/5 w-full'} %}
 
 				{# Feature List #}
 				{% case "featureList" %}

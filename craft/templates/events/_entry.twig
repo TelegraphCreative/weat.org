@@ -2,7 +2,7 @@
 {% block content %}
 
 
-<div class="simple-container">
+<div class="simple-container" data-module="accordion">
   <div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
     
 
@@ -39,7 +39,10 @@
         {# Article #}
         {% case "article" %}
           {% include '_components/article' with {classes: 'event-detail__article  --btns-left mb-16'} %}
-        {% default %}
+
+        {# Resources List #}
+        {% case "resourcesList" %}
+          {% include '_components/list--resources'  with {classes: ''} %}
         
       
       {% endswitch %}

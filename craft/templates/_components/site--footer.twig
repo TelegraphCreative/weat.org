@@ -3,26 +3,35 @@
 		<div class="flex-wrap md:flex md:flex-justify">
 
 			{# Info Group #}
-			<div class="info-group w-full text-center border-b-2 border-blue-light mb-10 lg:border-0 lg:w-1/2 lg:text-left lg:mb-0 pb-6 sm:pb-0">
+
+			<div class="info-group w-full text-center border-b-2 border-blue-light mb-10 lg:border-0 lg:w-1/2 lg:text-left lg:mb-0 pb-6 lg:pb-0">
+
 				<div class="content">
 					<div class="brand-logo text-blue-light mb-12 sm:mb-4 m-auto lg:ml-0">
 						{% include '_components/svg--weat-brand--simple' %}
 					</div>
 
 					<div class="contact text-1xs lg:pl-16">
-						<a href="tel:#" class="text-white hover:text-blue-light no-underline block mb-2">(512) 693-0060</a>
 
-						<a href="mailto:#" class="text-white hover:text-blue-light no-underline block mb-8">julie@weat.org</a>
+						{% if about.phone %}
+							<a href="tel:{{about.phone}}" class="text-white hover:text-blue-light no-underline block mb-2">{{about.phone}}</a>
+						{% endif %}
+												
 
+						{% if about.email %}
+							<a href="mailto:{{about.email}}" class="text-white hover:text-blue-light no-underline block mb-8">{{about.email}}</a>
+						{% endif %}
+						
 						<p class="text-white no-underline block mb-8">
 							<span class="block mb-2">
-								<span class="street">1825 Fort View Road, Suite 108</span>
+								<span class="street">{{about.address.parts.street_number}} {{about.address.parts.route}}, {{about.suite}} {{about.address.parts.subpremise}} </span>
 							</span>
 							
 							<span class="block">
-								<span class="city">Austin </span>
-								<span class="state">TX </span> 
-								<span class="zipcode">78042</span>
+								<span class="city">{{about.address.parts.locality}} </span>
+								<span class="state">{{about.address.parts.administrative_area_level_1_short}} </span> 
+								<span class="zipcode">{{about.address.parts.postal_code}}</span>
+
 							</span>
 						</p>
 					</div>
@@ -32,7 +41,9 @@
 					</div>
 
 					<div class="copyright lg:pl-16">
-						<small class="text-2xs tracking-md">© 2018 Water Environment Association of Texas</small>
+						
+            <small class="text-2xs tracking-md">© {{now.year}} {{siteName}}</small>
+
 					</div>
 
 				</div>
@@ -43,41 +54,35 @@
 			<div class="info-group w-full lg:w-1/2 flex-wrap flex">
 				{# Column #}
 				<div class="info-group__col w-1/2 md:w-1/3 pr-6">
-					
+						
 					<nav class="footer-list mb-8" role="navigation">
+						
+						{% set footerGroup1 = craft.navee.getNav('footerGroup1') %}
+						{% nav item in footerGroup1 %}
 
-						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">About</h5>
+							{% if item.level == 1 %}
+								<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">
+									{% if item.url %}
+									<a class="text-blue-light no-underline" href="{{item.url}}" target="{{item.target}}">
+									{% endif %}									
+										{{item.title}}
+									{% if item.url %}
+									</a>
+									{% endif %}
+								</h5>
+							
+							{% else %}
+								<li class="mb-3"><a href="{{item.url}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
+							{% endif %}
 
-						<ul class="list-reset text-1xs">
+							{% ifchildren %}
+								<ul class="list-reset text-1xs mb-8">
+									{% children %}
+								</ul>
+							{% endifchildren %}
+							
+						{% endnav %}
 
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">About WEAT</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-						</ul>
-					
-					</nav>
-
-					<nav class="footer-list mb-8" role="navigation">
-
-						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Join</h5>
-
-						<ul class="list-reset text-1xs">
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Become a Member</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-						</ul>
 					</nav>
 
 				</div>
@@ -87,32 +92,33 @@
 					
 					{# Nav #}
 					<nav class="footer-list mb-8" role="navigation">
-						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Learn</h5>
 
-						<ul class="list-reset text-1xs">
+						{% set footerGroup2 = craft.navee.getNav('footerGroup2') %}
+						{% nav item in footerGroup2 %}
 
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">List Item</a></li>
-						</ul>
-				
-					</nav>
-					
-					{# Nav #}
-					<nav class="footer-list mb-8" role="navigation">
-						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Engage</h5>
+							{% if item.level == 1 %}
+								<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">
+									{% if item.url %}
+									<a class="text-blue-light no-underline" href="{{item.url}}" target="{{item.target}}">
+									{% endif %}									
+										{{item.title}}
+									{% if item.url %}
+									</a>
+									{% endif %}
+								</h5>
+							
+							{% else %}
+								<li class="mb-3"><a href="{{item.url}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
+							{% endif %}
 
-						<ul class="list-reset text-1xs">
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Texas Water!</a></li>
+							{% ifchildren %}
+								<ul class="list-reset text-1xs mb-8">
+									{% children %}
+								</ul>
+							{% endifchildren %}
+							
+						{% endnav %}
 
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Events</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Awards</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Scholarships</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Young Professionals</a></li>
-
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Operators</a></li>
-						</ul>
 					</nav>
 					
 				</div>
@@ -123,29 +129,33 @@
 									
 					{# Nav #}
 					<nav class="footer-list mb-8 md:w-auto w-1/2" role="navigation">
-						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">Advocate</h5>
 
-						<ul class="list-reset text-1xs">
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Legislative Issues</a></li>
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Regulatory Affairs</a></li>
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Water Infrastructure</a></li>
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Funding</a></li>
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Executive Director Corner</a></li>
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Press</a></li>
-						</ul>
-					</nav>
+						{% set footerGroup3 = craft.navee.getNav('footerGroup3') %}
+						{% nav item in footerGroup3 %}
 
-					{# Nav #}
-					<nav class="footer-list mb-8 md:w-auto w-1/2" role="navigation">
-						<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">More</h5>
+							{% if item.level == 1 %}
+								<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">
+									{% if item.url %}
+									<a class="text-blue-light no-underline" href="{{item.url}}" target="{{item.target}}">
+									{% endif %}									
+										{{item.title}}
+									{% if item.url %}
+									</a>
+									{% endif %}
+								</h5>
+							
+							{% else %}
+								<li class="mb-3"><a href="{{item.url}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
+							{% endif %}
 
-						<ul class="list-reset text-1xs">
+							{% ifchildren %}
+								<ul class="list-reset text-1xs mb-8">
+									{% children %}
+								</ul>
+							{% endifchildren %}
+							
+						{% endnav %}
 
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Login</a></li>
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Search</a></li>
-							<li class="mb-3"><a href="#" class="text-white hover:text-blue-light no-underline text-1xs">Subscribe</a></li>
-						</ul>
-				
 					</nav>
 					
 				</div>
