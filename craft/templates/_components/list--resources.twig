@@ -2,7 +2,11 @@
 <div class="list-accordion list--resources  md:px-0 px-6 m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-10">
 	
 	{# Section Header #}
-	{% include '_components/header--section-divider' with {'title': block.sectionTitle} %}
+	{% include '_components/headers' with {
+			type: 'section-header--divider', 
+			'title': block.sectionTitle
+		} 
+	%}
 
 	{% set list = block.listLinkDocContact %}
 	{% for block in list %}
