@@ -60,9 +60,14 @@
               </div>
             </header>
             
-
+    
             <figure class="img is16by9 bg-grey-lightest md:mb-4">
-              {{image.single_simple(event.singleImage[0],'absolute pin-t pin-l')}}  
+              {% if event.singleImage|length %}
+                {{image.single_simple(event.singleImage[0],'absolute pin-t pin-l')}}  
+              {% else %}
+                {# Placeholder #}
+                <img src="/assets/img/WEAT-placeholder-img.jpg" class="absolute pin-t pin-l">
+              {% endif %}
             </figure>
 
             {% include 'events/components/_timeline-item--first' %}  
