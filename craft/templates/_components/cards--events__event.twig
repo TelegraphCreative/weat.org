@@ -4,22 +4,26 @@
 
 	<div class="content">
 		<figure class="img is16by9 bg-grey-lightest mb-4">
-		  {{image.single_simple(entry.singleImage[0],'absolute pin-t pin-l')}}  
+			{% if entry.singleImage|length %}
+        {{image.single_simple(entry.singleImage[0],'absolute pin-t pin-l')}}  
+      {% else %}
+        {# Placeholder #}
+        <img src="/assets/img/WEAT-placeholder-img.jpg" class="absolute pin-t pin-l">
+      {% endif %}
 		</figure>
 
 		<h2 class="text-2md mb-4 text-blue">
 			<a class="text-blue hover:text-green no-underline" href="#">{{entry.title}}</a>
 		</h2>
 		<time class="block text-2xs tracking-wide uppercase mb-3 text-blue-light">{{entry.startDate|date('F d, Y')}}</time>
-
-		<div class="text-base text-grey-dark leading-normal mb-8">
-			{% if loop.index == 2 %}
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat delectus quas iure deleniti dolores qui dignissimos.</p>
-			{% else %}
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis qui consequuntur aperiam recusandae autem, eaque alias cumque explicabo maxime, blanditiis, error suscipit similique.</p>
-			{% endif %}
-			
-		</div>
+		
+		{% if entry.eventSummary|length %}
+			<div class="text-base text-grey-dark leading-normal mb-8">
+				{{entry.eventSummary}}
+			</div>
+		{% endif %}
+		
+		
 	</div>
 
 	<div>
