@@ -1110,6 +1110,14 @@ textarea {
   max-width: inherit;
 }
 
+.btn.\--special:hover .hover-show {
+  opacity: 1;
+}
+
+.btn.\--special:hover .hover-hide {
+  opacity: 0;
+}
+
 .btn.\--outline {
   background-color: transparent;
   border-width: 1px;

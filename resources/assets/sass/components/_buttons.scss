@@ -54,6 +54,18 @@
 		max-width: inherit;
 	}
 
+	//
+	// Special
+	//
+	&.--special:hover {
+		.hover-show {
+			opacity: 1;
+		}
+		.hover-hide {
+			opacity: 0;
+		}
+	}
+
 
 	//
 	// Outline

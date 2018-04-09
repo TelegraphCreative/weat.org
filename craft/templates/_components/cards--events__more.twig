@@ -1,12 +1,7 @@
 {# Event Card -- See All Filler Card #}
-
-{% set Header = '
-32 Committees <br>
-4 Annual Conferences <br>
-19 Meetup Groups 
-' %}
-{% set Text = 'That’s a lot of events.<br> Open to non-members. Join us!' %}
-
+{% set entry = craft.entries.section('eventsLanding')[0] %}
+{% set Header = entry.textBarebones %}
+{% set Text = entry.textBarebones2 %}
 {% set Button = 'See All Events' %}
 
 
@@ -22,7 +17,7 @@
 				{{Text|raw}}
 			</div>
 
-			<a href="#" class="btn w-full">{{Button}}</a>
+			<a href="/events" class="btn w-full">{{Button}}</a>
 
 		</div>
 	</div>
