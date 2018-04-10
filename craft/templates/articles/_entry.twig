@@ -45,12 +45,14 @@
 
 			{% endfor %}
 
-			{% if entry.description %}
 			{# Citations #}
-			<div class="border-t border-grey-lightest leading-tight pt-4 text-grey-dark text-xs">
-				<h5 class="leading-loose mb-1 text-xs">Citations</h5>
-				<p class="">{{entry.description}}</p>
-			</div>
+			{% if entry.description %}
+				<div class="pt-10">
+					<div class="border-t border-grey-lightest leading-tight pt-4 text-grey-dark text-xs">
+						<h5 class="mb-2 mb-1 text-xs">Citations</h5>
+						<p class="leading-tight">{{entry.description}}</p>
+					</div>
+				</div>
 			{% endif %}
 
 		</section>
