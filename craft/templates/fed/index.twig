@@ -20,7 +20,7 @@
 		{# Section Header #}
 		{% include '_components/headers' with {
 			type: 'section-header--divider', 
-			'title': 'Layouts (Static Front End)'
+			'title': 'Home'
 			} 
 		%}
 
@@ -43,6 +43,15 @@
 
 			</header>
 		</div>
+
+		{# Section Header #}
+		<div class="mt-12">
+		{% include '_components/headers' with {
+			type: 'section-header--divider', 
+			'title': 'Indexes / Landings'
+			} 
+		%}
+	</div>
 
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
@@ -124,28 +133,7 @@
 			</header>
 		</div>
 		
-
-		{# Link Item #}
-		<div class="border-b border-grey-lightest pt-8 pb-8">	
-			{# Header #}
-			<header class="item__header">
-
-				<a href="/fed/detailArticle" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
-					<h4 class="text-blue text-1md sm:text-2md tr-all">
-						Article Detail
-					</h4>
-					
-					<div class="cursor-pointer relative">
-						<span class="icon --link --md ml-1 ">
-							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
-						</span>
-					</div>
-				</a>
-
-			</header>
-		</div>
 		
-
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
 			{# Header #}
@@ -165,69 +153,6 @@
 
 			</header>
 		</div>
-		
-		
-		
-		
-		<div class="mt-12">
-			{# Section Header #}
-			{% include '_components/headers' with {
-				type: 'section-header--divider', 
-				'title': 'Checkout'
-				} 
-			%}
-		</div>
-		
-		{# Link Item #}
-		<div class="border-b border-grey-lightest pt-8 pb-8">	
-			{# Header #}
-			<header class="item__header">
-
-				<a href="/fed/checkout--order" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
-					<h4 class="text-blue text-1md sm:text-2md tr-all">
-						Order Summary
-					</h4>
-					
-					<div class="cursor-pointer relative">
-						<span class="icon --link --md ml-1 ">
-							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
-						</span>
-					</div>
-				</a>
-
-			</header>
-		</div>
-
-		<div class="border-b border-grey-lightest pt-8 pb-8">	
-			{# Header #}
-			<header class="item__header">
-
-				<a href="/fed/checkout--confirm" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
-					<h4 class="text-blue text-1md sm:text-2md tr-all">
-						Checkout Confirm
-					</h4>
-					
-					<div class="cursor-pointer relative">
-						<span class="icon --link --md ml-1 ">
-							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
-						</span>
-					</div>
-				</a>
-
-			</header>
-		</div>
-
-		
-
-		{# Section Header #}
-		<div class="mt-12">
-			{% include '_components/headers' with {
-				type: 'section-header--divider', 
-				'title': 'Events'
-				} 
-			%}
-		</div>
-
 
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
@@ -250,6 +175,35 @@
 		</div>
 
 
+
+		<div class="mt-12">
+			{# Section Header #}
+			{% include '_components/headers' with {
+				type: 'section-header--divider', 
+				'title': 'Detail'
+				} 
+			%}
+		</div>
+		{# Link Item #}
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/detailArticle" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Article Detail
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
+
 		{# Link Item #}
 		<div class="border-b border-grey-lightest pt-8 pb-8">	
 			{# Header #}
@@ -269,7 +223,56 @@
 
 			</header>
 		</div>
+		
+		
 
+		<div class="mt-12">
+			{# Section Header #}
+			{% include '_components/headers' with {
+				type: 'section-header--divider', 
+				'title': 'Checkout'
+				} 
+			%}
+		</div>
+		
+		{# Link Item #}
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/checkout--order" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Checkout -- Order
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
+
+		<div class="border-b border-grey-lightest pt-8 pb-8">	
+			{# Header #}
+			<header class="item__header">
+
+				<a href="/fed/checkout--confirm" class="flex justify-between items-center no-underline text-grey-dark hover:text-blue-light">
+					<h4 class="text-blue text-1md sm:text-2md tr-all">
+						Checkout -- Confirm
+					</h4>
+					
+					<div class="cursor-pointer relative">
+						<span class="icon --link --md ml-1 ">
+							<svg><use xlink:href="/assets/svg/symbols.svg#link"></use></svg>
+						</span>
+					</div>
+				</a>
+
+			</header>
+		</div>
 
 
 
@@ -383,6 +386,23 @@
 
 			</header>
 		</div>
+
+
+		{# Section Header #}
+		<div class="mt-12">
+			{% include '_components/headers' with {
+				type: 'section-header--divider', 
+				'title': 'Events'
+				} 
+			%}
+		</div>
+
+
+		
+
+
+		
+
 	
 
 		{# Section Header #}
