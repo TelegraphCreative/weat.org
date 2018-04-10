@@ -940,6 +940,73 @@ textarea {
   }
 }
 
+.step-breadcrumbs {
+  counter-reset: step-counter;
+}
+
+.step-breadcrumbs.\--circle-counters li {
+  position: relative;
+}
+
+.step-breadcrumbs.\--circle-counters li:before {
+  counter-increment: step-counter;
+  content: counter(step-counter);
+  font-size: .6875rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-color: #f0f0f0;
+  border-width: 1px;
+  color: #f0f0f0;
+  position: absolute;
+  border-radius: 9999px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.step-breadcrumbs.\--circle-counters li .name {
+  top: 6px;
+  color: #f0f0f0;
+}
+
+.step-breadcrumbs.\--circle-counters li.active:before {
+  background-color: #2466cc;
+  color: #fff;
+  border-color: #2466cc;
+}
+
+.step-breadcrumbs.\--circle-counters li.active .name {
+  color: #2466cc;
+}
+
+.step-breadcrumbs.\--circle-counters li.inactive:before {
+  background-color: #7f8fa4;
+  color: #fff;
+  border-color: #7f8fa4;
+}
+
+.step-breadcrumbs.\--circle-counters li.inactive .name {
+  color: #7f8fa4;
+}
+
+@media (min-width: 768px) {
+  .step-breadcrumbs.\--circle-counters li:before {
+    height: 2.25rem;
+    width: 2.25rem;
+    font-size: 1.125rem;
+  }
+
+  .step-breadcrumbs.\--circle-counters li .name {
+    top: 8px;
+  }
+}
+
 .simple-container {
   padding-right: 1rem;
   padding-left: 1rem;
@@ -3913,6 +3980,10 @@ http://flickity.metafizzy.co
 
 .max-h-screen {
   max-height: 100vh;
+}
+
+.max-w-tiny {
+  max-width: 7.5rem;
 }
 
 .max-w-1xs {
@@ -7036,6 +7107,10 @@ http://flickity.metafizzy.co
     max-height: 100vh;
   }
 
+  .sm\:max-w-tiny {
+    max-width: 7.5rem;
+  }
+
   .sm\:max-w-1xs {
     max-width: 12.5rem;
   }
@@ -10148,6 +10223,10 @@ http://flickity.metafizzy.co
 
   .md\:max-h-screen {
     max-height: 100vh;
+  }
+
+  .md\:max-w-tiny {
+    max-width: 7.5rem;
   }
 
   .md\:max-w-1xs {
@@ -13264,6 +13343,10 @@ http://flickity.metafizzy.co
     max-height: 100vh;
   }
 
+  .lg\:max-w-tiny {
+    max-width: 7.5rem;
+  }
+
   .lg\:max-w-1xs {
     max-width: 12.5rem;
   }
@@ -16376,6 +16459,10 @@ http://flickity.metafizzy.co
 
   .xl\:max-h-screen {
     max-height: 100vh;
+  }
+
+  .xl\:max-w-tiny {
+    max-width: 7.5rem;
   }
 
   .xl\:max-w-1xs {
