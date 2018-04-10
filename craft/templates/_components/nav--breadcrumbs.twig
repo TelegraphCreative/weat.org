@@ -1,10 +1,13 @@
 {% if entry.articleGroup | length %}
+
 <nav class="site-breadcrumbs border-t border-b border-grey-lightest py-4 lg:py-6">
 	<div class="simple-container text-xs">
 		<ul class="list-reset">
 			<li class="inline-block pr-4"><a href="/" class="no-underline pr-4 text-grey-dark hover:text-black">Home</a></li>
         {% for crumb in entry.articleGroup %}
-            <li class="inline-block pr-4"><a href="{{crumb.url}}" class="no-underline pr-4 text-grey-dark hover:text-black">{{ crumb.title }}</li>
+						{% if crumb.title %}
+            <li class="inline-block pr-4"><a href="{{crumb.url}}" class="no-underline pr-4 text-grey-dark hover:text-black">{{ crumb.title }}</a></li>
+							{% endif %}
         {% endfor %}
 		</ul>
 	</div>
