@@ -1272,6 +1272,10 @@ input.error {
   margin: 0;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
 .check-radio-input input {
   position: absolute;
   left: -9999px;
