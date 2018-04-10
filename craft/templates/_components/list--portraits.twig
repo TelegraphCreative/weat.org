@@ -10,16 +10,22 @@
 				{{image.single_simple(block.singleImage[0],'rounded-full')}}	
 			</div>
 			<h4 class="text-blue text-2md mb-3">{{block.header}}</h4>
-				<div class="text-base text-grey-dark m-auto w-full leading-normal">
-					{% if block.phone|length %}
-						<a href="tel:{{block.phone}}" class="mb-3 no-underline text-grey-dark hover:text-blue">{{block.phone}}</a>
-					{% endif %}
 
-					{% if block.phone|length %}
-						<a href="mailto:{{block.email}}" class="mb-3 no-underline text-grey-dark hover:text-blue">{{block.email}}</a>
-					{% endif %}
-					
-				</div>
+			{% if block.role|length %}
+				<h6 class="text-blue-light text-base sm:text-md mb-2 md:mb-4">{{block.role}}</h6>
+			{% endif %}
+
+			<div class="text-base text-grey-dark m-auto w-full leading-normal">
+				{% if block.phone|length %}
+					<a href="tel:{{block.phone}}" class="mb-3 no-underline text-grey-dark hover:text-blue">{{block.phone}}</a>
+				{% endif %}
+
+
+				{% if block.phone|length %}
+					<a href="mailto:{{block.email}}" class="mb-3 no-underline text-grey-dark hover:text-blue">{{block.email}}</a>
+				{% endif %}
+				
+			</div>
 		</div>
 
 	{% endfor %}

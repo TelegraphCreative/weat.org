@@ -1371,23 +1371,32 @@ svg {
 
 .article p,
 .article ul,
+.article ol,
 .article blockquote {
   font-size: 1rem;
   line-height: 1.6;
 }
 
-.article ul {
+.article ul,
+.article ol {
   margin-top: 2rem;
   margin-bottom: 2rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.article ul li,
+.article ol li {
+  padding-left: 1.5rem;
+}
+
+.article ul {
   list-style: none;
   padding: 0;
 }
 
 .article ul li {
   position: relative;
-  padding-left: 1.5rem;
 }
 
 .article ul li:before {
@@ -1446,6 +1455,7 @@ svg {
 
   .article p,
   .article ul,
+  .article ol,
   .article blockquote {
     font-size: 1.125rem;
   }

@@ -10,16 +10,16 @@
 			<h4 class="text-blue text-1md sm:text-2md tr-all">
 				{{block.heading}}
 			</h4>
-			
+
 			{# Icon by Type#}
-			{% if block.type == 'download' %}
+			{% if block.linkType == 'download_' %}
 				<div class="cursor-pointer relative">
 					<span class="icon --attachment --md ml-1 ">
 						<svg><use xlink:href="/assets/svg/symbols.svg#attachment"></use></svg>
 					</span>
 				</div>
 
-			{% else %}
+			{% elseif block.linkType == 'link_' %}
 
 				<div class="cursor-pointer relative">
 				<span class="icon --link --md ml-1 ">
