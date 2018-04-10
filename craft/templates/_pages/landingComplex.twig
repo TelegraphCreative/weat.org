@@ -1,12 +1,17 @@
 {# Landing Complex #}
 {% block content %}
 
-	{% set Title = entry.pageTitle %}
+
 	{% set Builder = entry.complexContentBuilder %}
 	
 
 	{# Page Header #}
-	{% include '_components/headers' with {'type': 'page-header--standard'} %}
+	{% include '_components/headers' with {
+		type: 'page-header--standard',
+		Title: entry.pageTitle,
+		classes: ''
+		} 
+	%}
 
 	<section class="landing mb-lg" data-module="accordion">
 		
