@@ -1,0 +1,40 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+	{% set Title = entry.pageTitle %}
+	{% set Builder = entry.standardContentBuilder %}
+
+
+	{# Page Header #}
+	{% include '_components/headers' with {'type': 'page-header--standard'} %}
+
+	<section class="landing mb-lg" data-module="accordion">
+
+		{# Content Builder #}
+		{% for block in Builder %}
+			{% switch block.type %}
+
+				{# Standard Slider #}
+				{% case "standardSlider" %}
+					{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 pt-9 mb-14'} %}
+
+
+				{# Article #}
+				{% case "article" %}
+					{% include '_components/article' with {classes: 'm-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10'} %}
+
+				{# Resources List #}
+				{% case "resourcesList" %}
+					{% include '_components/list--resources' with {classes: 'sm:pt-10 sm:mb-10 m-auto md:w-3/5 w-full'} %}
+				
+				{% default %}
+				
+			{% endswitch %}
+			
+		{% endfor %}
+
+	</section>
+	
+
+{% endblock %}

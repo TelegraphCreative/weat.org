@@ -781,6 +781,8 @@ textarea {
 
 @media (min-width: 768px) {
   .menu__drop-menu {
+    -webkit-box-shadow: 0 2px 3px 1px rgba(0, 0, 0, .05);
+            box-shadow: 0 2px 3px 1px rgba(0, 0, 0, .05);
     padding-top: .5rem;
     position: absolute;
     background-color: #2466cc;
@@ -798,7 +800,7 @@ textarea {
 
   .menu__drop-menu a {
     font-size: .9375rem;
-    padding-top: 1rem;
+    padding-top: .75rem;
     padding-bottom: .75rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -819,6 +821,10 @@ textarea {
     text-decoration: none;
     padding-bottom: 1.25rem;
   }
+}
+
+.current a {
+  color: #5fc3e2;
 }
 
 .menu__drop.active [data-module="toggleDrop"] {

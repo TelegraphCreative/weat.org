@@ -16,7 +16,11 @@
 				
 				{# Hero Slider #}
 				{% case "heroSlider" %}
-					{% include '_components/slider--hero' %}
+					{% include '_components/slider--hero' with {
+							content: block.heroSlider,
+							classes: 'm-auto max-w-2xl mb-8 -mt-6 px-6 sm:px-0 sm:mb-0 pt-4 sm:-mt-8'
+						}
+					%}
 				
 				{# Standard Slider #}
 				{% case "standardSlider" %}

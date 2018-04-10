@@ -1,5 +1,9 @@
-{% set mainMenu = craft.navee.getNav('mainMenu') %}
-{% set memberMenu = craft.navee.getNav('memberLogin') %}
+{% set navConfig = {
+    'activeClass' : 'current'
+} %}
+
+{% set mainMenu = craft.navee.getNav('mainMenu', navConfig) %}
+{% set memberMenu = craft.navee.getNav('memberLogin', navConfig) %}
 
 {# Main Site Menu #}
 <section class="site-header    simple-container --x-0 relative">
@@ -28,9 +32,11 @@
 
 		        		{% if item.hasChildren %}
 			            menu__drop
+		            {% else %}
+			            	
+			          {{ item.class }}
 		            {% endif %}
-
-		        		{{ item.class }}
+		        		
 		        		">
 		            <a 
 		            	{% if item.hasChildren %}

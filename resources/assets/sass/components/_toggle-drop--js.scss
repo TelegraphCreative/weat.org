@@ -36,7 +36,10 @@
 			@apply .text-xs
 		}
 	}
+
 	@screen md {
+
+		box-shadow: 0 2px 3px 1px rgba(#000, 0.05);
 
 		@apply .pt-2 .absolute .bg-blue .z-50 .pointer-events-none .opacity-0 .tr-all ; 
 		top: 2.5rem;
@@ -48,7 +51,7 @@
 
 		// # Links
 		a {
-			@apply .text-sm .pt-4 .pb-3 .px-6 .font-light ;
+			@apply .text-sm .pt-3 .pb-3 .px-6 .font-light ;
 			white-space: nowrap;
 			min-width: 12em;
 		}
@@ -75,6 +78,15 @@
 	
 	}
 
+}
+
+//
+// Current
+//
+.current {
+	a {
+		@apply .text-blue-light;
+	}
 }
 
 //
