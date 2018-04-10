@@ -1,10 +1,10 @@
 {% extends "_layouts/standard" %}
 
-{% set Builder = entry.standardContentBuilder %}
+{% set Builder = entry.articleContentBuilder %}
 
 {% block content %}
 {# Breadcrumbs #}
-{% include '_components/fed/nav--breadcrumbs' %}
+{% include '_components/nav--breadcrumbs' %}
 
 {# Container #}
 <div class="simple-container">
@@ -47,18 +47,6 @@
 
 			{% if entry.description %}
 			{# Citations #}
-			{% for colophon in entry.colophon %}
-				{% switch block.type %}
-
-					{# Standard Slider #}
-					{% case "standardSlider" %}
-						{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 pt-9 mb-14'} %}
-
-					{% default %}
-
-				{% endswitch %}
-
-			{% endfor %}
 			<div class="border-t border-grey-lightest leading-tight pt-4 text-grey-dark text-xs">
 				<h5 class="leading-loose mb-1 text-xs">Citations</h5>
 				<p class="">{{entry.description}}</p>
