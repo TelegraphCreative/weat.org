@@ -5,9 +5,13 @@
 
 {% set groups = craft.categories.group('articleCategory').slug(theCategory).first() %}
 
-{% set entries = craft.entries.section('articles').relatedTo({
+{% set Structure = craft.entries.section('articles').relatedTo({
 	targetElement: groups
 }) %}
+{% paginate Structure.limit(1) as pageInfo, entries %}
+{#% set entries = craft.entries.section('articles').relatedTo({
+	targetElement: groups
+}) %#}
 
 
 </pre>
@@ -64,13 +68,15 @@
 
 
 			{# Inf Scroll Pagination #}
-			<div class="pagination hidden">
-				<a class="pagination__next" href="/fed/indexArticle--pg2.twig">Next page</a>
-			</div>
 
-			<div class="w-full block">
-				<div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
-			</div>
+			{% if pageInfo.nextUrl %}
+				<div class="pagination hidden">
+					<a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+				</div>
+				<div class="w-full block">
+					<div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+				</div>
+			{% endif %}
 			{# / End #}
 
 		</section>
