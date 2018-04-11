@@ -5,20 +5,33 @@
 		{% for block in Content %}
 
 			{% set Image = block.singleImage %}
+			{% set Icon = block.listIcons %}
 			{% set Header = block.header %}
 			{% set Text = block.body %}
 			{% set Button = block.button %}
 
-			<div class="feature__group   w-full block text-center max-w-xs m-auto mb-14 md:w-1/3 md:w-1/3 md:mb-0 sm:px-2">
-				
-				{% if Image|length %}
-				
-					<div class="m-auto mb-6 w-3/5">
+			<div class="feature__group   w-full block text-center max-w-xs ml-auto mr-auto mb-14 md:w-1/3 md:w-1/3 md:mb-0 sm:px-2">
+
+				{% if Icon != 'None' %}
+
+					<div class="m-auto mb-6 w-32">
 						<div class="img is1by1 relative">
-							{{image.single_simple(Image[0],'absolute pin-t pin-l w-full h-full')}}	
+									<img src="/assets/svg/icon--{{Icon}}.svg" class="absolute pin-t pin-l w-full h-full">
+
 						</div>
 					</div>	
 
+				{% else %}
+						
+					{% if Image|length %}
+					
+						<div class="m-auto mb-6 w-3/5">
+							<div class="img is1by1 relative">
+								{{image.single_simple(Image[0],'absolute pin-t pin-l w-full h-full')}}	
+							</div>
+						</div>	
+
+					{% endif %}
 				{% endif %}
 
 				<h4 class="text-blue text-2md mb-6 sm:mb-3">{{Header}}</h4>

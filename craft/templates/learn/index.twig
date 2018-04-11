@@ -1,13 +1,18 @@
+{# Learn #}
+
 {% extends "_layouts/standard" %}
 
 {% block content %}
 
-	{% set Title = entry.pageTitle %}
 	{% set Builder = entry.standardContentBuilder %}
 
-
 	{# Page Header #}
-	{% include '_components/headers' with {'type': 'page-header--standard'} %}
+	{% include '_components/headers' with {
+		type: 'page-header--standard',
+		Title: entry.pageTitle,
+		classes: ''
+		} 
+	%}
 
 	<div class="simple-container" data-module="slider">
 
@@ -25,7 +30,7 @@
 					
 					{# Stream #}
 					{% set Structure = craft.entries.section('learn') %}
-					{% paginate Structure.limit(1) as pageInfo, Content %}
+					{% paginate Structure.limit(3) as pageInfo, Content %}
 					{% include '_components/list--articles--images' with {
 							content: Content,
 							classes: ''

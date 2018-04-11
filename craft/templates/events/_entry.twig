@@ -1,6 +1,9 @@
 {% extends "_layouts/standard" %}
 {% block content %}
 
+{# Breadcrumbs #}
+{% include '_components/nav--breadcrumbs--events'  %}
+
 
 <div class="simple-container" data-module="accordion">
   <div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
@@ -11,16 +14,15 @@
       {% set Builder = event.standardContentBuilder %}
 
       {# Header #}
-      <header class="event-detail__header   mb-10 sm:items-center mb-10 mt-12 sm:flex sm:justify-between">
+      <header class="event-detail__header   mb-14 sm:items-center mb-10 mt-12 sm:flex sm:justify-between">
         <time class="mb-2 block md:pr-8 sm:pr-8 sm:mb-0 text-blue">
           <span class="text-md sm:text-2md sm:block">{{ event.startDate|date('M') }}</span>
           <span class="text-md sm:text-lg lg:text-3xl sm:block">{{ event.startDate|date('d') }}</span>
         </time>
 
-        <div class="featured-event__content sm:flex-1 sm:pl-6 md:pl-8">
-          <a class="no-underline hover:text-green" href="#">
-            <h4 class="text-2md sm:text-xl">{{event.title}}</h4>
-          </a>
+        <div class="sm:flex-1 sm:pl-6 md:pl-8">
+          <h4 class="text-2md text-blue sm:text-xl">{{event.title}}</h4>
+        </div>
       </header>
 
       {# Image #}
