@@ -1,5 +1,5 @@
 {% extends "_layouts/standard" %}
-{% set theCategory = craft.request.getSegment(2) %}
+{% set theCategory = craft.request.firstSegment() %}
 {% block content %}
 <pre>
 
