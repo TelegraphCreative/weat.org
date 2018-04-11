@@ -9,6 +9,7 @@
   {# Get the url params for month & year #}
   {% set currentMonth = "now"|date('n') %}
   {% set currentYear = "now"|date('Y') %}
+
   {# Set the current Year - Month #}
   {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
   {# Set previous and next months #}
@@ -17,7 +18,15 @@
   {#  Get Events for month between prevMonth & nextMonth #}
   {% set allEvents = craft.venti.events() %}
   {% set allGroups = craft.venti.groups() %}
+
+  {# Infinity Future #}
+  {% set infinity = now|date_modify('+1000 month')|date('c') %}
+  
+  {% set allUpcomingEvents = allEvents.between(current,infinity) %}
   {% set events = allEvents.between(prevMonth,nextMonth|date_modify('last day of last month')|date('c')) %}
+
+  {# Current Filter #}
+  {% set filter = craft.request.query('group') %}
   
   {# Fetching Current Group Info #}
   {% set currentMonth_numeric = "now"|date('n') %}
@@ -25,7 +34,7 @@
   {% set activeGroupIds = [] %}
 
   {% for group in allGroups %}
-      {% set activeEvents = allEvents.groupId(group.id).ids() %}
+      {% set activeEvents = allUpcomingEvents.groupId(group.id).ids() %}
       {% if activeEvents|length %}
           {% set activeGroupIds = activeGroupIds|merge([group.id]) %}
       {% endif %}
@@ -83,11 +92,6 @@
         
 
         {# Upcoming Events Header #}
-
-        {# Current Filter #}
-        {% set filter = craft.request.query('group') %}
-
-
         <header class="pt-6 mb-4 sm:py-8 sm:mt-12 sm:flex sm:justify-between">
           <div class="title md:1/2 mb-3 md:pr-4 sm:mb-0">
             <h1 class="text-2md sm:text-lg md:text-xl">Upcoming Events</h1>
@@ -102,10 +106,12 @@
                   {% endif %}
                 {% endfor %}
               {% endfor %}
+              
+              
+              <option {% if filter is empty %}selected{% endif %} value="/events">Show All</option>
+   
 
-              <option value="/events">Show All</option>
-
-              {# Insanity: 
+              {# sort by ajax…sorta kinda: 
                 {% for group in allGroups %}
                   {% for id in activeGroupIds %}
                     {% if group.id == id %}
@@ -127,7 +133,7 @@
         
         {# Filtered Results#}
         {% if filter|length %}
-          {% set eventsList = craft.venti.events.group(filter) %}
+          {% set eventsList = allUpcomingEvents.group(filter) %}
           {% paginate eventsList.limit(1) as pageInfo, eventsList %}   
           <div class="js-infScroll" data-module="infScroll">
             {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
@@ -136,12 +142,6 @@
               {% include 'events/components/_timeline-item--all' %}  
                 
             {% endfor %}
-            {# {% for entry in eventsList %}
-              <a href="{{entry.url}}" class="inf-card   mb-4 no-underline block">
-                <h2>{{entry.title}} — {{entry.startDate|date('F d, Y')}}</h2>
-                <small>Group: {{entry.getGroup()}} / Group #: {{entry.getGroup().id}} / Entry #: {{entry.id}}</small>
-              </a>
-            {% endfor %} #}
           </div>
 
           {# Inf Scroll Pagination #}
@@ -159,7 +159,7 @@
         {# All Results #}
         {% else %}
 
-          {% paginate allEvents.limit(2) as pageInfo, eventsList %}   
+          {% paginate allUpcomingEvents.limit(2) as pageInfo, eventsList %}   
           <div class="js-infScroll" data-module="infScroll">
             {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
 
@@ -167,12 +167,6 @@
               {% include 'events/components/_timeline-item--all' %}  
                 
             {% endfor %}
-            {# {% for entry in eventsList %}
-              <a href="{{entry.url}}" class="inf-card   mb-4 no-underline block">
-                <h2>{{entry.title}} — {{entry.startDate|date('F d, Y')}}</h2>
-                <small>{{entry.getGroup()}} / {{entry.id}}</small>
-              </a>
-            {% endfor %} #}
           </div>
 
           {# Inf Scroll Pagination #}

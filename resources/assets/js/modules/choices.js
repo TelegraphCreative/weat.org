@@ -8,7 +8,8 @@ export default class choices {
 	    this.el = el;
 
 	    const choicesDefault = new Choices(el, {
-	    	searchEnabled: false
+	    	searchEnabled: false,
+	    	shouldSort: false
 	    });
 
 	}

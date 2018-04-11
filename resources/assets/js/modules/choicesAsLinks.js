@@ -10,7 +10,9 @@ export default class choices {
 		this.el = el;
 
     const choicesAsLinks = new Choices(el, {
-    	searchEnabled: false
+    	searchEnabled: false,
+    	shouldSort: false,
+    	shouldSortItems: false
     });
 
 		choicesAsLinks.passedElement.addEventListener('choice', function(event) {

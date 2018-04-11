@@ -1,0 +1,155 @@
+{% extends "_layouts/standard" %}
+{% block content %}
+
+  {# Events Assets #}
+  {% includeJsFile '/assets/static/venti-js/grapnel.js' %}
+  {% includeJsFile '/assets/static/venti-js/venti.min.js' %}
+
+
+  {# Get the url params for month & year #}
+  {% set currentMonth = "now"|date('n') %}
+  {% set currentYear = "now"|date('Y') %}
+  {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
+
+  {# The Ghost of Christmas Past #}
+  {% set foreverAgo = now|date_modify('-1000 month')|date('c') %}
+  
+  {#  Get Events for month between prevMonth & nextMonth #}
+  {% set allEvents = craft.venti.events() %}
+  {% set allGroups = craft.venti.groups() %}
+  {% set allPastEvents = allEvents.between(foreverAgo,current) %}
+
+  
+  {# Current Filter #}
+  {% set filter = craft.request.query('group') %}
+  
+  {# Fetching Current Group Info #}
+  {% set activeGroupIds = [] %}
+
+  {% for group in allGroups %}
+      {% set activeEvents = allPastEvents.groupId(group.id).ids() %}
+      {% if activeEvents|length %}
+          {% set activeGroupIds = activeGroupIds|merge([group.id]) %}
+      {% endif %}
+  {% endfor %}
+
+  
+  {# Page Header #}
+  {% set Title = 'Events' %}
+  {% include '_components/headers' with {
+    type: 'page-header--standard',
+    Title: entry.pageTitle,
+    classes: ''
+    } 
+  %}
+
+
+
+  {# Container #}
+  <div class="simple-container">
+
+    <div class=" mb-lg md:-mx-4 clearfix">
+
+      {# Main #}
+      <section class="main-content lg:float-left lg:w-2/3 md:px-4 ">
+
+       
+        {# Past Events Header #}
+        <header class="pt-6 mb-4 sm:py-8 sm:mt-12 sm:flex sm:justify-between">
+          <div class="title md:1/2 mb-3 md:pr-4 sm:mb-0">
+            <h1 class="text-2md sm:text-lg md:text-xl">Past Events</h1>
+          </div>
+          <div class="max-w-1xs w-full">
+            <select data-module="choicesAsLinks" name="" id="">
+              
+              {% for group in allGroups %}
+                {% for id in activeGroupIds %}
+                  {% if group.id == id %}
+                    <option {% if group.handle == filter %}selected{% endif %} value="/events/?group={{group.handle}}">{{ group.name}}</option>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}  
+              
+              <option {% if filter is empty %}selected{% endif %} value="/events">Show All</option>
+   
+            </select>
+
+          </div>
+        </header>
+       
+
+        
+        {# Filtered Results #}
+        {% if filter|length %}
+          {% set eventsList = allPastEvents.group(filter) %}
+          {% paginate eventsList.limit(1) as pageInfo, eventsList %}   
+          <div class="js-infScroll" data-module="infScroll">
+            {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
+
+              {# Feature Event Article #}
+              {% include 'events/components/_timeline-item--all' %}  
+                
+            {% endfor %}
+          </div>
+
+          {# Inf Scroll Pagination #}
+          {% if pageInfo.nextUrl %}
+            <div class="pagination hidden">
+              <a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+            </div>
+            <div class="w-full block">
+              <div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+            </div>
+          {% endif %}
+          {# / End #}
+
+
+        {# All Results #}
+        {% else %}
+
+          {% paginate allPastEvents.limit(2) as pageInfo, eventsList %}   
+          <div class="js-infScroll" data-module="infScroll">
+            {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
+
+              {# Feature Event Article #}
+              {% include 'events/components/_timeline-item--all' %}  
+                
+            {% endfor %}
+          </div>
+
+          {# Inf Scroll Pagination #}
+          {% if pageInfo.nextUrl %}
+            <div class="pagination hidden">
+              <a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+            </div>
+            <div class="w-full block">
+              <div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+            </div>
+          {% endif %}
+          {# / End #}
+
+        {% endif %}
+        
+
+      </section>
+
+
+      {# Aside #}
+      <aside class="aside-content sticky pin-t lg:float-left w-full lg:w-1/3 mt-14 lg:mt-lg md:px-4 clearfix ">
+        <div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
+          <div class="border-b border-grey-lightest pb-6">
+
+            <a href="/events" class="btn">Browse All Events</a>
+
+
+          </div>
+
+
+        </div>
+      </aside>
+
+    </div>
+
+  </div>
+
+{% endblock %}
