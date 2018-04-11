@@ -781,11 +781,9 @@ textarea {
 
 @media (min-width: 768px) {
   .menu__drop-menu {
-    -webkit-box-shadow: 0 2px 3px 1px rgba(0, 0, 0, .05);
-            box-shadow: 0 2px 3px 1px rgba(0, 0, 0, .05);
     padding-top: .5rem;
     position: absolute;
-    background-color: #2466cc;
+    background-color: #10387a;
     z-index: 50;
     pointer-events: none;
     opacity: 0;
@@ -1225,6 +1223,10 @@ textarea {
 
 .btn.\--light-blue {
   background-color: #5fc3e2;
+}
+
+.btn.\--light-blue:hover {
+  background-color: #10387a;
 }
 
 @media (min-width: 992px) {

@@ -100,6 +100,10 @@
 	//
 	&.--light-blue {
 		@apply .bg-blue-light;
+
+		&:hover {
+			@apply .bg-blue-dark
+		}
 	}
 
 	//

@@ -39,9 +39,9 @@
 
 	@screen md {
 
-		box-shadow: 0 2px 3px 1px rgba(#000, 0.05);
+		// box-shadow: 0 2px 3px 1px rgba(#000, 0.05);
 
-		@apply .pt-2 .absolute .bg-blue .z-50 .pointer-events-none .opacity-0 .tr-all ; 
+		@apply .pt-2 .absolute .bg-blue-dark .z-50 .pointer-events-none .opacity-0 .tr-all ; 
 		top: 2.5rem;
 
 		// Set Right
