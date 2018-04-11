@@ -5,10 +5,10 @@
           {# Group events by day of the month using the event's startDate as a guide #}
           {% for day, dayEvents in events|group('startDate|date("M d Y")')  %}
 
-              {# Feature Event Article #}
-              {% include 'events/components/_timeline-item--all' %}  
-                
-            {% endfor %}
+            {# Feature Event Article #}
+            {% include 'events/components/_timeline-item--all' %}  
+              
+          {% endfor %}
       
       {% else %}
 

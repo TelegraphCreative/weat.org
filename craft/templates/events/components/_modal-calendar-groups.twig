@@ -22,7 +22,7 @@
             <ul class="switches">
                 {% for group in craft.venti.groups() %}
                     <li style="color:{{ group.color }}">
-                        <input type="checkbox" id="cal-{{ group.id }}" name="cal[]" value="{{ group.id }}">
+                        <input checked type="checkbox" id="cal-{{ group.id }}" name="cal[]" value="{{ group.id }}">
                         <label for="cal-{{ group.id }}"><span>{{ group.name}}</span></label>
                     </li>
                     {# broke-ass plugin: 

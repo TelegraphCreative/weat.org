@@ -34,7 +34,12 @@
   
   {# Page Header #}
   {% set Title = 'Events' %}
-  {% include '_components/headers' with {'type': 'page-header--standard'} %}
+  {% include '_components/headers' with {
+    type: 'page-header--standard',
+    Title: entry.pageTitle,
+    classes: ''
+    } 
+  %}
 
 
 
@@ -78,31 +83,111 @@
         
 
         {# Upcoming Events Header #}
+
+        {# Current Filter #}
+        {% set filter = craft.request.query('group') %}
+
+
         <header class="pt-6 mb-4 sm:py-8 sm:mt-12 sm:flex sm:justify-between">
           <div class="title md:1/2 mb-3 md:pr-4 sm:mb-0">
             <h1 class="text-2md sm:text-lg md:text-xl">Upcoming Events</h1>
           </div>
           <div class="max-w-1xs w-full">
             <select data-module="choicesAsLinks" name="" id="">
+              
               {% for group in allGroups %}
                 {% for id in activeGroupIds %}
                   {% if group.id == id %}
-                    <option value="{{craft.request.getUrl()}}#cal/{{currentYear_numeric}}/{{currentMonth_numeric}}/{{group.id}}">{{ group.name}}</option>
+                    <option {% if group.handle == filter %}selected{% endif %} value="/events/?group={{group.handle}}">{{ group.name}}</option>
                   {% endif %}
                 {% endfor %}
               {% endfor %}
 
-              <option value="{{craft.request.getUrl()}}#cal/{{currentYear_numeric}}/{{currentMonth_numeric}}/{% for item in activeGroupIds %}{{item}}{% if not loop.last %},{% endif %}{% endfor %}">Show All</option>
+              <option value="/events">Show All</option>
+
+              {# Insanity: 
+                {% for group in allGroups %}
+                  {% for id in activeGroupIds %}
+                    {% if group.id == id %}
+                      <option value="{{craft.request.getUrl()}}#cal/{{currentYear_numeric}}/{{currentMonth_numeric}}/{{group.id}}">{{ group.name}}</option>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+
+                <option value="{{craft.request.getUrl()}}#cal/{{currentYear_numeric}}/{{currentMonth_numeric}}/{% for item in activeGroupIds %}{{item}}{% if not loop.last %},{% endif %}{% endfor %}">Show All</option>
+                
+              #}
               
             </select>
 
           </div>
         </header>
-        
+       
 
-        <div id="events-list" class="tabs_content" >
-          {% include 'events/components/_timeline' with { events:events, month:currentMonth, year:currentYear } only %}
-        </div>
+        
+        {# Filtered Results#}
+        {% if filter|length %}
+          {% set eventsList = craft.venti.events.group(filter) %}
+          {% paginate eventsList.limit(1) as pageInfo, eventsList %}   
+          <div class="js-infScroll" data-module="infScroll">
+            {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
+
+              {# Feature Event Article #}
+              {% include 'events/components/_timeline-item--all' %}  
+                
+            {% endfor %}
+            {# {% for entry in eventsList %}
+              <a href="{{entry.url}}" class="inf-card   mb-4 no-underline block">
+                <h2>{{entry.title}} — {{entry.startDate|date('F d, Y')}}</h2>
+                <small>Group: {{entry.getGroup()}} / Group #: {{entry.getGroup().id}} / Entry #: {{entry.id}}</small>
+              </a>
+            {% endfor %} #}
+          </div>
+
+          {# Inf Scroll Pagination #}
+          {% if pageInfo.nextUrl %}
+            <div class="pagination hidden">
+              <a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+            </div>
+            <div class="w-full block">
+              <div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+            </div>
+          {% endif %}
+          {# / End #}
+
+
+        {# All Results #}
+        {% else %}
+
+          {% paginate allEvents.limit(2) as pageInfo, eventsList %}   
+          <div class="js-infScroll" data-module="infScroll">
+            {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
+
+              {# Feature Event Article #}
+              {% include 'events/components/_timeline-item--all' %}  
+                
+            {% endfor %}
+            {# {% for entry in eventsList %}
+              <a href="{{entry.url}}" class="inf-card   mb-4 no-underline block">
+                <h2>{{entry.title}} — {{entry.startDate|date('F d, Y')}}</h2>
+                <small>{{entry.getGroup()}} / {{entry.id}}</small>
+              </a>
+            {% endfor %} #}
+          </div>
+
+          {# Inf Scroll Pagination #}
+          {% if pageInfo.nextUrl %}
+            <div class="pagination hidden">
+              <a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+            </div>
+            <div class="w-full block">
+              <div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+            </div>
+          {% endif %}
+          {# / End #}
+
+        {% endif %}
+        
 
       </section>
 
@@ -170,11 +255,11 @@
     {# Groups #}
     {% include 'events/components/_modal-calendar-groups' %}
     {# List #}
-    <div id="events-list" class="tabs_content" >
+    {# <div id="events-list" class="tabs_content" >
       {% include 'events/components/_eventsNav' with { prev:prevMonth, next:nextMonth, current:current, ids:[] } only %}
       <div class="container container-10 pad-x-0">
         {% include 'events/components/_timeline' with { events:events, month:currentMonth, year:currentYear } only %}
-      </div>
+      </div> #}
     </div>
   </div>
   {# {% includeCssFile '/assets/static/venti-css/venti.css' %} #}
