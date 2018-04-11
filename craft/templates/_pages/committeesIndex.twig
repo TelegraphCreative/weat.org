@@ -76,8 +76,8 @@
 
 		                <div class="text-xs mb-6 text-grey-dark leading-normal">
 												<span class="block">{{entry.committeeChair|nl2br}}</span>
-												<span class="block">{{entry.phone}}</span>
-												<span class="block">{{entry.email}}</span>
+												{% if entry.phone != '(###) ###-####' %}<span class="block">{{entry.phone}}</span>{% endif %}
+												{% if entry.email %}<span class="block">{{entry.email}}</span>{% endif %}
 		                    {#}<span class="block">Susan O'Malley, 2016 - 2018</span>
 		                    <span class="block">(512) 972-0083</span>
 		                    <span class="block">heather@dodsongroup.org</span>{#}
@@ -85,7 +85,9 @@
 		            </div>
 		        </div>
 
-		        <a class="btn   mb-4 mt-8">Join Committee</a>
+		        {# Hide Until Live
+						<a class="btn   mb-4 mt-8">Join Committee</a>
+						#}
 		    </div>
 		</div>
 		{% endfor %}
