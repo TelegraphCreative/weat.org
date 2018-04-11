@@ -2,12 +2,17 @@
 
 {% block content %}
 
-	{% set Title = entry.pageTitle %}
 	{% set Builder = entry.standardContentBuilder %}
 
 
 	{# Page Header #}
-	{% include '_components/headers' with {'type': 'page-header--standard'} %}
+	{# Page Header #}
+	{% include '_components/headers' with {
+		type: 'page-header--standard',
+		Title: entry.pageTitle,
+		classes: ''
+		} 
+	%}
 
 	<div class="simple-container" data-module="slider">
 
