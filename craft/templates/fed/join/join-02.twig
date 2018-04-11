@@ -1,0 +1,146 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+<div class="border-t border-grey-lightest">
+	
+	{# Container #}
+	<div class="simple-container">
+		
+		{# Header #}
+		<header class="mb-10 pt-9">
+			<h1 class="text-lg text-blue mb-6">Join WEAT</h1>
+		</header>
+
+			
+
+		<div class="form-container choices-as-boxes md:flex md:justify-between">
+			
+				{# Form #}
+				<section class="form-container --narrow w-full md:w-3/5 mb-8 mb:mb-lg ">
+
+					{# Join Breadcrumbs #}
+					<nav class="step-breadcrumbs --circle-counters mb-8 text-sm md:text-md">
+						<ul class="list-reset">
+							
+							{# Inactive State: .inactive #}
+							<li class="inactive   inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+								<span class="name md:ml-16 ml-12 relative">
+									Account
+								</span>
+							</li>
+							
+							{# Active State: .active #}
+							<li class="active   inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+								<span class="name md:ml-16 ml-12 relative">
+									Address
+								</span>
+							</li>
+							
+							{# Default State: -- #}
+							<li class="inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+								<span class="name md:ml-16 ml-12 relative">
+									Billing
+								</span>
+							</li>
+
+						</ul>
+					</nav>
+					
+					<form action="#" class="mb-xl py-4">
+						
+						{# Address #}
+						<div class="form-row mb-6">
+							<label for="streetAddress" class="field-label block w-full">Street Address</label>
+							<input required name="streetAddress" id="streetAddress" type="text" class="input-field block w-full" placeholder="Street Address">
+						</div>
+
+						{# Split Fields: City & State #}
+						<div class="form-row mb-6 flex justify-between items-center -mx-4">
+
+							<div class="w-1/2 px-4">
+								<label for="city" class="field-label block w-full">City</label>
+								<input required name="city" id="city" type="text" class="input-field block w-full" placeholder="City">
+							</div>
+
+							<div class="w-1/2 px-4">
+								<label for="state" class="field-label block w-full">State</label>
+								<select name="state" id="state" data-module="choices">
+									<option value="CT">CT</option>
+									<option value="AZ">AZ</option>
+									<option value="NM">NM</option>
+									<option value="TX">TX</option>
+									<option value="CA">CA</option>
+								</select>
+							</div>				
+						</div>
+						
+						
+						{# Zipcode #}
+						<div class="form-row mb-6 flex justify-between items-center -mx-4">
+
+							<div class="w-1/2 px-4">
+								<label for="zipcode" class="field-label block w-full">Zipcode</label>
+								<input required name="zipcode" id="zipcode" type="text" class="input-field block w-full" placeholder="Zipcode">
+							</div>		
+						</div>
+
+
+						{# Checkbox: Billing Address #}
+						<div class="form-row mb-6">
+							<label for="checkboxBillingAddress" class="text-sm check-radio-input block w-full text-sm flex items-center">
+								<input type="checkbox" id="checkboxBillingAddress" class="check-radio__input">
+								{{svg.icon('icon --md text-green', 'checkmark')}}
+								<span class="check-radio__label inline-block ml-3  cursor-pointer">Use this address for billing address</span>
+							</label>
+						</div>
+
+						{# Complete Purchase Button #}
+						<div class="form-row mb-6 pt-6 flex items-center">
+							 <input class="submit btn" type="submit" value="Complete Purchase">
+						</div>
+
+
+
+					</form>
+
+				</section>
+
+				{# Aside #}
+				<aside class="form-aside w-full md:w-2/5 md:mb-0 mb-lg md:pl-8 px-6 md:px-0 ">
+					<div class="lg:max-w-xs max-w-sm lg:ml- m-auto md:float-right w-full">
+
+						<header class="text-center border-b border-grey-lightest text-grey">
+							<h4 class="text-md pb-6">Your Order</h4>
+						</header>
+
+						<div class="text-base font-medium my-3">
+							<p>Annual WEAT Membership</p>
+						</div>
+
+						<div class="clearfix text-xs text-grey-dark">
+							<div class="float-left w-1/2">Qty: 1</div>
+							<div class="float-left w-1/2 text-right">$50</div>
+						</div>
+
+
+
+					</div>
+				</aside>
+
+		</div>
+
+	</div>
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}
