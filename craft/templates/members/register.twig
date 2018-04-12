@@ -1,3 +1,6 @@
+{% if currentUser %}
+{% redirect "members/edit/account" %}
+{% endif %}
 {% extends "_layouts/standard" %}
 
 {% block content %}
@@ -5,73 +8,64 @@
 {# Container #}
 <div class="simple-container">
 
-	{# Form #}
-	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg choices-as-boxes">
-    {% set message = craft.session.getFlash('notice') %}
-    {{ message }}
+  {# Form #}
+  <section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+    <header class="mb-10 pt-9">
+      <h1 class="text-lg text-blue mb-6">Register for a WEAT account</h1>
+    </header>
+
     <form method="post" accept-charset="UTF-8">
       {{ getCsrfInput() }}
       {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
-      {{ forms.hidden({ name : 'redirect', value: 'members/subscribe' }) }}
+      {{ forms.hidden({ name : 'redirect', value: 'members/register-thank-you' }) }}
       {% if allErrors is defined %}
           {{ forms.errorBlock(allErrors) }}
       {% endif %}
 
       <div id="payment-errors" class="alert alert-error"></div>
 
+      <div class="form-row mb-6 flex justify-center items-center -mx-4">
+        {# Field #}
+        <div class="w-1/2 px-4">
+          <label for="firstName" class="field-label block w-full">First Name</label>
+          <input required name="firstName" id="firstName" type="text" class="input-field block w-full" placeholder="Your First Name">
+        </div>
 
-
-
-      {# Field #}
-      <div class="form-row mb-6">
-        <label for="username" class="field-label block w-full">Username</label>
-        {{ forms.text({
-            label: 'Username',
-            name: 'username',
-            id: 'username',
-            placeholder: 'eg. jsmith',
-            value: (account is defined ? account.username ),
-            class: "input-field block w-full"
-        }) }}
-        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('username')) } %}
+        {# Field #}
+        <div class="w-1/2 px-4">
+          <label for="lastName" class="field-label block w-full">Last Name</label>
+          <input required name="lastName" id="lastName" type="text" class="input-field block w-full" placeholder="Your Last Name">
+        </div>
       </div>
 
       {# Field #}
       <div class="form-row mb-6">
         <label for="email" class="field-label block w-full">Email</label>
-        {{ forms.text({
-            label: 'Email',
-            name: 'email',
-            id: 'email',
-            placeholder: 'eg. jsmith@company.org',
-            value: (account is defined ? account.email ),
-            class: "input-field block w-full"
-        }) }}
-        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('email')) } %}
+        <input required name="email" id="email" type="email" class="input-field block w-full" placeholder="hello@mail.com">
       </div>
 
       {# Field #}
       <div class="form-row mb-6">
         <label for="password" class="field-label block w-full">Password</label>
-
-        {{ forms.password({
-            label: 'Password',
-            name: 'password',
-            id: 'password',
-            class: "input-field block w-full"
-        }) }}
-        {% include "_macros/forms/errorList" with { errors: (account is defined ? account.getErrors('password')) } %}
+        <input required name="password" id="password" type="password" class="input-field block w-full">
       </div>
 
-			{# Buttons #}
-			<div class="form-row mb-6 pt-6 flex items-center">
-					 <input class="submit btn" type="submit" value="Register">
-			</div>
+      {# Buttons #}
+      <div class="form-row mb-6 pt-6 flex items-center">
+         <input class="submit btn" type="submit" value="Register">
+      </div>
+    </form>
 
-		</form>
-
-	</section>
+  </section>
 
 </div>
+
+{# Form Validation #}
+{% set formJs %}
+  $("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
 
 {% endblock %}

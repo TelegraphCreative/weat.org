@@ -1,0 +1,83 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+
+{# Page Header #}
+<header class="page-header bg-blue">
+	<div class="simple-container py-8 sm:py-10">
+		{# Landing Page Title: #}
+		<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">Contact Us</h1>
+	</div>
+</header>
+
+{# Container #}
+<div class="simple-container">
+	
+	<div class="mb-lg md:-mx-4">
+	
+		{# Main #}
+		<section class="main-content   lg:w-2/3 md:px-4 ">
+
+			{# General Inquiry #}
+			<div class="mb-15">
+				<h2 class="border-b border-grey-lightest mb-10 mt-20 pb-4 leading-tight text-2md text-grey-dark">General Inquiry</h2>
+				
+				{# Email #}
+				<div class="mb-6">
+					<p class="leading-loose text-black text-md">Email</p>
+					<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="mailto:info@weat.org">info@weat.org</a>
+				</div>
+				
+				
+				<div class="sm:flex">
+					<div class="mb-6 sm:w-1/2">
+						{# Phone #}
+						<p class="leading-loose text-black text-md">Phone</p>
+						<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="tel:(512) 693-0060">(512) 693-0060</a>
+					</div>
+					
+					<div class="mb-6 sm:w-1/2">
+						{# Fax #}
+						<p class="leading-loose text-black text-md">Fax</p>
+						<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="tel:(512) 693-0060">(512) 693-0060</a>
+					</div>
+				</div>
+				
+				{# Mailing Address #}
+				<div class="mb-6">
+					{# Email #}
+					<p class="leading-loose text-black text-md">Mailing Address</p>
+					<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="https://www.google.com/maps/place/Water+Environment+Association+of+Texas/@30.2300995,-97.7888576,17z/data=!3m1!4b1!4m5!3m4!1s0x865b4b351fab3d3b:0xc8ee8ade1553abea!8m2!3d30.2300995!4d-97.7866689?shorturl=1" target="_blank">
+						1825 Fort View Road, Suite 108
+						<br>Austin TX 78704
+					</a>
+				</div>
+			</div>
+
+			
+			{# Texas WET #}
+			<div class="lg:mb-xl">
+				<h2 class="border-b border-grey-lightest mb-10 pb-4 leading-tight text-2md text-grey-dark">Texas WET</h2>
+				
+				{# Email #}
+				<div class="mb-6">
+					<p class="leading-loose text-black text-md">For any questions related to Texas WET, the official magazine of WEAT, please contact our Executive Director, Julie Nahrgang.</p>
+				</div>
+
+				{# Mailing Address #}
+				<div class="mb-6">
+					{# Email #}
+					<p class="leading-loose text-black text-md">Email</p>
+					<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="mailto:julie@weat.org">julie@weat.org</a>
+				</div>
+			</div>
+		
+		</section>
+
+	</div>
+
+</div>
+
+
+{% endblock %}
