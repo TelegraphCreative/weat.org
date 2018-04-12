@@ -12,6 +12,7 @@
 	  padding-left: 0;
   }
 }
+
 @screen md {
 	.simple-container {
 	    max-width: 70rem;
@@ -19,6 +20,9 @@
 	    // padding-left: 1rem;
 	    @apply .w-full .m-auto;
 	}
+	&.--wide {
+  	max-width: 80rem; // 1280	
+  }
 }
 //
 // Transitions
