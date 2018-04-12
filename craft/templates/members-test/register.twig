@@ -1,0 +1,128 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{% include '_components/fed/nav--breadcrumbs'  %}
+
+{# Container #}
+<div class="simple-container">
+
+	{# Header #}
+	<header class="mb-10 pt-9">
+		<h1 class="text-lg text-blue mb-6">Register for a WEAT account</h1>
+	</header>
+
+
+
+	<div class="form-container choices-as-boxes md:flex md:justify-between">
+
+			{# Form #}
+			<section class="form-container --narrow w-full md:w-3/5 mb-8 mb:mb-lg ">
+
+				{# Join Breadcrumbs #}
+				<nav class="step-breadcrumbs --circle-counters mb-8 text-sm md:text-md">
+					<ul class="list-reset">
+
+						{# Active State: .active #}
+						<li class="active    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+							<span class="name md:ml-16 ml-12 relative">
+								Account
+							</span>
+						</li>
+
+						{# Inactive State: .inactive #}
+						<li class="inactive    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+							<span class="name md:ml-16 ml-12 relative">
+								Address
+							</span>
+						</li>
+
+						{# Default State: -- #}
+						<li class="inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+							<span class="name md:ml-16 ml-12 relative">
+								Billing
+							</span>
+						</li>
+
+					</ul>
+				</nav>
+
+				<form method="post" accept-charset="UTF-8">
+		        {{ getCsrfInput() }}
+		        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+		        {{ forms.hidden({ name : 'redirect', value: 'members/confirm-thank-you' }) }}
+		        {% if allErrors is defined %}
+		            {{ forms.errorBlock(allErrors) }}
+		        {% endif %}
+
+		        <div id="payment-errors" class="alert alert-error"></div>
+
+						<div class="form-row mb-6 flex justify-center items-center -mx-4">
+					{# Field #}
+					<div class="w-1/2 px-4">
+						<label for="firstName" class="field-label block w-full">First Name</label>
+						<input required name="firstName" id="firstName" type="text" class="input-field block w-full" placeholder="Your First Name">
+					</div>
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="lastName" class="field-label block w-full">Last Name</label>
+					<input required name="lastName" id="lastName" type="text" class="input-field block w-full" placeholder="Your Last Name">
+				</div>
+
+</div>
+					{# Field #}
+					<div class="form-row mb-6">
+						<label for="email" class="field-label block w-full">Email</label>
+						<input required name="email" id="email" type="email" class="input-field block w-full" placeholder="hello@mail.com">
+					</div>
+
+
+					{# Buttons #}
+					<div class="form-row mb-6 pt-6 flex items-center">
+						 <input class="submit btn" type="submit" value="Register">
+					</div>
+
+
+
+				</form>
+
+			</section>
+
+			{# Aside #}
+			<aside class="form-aside w-full md:w-2/5 md:mb-0 mb-lg md:pl-8 px-6 md:px-0 ">
+				<div class="lg:max-w-xs max-w-sm lg:ml- m-auto md:float-right w-full">
+
+					<header class="text-center border-b border-grey-lightest text-grey">
+						<h4 class="text-md pb-6">Your Order</h4>
+					</header>
+
+					<div class="text-base font-medium my-3">
+						<p>Annual WEAT Membership</p>
+					</div>
+
+					<div class="clearfix text-xs text-grey-dark">
+						<div class="float-left w-1/2">Qty: 1</div>
+						<div class="float-left w-1/2 text-right">$50</div>
+					</div>
+
+
+
+				</div>
+			</aside>
+
+	</div>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+{% endblock %}
