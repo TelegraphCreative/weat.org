@@ -46,21 +46,30 @@
 
 {# Output them #}
 {% for entry in entries %}
-		{# Article Summary #}
+		{# Article Summary #}		
 		<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
 			<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
-			<h1 class="mb-5 text-2md text-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
+			
+			<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
+				<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
+			</a>
 
-			<div class="lg:flex lg:items-end">
-				<div class="leading-normal mb-6 text-xs text-grey-dark">{{entry.body}}</div>
+			<div class="md:flex md:items-end">
+				<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4">{{entry.body}}</div>
 
 				{# button #}
-				<a href="{{entry.url}}"class="btn --auto-w  --text lg:flex-none lg:ml-16">Read More</a>
-
-				{# text #}
-				{#
-				<a class="btn --text   px-0   lg:flex-none lg:ml-16 lg:pr-2">TCEQ’s Rule Log</a>
-				#}
+				<a href="{{entry.url}}" class="btn --auto-w --text text-xs --special   whitespace-no-wrap">
+					<span class="text relative text-center">
+						<span class="hover-show opacity-0 tr-all">
+							Read More
+						</span>
+						
+						{# Type #}
+						<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
+						   TECQ's Rule Log
+						</span>
+					</span>
+				</a>
 			</div>
 		</article>
 {% endfor %}
