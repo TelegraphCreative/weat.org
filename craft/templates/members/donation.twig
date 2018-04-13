@@ -2,8 +2,15 @@
 
 {% block content %}
 
-<section class="landing mb-lg">
-  <div class="article    m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
+
+{# Container #}
+<div class="simple-container">
+
+  {# Form #}
+  <section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+    <header class="mb-10 pt-9">
+      <h1 class="text-lg text-blue mb-6">Donate to WEAT</h1>
+    </header>
     <form class="form-horizontal"
           id="charge-form"
           method="post"
@@ -12,6 +19,8 @@
           data-publicKey="{{ craft.charge.getPublicKey }}">
         {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
         {{ forms.hidden({ name : 'redirect', value: 'charge/thanks?hash={hash}' }) }}
+        {{ forms.hidden({ name : 'createAccount', value: 'no' }) }}
+        {{ forms.hidden({ name : 'description', value: 'Donation' }) }}
         {{ getCsrfInput() }}
 
         {% set options = { 'allowDynamic' : true } %}
@@ -23,54 +32,43 @@
 
         <div id="payment-errors" class="alert alert-error"></div>
 
-        <h4>Customer Details</h4>
-        {% include '_components/charge--customer-details' %}
+        {# Field #}
+        <div class="form-row mb-6">
+          <label for="customerName" class="field-label block w-full">Name</label>
+          <input required name="customerName" id="customerName" type="text" class="input-field block w-full" placeholder="Riley Price" value="{{(charge is defined ? charge.customerName )}}">
+        </div>
 
-        <h4>Plan Details</h4>
-        {{ stripe.amountField({
-            label: 'Amount',
-            name: 'planAmount',
-            id: 'planAmount',
-            placeholder: 'eg. 49.99',
-            value: (charge is defined ? charge.planAmount ),
-            errors: (charge is defined ? charge.getErrors('planAmount'))
-        }) }}
+        {# Field #}
+        <div class="form-row mb-6">
+          <label for="customerEmail" class="field-label block w-full">Email</label>
+          <input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full" placeholder="hello@mail.com" value="{{(charge is defined ? charge.customerEmail )}}">
+        </div>
 
-        {{ forms.radioGroupField({
-            label: 'Plan Interval',
-            name: 'planInterval',
-            id: 'planInterval',
-            options: {
-                '' : 'One-Off',
-                'day' : 'Daily',
-                'week' : 'Weekly',
-                'month' : 'Monthly',
-                'year' : 'Yearly'
-            },
-            value: (charge is defined ? charge.planInterval),
-            errors: (charge is defined ? charge.getErrors('planInterval'))
-        }) }}
+        {# Field #}
+        <div class="form-row mb-6">
+          <label for="planAmount" class="field-label block w-full">Donation amount</label>
+          <input required name="planAmount" id="planAmount" type="text" class="input-field block w-full" placeholder="50.00" value="{{(charge is defined ? charge.planAmount )}}">
+        </div>
 
-        {{ forms.radioGroupField({
-            label: 'Plan Interval Count',
-            name: 'planIntervalCount',
-            id: 'planIntervalCount',
-            options: {
-                '0' : 'Not recurring',
-                '1' : 'Every Period',
-                '3' : 'Every 3 Periods',
-                '12' : 'Every 12 Periods'
-            },
-            value: (charge is defined ? charge.planIntervalCount),
-            errors: (charge is defined ? charge.getErrors('planIntervalCount'))
-        }) }}
 
 
         <h4>Card Details</h4>
         {% include '_components/charge--card-details' %}
         {% include '_components/charge--payment-button' %}
     </form>
-  </div>
-</section>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
 
 {% endblock %}

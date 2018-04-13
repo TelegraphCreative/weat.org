@@ -1,70 +1,99 @@
 {% extends "_layouts/standard" %}
-{% requireLogin %}
 
-{% block content %}
 {#% set eventId = craft.request.getSegment(3) %}
 {% set event = craft.venti.events.id(eventId) %#}
 {% set eventSlug = craft.request.getSegment(3) %}
 {% set event = craft.venti.events.slug(eventSlug) %}
-<pre>
+{% if event is empty %}
+{% set event = craft.venti.events.id(eventSlug) %}
+{% endif %}
+{% block content %}
 
-  {#{ dump(eventss) }#}
 
+{# Container #}
+<div class="simple-container">
 
-  {#% set event = craft.venti.events() %#}
-  {#{ dump(event[0])}#}
+  {# Header #}
+  <header class="text-center ml-auto mr-auto text-blue text-md sm:text-lg lg:text-xl mt-18 mb-14 sm:mt-xl sm:mb-18">
+    <h2>Your Order</h2>
+  </header>
 
-  {{ event[0].title }}
-  {{ event[0].membersOnly }}
-  {% for price in event[0].pricing %}
-    {{ price.label }} - {{ price.price }}
+  {# Form #}
+  <section class="form-container --narrow m-auto w-full lg:w-2/3 mb-12 sm:mb-lg choices-as-boxes">
 
-    <form class="form-horizontal"
-          id="charge-form"
-          method="post"
-          action=""
-          accept-charset="UTF-8"
-          data-publicKey="{{ craft.charge.getPublicKey }}">
-        {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
-        {{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}
+    <form method="post" action="{{ url('payments/checkout')}}" class="py-4">
+
         {{ getCsrfInput() }}
 
-        {% set options = {
-            'planAmount' : price.price
-          }
-        %}
+        <input type="hidden" name="eventId" value="{{event[0].id}}" />
+      {# Field / split #}
+      <div class="form-row mb-4 sm:mb-0 px-4 lg:px-0 md:flex justify-center -mx-4">
 
-        {{ craft.charge.setPaymentOptions(options) }}
+        <div class="w-full md:w-3/5 ">
+          <label for="item" class="field-label md:text-md block w-full pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest mb-6 px-4">Item</label>
+          <div class="px-4 mb-6 md:w-4/5">
+            <select name="item" id="item" data-module="choices" autocomplete="cc-exp">
+              {{ event[0].title }}
+              {{ event[0].membersOnly }}
+              {% for price in event[0].pricing %}
+                <option value="{{price.id}}">{{ price.label }} - {{ price.price }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
 
-        {% if allErrors is defined %}
-            {{ forms.errorBlock(allErrors) }}
-        {% endif %}
+        <div class="w-full md:w-1/5 md:max-w-tiny" data-module="spinners">
+          <label for="qty" class="field-label md:text-md block w-full pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest mb-6 px-4">Qty</label>
+          <div class="px-4 mb-6 clearfix">
+            <div class="spinner-group relative flex text-sm ">
+                <div class="spinner__decr inline-block border-t border-b border-l py-3 px-2 cursor-pointer text-grey-light hover:text-grey tr-all-1">-</div>
+                <input type="number" name="quantity" max="24" value="1" class="spinner border text-center w-10 bg-transparent py-3 pointer-events-none">
+                <div class="spinner__incr inline-block border-t border-b border-r py-3 px-2 cursor-pointer text-grey-light hover:text-grey tr-all-1">+</div>
+            </div>
+          </div>
+        </div>
 
-        <div id="payment-errors" class="alert alert-error"></div>
+        <div class="w-full  md:w-1/5 md:max-w-tiny">
+          <label class="field-label md:text-md block w-full md:pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest mb-6 px-4">Amount</label>
+          <span class="block text-left px-4 md:mt-10 sm:text-md text-base md:text-right md:w-1/2">$30</span>
+        </div>
 
-        {{ forms.hidden({
-            name: 'customerName',
-            id: 'customerName',
-            value: (currentUser is defined ? currentUser.friendlyName),
-            data: { stripe : 'name' }
-        }) }}
 
-        {{ forms.hidden({
-            name: 'customerEmail',
-            id: 'customerEmail',
-            value: (currentUser is defined ? currentUser.email)
-        }) }}
-        {{ stripe.amountField({
-            label: 'Amount',
-            value: options.planAmount,
-            readonly: true
-        }) }}
+      </div>
 
-        {% include '_components/charge--card-details' %}
-        {% include '_components/charge--payment-button' %}
+      {# Field / split #}
+      <div class="form-row mb-6 px-4  lg:px-0 flex md:justify-center md:-mx-4 md:border-t-0 border-t border-grey-lightest ">
+        <div class="w-full md:w-3/5  md:border-t border-grey-lightest"></div>
+
+        <div class="w-auto  md:w-1/5 md:max-w-tiny   md:border-t border-grey-lightest">
+          <span class="block pr-4 md:px-4 pt-3 md:text-right sm:pt-0 sm:mt-6 sm:text-md text-base">Total:</span>
+        </div>
+
+        <div class="w-auto  md:w-1/5 md:max-w-tiny   md:border-t border-grey-lightest">
+          <span class="block text-left px-4 md:mt-6 sm:text-md text-base md:text-right md:w-1/2 pt-3 sm:pt-0">$60</span>
+        </div>
+
+
+      </div>
+
+
+
+      {# Buttons #}
+      <div class="form-row mb-6 pt-6 flex items-center ">
+       <div class="md:w-2/5">
+         <input class="submit btn --full-w" type="submit" value="Continue to Checkout">
+       </div>
+      </div>
+
+
 
     </form>
-{% endfor %}
-</pre>
+
+  </section>
+
+</div>
+
+
+
 
 {% endblock %}

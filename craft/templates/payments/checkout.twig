@@ -1,0 +1,251 @@
+{% extends "_layouts/standard" %}
+{% set item = craft.request.getParam('item') %}
+{% set quantity = craft.request.getParam('quantity') %}
+{% set eventId = craft.request.getParam('eventId') %}
+{% set event = craft.venti.events.id(eventId).first %}
+{% set pricing = event.pricing.id(item).first %}
+{% set individualPrice = pricing.price %}
+{% set totalPrice = individualPrice * quantity %}
+
+{% block content %}
+
+
+{{individualPrice}}
+
+{# Breadcrumbs #}
+{% include '_components/fed/nav--breadcrumbs'  %}
+
+{# Container #}
+<div class="simple-container">
+  {{craft.request.getParam('item')}}
+  {{craft.request.getParam('quantity')}}
+
+  {# Header #}
+  <header class="mb-10 pt-9">
+    <h1 class="text-lg text-blue mb-6">Join WEAT</h1>
+  </header>
+
+  <div class="form-container choices-as-boxes md:flex md:justify-between">
+
+    {# Form #}
+    <section class="form-container --narrow w-full md:w-3/5 mb-8 mb:mb-lg ">
+
+      {# Join Breadcrumbs #}
+      <nav class="step-breadcrumbs --circle-counters mb-8 text-sm md:text-md">
+        <ul class="list-reset">
+
+          {# Active State: .active #}
+          <li class="active    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+            <span class="name md:ml-16 ml-12 relative">
+              Account
+            </span>
+          </li>
+
+          {# Inactive State: .inactive #}
+          <li class="inactive    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+            <span class="name md:ml-16 ml-12 relative">
+              Address
+            </span>
+          </li>
+
+          {# Default State: -- #}
+          <li class="inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+            <span class="name md:ml-16 ml-12 relative">
+              Billing
+            </span>
+          </li>
+
+        </ul>
+      </nav>
+
+      <form class="form-horizontal" id="charge-form" method="post" action="" accept-charset="UTF-8" data-publicKey="{{ craft.charge.getPublicKey }}">
+        {{ getCsrfInput() }}
+        {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
+        {{ forms.hidden({ name : 'redirect', value: 'members/register-thank-you' }) }}
+        {{ forms.hidden({ name: 'createAccount', value: 'yes' }) }}
+\
+        {% if allErrors is defined %}
+          {{ forms.errorBlock(allErrors) }}
+        {% endif %}
+
+        <div id="payment-errors" class="alert alert-error"></div>
+
+        <div id="step-account">
+
+          <div class="form-row mb-6 flex justify-center items-center -mx-4">
+            {# Field #}
+            <div class="w-1/2 px-4">
+              <label for="firstName" class="field-label block w-full">First Name</label>
+              <input required name="firstName" id="firstName" type="text" class="input-field block w-full" placeholder="Your First Name">
+            </div>
+
+            {# Field #}
+            <div class="w-1/2 px-4">
+              <label for="lastName" class="field-label block w-full">Last Name</label>
+              <input required name="lastName" id="lastName" type="text" class="input-field block w-full" placeholder="Your Last Name">
+            </div>
+          </div>
+
+          {# Field #}
+          <div class="form-row mb-6">
+            <label for="customerEmail" class="field-label block w-full">Email</label>
+            <input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full" placeholder="hello@mail.com">
+          </div>
+
+          {# Field #}
+          <div class="form-row mb-6">
+            <label for="password" class="field-label block w-full">Password</label>
+            <input required name="password" id="password" type="password" class="input-field block w-full">
+          </div>
+        </div>
+
+        <div id="step-address">
+          Address boxes here
+        </div>
+
+        <div id="step-billing">
+          {% set options = {
+              'planAmount' : totalPrice,
+              'description' : 'Ticket',
+              'meta' : {
+                'quantity' : 1,
+                'eventName' : event.title,
+                'type' : 'ticket',
+                'eventId' : eventId,
+                'eventName' : event.title,
+                'ticketType' : pricing.label,
+                'ticketQuantity' : quantity
+              },
+              'actions' : {
+                  'onSuccess': {
+                      'subscription' : 'weat'
+                  },
+              }
+            }
+          %}
+
+          {{ craft.charge.setPaymentOptions(options) }}
+          {% if charge is defined and charge.cardToken is not null %}
+
+            <p>We have card details.</p>
+            <p>Card Last 4 : {{ charge.cardLast4 }}</p>
+
+            {# Actually include the existing card details #}
+            {{ forms.hidden({ name: 'cardToken', value: charge.cardToken, 'data': { stripe: 'token' }}) }}
+            {{ forms.hidden({ name: 'cardLast4', value: charge.cardLast4 }) }}
+            {{ forms.hidden({ name: 'cardType', value: charge.cardType }) }}
+            {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
+            {{ forms.hidden({ name: 'cardExpMonth', value: charge.cardExpMonth }) }}
+            {{ forms.hidden({ name: 'cardExpYear', value: charge.cardExpYear }) }}
+            {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
+
+          {% else %}
+
+            <div class="form-row mb-6">
+              <label for="cardNumber" class="field-label block w-full">Credit Card Number</label>
+              {% set config = {
+                'id' : 'cardNumber',
+                'name':'cardNumber',
+                'class': 'cc-number input-field block w-full',
+                'placeholder' : '•••• •••• •••• ••••'
+              } %}
+              {% if craft.charge.getMode == 'test' and craft.config.devMode %}
+                  {% set config = config|merge({
+                    'value': '4242 4242 4242 4242'
+                  }) %}
+              {% endif %}
+              {{ stripe.card(config) }}
+            </div>
+
+            <div class="form-row mb-6">
+              <label for="cardNumber" class="field-label block w-full">Expiry</label>
+              {{ stripe.expiry({
+                    label: 'Expiry',
+                    id: 'cardExpMonth',
+                    class: 'cc-expiry'
+                }) }}
+                {{ stripe.expiryYear({
+                    label: 'Expiry Year',
+                    id: 'cardExpYear',
+                    class: 'cc-expiry'
+                }) }}
+              {% set config = {
+                'data' : { 'stripe' : 'exp'},
+                'class': 'input-field block w-full',
+              } %}
+              {% set configMonth = { name: 'cardExpMonth', data: { stripe : 'exp_month' }} %}
+              {% set configYear = { name: 'cardExpYear', data: { stripe : 'exp_year' }} %}
+
+              {% if craft.charge.getMode == 'test' and craft.config.devMode %}
+                  {% set config = config|merge({ 'value': '12 / 34' }) %}
+                  {% set configMonth = configMonth|merge({ 'value': '12' }) %}
+                  {% set configYear = configYear|merge({ 'value': '34' }) %}
+              {% endif %}
+
+
+            </div>
+
+            <div class="form-row mb-6">
+              {{ stripe.cvcField({
+                label: 'CVC',
+                id: 'cardCvc',
+                class: 'cc-cvc',
+                placeholder: '•••'
+              }) }}
+            </div>
+            <div class="form-row mb-6">
+              {{ stripe.textField({ label: 'Type', fieldWidth: 'col-sm-2', class:'card-type', readonly: true}) }}
+            </div>
+          {% endif %}
+
+          </div>
+
+
+      <div class="form-row mb-6">
+        <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
+          <div class="charge_indicator spinner-loader">
+          Loading…
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </section>
+
+  {# Aside #}
+  <aside class="form-aside w-full md:w-2/5 md:mb-0 mb-lg md:pl-8 px-6 md:px-0 ">
+    <div class="lg:max-w-xs max-w-sm lg:ml- m-auto md:float-right w-full">
+
+      <header class="text-center border-b border-grey-lightest text-grey">
+        <h4 class="text-md pb-6">Your Order</h4>
+      </header>
+
+      <div class="text-base font-medium my-3">
+        <p>{{event.title}} - {{pricing.label}}</p>
+      </div>
+
+      <div class="clearfix text-xs text-grey-dark">
+        <div class="float-left w-1/2">Qty: {{quantity}}</div>
+        <div class="float-left w-1/2 text-right">${{totalPrice}}</div>
+      </div>
+
+
+
+    </div>
+  </aside>
+
+</div>
+
+</div>
+{# Form Validation #}
+{% set formJs %}
+  $("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}

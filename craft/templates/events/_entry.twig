@@ -74,7 +74,7 @@
           {# For Members #}
           {% if event.membersOnly > 0 %}
               {% if currentUser and currentUser.isInGroup('subscriber') %}
-                <a href="{{ url('payments/checkout/event/' ~ event.id ) }}" class="btn --full-w --lg">Register</a>
+                <a href="{{ url('payments/event/' ~ event.id ) }}" class="btn --full-w --lg">Register</a>
               {% else %}
                 <a href="{{ url('members/login') }}" class="btn --full-w --lg">Join Now</a>
                 <small class="block mt-3 text-2xs text-grey text-center ">Become a member to register.</small>
@@ -83,7 +83,7 @@
           {% else %}
 
           {# For everyone #}
-          <a href="{{ url('payments/checkout/event/' ~ event.id ) }}" target="_blank" class="btn --full-w --lg">Register</a>
+          <a href="{{ url('payments/event/' ~ event.id ) }}" target="_blank" class="btn --full-w --lg">Register</a>
 
           {% endif %}
         </div>
