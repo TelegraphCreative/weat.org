@@ -9,20 +9,15 @@
 
 {% block content %}
 
-
-{{individualPrice}}
-
 {# Breadcrumbs #}
-{% include '_components/fed/nav--breadcrumbs'  %}
+{#% include '_components/fed/nav--breadcrumbs'  %#}
 
 {# Container #}
 <div class="simple-container">
-  {{craft.request.getParam('item')}}
-  {{craft.request.getParam('quantity')}}
 
   {# Header #}
   <header class="mb-10 pt-9">
-    <h1 class="text-lg text-blue mb-6">Join WEAT</h1>
+    <h1 class="text-lg text-blue mb-6">Checkout</h1>
   </header>
 
   <div class="form-container choices-as-boxes md:flex md:justify-between">
@@ -58,159 +53,207 @@
         </ul>
       </nav>
 
-      <form class="form-horizontal" id="charge-form" method="post" action="" accept-charset="UTF-8" data-publicKey="{{ craft.charge.getPublicKey }}">
-        {{ getCsrfInput() }}
-        {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
-        {{ forms.hidden({ name : 'redirect', value: 'members/register-thank-you' }) }}
-        {{ forms.hidden({ name: 'createAccount', value: 'yes' }) }}
-\
-        {% if allErrors is defined %}
-          {{ forms.errorBlock(allErrors) }}
-        {% endif %}
+      {% if totalPrice <= 0 %}
+        We need a different flow here
+      {% else %}
 
-        <div id="payment-errors" class="alert alert-error"></div>
-
-        <div id="step-account">
-
-          <div class="form-row mb-6 flex justify-center items-center -mx-4">
-            {# Field #}
-            <div class="w-1/2 px-4">
-              <label for="firstName" class="field-label block w-full">First Name</label>
-              <input required name="firstName" id="firstName" type="text" class="input-field block w-full" placeholder="Your First Name">
-            </div>
-
-            {# Field #}
-            <div class="w-1/2 px-4">
-              <label for="lastName" class="field-label block w-full">Last Name</label>
-              <input required name="lastName" id="lastName" type="text" class="input-field block w-full" placeholder="Your Last Name">
-            </div>
-          </div>
-
-          {# Field #}
-          <div class="form-row mb-6">
-            <label for="customerEmail" class="field-label block w-full">Email</label>
-            <input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full" placeholder="hello@mail.com">
-          </div>
-
-          {# Field #}
-          <div class="form-row mb-6">
-            <label for="password" class="field-label block w-full">Password</label>
-            <input required name="password" id="password" type="password" class="input-field block w-full">
-          </div>
-        </div>
-
-        <div id="step-address">
-          Address boxes here
-        </div>
-
-        <div id="step-billing">
-          {% set options = {
-              'planAmount' : totalPrice,
-              'description' : 'Ticket',
-              'meta' : {
-                'quantity' : 1,
-                'eventName' : event.title,
-                'type' : 'ticket',
-                'eventId' : eventId,
-                'eventName' : event.title,
-                'ticketType' : pricing.label,
-                'ticketQuantity' : quantity
-              },
-              'actions' : {
-                  'onSuccess': {
-                      'subscription' : 'weat'
-                  },
-              }
-            }
-          %}
-
-          {{ craft.charge.setPaymentOptions(options) }}
-          {% if charge is defined and charge.cardToken is not null %}
-
-            <p>We have card details.</p>
-            <p>Card Last 4 : {{ charge.cardLast4 }}</p>
-
-            {# Actually include the existing card details #}
-            {{ forms.hidden({ name: 'cardToken', value: charge.cardToken, 'data': { stripe: 'token' }}) }}
-            {{ forms.hidden({ name: 'cardLast4', value: charge.cardLast4 }) }}
-            {{ forms.hidden({ name: 'cardType', value: charge.cardType }) }}
-            {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
-            {{ forms.hidden({ name: 'cardExpMonth', value: charge.cardExpMonth }) }}
-            {{ forms.hidden({ name: 'cardExpYear', value: charge.cardExpYear }) }}
-            {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
-
-          {% else %}
-
-            <div class="form-row mb-6">
-              <label for="cardNumber" class="field-label block w-full">Credit Card Number</label>
-              {% set config = {
-                'id' : 'cardNumber',
-                'name':'cardNumber',
-                'class': 'cc-number input-field block w-full',
-                'placeholder' : '•••• •••• •••• ••••'
-              } %}
-              {% if craft.charge.getMode == 'test' and craft.config.devMode %}
-                  {% set config = config|merge({
-                    'value': '4242 4242 4242 4242'
-                  }) %}
-              {% endif %}
-              {{ stripe.card(config) }}
-            </div>
-
-            <div class="form-row mb-6">
-              <label for="cardNumber" class="field-label block w-full">Expiry</label>
-              {{ stripe.expiry({
-                    label: 'Expiry',
-                    id: 'cardExpMonth',
-                    class: 'cc-expiry'
-                }) }}
-                {{ stripe.expiryYear({
-                    label: 'Expiry Year',
-                    id: 'cardExpYear',
-                    class: 'cc-expiry'
-                }) }}
-              {% set config = {
-                'data' : { 'stripe' : 'exp'},
-                'class': 'input-field block w-full',
-              } %}
-              {% set configMonth = { name: 'cardExpMonth', data: { stripe : 'exp_month' }} %}
-              {% set configYear = { name: 'cardExpYear', data: { stripe : 'exp_year' }} %}
-
-              {% if craft.charge.getMode == 'test' and craft.config.devMode %}
-                  {% set config = config|merge({ 'value': '12 / 34' }) %}
-                  {% set configMonth = configMonth|merge({ 'value': '12' }) %}
-                  {% set configYear = configYear|merge({ 'value': '34' }) %}
-              {% endif %}
-
-
-            </div>
-
-            <div class="form-row mb-6">
-              {{ stripe.cvcField({
-                label: 'CVC',
-                id: 'cardCvc',
-                class: 'cc-cvc',
-                placeholder: '•••'
-              }) }}
-            </div>
-            <div class="form-row mb-6">
-              {{ stripe.textField({ label: 'Type', fieldWidth: 'col-sm-2', class:'card-type', readonly: true}) }}
-            </div>
+        <form class="form-horizontal" id="charge-form" method="post" accept-charset="UTF-8" data-publicKey="{{ craft.charge.getPublicKey }}">
+          {{ getCsrfInput() }}
+          {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
+          {{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}
+          {{ forms.hidden({ name : 'item', value: item }) }}
+          {{ forms.hidden({ name : 'quantity', value: quantity }) }}
+          {{ forms.hidden({ name : 'eventId', value: eventId }) }}
+          {% if allErrors is defined %}
+            {{ forms.errorBlock(allErrors) }}
           {% endif %}
 
+          <div id="payment-errors" class="alert alert-error"></div>
+
+          <div id="step-account">
+
+            <div class="form-row mb-6 flex justify-center items-center -mx-4">
+              {# Field #}
+              <div class="w-1/2 px-4">
+                <label for="firstName" class="field-label block w-full">First Name</label>
+                <input required name="firstName" id="firstName" type="text" class="input-field block w-full" placeholder="Your First Name" value="{{charge is defined and charge.user ? charge.user.firstName : (currentUser ? currentUser.firstName : '')}}">
+              </div>
+
+              {# Field #}
+              <div class="w-1/2 px-4">
+                <label for="lastName" class="field-label block w-full">Last Name</label>
+                <input required name="lastName" id="lastName" type="text" class="input-field block w-full" placeholder="Your Last Name" value="{{charge is defined and charge.user ? charge.user.lastName : (currentUser ? currentUser.lastName : '')}}">
+              </div>
+            </div>
+
+            {# Field #}
+            <div class="form-row mb-6">
+              <label for="customerEmail" class="field-label block w-full">Email</label>
+              <input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full" placeholder="hello@mail.com" value="{{charge is defined ? charge.customerEmail : (currentUser ? currentUser.email : '')}}">
+            </div>
+
+            {% if not currentUser and pricing.subscription %}
+            {# Field #}
+            <div class="form-row mb-6">
+              <label for="password" class="field-label block w-full">Password</label>
+              <input required name="password" id="password" type="password" class="input-field block w-full">
+            </div>
+            {% endif %}
           </div>
 
-
-      <div class="form-row mb-6">
-        <div class="col-sm-offset-2 col-sm-10">
-        <input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
-          <div class="charge_indicator spinner-loader">
-          Loading…
+          <div id="step-address">
+            Address boxes here
           </div>
+
+          <div id="step-billing">
+            {% set options = {
+                'planAmount' : totalPrice,
+                'description' : event.title ~ ' Ticket',
+                'meta' : {
+                  'eventName' : event.title,
+                  'type' : 'ticket',
+                  'eventId' : eventId,
+                  'eventName' : event.title,
+                  'ticketName' : pricing.label,
+                  'ticketQuantity' : quantity,
+                  'ticketPrice' : individualPrice
+                }
+              }
+            %}
+
+            {% if pricing.subscription %}
+              {{ forms.hidden({ name: 'createAccount', value: 'yes' }) }}
+              {% set options = options|merge({
+                  'actions' : {
+                    'onSuccess': {
+                      'subscription' : 'weat',
+                      'email' : { 0: 'registration-confirmation' }
+                    },
+                  }
+                })
+              %}
+            {% else %}
+              {{ forms.hidden({ name: 'createAccount', value: 'no' }) }}
+              {% set options = options|merge({
+                  'actions' : {
+                    'onSuccess': {
+                      'email' : { 0: 'registration-confirmation' }
+                    },
+                  }
+                })
+              %}
+              {#% set options = {
+                  'planAmount' : totalPrice,
+                  'description' : event.title ~ ' Ticket',
+                  'meta' : {
+                    'eventName' : event.title,
+                    'type' : 'ticket',
+                    'eventId' : eventId,
+                    'eventName' : event.title,
+                    'ticketName' : pricing.label,
+                    'ticketQuantity' : quantity,
+                    'ticketPrice' : individualPrice
+                  },
+                  'actions' : {
+                    'onSuccess': {
+                      'subscription' : 'weat',
+                    },
+                  }
+                }
+              %#}
+            {% endif %}
+
+            {{ craft.charge.setPaymentOptions(options) }}
+            {% if charge is defined and charge.cardToken is not null %}
+
+              <p>We have card details.</p>
+              <p>Card Last 4 : {{ charge.cardLast4 }}</p>
+
+              {# Actually include the existing card details #}
+              {{ forms.hidden({ name: 'cardToken', value: charge.cardToken, 'data': { stripe: 'token' }}) }}
+              {{ forms.hidden({ name: 'cardLast4', value: charge.cardLast4 }) }}
+              {{ forms.hidden({ name: 'cardType', value: charge.cardType }) }}
+              {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
+              {{ forms.hidden({ name: 'cardExpMonth', value: charge.cardExpMonth }) }}
+              {{ forms.hidden({ name: 'cardExpYear', value: charge.cardExpYear }) }}
+              {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
+
+            {% else %}
+
+              <div class="form-row mb-6">
+                <label for="cardNumber" class="field-label block w-full">Credit Card Number</label>
+                {% set config = {
+                  'id' : 'cardNumber',
+                  'name':'cardNumber',
+                  'class': 'cc-number input-field block w-full',
+                  'placeholder' : '•••• •••• •••• ••••'
+                } %}
+                {% if craft.charge.getMode == 'test' and craft.config.devMode %}
+                    {% set config = config|merge({
+                      'value': '4242 4242 4242 4242'
+                    }) %}
+                {% endif %}
+                {{ stripe.card(config) }}
+              </div>
+
+              <div class="form-row mb-6">
+                <label for="cardNumber" class="field-label block w-full">Expiry</label>
+                {{ stripe.expiry({
+                      label: 'Expiry',
+                      id: 'cardExpMonth',
+                      class: 'cc-expiry'
+                  }) }}
+                  {{ stripe.expiryYear({
+                      label: 'Expiry Year',
+                      id: 'cardExpYear',
+                      class: 'cc-expiry'
+                  }) }}
+                {% set config = {
+                  'data' : { 'stripe' : 'exp'},
+                  'class': 'input-field block w-full',
+                } %}
+                {% set configMonth = { name: 'cardExpMonth', data: { stripe : 'exp_month' }} %}
+                {% set configYear = { name: 'cardExpYear', data: { stripe : 'exp_year' }} %}
+
+                {% if craft.charge.getMode == 'test' and craft.config.devMode %}
+                    {% set config = config|merge({ 'value': '12 / 34' }) %}
+                    {% set configMonth = configMonth|merge({ 'value': '12' }) %}
+                    {% set configYear = configYear|merge({ 'value': '34' }) %}
+                {% endif %}
+
+
+              </div>
+
+              <div class="form-row mb-6">
+                {{ stripe.cvcField({
+                  label: 'CVC',
+                  id: 'cardCvc',
+                  class: 'cc-cvc',
+                  placeholder: '•••'
+                }) }}
+              </div>
+              <div class="form-row mb-6">
+                {{ stripe.textField({ label: 'Type', fieldWidth: 'col-sm-2', class:'card-type', readonly: true}) }}
+              </div>
+            {% endif %}
+
+            </div>
+
+        {#}<div class="form-row mb-6">
+          <div class="col-sm-offset-2 col-sm-10">
+          <input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
+            <div class="charge_indicator spinner-loader">
+            Loading…
+            </div>
+          </div>
+        </div>#}
+        {# Buttons #}
+        <div class="form-row mb-6 pt-6 flex items-center">
+           <input class="submit btn --auto-w --full-w" type="submit" value="Checkout">
         </div>
-      </div>
 
-    </form>
+      </form>
+    {% endif %}
   </section>
 
   {# Aside #}
@@ -239,13 +282,19 @@
 
 </div>
 {# Form Validation #}
-{% set formJs %}
+{#% set formJs %}
   $("form").validate();
 {% endset %}
 
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %#}
+{% includeJsFile "{{ resourceUrl('charge/js/stripe_v2.min.js') }}" %}
+{% includeJsFile "{{ resourceUrl('charge/js/jquery.charge.js') }}" %}
+{% set formJs %}
+    (function () {
+        $(this).charge();
+    })();
+{% endset %}
 {% includeJs formJs %}
-
-
 
 {% endblock %}

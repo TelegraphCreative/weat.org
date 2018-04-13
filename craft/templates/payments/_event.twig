@@ -3,12 +3,17 @@
 {#% set eventId = craft.request.getSegment(3) %}
 {% set event = craft.venti.events.id(eventId) %#}
 {% set eventSlug = craft.request.getSegment(3) %}
-{% set event = craft.venti.events.slug(eventSlug) %}
+{% set event = craft.venti.events.slug(eventSlug).first %}
 {% if event is empty %}
-{% set event = craft.venti.events.id(eventSlug) %}
+  {% set event = craft.venti.events.id(eventSlug).first %}
 {% endif %}
+
+
 {% block content %}
 
+{% if event is empty %}
+  {% redirect "error" %}
+{% endif %}
 
 {# Container #}
 <div class="simple-container">
@@ -25,7 +30,7 @@
 
         {{ getCsrfInput() }}
 
-        <input type="hidden" name="eventId" value="{{event[0].id}}" />
+        <input type="hidden" name="eventId" value="{{event.id}}" />
       {# Field / split #}
       <div class="form-row mb-4 sm:mb-0 px-4 lg:px-0 md:flex justify-center -mx-4">
 
@@ -33,10 +38,10 @@
           <label for="item" class="field-label md:text-md block w-full pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest mb-6 px-4">Item</label>
           <div class="px-4 mb-6 md:w-4/5">
             <select name="item" id="item" data-module="choices" autocomplete="cc-exp">
-              {{ event[0].title }}
-              {{ event[0].membersOnly }}
-              {% for price in event[0].pricing %}
-                <option value="{{price.id}}">{{ price.label }} - {{ price.price }}</option>
+              {{ event.title }}
+              {{ event.membersOnly }}
+              {% for price in event.pricing %}
+                <option value="{{price.id}}" customProperties="{value:{{price.price}}:{{price.id}}}">{{ price.label }} - {{ price.price }}</option>
               {% endfor %}
             </select>
           </div>
@@ -47,7 +52,7 @@
           <div class="px-4 mb-6 clearfix">
             <div class="spinner-group relative flex text-sm ">
                 <div class="spinner__decr inline-block border-t border-b border-l py-3 px-2 cursor-pointer text-grey-light hover:text-grey tr-all-1">-</div>
-                <input type="number" name="quantity" max="24" value="1" class="spinner border text-center w-10 bg-transparent py-3 pointer-events-none">
+                <input type="number" name="quantity" id="quantity" max="24" value="1" class="spinner border text-center w-10 bg-transparent py-3 pointer-events-none">
                 <div class="spinner__incr inline-block border-t border-b border-r py-3 px-2 cursor-pointer text-grey-light hover:text-grey tr-all-1">+</div>
             </div>
           </div>
@@ -55,7 +60,7 @@
 
         <div class="w-full  md:w-1/5 md:max-w-tiny">
           <label class="field-label md:text-md block w-full md:pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest mb-6 px-4">Amount</label>
-          <span class="block text-left px-4 md:mt-10 sm:text-md text-base md:text-right md:w-1/2">$30</span>
+          <span id="single-amount" class="block text-left px-4 md:mt-10 sm:text-md text-base md:text-right md:w-1/2">$30</span>
         </div>
 
 
@@ -70,13 +75,10 @@
         </div>
 
         <div class="w-auto  md:w-1/5 md:max-w-tiny   md:border-t border-grey-lightest">
-          <span class="block text-left px-4 md:mt-6 sm:text-md text-base md:text-right md:w-1/2 pt-3 sm:pt-0">$60</span>
+          <span id="total-amount" class="block text-left px-4 md:mt-6 sm:text-md text-base md:text-right md:w-1/2 pt-3 sm:pt-0">$60</span>
         </div>
 
-
       </div>
-
-
 
       {# Buttons #}
       <div class="form-row mb-6 pt-6 flex items-center ">
@@ -85,15 +87,25 @@
        </div>
       </div>
 
-
-
     </form>
 
   </section>
 
 </div>
 
+{% set myJs %}
+var $totalAmount = $('#total-amount');
+var $quantity = $('#quantity');
+$('#item').on('change', function() {
+  console.log($(this));
+  var ticketPrice = $(this).children(":selected");
+  $totalAmount.text($quantity.val() * ticketPrice);
 
+    console.log(ticketPrice);
+    console.log($quantity.val());
+});
+{% endset %}
 
+{% includeJs myJs %}
 
 {% endblock %}
