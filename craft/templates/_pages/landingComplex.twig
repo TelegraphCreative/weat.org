@@ -14,33 +14,49 @@
 	%}
 
 	<section class="landing mb-lg simple-container --wide" data-module="accordion">
-		
+		{% set blockIndex = 0 %}
 		{# Content Builder #}
 		{% for block in Builder %}
 			{% switch block.type %}
 				
 				{# Hero Slider #}
+				
 				{% case "heroSlider" %}
+										
+					{% set blockIndex = blockIndex+1 %}
+					
+					{# Set Classes based on position #}
+					{% if blockIndex == 1 %}
+						{% set sliderHeroClasses = 'm-auto max-w-2xl mb-8 -mt-6 px-6 sm:px-0 sm:mb-0 pt-4 sm:-mt-16' %}
+					{% else %}
+						{% set sliderHeroClasses = 'm-auto max-w-2xl mb-8 px-6 sm:px-0 sm:mb-0 pt-4' %}
+					{% endif %}
+					
+
 					{% include '_components/slider--hero' with {
 							content: block.heroSlider,
-							classes: 'm-auto max-w-2xl mb-8 -mt-6 px-6 sm:px-0 sm:mb-0 pt-4 sm:-mt-8'
+							classes: sliderHeroClasses
 						}
 					%}
 				
 				{# Standard Slider #}
 				{% case "standardSlider" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 pt-9 mb-14'} %}
 
 				{# Article #}
 				{% case "article" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/article' with {classes: 'm-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10'} %}
 
 				{# Resources List #}
 				{% case "resourcesList" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/list--resources' with {classes: 'sm:pt-10 sm:mb-10 m-auto md:w-3/5 w-full'} %}
 
 				{# Feature List #}
 				{% case "featureList" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/list--features' with {
 							Content: block.children, 
 							Class: 'mb-18 pt-10 md:pt-12 sm:pb-8'
@@ -49,26 +65,32 @@
 
 				{# Portrait List #}
 				{% case "portraitList" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/list--portraits' %}
 
 				{# Stat List #}
 				{% case "statList" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/list--stats' %}
 
 				{# Entries List #}
 				{% case "entriesList" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/list--entries' %} 
 
 				{# Feature Cards #}
 				{% case "featureCards" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/cards--features' %}
 
 				{# Feature Hero #}
 				{% case "featureHero" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/hero--feature' %}
 
 				{# CTA Hero #}
 				{% case "ctaHero" %}
+					{% set blockIndex = blockIndex+1 %}
 					{% include '_components/hero--cta' with {
 						Spacing: block.spacing,
 						Header: block.header,
@@ -81,7 +103,6 @@
 				
 				{% default %}
 				
-			
 			{% endswitch %}
 			
 		{% endfor %}

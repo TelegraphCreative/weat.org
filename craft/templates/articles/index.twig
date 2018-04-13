@@ -1,3 +1,4 @@
+{# Article Index #}
 {% extends "_layouts/standard" %}
 {% set theCategory = craft.request.firstSegment() %}
 {% block content %}
@@ -8,7 +9,7 @@
 {% set Structure = craft.entries.section('articles').relatedTo({
 	targetElement: groups
 }) %}
-{% paginate Structure.limit(1) as pageInfo, entries %}
+{% paginate Structure.limit(8) as pageInfo, entries %}
 {#% set entries = craft.entries.section('articles').relatedTo({
 	targetElement: groups
 }) %#}

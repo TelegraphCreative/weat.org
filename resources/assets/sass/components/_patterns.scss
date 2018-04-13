@@ -3,41 +3,80 @@
 //
 
 // Header with Dots Background
-.page-header {
-	background-image: url("/assets/svg/pattern_page-header-bg.svg");
-	background-position: 100% 60px;
-	background-repeat: no-repeat;
-	background-size: auto 100%;
+@screen sm {
+	.page-header {
+		@apply .relative;
 
-	@apply .relative;
+		&:after {
+			position: absolute;
+			content: '';
+			height: 100%;
+			width: 65px;
+			background-image: url(/assets/svg/pattern_page-header-bg.svg);
+			// background-position: -6px 110px;
+			background-position: -6px 16px;
+			top: 0;
+			right: 0;
+			background-repeat: repeat-y;
+			background-size: auto 84%;
+		}
 
-	&:before {
-		@apply .absolute .pin-l;
-    content: '';
-    height: 100%;
-    width: 65px;
-    background-image: url(/assets/svg/pattern_page-header-bg.svg);
-    background-position: -18px -150px;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
+
+		&.--double-pattern {
+
+			&:before {
+				@apply .absolute .pin-l;
+		    content: '';
+		    height: 100%;
+		    width: 75px;
+		    background-image: url(/assets/svg/pattern_page-header-bg.svg);
+		    background-position: 4px -80px;
+		    background-repeat: no-repeat;
+		    background-size: auto 84%;
+			}
+
+			&:after {
+				background-position: -6px 30px;
+				background-repeat: no-repeat;
+			}
+
+			&:after,
+			&:before {
+				opacity: .6;
+			}
+		}
 	}
 }
 
-// Header with Dots Overlay
-.page-header.dots {
-	background-image: none;
-	@screen md {
 
-		&.pin-l {
-			left: -2.25rem;
-			top: 1.5rem;
+.page-header {
+	// No Pattern
+	&.--hero {
+		&:before,
+		&:after {
+			display: none;
 		}
-		&.pin-r {
-			right: -2.15rem;
-			bottom: -2rem;
-		}
+	}	
 
+
+	// Header with Dots Overlay
+	.dots {
+		background-image: none;
+
+		@screen md {
+
+			&.pin-l {
+				left: -2.25rem;
+				top: 1.5rem;
+			}
+			&.pin-r {
+				right: -2.15rem;
+				bottom: -2.25rem;
+			}
+
+		}
 	}
+
 }
 
 /*
