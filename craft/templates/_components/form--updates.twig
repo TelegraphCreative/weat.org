@@ -1,18 +1,45 @@
 {# Sign Up Form #}
 <div class="bg-blue-lighter text-blue">
 	<div class="max-w-xl m-auto py-8 px-4 sm:pt-10 sm:pb-12 md:flex md:items-center md:justify-between">
-		
+
 		<header class="w-full md:w-1/2">
 			<h4 class="text-2md mb-4 md:mb-0 sm:text-lg">Get our Updates</h4>
 		</header>
-		
+
 		<div class="signup w-full md:w-1/2">
-			<form action="#" class="flex">
-				<input type="email" class="flex-1 rounded-full bg-white text-black mr-1 text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" placeholder="Email Address">
-				<a href="#" class="btn text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6">Register</a>
+  {{ getCsrfInput() }}
+			<form action="#" id="email-subscribe" class="flex" method="post" accept-charset="UTF-8">
+				{{ getCsrfInput() }}
+				<input type="email" name="fields[email]" class="required flex-1 rounded-full bg-white text-black mr-1 text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" placeholder="Email Address">
+				<input type="submit" class="btn text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" value="Register">
 			</form>
-			
+
 		</div>
 
 	</div>
 </div>
+
+{% set subscribeJs %}
+var $form = $("form#email-subscribe");
+$form.validate();
+
+$form.submit(function(event){
+	$.ajax({
+		type: 'POST',
+		url: '/actions/constantContactSubscribe/list/Subscribe',
+		data: $('form').serialize(),
+		complete: function(data){
+			console.log(data);
+			/*if (data.responseJSON.responseCode == 201){
+				$('.cd-response-success').addClass('is-visible');
+			} else {
+				$('.cd-response-error').addClass('is-visible');
+			}*/
+		}
+	});
+	event.preventDefault();
+});
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs subscribeJs %}
