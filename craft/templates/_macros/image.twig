@@ -3,6 +3,13 @@
 	<img data-src="{{ image.url }}" src="{{image.getUrl('lazyload')}}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }} lazyload" height="{{ image.height }}" width="{{ image.width }}">
 {% endmacro %}
 
+{# Single, Transform #}
+{% macro single_transform(image, transform, class) %}
+	<img src="{{ image.getUrl(transform) }}" alt="{{image.title}}" title="{{ image.title }}" class="{{ class }}" width="{{ image.getWidth(transform) }}" height="{{ image.getHeight(transform) }}">
+{% endmacro %}
+
+
+
 
 {# Multiple, Simple #}
 {% macro multiple_simple(images, class) %}

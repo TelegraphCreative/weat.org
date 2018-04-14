@@ -170,7 +170,7 @@
 
 
 	{# Group #}
-	<section class="group mb-lg">
+	<section id="checkboxes" class="group mb-lg">
 		
 			<h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Checkboxes</h2>
 
@@ -247,14 +247,14 @@
 						{% set Title = 'Title of Page' %}
 						<br>
 						<br>
-						{% include '_components/headers' with {'type': 'page-header--standard'} %}
+						{% include '_components/headers' with {'type': 'page-header--standard',classes:''} %}
 					{% endverbatim %}
 				</code>
 			</div>
 
 			<p class="font-bold text-1xs my-6">Output:</p>
 			{% set Title = 'Title of Page' %}
-			{% include '_components/headers' with {'type': 'page-header--standard'} %}
+			{% include '_components/headers' with {'type': 'page-header--standard',classes:''} %}
 			
 	</section>
 
@@ -266,7 +266,7 @@
 			<h2 class="md:text-2xl md:pt-10 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Headers</h2>
 			
 			{% set Title = 'Title of Page' %}
-			{% include '_components/headers' with {'type': 'page-header--standard'} %}
+			{% include '_components/headers' with {'type': 'page-header--standard',classes:''} %}
 			
 	</section> #}
 

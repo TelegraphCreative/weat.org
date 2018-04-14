@@ -5,7 +5,7 @@
 	{# Standard Blue #}
 	{% case "page-header--standard" %}
 	
-		<header class="page-header bg-blue">
+		<header class="page-header bg-blue {{classes}}">
 			<div class="simple-container py-8 sm:py-10 ">
 				{# Landing Page Title: #}
 				<h1 class="text-white font-medium md:text-3xl max-w-lg sm:text-xl text-lg {{classes}}">{{Title}}</h1>
@@ -27,8 +27,8 @@
 			</div>
 
 			{# Patterns #}
-			{{svg.pattern('dots','dots pin-t absolute pin-l z-10 text-blue-lighter h-48 w-24 hidden md:block')}}
-			{{svg.pattern('dots','dots pin-b absolute pin-r z-10 text-blue-lighter h-48 w-24 hidden md:block')}}
+			{{svg.pattern('dots','dots pin-t absolute pin-l z-10 text-blue-light h-48 w-32 hidden md:block')}}
+			{{svg.pattern('dots','dots pin-b absolute pin-r z-10 text-blue-light h-48 w-32 hidden md:block')}}
 
 			{# Background Image #}
 			<div class="absolute h-full w-full pin-t pin-l overflow-hidden z-0">

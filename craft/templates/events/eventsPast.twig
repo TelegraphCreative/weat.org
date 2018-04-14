@@ -82,7 +82,7 @@
         {# Filtered Results #}
         {% if filter|length %}
           {% set eventsList = allPastEvents.group(filter) %}
-          {% paginate eventsList.limit(1) as pageInfo, eventsList %}   
+          {% paginate eventsList.limit(8) as pageInfo, eventsList %}   
           <div class="js-infScroll mt-4" data-module="infScroll">
             {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
 
@@ -107,7 +107,7 @@
         {# All Results #}
         {% else %}
 
-          {% paginate allPastEvents.limit(2) as pageInfo, eventsList %}   
+          {% paginate allPastEvents.limit(8) as pageInfo, eventsList %}   
           <div class="js-infScroll mt-4" data-module="infScroll">
             {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
 

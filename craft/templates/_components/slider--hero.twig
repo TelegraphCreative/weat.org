@@ -7,16 +7,28 @@
 			
 			<li class="js_slide bg-blue-lighter">
 	      <figure class="img bg-grey-lightest">
-	        {{image.single_simple(asset,'')}}	
+	        {# {{image.single_simple(asset,'')}}	 #}
+	        {{image.single_transform(asset,'slide','h-auto')}}	
+
 	      </figure>
 				
 				
 	      {% if asset.caption %}
 	      
 		      <figcaption class="px-6 py-8 sm:px-10 content-fades-in tr-all-3">
-		      	<a class="hover:text-blue-light no-underline max-w-lg block sm:mt-14 sm:mb-16" href="#">
-			      	<h4 class="text-md sm:text-lg">{{asset.caption}}</h4>
-			      </a>
+		      	{% if asset.urlLink %}
+
+			      	<a class="hover:text-blue-light no-underline max-w-lg block sm:mt-14 sm:mb-16" href="{{asset.urlLink.url}}">
+				      	<h4 class="text-md sm:text-lg">{{asset.caption}}</h4>
+				      </a>
+
+		      	{% else %}
+
+		      		<h4 class="text-blue text-md sm:text-lg max-w-lg block sm:mt-14 sm:mb-16">{{asset.caption}}</h4>
+
+		      	{% endif %}
+		      	
+		      	
 		      </figcaption>
 
 	      {% endif %}

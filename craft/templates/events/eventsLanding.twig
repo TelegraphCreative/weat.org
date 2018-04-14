@@ -134,7 +134,7 @@
         {# Filtered Results#}
         {% if filter|length %}
           {% set eventsList = allUpcomingEvents.group(filter) %}
-          {% paginate eventsList.limit(1) as pageInfo, eventsList %}   
+          {% paginate eventsList.limit(8) as pageInfo, eventsList %}   
           <div class="js-infScroll" data-module="infScroll">
             {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
 
@@ -159,7 +159,7 @@
         {# All Results #}
         {% else %}
 
-          {% paginate allUpcomingEvents.limit(2) as pageInfo, eventsList %}   
+          {% paginate allUpcomingEvents.limit(8) as pageInfo, eventsList %}   
           <div class="js-infScroll" data-module="infScroll">
             {% for day, dayEvents in eventsList|group('startDate|date("M d Y")')  %}
 
