@@ -1,3 +1,6 @@
+{% if currentUser and currentUser.isInGroup('subscriber') %}
+{% redirect "members/edit/account?loggedIn=true&isMember=true" %}
+{% endif %}
 {% extends "_layouts/standard" %}
 
 {% block content %}
@@ -93,7 +96,7 @@
 				<div id="step-billing">
 					{% set options = {
 							'planAmount' : 50.00,
-							'planInterval' : 'week',
+							'planInterval' : 'year',
 							'planIntervalCount' : '1',
 							'actions' : {
 									'onSuccess': {
@@ -138,15 +141,15 @@
 						<div class="form-row mb-6">
 							<label for="cardNumber" class="field-label block w-full">Expiry</label>
 							{{ stripe.expiry({
-                    label: 'Expiry',
-                    id: 'cardExpMonth',
-                    class: 'cc-expiry'
-                }) }}
-                {{ stripe.expiryYear({
-                    label: 'Expiry Year',
-                    id: 'cardExpYear',
-                    class: 'cc-expiry'
-                }) }}
+										label: 'Expiry',
+										id: 'cardExpMonth',
+										class: 'cc-expiry'
+								}) }}
+								{{ stripe.expiryYear({
+										label: 'Expiry Year',
+										id: 'cardExpYear',
+										class: 'cc-expiry'
+								}) }}
 							{% set config = {
 								'data' : { 'stripe' : 'exp'},
 								'class': 'input-field block w-full',
@@ -160,16 +163,7 @@
 									{% set configYear = configYear|merge({ 'value': '34' }) %}
 							{% endif %}
 
-							{{ stripe.text(config) }}
-							{{ stripe.hidden(configMonth) }}
-							{{ stripe.hidden(configYear) }}
 
-							{{ stripe.expiryField({
-								label: 'Expiry',
-								id: 'cardExpiry',
-								class: 'cc-expiry',
-								placeholder: 'MM / YY'
-							}) }}
 						</div>
 
 						<div class="form-row mb-6">
@@ -225,13 +219,20 @@
 
 </div>
 {# Form Validation #}
-{% set formJs %}
+{#% set formJs %}
 	$("form").validate();
 {% endset %}
 
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %#}
+{% includeJsFile "{{ resourceUrl('charge/js/stripe_v2.min.js') }}" %}
+{% includeJsFile "{{ resourceUrl('charge/js/jquery.charge.js') }}" %}
+{% set formJs %}
+    (function () {
+        $(this).charge();
+    })();
+{% endset %}
 {% includeJs formJs %}
-
 
 
 {% endblock %}

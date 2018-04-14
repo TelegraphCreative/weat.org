@@ -1,5 +1,5 @@
 {% if currentUser %}
-{% redirect "members/edit/account" %}
+{% redirect "members/edit/account?loggedIn=true" %}
 {% endif %}
 {% extends "_layouts/standard" %}
 

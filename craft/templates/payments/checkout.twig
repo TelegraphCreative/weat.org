@@ -30,21 +30,21 @@
         <ul class="list-reset">
 
           {# Active State: .active #}
-          <li class="active    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+          <li id="step-account-nav" class="active account-nav inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
             <span class="name md:ml-16 ml-12 relative">
               Account
             </span>
           </li>
 
           {# Inactive State: .inactive #}
-          <li class="inactive    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+          <li id="step-address-nav" class="inactive account-nav inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
             <span class="name md:ml-16 ml-12 relative">
               Address
             </span>
           </li>
 
           {# Default State: -- #}
-          <li class="inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+          <li id="step-billing-nav" class="inactive account-nav inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
             <span class="name md:ml-16 ml-12 relative">
               Billing
             </span>
@@ -70,7 +70,7 @@
 
           <div id="payment-errors" class="alert alert-error"></div>
 
-          <div id="step-account">
+          <div id="step-account" class="step-container">
 
             <div class="form-row mb-6 flex justify-center items-center -mx-4">
               {# Field #}
@@ -99,13 +99,21 @@
               <input required name="password" id="password" type="password" class="input-field block w-full">
             </div>
             {% endif %}
+
+            <div class="form-row mb-6 pt-6 flex items-center">
+               <input id="step-account-next" class="submit btn --auto-w --full-w" type="button" value="Next">
+            </div>
           </div>
 
-          <div id="step-address">
+          <div id="step-address" class="step-container" style="display:none">
             Address boxes here
+
+            <div class="form-row mb-6 pt-6 flex items-center">
+               <input id="step-address-next" class="submit btn --auto-w --full-w" type="button" value="Next">
+            </div>
           </div>
 
-          <div id="step-billing">
+          <div id="step-billing" class="step-container" style="display:none">
             {% set options = {
                 'planAmount' : totalPrice,
                 'description' : event.title ~ ' Ticket',
@@ -128,7 +136,7 @@
                     'onSuccess': {
                       'subscription' : 'weat',
                       'email' : { 0: 'registration-confirmation' }
-                    },
+                    }
                   }
                 })
               %}
@@ -237,20 +245,21 @@
               </div>
             {% endif %}
 
+              {#}<div class="form-row mb-6">
+                <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
+                  <div class="charge_indicator spinner-loader">
+                  Loading…
+                  </div>
+                </div>
+              </div>#}
+              {# Buttons #}
+              <div class="form-row mb-6 pt-6 flex items-center">
+                 <input class="submit btn --auto-w --full-w" type="submit" value="Checkout">
+              </div>
+
             </div>
 
-        {#}<div class="form-row mb-6">
-          <div class="col-sm-offset-2 col-sm-10">
-          <input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
-            <div class="charge_indicator spinner-loader">
-            Loading…
-            </div>
-          </div>
-        </div>#}
-        {# Buttons #}
-        <div class="form-row mb-6 pt-6 flex items-center">
-           <input class="submit btn --auto-w --full-w" type="submit" value="Checkout">
-        </div>
 
       </form>
     {% endif %}
@@ -293,6 +302,25 @@
 {% set formJs %}
     (function () {
         $(this).charge();
+        var $stepAccount = $('#step-account');
+        var $stepAddress = $('#step-address');
+        var $stepBilling = $('#step-billing');
+        $stepAddress.hide();
+        $stepBilling.hide();
+        $('#step-account-next').on('click', function() {
+          $('.step-container').hide();
+          $('.account-nav').removeClass('active').addClass('inactive');
+          $('#step-address-nav').removeClass('inactive').addClass('active');
+          $stepAddress.show();
+
+
+        });
+        $('#step-address-next').on('click', function() {
+          $('.step-container').hide();
+          $('.account-nav').removeClass('active').addClass('inactive');
+          $('#step-billing-nav').removeClass('inactive').addClass('active');
+          $stepBilling.show();
+        });
     })();
 {% endset %}
 {% includeJs formJs %}
