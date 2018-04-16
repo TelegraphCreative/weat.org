@@ -53,14 +53,10 @@
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="username" class="field-label block w-full">Username</label>
-				<input type="text" name="username" id="username" class="input-field block w-full" placeholder="lonegunmen" value="{{ currentUser.username }}">
+				<a href="{{url('members/edit/password')}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
 			</div>
-
-
-
 			{# Field / split #}
-			<div class="form-row mb-6 flex justify-center items-center">
+			{#<div class="form-row mb-6 flex justify-center items-center">
 
 				<div class="w-1/2">
 					<label for="password" class="field-label block w-full">Password</label>
@@ -68,9 +64,9 @@
 				</div>
 
 				<div class="w-1/2">
-					<a href="#" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
+					<a href="{{members/edit/password}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
 				</div>
-			</div>
+			</div>#}
 
 
 

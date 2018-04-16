@@ -1,15 +1,9 @@
 {% extends "_layouts/standard" %}
 {% requireLogin %}
 
-{% set charges = craft.charge.getChargesByUser %}
-{#% set subscriptions = craft.charge.getAllMembershipSubscriptions %#}
-{#% set g = craft.charge.getAllMembershipSubscriptions() %#}
-{#% set h = craft.charge.getSubscriberByUserId %#}
-{#% set c = craft.charge.getMembershipSubscriptionForUser %#}
-{#% set customer = craft.charge.customer %#}
-
-
 {% block content %}
+
+{% set charges = craft.charge.getChargesByUser %}
 
 {# Breadcrumbs #}
 {% include '_components/fed/nav--breadcrumbs'  %}
@@ -22,56 +16,87 @@
 
 	{# Form #}
 	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg choices-as-boxes">
+		{% if craft.weat.isWeatMember %}
 
-		<form method="post" accept-charset="UTF-8" class="py-4">
-        {{ getCsrfInput() }}
-        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
-        {{ forms.hidden({ name : 'userId', value: currentUser.id }) }}
-        {% if allErrors is defined %}
-            {{ forms.errorBlock(allErrors) }}
-        {% endif %}
+			<form method="post" id="endSubscriptionForm" accept-charset="UTF-8" class="py-4">
+				{{ getCsrfInput() }}
+				{% if allErrors is defined %}
+					{{ forms.errorBlock(allErrors) }}
+				{% endif %}
 
-			{# Field #}
-			<div class="form-row mb-6 border-b border-grey-lightest pb-6">
-				<h4 class="mb-4 text-md">WEAT Annual Membership </h4>
-				<div class="text-xs text-grey-dark leading-normal">
-					<p>Start Date: 01/19/2014</p>
-					<p>Expiry Date: 01/19/2018</p>
+
+				{% for charge in charges %}
+					{% if charge.subscription.currentPeriodEnd >= date().timestamp %}
+						{# Field #}
+						<div class="form-row mb-6 border-b border-grey-lightest pb-6">
+							{{ forms.hidden({ name: 'subscriptionId', value: charge.subscription.id }) }}
+							<h4 class="mb-4 text-md">{{ charge.subscription.planName }}</h4>
+							<div class="text-xs text-grey-dark leading-normal">
+								<p>Start Date: {{ date.simple(charge.subscription.currentPeriodStart) }}</p>
+								<p>Expiry Date: {{ date.simple(charge.subscription.currentPeriodEnd) }}</p>
+							</div>
+						</div>
+
+						{# Field #}
+						<div class="form-row mb-6">
+							{% if charge.subscription.status == 'active' %}
+								{{ forms.hidden({ name: 'action', value: 'charge/endSubscription'}) }}
+								<label for="membershipAutoRenew" class="check-radio-input block w-full text-sm flex items-center">
+									<input type="checkbox" id="membershipAutoRenew" class="check-radio__input" checked>
+									{{svg.icon('icon --md text-green', 'checkmark')}}
+									<span class="check-radio__label inline-block ml-3  cursor-pointer">Auto-Renew Membership</span>
+								</label>
+							{% elseif charge.subscription.status == 'cancelled' %}
+
+								{{ forms.hidden({ name: 'action', value: 'charge/reactivateSubscription'}) }}
+								<p>Your membership will not renew at the end of the expiry date.</p>
+							{% else %}
+								<p>Unknow status {{ charge.subscription.status }}</p>
+							{% endif %}
+						</div>
+					{% endif %}
+				{% endfor %}
+
+				{# Buttons #}
+				<div class="form-row mb-6 pt-6 flex items-center">
+						 <input id="endSubscriptionSubmit" class="submit btn --disabled" type="submit" value="Update" disabled>
+						<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
 				</div>
-			</div>
 
-			{# Field #}
-			<div class="form-row mb-6">
-				<label for="membershipAutoRenew" class="check-radio-input block w-full text-sm flex items-center">
-					<input type="checkbox" id="membershipAutoRenew" class="check-radio__input">
-					{{svg.icon('icon --md text-green', 'checkmark')}}
-					<span class="check-radio__label inline-block ml-3  cursor-pointer">Auto-Renew Membership</span>
-				</label>
-			</div>
+			</form>
+{# Form Validation #}
+{% set formJs %}
+$(function() {
+	var $endSubscriptionSubmit = $('#endSubscriptionSubmit');
+	$('#membershipAutoRenew').change(function(){
+		if ( this.checked ) {
+			$endSubscriptionSubmit.prop('disabled', true).addClass('--disabled');
+		} else {
+			$endSubscriptionSubmit.prop('disabled', false).removeClass('--disabled');
+		}
+	});
+	$('#endSubscriptionForm').submit(function(event) {
+		var c = confirm("Are you sure you want to turn of auto-renew?");
+		return c;
+	});
+});
+{% endset %}
+{% includeJs formJs %}
+
+		{% else %}
 
 
-
-			{# Buttons #}
 			<div class="form-row mb-6 pt-6 flex items-center">
-					 <input class="submit btn" type="submit" value="Update">
-					<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
+				<a href="{{ url('members/join') }}" class="btn">Join WEAT</a>
 			</div>
 
-
-
-		</form>
+		{% endif %}
 
 	</section>
 
 </div>
 
-{# Form Validation #}
-{% set formJs %}
-	$("form").validate();
-{% endset %}
 
-{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
-{% includeJs formJs %}
 
 
 

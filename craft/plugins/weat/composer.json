@@ -1,0 +1,14 @@
+{
+	"name": "TelegraphCreative/weat.org/weat",
+	"description": "WEAT plugin for Craft CMS",
+	"type": "craft-plugin",
+	"authors": [
+		{
+			"name": "Bo Bartlett - Telegraph Creative",
+			"homepage": "https://telegraphcreative.co/"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}

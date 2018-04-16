@@ -1,84 +1,9 @@
-{% set item = craft.request.getParam('item') %}
-{% set quantity = craft.request.getParam('quantity') %}
-{% set eventId = craft.request.getParam('eventId') %}
-{% set event = craft.venti.events.id(eventId).first %}
-{% set pricing = event.pricing.id(item).first %}
-{% set individualPrice = pricing.price %}
-{% set totalPrice = individualPrice * quantity %}
-{% set itemLabel = event.title ~ ' - ' ~ pricing.label %}
-{% set pageHeader = 'Checkout' %}
-{% set createAccount = 'no' %}
-
-
-{% set options = {
-		'planAmount' : totalPrice,
-		'description' : event.title ~ ' Ticket' ~ ' | ' ~ pricing.label,
-		'meta' : {
-			'eventName' : event.title,
-			'type' : 'registration',
-			'eventId' : eventId,
-			'eventName' : event.title,
-			'ticketName' : pricing.label,
-			'quantity' : quantity,
-			'individualPrice' : individualPrice,
-			'includeSubscription' : false
-		}
-	}
-%}
-{% if pricing.subscription %}
-  {% set createAccount = 'yes' %}
-  {% set options = options|merge({
-      'actions' : {
-        'onSuccess': {
-          'subscription' : 'weat',
-          'email' : { 0: 'registration-confirmation' }
-        },
-        'meta' : {
-          'includeSubscription' : true
-        }
-      }
-    })
-  %}
-{% else %}
-  {% set createAccount = 'no' %}
-  {% set options = options|merge({
-      'actions' : {
-        'onSuccess': {
-          'email' : { 0: 'registration-confirmation' }
-        },
-      }
-    })
-  %}
-
-{% endif %}
-
-
-
-
-
-
-
-
-{% extends "_layouts/standard" %}
-{% set item = craft.request.getParam('item') %}
-{% set quantity = craft.request.getParam('quantity') %}
-{% set eventId = craft.request.getParam('eventId') %}
-{% set event = craft.venti.events.id(eventId).first %}
-{% set pricing = event.pricing.id(item).first %}
-{% set individualPrice = pricing.price %}
-{% set totalPrice = individualPrice * quantity %}
-
-{% block content %}
-
-{# Breadcrumbs #}
-{#% include '_components/fed/nav--breadcrumbs'  %#}
-
 {# Container #}
 <div class="simple-container">
 
 	{# Header #}
 	<header class="mb-10 pt-9">
-		<h1 class="text-lg text-blue mb-6">Checkout</h1>
+		<h1 class="text-lg text-blue mb-6">{{ pageHeader }}</h1>
 	</header>
 
 	<div class="form-container choices-as-boxes md:flex md:justify-between">
@@ -122,24 +47,11 @@
 					{{ getCsrfInput() }}
 					{{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
 					{{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}
+					{{ forms.hidden({ name : 'createAccount', value: createAccount }) }}
 					{{ forms.hidden({ name : 'fields[chargeType]', value: 'registration' }) }}
 					{{ forms.hidden({ name : 'customerName', value: '', id: 'hiddenName' }) }}
 					{{ forms.hidden({ name : 'cardAddressLine1', value: '1300' }) }}
-					{#}
-					{{ forms.hidden({ name : 'fields[item]', value: item }) }}
-					{{ forms.hidden({ name : 'fields[ticketQuantity]', value: quantity }) }}
-					{{ forms.hidden({ name : 'fields[eventId]', value: eventId }) }}
-					{{ forms.hidden({ name : 'fields[eventName]', value: event.title }) }}
-					{{ forms.hidden({ name : 'fields[ticketName]', value: pricing.label }) }}
-					{{ forms.hidden({ name : 'fields[ticketPrice]', value: individualPrice }) }}
-					{{ forms.hidden({ name : 'fields[firstName]', value: '', id: 'hiddenFirstName' }) }}
-					{{ forms.hidden({ name : 'fields[lastName]', value: '', id: 'hiddenFirstName' }) }}
-					{% if not currentUser and pricing.subscription %}
-					{{ forms.hidden({ name : 'fields[includeSubscription]', value: true }) }}
-					{% else %}
-					{{ forms.hidden({ name : 'fields[includeSubscription]', value: false }) }}
-					{% endif %}
-					#}
+
 					{% if allErrors is defined %}
 						{{ forms.errorBlock(allErrors) }}
 					{% endif %}
@@ -168,7 +80,7 @@
 							<input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full pageRequired" placeholder="hello@mail.com" value="{{charge is defined ? charge.customerEmail : (currentUser ? currentUser.email : '')}}">
 						</div>
 
-						{% if not currentUser and pricing.subscription %}
+						{% if not currentUser and createAccount == 'yes' %}
 						{# Field #}
 						<div class="form-row mb-6">
 							<label for="password" class="field-label block w-full">Password</label>
@@ -178,8 +90,8 @@
 
 						{# Field #}
 						<div class="form-row mb-6">
-							<label for="newsletter" class="check-radio-input block w-full text-sm flex items-center">
-								<input type="checkbox" id="newsletter" class="check-radio__input" checked>
+							<label for="meta[newsletter]" class="check-radio-input block w-full text-sm flex items-center">
+								<input type="checkbox" name="meta[newsletter]" id="newsletter" class="check-radio__input" checked>
 								{{svg.icon('icon --md text-green', 'checkmark')}}
 								<span class="check-radio__label inline-block ml-3  cursor-pointer">Sign up for our newsletter?</span>
 							</label>
@@ -210,6 +122,11 @@
 							<div class="w-1/2 px-4">
 								<label for="cardAddressCity" class="field-label block w-full">City</label>
 								<input required name="cardAddressCity" id="city" type="text" class="input-field block w-full" placeholder="City">
+							</div>
+
+							<div class="w-1/2 px-4">
+								<label for="meta[addressCity]" class="field-label block w-full">City</label>
+								<input required name="meta[addressCity]" id="city" type="text" class="input-field block w-full" placeholder="City">
 							</div>
 
 							<div class="w-1/2 px-4">
@@ -246,66 +163,6 @@
 					</div>
 
 					<div id="step-3" class="step-container" style="display:none">
-						{% set options = {
-								'planAmount' : totalPrice,
-								'description' : event.title ~ ' Ticket',
-								'meta' : {
-									'eventName' : event.title,
-									'type' : 'registration',
-									'eventId' : eventId,
-									'eventName' : event.title,
-									'ticketName' : pricing.label,
-									'ticketQuantity' : quantity,
-									'ticketPrice' : individualPrice,
-									'includeSubscription' : false
-								}
-							}
-						%}
-
-						{% if pricing.subscription %}
-							{{ forms.hidden({ name: 'createAccount', value: 'yes' }) }}
-							{% set options = options|merge({
-									'actions' : {
-										'onSuccess': {
-											'subscription' : 'weat',
-											'email' : { 0: 'registration-confirmation' }
-										},
-										'meta' : {
-											'includeSubscription' : true
-										}
-									}
-								})
-							%}
-						{% else %}
-							{{ forms.hidden({ name: 'createAccount', value: 'no' }) }}
-							{% set options = options|merge({
-									'actions' : {
-										'onSuccess': {
-											'email' : { 0: 'registration-confirmation' }
-										},
-									}
-								})
-							%}
-							{#% set options = {
-									'planAmount' : totalPrice,
-									'description' : event.title ~ ' Ticket',
-									'meta' : {
-										'eventName' : event.title,
-										'type' : 'ticket',
-										'eventId' : eventId,
-										'eventName' : event.title,
-										'ticketName' : pricing.label,
-										'ticketQuantity' : quantity,
-										'ticketPrice' : individualPrice
-									},
-									'actions' : {
-										'onSuccess': {
-											'subscription' : 'weat',
-										},
-									}
-								}
-							%#}
-						{% endif %}
 
 						{{ craft.charge.setPaymentOptions(options) }}
 						{% if charge is defined and charge.cardToken is not null %}
@@ -381,14 +238,6 @@
 							</div>
 						{% endif %}
 
-							{#}<div class="form-row mb-6">
-								<div class="col-sm-offset-2 col-sm-10">
-								<input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
-									<div class="charge_indicator spinner-loader">
-									Loading…
-									</div>
-								</div>
-							</div>#}
 							{# Buttons #}
 							<div class="form-row mb-6 flex justify-center items-center -mx-4">
 								{# Field #}
@@ -413,20 +262,13 @@
 
 	{# Aside #}
 	<aside class="form-aside w-full md:w-2/5 md:mb-0 mb-lg md:pl-8 px-6 md:px-0 ">
-		{% set itemLabel = event.title ~ ' - ' ~ pricing.label %}
 		{% include '_components/checkout--summary.twig' %}
 	</aside>
 
 </div>
 
 </div>
-{# Form Validation #}
-{#% set formJs %}
-	$("form").validate();
-{% endset %}
 
-{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
-{% includeJs formJs %#}
 {% includeJsResource 'charge/js/stripe_v2.min.js' %}
 {% includeJsResource 'charge/js/jquery.charge.js' %}
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
@@ -462,10 +304,7 @@
 				var v = $('form#charge-form').validate({
 					errorClass: "warning",
 					onkeyup: false,
-					onfocusout: false,
-					submitHandler: function() {
-						alert("Submitted, thanks!");
-					}
+					onfocusout: false
 				});
 
 				// back buttons do not need to run validation
@@ -535,5 +374,3 @@
 		})();
 {% endset %}
 {% includeJs formJs %}
-
-{% endblock %}

@@ -28,9 +28,8 @@ class WeatVariable
       if(count($charges > 1)) {
         WeatPlugin::log('Too many subscriptions for userId ' . $userId);
       }
-      WeatPlugin::log('Too many subscriptions for userId ' . $userId);
       foreach ($charges as $charge) {
-        if($charge->subscription->status == 'active') {
+        if($charge->subscription->status == 'active' or $charge->subscription->currentPeriodEnd >= time()) {
           return true;
         }
       }
