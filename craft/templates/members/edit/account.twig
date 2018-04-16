@@ -12,21 +12,26 @@
 	{# Logged In Menu #}
 	{% include '_components/fed/nav--logged-in' %}
 
-	{% set message = craft.session.getFlash('notice') %}
-	{{ message }}
-
 	{# Form #}
 	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
 
+		{% set message = craft.session.getFlash('notice') %}
+		{{ message }}
+		{% if craft.request.getParam( 'loggedIn' ) %}
+		You are already logged in.
+		{% endif %}
+		{% if craft.request.getParam( 'isMember' ) %}
+		And you have an active subscription so there is no need to Join again.
+		{% endif %}
 		<form method="post" accept-charset="UTF-8" class="py-4">
-        {{ getCsrfInput() }}
-        {{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
-        {{ forms.hidden({ name : 'userId', value: currentUser.id }) }}
-        {% if allErrors is defined %}
-            {{ forms.errorBlock(allErrors) }}
-        {% endif %}
+				{{ getCsrfInput() }}
+				{{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+				{{ forms.hidden({ name : 'userId', value: currentUser.id }) }}
+				{% if allErrors is defined %}
+						{{ forms.errorBlock(allErrors) }}
+				{% endif %}
 
-        <div id="payment-errors" class="alert alert-error"></div>
+				<div id="payment-errors" class="alert alert-error"></div>
 
 			{# Field #}
 			<div class="form-row mb-6">
@@ -48,14 +53,10 @@
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="username" class="field-label block w-full">Username</label>
-				<input type="text" name="username" id="username" class="input-field block w-full" placeholder="lonegunmen" value="{{ currentUser.username }}">
+				<a href="{{url('members/edit/password')}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
 			</div>
-
-
-
 			{# Field / split #}
-			<div class="form-row mb-6 flex justify-center items-center">
+			{#<div class="form-row mb-6 flex justify-center items-center">
 
 				<div class="w-1/2">
 					<label for="password" class="field-label block w-full">Password</label>
@@ -63,9 +64,9 @@
 				</div>
 
 				<div class="w-1/2">
-					<a href="#" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
+					<a href="{{members/edit/password}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
 				</div>
-			</div>
+			</div>#}
 
 
 

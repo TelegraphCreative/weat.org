@@ -1,3 +1,64 @@
+{% set item = craft.request.getParam('item') %}
+{% set quantity = craft.request.getParam('quantity') %}
+{% set eventId = craft.request.getParam('eventId') %}
+{% set event = craft.venti.events.id(eventId).first %}
+{% set pricing = event.pricing.id(item).first %}
+{% set individualPrice = pricing.price %}
+{% set totalPrice = individualPrice * quantity %}
+{% set itemLabel = event.title ~ ' - ' ~ pricing.label %}
+{% set pageHeader = 'Checkout' %}
+{% set createAccount = 'no' %}
+
+
+{% set options = {
+		'planAmount' : totalPrice,
+		'description' : event.title ~ ' Ticket' ~ ' | ' ~ pricing.label,
+		'meta' : {
+			'eventName' : event.title,
+			'type' : 'registration',
+			'eventId' : eventId,
+			'eventName' : event.title,
+			'ticketName' : pricing.label,
+			'quantity' : quantity,
+			'individualPrice' : individualPrice,
+			'includeSubscription' : false
+		}
+	}
+%}
+{% if pricing.subscription %}
+  {% set createAccount = 'yes' %}
+  {% set options = options|merge({
+      'actions' : {
+        'onSuccess': {
+          'subscription' : 'weat',
+          'email' : { 0: 'registration-confirmation' }
+        },
+        'meta' : {
+          'includeSubscription' : true
+        }
+      }
+    })
+  %}
+{% else %}
+  {% set createAccount = 'no' %}
+  {% set options = options|merge({
+      'actions' : {
+        'onSuccess': {
+          'email' : { 0: 'registration-confirmation' }
+        },
+      }
+    })
+  %}
+
+{% endif %}
+
+
+
+
+
+
+
+
 {% extends "_layouts/standard" %}
 {% set item = craft.request.getParam('item') %}
 {% set quantity = craft.request.getParam('quantity') %}
@@ -15,285 +76,463 @@
 {# Container #}
 <div class="simple-container">
 
-  {# Header #}
-  <header class="mb-10 pt-9">
-    <h1 class="text-lg text-blue mb-6">Checkout</h1>
-  </header>
+	{# Header #}
+	<header class="mb-10 pt-9">
+		<h1 class="text-lg text-blue mb-6">Checkout</h1>
+	</header>
 
-  <div class="form-container choices-as-boxes md:flex md:justify-between">
+	<div class="form-container choices-as-boxes md:flex md:justify-between">
 
-    {# Form #}
-    <section class="form-container --narrow w-full md:w-3/5 mb-8 mb:mb-lg ">
+		{# Form #}
+		<section class="form-container --narrow w-full md:w-3/5 mb-8 mb:mb-lg ">
 
-      {# Join Breadcrumbs #}
-      <nav class="step-breadcrumbs --circle-counters mb-8 text-sm md:text-md">
-        <ul class="list-reset">
+			{# Join Breadcrumbs #}
+			<nav class="step-breadcrumbs --circle-counters mb-8 text-sm md:text-md">
+				<ul class="list-reset">
 
-          {# Active State: .active #}
-          <li class="active    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
-            <span class="name md:ml-16 ml-12 relative">
-              Account
-            </span>
-          </li>
+					{# Active State: .active #}
+					<li id="step-nav-1" class="active account-nav inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+						<span class="name md:ml-16 ml-12 relative">
+							Account
+						</span>
+					</li>
 
-          {# Inactive State: .inactive #}
-          <li class="inactive    inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
-            <span class="name md:ml-16 ml-12 relative">
-              Address
-            </span>
-          </li>
+					{# Inactive State: .inactive #}
+					<li id="step-nav-2" class="inactive account-nav inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+						<span class="name md:ml-16 ml-12 relative">
+							Address
+						</span>
+					</li>
 
-          {# Default State: -- #}
-          <li class="inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
-            <span class="name md:ml-16 ml-12 relative">
-              Billing
-            </span>
-          </li>
+					{# Default State: -- #}
+					<li id="step-nav-3" class="inactive account-nav inline-block mr-6 md:mr-8 lg:mr-12 mb-10">
+						<span class="name md:ml-16 ml-12 relative">
+							Billing
+						</span>
+					</li>
 
-        </ul>
-      </nav>
+				</ul>
+			</nav>
 
-      {% if totalPrice <= 0 %}
-        We need a different flow here
-      {% else %}
+			{% if totalPrice <= 0 %}
+				We need a different flow here
+			{% else %}
 
-        <form class="form-horizontal" id="charge-form" method="post" accept-charset="UTF-8" data-publicKey="{{ craft.charge.getPublicKey }}">
-          {{ getCsrfInput() }}
-          {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
-          {{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}
-          {{ forms.hidden({ name : 'item', value: item }) }}
-          {{ forms.hidden({ name : 'quantity', value: quantity }) }}
-          {{ forms.hidden({ name : 'eventId', value: eventId }) }}
-          {% if allErrors is defined %}
-            {{ forms.errorBlock(allErrors) }}
-          {% endif %}
+				<form class="form-horizontal" id="charge-form" method="post" accept-charset="UTF-8" data-publicKey="{{ craft.charge.getPublicKey }}">
+					{{ getCsrfInput() }}
+					{{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
+					{{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}
+					{{ forms.hidden({ name : 'fields[chargeType]', value: 'registration' }) }}
+					{{ forms.hidden({ name : 'customerName', value: '', id: 'hiddenName' }) }}
+					{{ forms.hidden({ name : 'cardAddressLine1', value: '1300' }) }}
+					{#}
+					{{ forms.hidden({ name : 'fields[item]', value: item }) }}
+					{{ forms.hidden({ name : 'fields[ticketQuantity]', value: quantity }) }}
+					{{ forms.hidden({ name : 'fields[eventId]', value: eventId }) }}
+					{{ forms.hidden({ name : 'fields[eventName]', value: event.title }) }}
+					{{ forms.hidden({ name : 'fields[ticketName]', value: pricing.label }) }}
+					{{ forms.hidden({ name : 'fields[ticketPrice]', value: individualPrice }) }}
+					{{ forms.hidden({ name : 'fields[firstName]', value: '', id: 'hiddenFirstName' }) }}
+					{{ forms.hidden({ name : 'fields[lastName]', value: '', id: 'hiddenFirstName' }) }}
+					{% if not currentUser and pricing.subscription %}
+					{{ forms.hidden({ name : 'fields[includeSubscription]', value: true }) }}
+					{% else %}
+					{{ forms.hidden({ name : 'fields[includeSubscription]', value: false }) }}
+					{% endif %}
+					#}
+					{% if allErrors is defined %}
+						{{ forms.errorBlock(allErrors) }}
+					{% endif %}
 
-          <div id="payment-errors" class="alert alert-error"></div>
+					<div id="payment-errors" class="alert alert-error"></div>
 
-          <div id="step-account">
+					<div id="step-1" class="step-container">
 
-            <div class="form-row mb-6 flex justify-center items-center -mx-4">
-              {# Field #}
-              <div class="w-1/2 px-4">
-                <label for="firstName" class="field-label block w-full">First Name</label>
-                <input required name="firstName" id="firstName" type="text" class="input-field block w-full" placeholder="Your First Name" value="{{charge is defined and charge.user ? charge.user.firstName : (currentUser ? currentUser.firstName : '')}}">
-              </div>
+						<div class="form-row mb-6 flex justify-center items-center -mx-4">
+							{# Field #}
+							<div class="w-1/2 px-4">
+								<label for="firstName" class="field-label block w-full">First Name</label>
+								<input required name="firstName" id="firstName" type="text" class="input-field block w-full pageRequired" placeholder="Your First Name" value="{{charge is defined and charge.user ? charge.user.firstName : (currentUser ? currentUser.firstName : '')}}">
+							</div>
 
-              {# Field #}
-              <div class="w-1/2 px-4">
-                <label for="lastName" class="field-label block w-full">Last Name</label>
-                <input required name="lastName" id="lastName" type="text" class="input-field block w-full" placeholder="Your Last Name" value="{{charge is defined and charge.user ? charge.user.lastName : (currentUser ? currentUser.lastName : '')}}">
-              </div>
-            </div>
+							{# Field #}
+							<div class="w-1/2 px-4">
+								<label for="lastName" class="field-label block w-full">Last Name</label>
+								<input required name="lastName" id="lastName" type="text" class="input-field block w-full pageRequired" placeholder="Your Last Name" value="{{charge is defined and charge.user ? charge.user.lastName : (currentUser ? currentUser.lastName : '')}}">
+							</div>
+						</div>
 
-            {# Field #}
-            <div class="form-row mb-6">
-              <label for="customerEmail" class="field-label block w-full">Email</label>
-              <input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full" placeholder="hello@mail.com" value="{{charge is defined ? charge.customerEmail : (currentUser ? currentUser.email : '')}}">
-            </div>
+						{# Field #}
+						<div class="form-row mb-6">
+							<label for="customerEmail" class="field-label block w-full">Email</label>
+							<input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full pageRequired" placeholder="hello@mail.com" value="{{charge is defined ? charge.customerEmail : (currentUser ? currentUser.email : '')}}">
+						</div>
 
-            {% if not currentUser and pricing.subscription %}
-            {# Field #}
-            <div class="form-row mb-6">
-              <label for="password" class="field-label block w-full">Password</label>
-              <input required name="password" id="password" type="password" class="input-field block w-full">
-            </div>
-            {% endif %}
-          </div>
+						{% if not currentUser and pricing.subscription %}
+						{# Field #}
+						<div class="form-row mb-6">
+							<label for="password" class="field-label block w-full">Password</label>
+							<input required name="password" id="password" type="password" class="input-field block w-full">
+						</div>
+						{% endif %}
 
-          <div id="step-address">
-            Address boxes here
-          </div>
+						{# Field #}
+						<div class="form-row mb-6">
+							<label for="newsletter" class="check-radio-input block w-full text-sm flex items-center">
+								<input type="checkbox" id="newsletter" class="check-radio__input" checked>
+								{{svg.icon('icon --md text-green', 'checkmark')}}
+								<span class="check-radio__label inline-block ml-3  cursor-pointer">Sign up for our newsletter?</span>
+							</label>
+						</div>
 
-          <div id="step-billing">
-            {% set options = {
-                'planAmount' : totalPrice,
-                'description' : event.title ~ ' Ticket',
-                'meta' : {
-                  'eventName' : event.title,
-                  'type' : 'ticket',
-                  'eventId' : eventId,
-                  'eventName' : event.title,
-                  'ticketName' : pricing.label,
-                  'ticketQuantity' : quantity,
-                  'ticketPrice' : individualPrice
-                }
-              }
-            %}
+						<div class="form-row mb-6 flex justify-center items-center -mx-4">
+							{# Field #}
+							<div class="w-1/2 px-4">
+							</div>
+							{# Field #}
+							<div class="w-1/2 px-4">
+								<input class="next submit btn --auto-w --full-w" type="button" value="Next">
+							</div>
+						</div>
+					</div>
 
-            {% if pricing.subscription %}
-              {{ forms.hidden({ name: 'createAccount', value: 'yes' }) }}
-              {% set options = options|merge({
-                  'actions' : {
-                    'onSuccess': {
-                      'subscription' : 'weat',
-                      'email' : { 0: 'registration-confirmation' }
-                    },
-                  }
-                })
-              %}
-            {% else %}
-              {{ forms.hidden({ name: 'createAccount', value: 'no' }) }}
-              {% set options = options|merge({
-                  'actions' : {
-                    'onSuccess': {
-                      'email' : { 0: 'registration-confirmation' }
-                    },
-                  }
-                })
-              %}
-              {#% set options = {
-                  'planAmount' : totalPrice,
-                  'description' : event.title ~ ' Ticket',
-                  'meta' : {
-                    'eventName' : event.title,
-                    'type' : 'ticket',
-                    'eventId' : eventId,
-                    'eventName' : event.title,
-                    'ticketName' : pricing.label,
-                    'ticketQuantity' : quantity,
-                    'ticketPrice' : individualPrice
-                  },
-                  'actions' : {
-                    'onSuccess': {
-                      'subscription' : 'weat',
-                    },
-                  }
-                }
-              %#}
-            {% endif %}
+					<div id="step-2" class="step-container" style="display:none">
 
-            {{ craft.charge.setPaymentOptions(options) }}
-            {% if charge is defined and charge.cardToken is not null %}
+						{# Address #}
+						<div class="form-row mb-6">
+							<label for="cardAddressLine1" class="field-label block w-full">Street Address</label>
+							<input required name="cardAddressLine1" id="cardAddressLine1" type="text" class="input-field block w-full" placeholder="Street Address">
+						</div>
 
-              <p>We have card details.</p>
-              <p>Card Last 4 : {{ charge.cardLast4 }}</p>
+						{# Split Fields: City & State #}
+						<div class="form-row mb-6 flex justify-between items-center -mx-4">
 
-              {# Actually include the existing card details #}
-              {{ forms.hidden({ name: 'cardToken', value: charge.cardToken, 'data': { stripe: 'token' }}) }}
-              {{ forms.hidden({ name: 'cardLast4', value: charge.cardLast4 }) }}
-              {{ forms.hidden({ name: 'cardType', value: charge.cardType }) }}
-              {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
-              {{ forms.hidden({ name: 'cardExpMonth', value: charge.cardExpMonth }) }}
-              {{ forms.hidden({ name: 'cardExpYear', value: charge.cardExpYear }) }}
-              {{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
+							<div class="w-1/2 px-4">
+								<label for="cardAddressCity" class="field-label block w-full">City</label>
+								<input required name="cardAddressCity" id="city" type="text" class="input-field block w-full" placeholder="City">
+							</div>
 
-            {% else %}
+							<div class="w-1/2 px-4">
+								<label for="cardAddressState" class="field-label block w-full">State</label>
+								<select name="state" id="cardAddressState" data-module="choices">
+									<option value="CT">CT</option>
+									<option value="AZ">AZ</option>
+									<option value="NM">NM</option>
+									<option value="TX">TX</option>
+									<option value="CA">CA</option>
+								</select>
+							</div>
+						</div>
 
-              <div class="form-row mb-6">
-                <label for="cardNumber" class="field-label block w-full">Credit Card Number</label>
-                {% set config = {
-                  'id' : 'cardNumber',
-                  'name':'cardNumber',
-                  'class': 'cc-number input-field block w-full',
-                  'placeholder' : '•••• •••• •••• ••••'
-                } %}
-                {% if craft.charge.getMode == 'test' and craft.config.devMode %}
-                    {% set config = config|merge({
-                      'value': '4242 4242 4242 4242'
-                    }) %}
-                {% endif %}
-                {{ stripe.card(config) }}
-              </div>
+						{# Zipcode #}
+						<div class="form-row mb-6 flex justify-between items-center -mx-4">
 
-              <div class="form-row mb-6">
-                <label for="cardNumber" class="field-label block w-full">Expiry</label>
-                {{ stripe.expiry({
-                      label: 'Expiry',
-                      id: 'cardExpMonth',
-                      class: 'cc-expiry'
-                  }) }}
-                  {{ stripe.expiryYear({
-                      label: 'Expiry Year',
-                      id: 'cardExpYear',
-                      class: 'cc-expiry'
-                  }) }}
-                {% set config = {
-                  'data' : { 'stripe' : 'exp'},
-                  'class': 'input-field block w-full',
-                } %}
-                {% set configMonth = { name: 'cardExpMonth', data: { stripe : 'exp_month' }} %}
-                {% set configYear = { name: 'cardExpYear', data: { stripe : 'exp_year' }} %}
+							<div class="w-1/2 px-4">
+								<label for="cardAddressZip" class="field-label block w-full">Zipcode</label>
+								<input required name="cardAddressZip" id="zipcode" type="text" class="input-field block w-full" placeholder="Zipcode">
+							</div>
+						</div>
 
-                {% if craft.charge.getMode == 'test' and craft.config.devMode %}
-                    {% set config = config|merge({ 'value': '12 / 34' }) %}
-                    {% set configMonth = configMonth|merge({ 'value': '12' }) %}
-                    {% set configYear = configYear|merge({ 'value': '34' }) %}
-                {% endif %}
+						<div class="form-row mb-6 flex justify-center items-center -mx-4">
+							{# Field #}
+							<div class="w-1/2 px-4">
+								<input class="prev submit btn --auto-w --full-w" type="button" value="Previous">
+							</div>
+							{# Field #}
+							<div class="w-1/2 px-4">
+								<input class="next submit btn --auto-w --full-w" type="button" value="Next">
+							</div>
+						</div>
+					</div>
+
+					<div id="step-3" class="step-container" style="display:none">
+						{% set options = {
+								'planAmount' : totalPrice,
+								'description' : event.title ~ ' Ticket',
+								'meta' : {
+									'eventName' : event.title,
+									'type' : 'registration',
+									'eventId' : eventId,
+									'eventName' : event.title,
+									'ticketName' : pricing.label,
+									'ticketQuantity' : quantity,
+									'ticketPrice' : individualPrice,
+									'includeSubscription' : false
+								}
+							}
+						%}
+
+						{% if pricing.subscription %}
+							{{ forms.hidden({ name: 'createAccount', value: 'yes' }) }}
+							{% set options = options|merge({
+									'actions' : {
+										'onSuccess': {
+											'subscription' : 'weat',
+											'email' : { 0: 'registration-confirmation' }
+										},
+										'meta' : {
+											'includeSubscription' : true
+										}
+									}
+								})
+							%}
+						{% else %}
+							{{ forms.hidden({ name: 'createAccount', value: 'no' }) }}
+							{% set options = options|merge({
+									'actions' : {
+										'onSuccess': {
+											'email' : { 0: 'registration-confirmation' }
+										},
+									}
+								})
+							%}
+							{#% set options = {
+									'planAmount' : totalPrice,
+									'description' : event.title ~ ' Ticket',
+									'meta' : {
+										'eventName' : event.title,
+										'type' : 'ticket',
+										'eventId' : eventId,
+										'eventName' : event.title,
+										'ticketName' : pricing.label,
+										'ticketQuantity' : quantity,
+										'ticketPrice' : individualPrice
+									},
+									'actions' : {
+										'onSuccess': {
+											'subscription' : 'weat',
+										},
+									}
+								}
+							%#}
+						{% endif %}
+
+						{{ craft.charge.setPaymentOptions(options) }}
+						{% if charge is defined and charge.cardToken is not null %}
+
+							<p>We have card details.</p>
+							<p>Card Last 4 : {{ charge.cardLast4 }}</p>
+
+							{# Actually include the existing card details #}
+							{{ forms.hidden({ name: 'cardToken', value: charge.cardToken, 'data': { stripe: 'token' }}) }}
+							{{ forms.hidden({ name: 'cardLast4', value: charge.cardLast4 }) }}
+							{{ forms.hidden({ name: 'cardType', value: charge.cardType }) }}
+							{{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
+							{{ forms.hidden({ name: 'cardExpMonth', value: charge.cardExpMonth }) }}
+							{{ forms.hidden({ name: 'cardExpYear', value: charge.cardExpYear }) }}
+							{{ forms.hidden({ name: 'cardName', value: charge.cardName }) }}
+
+						{% else %}
+
+							<div class="form-row mb-6">
+								<label for="cardNumber" class="field-label block w-full">Credit Card Number</label>
+								{% set config = {
+									'id' : 'cardNumber',
+									'name':'cardNumber',
+									'class': 'cc-number input-field block w-full',
+									'placeholder' : '•••• •••• •••• ••••'
+								} %}
+								{% if craft.charge.getMode == 'test' and craft.config.devMode %}
+										{% set config = config|merge({
+											'value': '4242 4242 4242 4242'
+										}) %}
+								{% endif %}
+								{{ stripe.card(config) }}
+							</div>
+
+							<div class="form-row mb-6">
+								<label for="cardNumber" class="field-label block w-full">Expiry</label>
+								{{ stripe.expiry({
+											label: 'Expiry',
+											id: 'cardExpMonth',
+											class: 'cc-expiry'
+									}) }}
+									{{ stripe.expiryYear({
+											label: 'Expiry Year',
+											id: 'cardExpYear',
+											class: 'cc-expiry'
+									}) }}
+								{% set config = {
+									'data' : { 'stripe' : 'exp'},
+									'class': 'input-field block w-full',
+								} %}
+								{% set configMonth = { name: 'cardExpMonth', data: { stripe : 'exp_month' }} %}
+								{% set configYear = { name: 'cardExpYear', data: { stripe : 'exp_year' }} %}
+
+								{% if craft.charge.getMode == 'test' and craft.config.devMode %}
+										{% set config = config|merge({ 'value': '12 / 34' }) %}
+										{% set configMonth = configMonth|merge({ 'value': '12' }) %}
+										{% set configYear = configYear|merge({ 'value': '34' }) %}
+								{% endif %}
 
 
-              </div>
+							</div>
 
-              <div class="form-row mb-6">
-                {{ stripe.cvcField({
-                  label: 'CVC',
-                  id: 'cardCvc',
-                  class: 'cc-cvc',
-                  placeholder: '•••'
-                }) }}
-              </div>
-              <div class="form-row mb-6">
-                {{ stripe.textField({ label: 'Type', fieldWidth: 'col-sm-2', class:'card-type', readonly: true}) }}
-              </div>
-            {% endif %}
+							<div class="form-row mb-6">
+								{{ stripe.cvcField({
+									label: 'CVC',
+									id: 'cardCvc',
+									class: 'cc-cvc',
+									placeholder: '•••'
+								}) }}
+							</div>
+							<div class="form-row mb-6">
+								{{ stripe.textField({ label: 'Type', fieldWidth: 'col-sm-2', class:'card-type', readonly: true}) }}
+							</div>
+						{% endif %}
 
-            </div>
+							{#}<div class="form-row mb-6">
+								<div class="col-sm-offset-2 col-sm-10">
+								<input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
+									<div class="charge_indicator spinner-loader">
+									Loading…
+									</div>
+								</div>
+							</div>#}
+							{# Buttons #}
+							<div class="form-row mb-6 flex justify-center items-center -mx-4">
+								{# Field #}
+								<div class="w-1/2 px-4">
+									<input class="prev submit btn --auto-w --full-w" type="button" value="Previous">
+								</div>
+								{# Field #}
+								<div class="w-1/2 px-4">
+									<input class="submit btn --auto-w --full-w" type="submit" value="Checkout">
+										<div class="charge_indicator spinner-loader">
+										Loading…
+										</div>
+								</div>
+							</div>
 
-        {#}<div class="form-row mb-6">
-          <div class="col-sm-offset-2 col-sm-10">
-          <input type="submit" class="btn btn-primary" value="Pay with Stripe"/>
-            <div class="charge_indicator spinner-loader">
-            Loading…
-            </div>
-          </div>
-        </div>#}
-        {# Buttons #}
-        <div class="form-row mb-6 pt-6 flex items-center">
-           <input class="submit btn --auto-w --full-w" type="submit" value="Checkout">
-        </div>
-
-      </form>
-    {% endif %}
-  </section>
-
-  {# Aside #}
-  <aside class="form-aside w-full md:w-2/5 md:mb-0 mb-lg md:pl-8 px-6 md:px-0 ">
-    <div class="lg:max-w-xs max-w-sm lg:ml- m-auto md:float-right w-full">
-
-      <header class="text-center border-b border-grey-lightest text-grey">
-        <h4 class="text-md pb-6">Your Order</h4>
-      </header>
-
-      <div class="text-base font-medium my-3">
-        <p>{{event.title}} - {{pricing.label}}</p>
-      </div>
-
-      <div class="clearfix text-xs text-grey-dark">
-        <div class="float-left w-1/2">Qty: {{quantity}}</div>
-        <div class="float-left w-1/2 text-right">${{totalPrice}}</div>
-      </div>
+						</div>
 
 
+			</form>
+		{% endif %}
+	</section>
 
-    </div>
-  </aside>
+	{# Aside #}
+	<aside class="form-aside w-full md:w-2/5 md:mb-0 mb-lg md:pl-8 px-6 md:px-0 ">
+		{% set itemLabel = event.title ~ ' - ' ~ pricing.label %}
+		{% include '_components/checkout--summary.twig' %}
+	</aside>
 
 </div>
 
 </div>
 {# Form Validation #}
 {#% set formJs %}
-  $("form").validate();
+	$("form").validate();
 {% endset %}
 
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
 {% includeJs formJs %#}
-{% includeJsFile "{{ resourceUrl('charge/js/stripe_v2.min.js') }}" %}
-{% includeJsFile "{{ resourceUrl('charge/js/jquery.charge.js') }}" %}
+{% includeJsResource 'charge/js/stripe_v2.min.js' %}
+{% includeJsResource 'charge/js/jquery.charge.js' %}
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
 {% set formJs %}
-    (function () {
-        $(this).charge();
-    })();
+(function () {
+	$(this).charge();
+	//var validator = $('form#charge-form').validate();
+	var $step1 = $('#step-1');
+	var $step2 = $('#step-2');
+	var $step3 = $('#step-3');
+	$step2.hide();
+	$step3.hide();
+
+	var $firstName = $('#firstName');
+	var $lastName = $('#lastName');
+	var $hiddenName = $('#hiddenName');
+
+
+				var current = 0;
+
+				$.validator.addMethod("pageRequired", function(value, element) {
+					var $element = $(element)
+
+						function match(index) {
+							return current == index && $(element).parents("#step-" + (index + 1)).length;
+						}
+					if (match(0) || match(1) || match(2)) {
+						return !this.optional(element);
+					}
+					return "dependency-mismatch";
+				}, $.validator.messages.required)
+
+				var v = $('form#charge-form').validate({
+					errorClass: "warning",
+					onkeyup: false,
+					onfocusout: false,
+					submitHandler: function() {
+						alert("Submitted, thanks!");
+					}
+				});
+
+				// back buttons do not need to run validation
+
+				$step2.find('.prev').click(function() {
+					$('.step-container').hide();
+					$('.account-nav').removeClass('active').addClass('inactive');
+					$('#step-nav-1').removeClass('inactive').addClass('active');
+					$step1.show();
+					current = 0;
+				});
+				$step3.find('.prev').click(function() {
+					$('.step-container').hide();
+					$('.account-nav').removeClass('active').addClass('inactive');
+					$('#step-nav-2').removeClass('inactive').addClass('active');
+					$step2.show();
+					current = 1;
+				});
+
+				// these buttons all run the validation, overridden by specific targets above
+				$step1.find('.next').click(function() {
+					if (v.form()) {
+						$('.step-container').hide();
+						$('.account-nav').removeClass('active').addClass('inactive');
+						$('#step-nav-2').removeClass('inactive').addClass('active');
+						$step2.show();
+						$hiddenName.val($firstName.val() + ' ' + $lastName.val());
+						current = 1;
+					}
+				});
+				$step2.find('.next').click(function() {
+					if (v.form()) {
+						$('.step-container').hide();
+						$('.account-nav').removeClass('active').addClass('inactive');
+						$('#step-nav-3').removeClass('inactive').addClass('active');
+						$step3.show();
+						current = 2;
+					}
+				});
+				/*$(".open-1").click(function() {
+					if (v.form()) {
+						//accordion.accordion("option", "active", 0);
+						current = 0;
+					}
+				});*/
+/*			});
+
+
+
+				$('#step-account-next').on('click', function() {
+
+					validator.element($stepAccount)({
+						success: function() {
+							$('.step-container').hide();
+							$('.account-nav').removeClass('active').addClass('inactive');
+							$('#step-address-nav').removeClass('inactive').addClass('active');
+							$stepAddress.show();
+						}
+					});
+				});
+				$('#step-address-next').on('click', function() {
+					$('.step-container').hide();
+					$('.account-nav').removeClass('active').addClass('inactive');
+					$('#step-billing-nav').removeClass('inactive').addClass('active');
+					$stepBilling.show();
+				});*/
+		})();
 {% endset %}
 {% includeJs formJs %}
 

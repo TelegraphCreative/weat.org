@@ -1,0 +1,32 @@
+{% import "_includes/forms" as forms %}
+<p>All settings are required!</p>
+
+<div class="field" id="constantContactApiKey-field">
+  <div class="heading">
+    <label for="constantContactApiKey">API Key *</label>
+    <p class="instructions">Your developer will create the API Key for you. There must only be one API key per application.</p>
+  </div>
+  <div class="input">
+    <input class="text fullwidth" type="text" id="constantContactApiKey" name="constantContactApiKey" value="{{settings.constantContactApiKey}}">
+  </div>
+</div>
+
+<div class="field" id="constantContactAccessToken-field">
+  <div class="heading">
+    <label for="constantContactAccessToken">Access Token *</label>
+    <p class="instructions">Your developer will create the Access Token for you.</p>
+  </div>
+  <div class="input">
+    <input class="text fullwidth" type="text" id="constantContactAccessToken" name="constantContactAccessToken" value="{{settings.constantContactAccessToken}}">
+  </div>
+</div>
+
+<div class="field" id="constantContactList-field">
+  <div class="heading">
+    <label for="constantContactList">Default List ID *</label>
+    <p class="instructions">Developers can use the built-in functionality to get lists in one of the SDKs. They can also use Constant Contact's IO docs or a REST client to make a Get /lists API call.</p>
+  </div>
+  <div class="input">
+    <input class="text fullwidth" type="text" id="constantContactList" name="constantContactList" value="{{settings.constantContactList}}">
+  </div>
+</div>

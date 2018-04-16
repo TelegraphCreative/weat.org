@@ -18,6 +18,9 @@
 		<h4 class="text-blue text-2md mb-6 sm:text-lg md:w-4/5 m-auto">It looks like something is broken on this page.</h4>
 		<div class="text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md">
 			<p>Please retry what you are trying to do. If you continue to experience issues please <a href="{{'contact-us'}}">contact us</a> or return to <a href="{{url('/')}}">WEAT.org</a></p>
+			<p>
+				<code>{% filter md %}{{ message }}{% endfilter %}</code>
+			</p>
 		</div>
 	</section>
 

@@ -24,30 +24,30 @@
 
 				{% nav item in mainMenu %}
 		        <li class="
-								md:inline-block 
+								md:inline-block
 
 								{% if item.level == 1 %}
-									md:px-3 py-1 md:py-0 
+									md:px-3 py-1 md:py-0
 								{% endif %}
 
 		        		{% if item.hasChildren %}
 			            menu__drop
 		            {% else %}
-			            	
+
 			          {{ item.class }}
 		            {% endif %}
-		        		
+
 		        		">
-		            <a 
+		            <a
 		            	{% if item.hasChildren %}
 			            	data-module="toggleDrop"
 		            	{% endif %}
-			            href="{{ item.link }}" target="{{ item.target }}" 
+			            href="{{ item.link }}" target="{{ item.target }}"
 			            class="
 				            {% if item.level == 1 %}
 				            uppercase font-bold tracking-wide text-blue-light md:text-black hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-1xs block md:inline-block pb-2 md:pb-0
 				            {% else %}
-				            	
+
 			            	{% endif %}
 			            ">
 			            {{ item.title }}
@@ -62,12 +62,12 @@
 			                {% children %}
 			              </ul>
 		            {% endifchildren %}
-		            
+
 		        </li>
 		    {% endnav %}
 
 
-				
+
 			</ul>
 		</nav>
 
@@ -99,9 +99,9 @@
 							{%endnav%}
 						</ul>
 					{% endif %}
-					
+
 				</li>
-				
+
 				{# Link #}
 				<li class="has-icon   md:inline-block md:pt-0 pt-2">
 					<a href="/">
@@ -111,7 +111,7 @@
 						</span>
 					</a>
 				</li>
-			
+
 			</ul>
 
 		</div>
@@ -132,7 +132,7 @@
 {# <!-- Stuff: -->
 {% if currentUser %}
 	<a href="/members/edit">  {{ currentUser.friendlyName }}</a>
-	<a href="/members/subscribe">Subscribe</a>
+	<a href="/members/join">Subscribe</a>
 {% else %}
 	<a href="{{ loginUrl }}">Login</a>
 {% endif %}
