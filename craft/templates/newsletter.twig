@@ -1,0 +1,57 @@
+
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Container #}
+<div class="simple-container">
+
+	{# Form #}
+	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+		<header class="mb-10 pt-9">
+			<h1 class="text-lg text-blue mb-6">Subscribe to the WEAT newsletter</h1>
+		</header>
+		<form action="#" id="email-subscribe-solo" method="post" accept-charset="UTF-8">
+			{{ getCsrfInput() }}
+				{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[email]" class="field-label block w-full">Email address</label>
+				<input type="email" id="email-subscribe-email" name="fields[email]" class="required input-field block w-full" placeholder="my@email.com">
+			</div>
+
+			{# Buttons #}
+			<div class="form-row mb-6 pt-6 flex items-center">
+				 <input class="submit btn" type="submit" value="Subscribe">
+			</div>
+		</form>
+
+	</section>
+
+</div>
+
+{% set subscribeJs %}
+var $formSubscribeSolo = $("form#email-subscribe-solo");
+$formSubscribeSolo.validate();
+
+$formSubscribeSolo.submit(function(event){
+	event.preventDefault();
+	$.ajax({
+		type: 'POST',
+		url: '/actions/constantContactSubscribe/list/Subscribe',
+		data: $formSubscribeSolo.serialize(),
+		complete: function(data){
+			if (data.responseJSON.responseCode == 201){
+				alert('Thanks for subscribing!');
+				$('#email-subscribe-email').val('');
+			} else {
+				alert('We could not subscribe you at this time. Please try again later.');
+			}
+		}
+	});
+});
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs subscribeJs %}
+
+{% endblock %}
