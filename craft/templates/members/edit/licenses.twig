@@ -1,0 +1,123 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{#% include '_components/fed/nav--breadcrumbs'  %#}
+
+{# Container #}
+<div class="simple-container">
+
+	{# Logged In Menu #}
+	{% include '_components/fed/nav--logged-in' %}
+
+	{# Form #}
+	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+
+		{% set message = craft.session.getFlash('notice') %}
+		{{ message }}
+		{% if craft.request.getParam( 'loggedIn' ) %}
+		You are already logged in.
+		{% endif %}
+		{% if craft.request.getParam( 'isMember' ) %}
+		And you have an active subscription so there is no need to Join again.
+		{% endif %}
+		<form method="post" accept-charset="UTF-8" class="py-4">
+				{{ getCsrfInput() }}
+				{{ forms.hidden({ name : 'action', value: 'users/saveUser' }) }}
+				{{ forms.hidden({ name : 'userId', value: currentUser.id }) }}
+				{% if allErrors is defined %}
+						{{ forms.errorBlock(allErrors) }}
+				{% endif %}
+
+				<div id="payment-errors" class="alert alert-error"></div>
+
+			{# Field / split #}
+			{#<div class="form-row mb-6 flex justify-center items-center">
+
+				<div class="w-1/2">
+					<label for="password" class="field-label block w-full">Password</label>
+					<input type="password" name="password" id="password" class="input-field block w-full">
+				</div>
+
+				<div class="w-1/2">
+					<a href="{{members/edit/password}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
+				</div>
+			</div>#}
+
+			{#}{% set matrixField = craft.fields.getFieldByHandle('userLicenses') %}
+			{% set blockTypes = matrixField.getFieldType.getSettings.getBlockTypes %}
+			{% for blockType in blockTypes if blockType.handle == "userLicense" %}
+				{% for field in blockType.getFields() %}
+					{% if field.handle == "licenseName" %}
+						<select>
+							{% for option in field.settings.options %}
+								<option value="{{ option.value }}">{{ option.label }}</option>
+							{% endfor %}
+						</select>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+			#}
+
+
+{% set licenses = craft.fields.getFieldsByGroupId(18) %}
+{% for license in licenses %}
+	<div class="form-row mb-6">
+		<label for="fields[{{ license.handle }}]" class="field-label block w-full">{{ license.name }}</label>
+		<input type="text" name="fields[{{ license.handle }}]" class="input-field block w-full" value="{{ currentUser[ license.handle] }}" placeholder="{{license.settings.placeholder}}">
+	</div>
+{% endfor %}
+
+{#}
+			<input type="hidden" name="fields[userLicenses][new1][type]" value="userLicense">
+			{% set matrixField = craft.fields.getFieldByHandle('userLicenses') %}
+			{% set blockTypes = matrixField.getFieldType.getSettings.getBlockTypes %}
+			{% for blockType in blockTypes if blockType.handle == "userLicense" %}
+				{% for field in blockType.getFields() %}
+					{% if field.handle == "licenseName" %}
+						{% for option in field.settings.options %}
+							<div class="form-row mb-6 flex justify-center items-center -mx-4">
+								<div class="w-1/2 px-4">
+									{{ option.label }}<input type="hidden" name="fields[userLicenses][new1][fields][licenseName]" class="input-field block w-full" value="{{ option.value }}">
+								</div>
+								<div class="w-1/2 px-4">
+									<input type="text" name="fields[userLicenses][new1][fields][licenseNumber]" class="input-field block w-full">
+								</div>
+							</div>
+							#}
+{# For New Entries, you'll want to use the naming convention
+'new1', 'new2', 'new3' for each of your blocks.  For existing entries you
+can update those values to be the block IDs #}
+{#}
+<input type="text" name="fields[userLicenses][new2][fields][licenseName]" class="input-field block w-full">
+<input type="text" name="fields[userLicenses][new2][fields][licenseNumber]" class="input-field block w-full">#}
+{#}{% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}#}
+
+			{# Buttons #}
+			<div class="form-row mb-6 pt-6 flex items-center">
+					 <input class="submit btn" type="submit" value="Update">
+					<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
+			</div>
+
+		</form>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}

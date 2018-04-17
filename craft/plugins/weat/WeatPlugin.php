@@ -45,14 +45,43 @@ class WeatPlugin extends BasePlugin
 			//WeatPlugin::log($event);
 			//$type = $event->params['charge']->type;
 			//WeatPlugin::log('Charge type of ' . $type);
-			$meta = $event->params['charge']->meta;;
-			$chargeType = $event->params['charge']->chargeType;
-			switch ($chargeType) {
+			$meta = $event->params['charge']->meta;
+			//$chargeType = $event->params['charge']->chargeType;
+			switch ($meta['type']) {
 				case 'registration':
 					craft()->weat_registration->saveRegistration($event);
+					craft()->weat_registration->updateUser($event);
+					craft()->weat_registration->switchSubscription($event);
 					break;
 				case 'join':
+					craft()->weat_registration->updateUser($event);
+					craft()->weat_registration->switchSubscription($event);
+					break;
+				default:
+					WeatPlugin::log('Charge type does not match anything. ' . $type);
+			}
+			//craft()->weat_payments->exampleService();
+		});
+
+		craft()->on('charge.onBeforeCharge', function(Event $event) {
+			WeatPlugin::log('onBeforeCharge');
+			//WeatPlugin::log($event);
+			//$type = $event->params['charge']->type;
+			//WeatPlugin::log('Charge type of ' . $type);
+			$meta = $event->params['charge']->meta;
+			//$chargeType = $event->params['charge']->chargeType;
+			switch ($meta['type']) {
+				case 'registration':
+					//craft()->weat_registration->saveRegistration($event);
+					//craft()->weat_registration->saveUser($user);
+					break;
+				case 'join':
+					WeatPlugin::log('join');
 					//echo "Your favorite color is blue!";
+					if(craft()->userSession->isGuest()) {
+						WeatPlugin::log('Is a guest');
+						craft()->weat_registration->updateUser($event);
+					}
 					break;
 				default:
 					WeatPlugin::log('Charge type does not match anything. ' . $type);
@@ -61,6 +90,7 @@ class WeatPlugin extends BasePlugin
 		});
 		craft()->on('users.onSaveUser', function(Event $event) {
 			//craft()->weat_registration->saveRegistration($event);
+			craft()->weat_registration->switchSubscription();
 		});
 
 		/*

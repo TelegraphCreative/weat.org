@@ -1,3 +1,11 @@
+{% extends "_layouts/standard" %}
+
+{% if createAccount is not defined or createAccount != 'no' %}
+{% set createAccount = 'yes' %}
+{% endif %}
+{# quantity, individualPrice #}
+
+{% block content %}
 {# Container #}
 <div class="simple-container">
 
@@ -50,7 +58,9 @@
 					{{ forms.hidden({ name : 'createAccount', value: createAccount }) }}
 					{{ forms.hidden({ name : 'fields[chargeType]', value: 'registration' }) }}
 					{{ forms.hidden({ name : 'customerName', value: '', id: 'hiddenName' }) }}
-					{{ forms.hidden({ name : 'cardAddressLine1', value: '1300' }) }}
+					{{ forms.hidden({ name : 'meta[quantity]', value: quantity }) }}
+					{{ forms.hidden({ name : 'meta[individualPrice]', value: individualPrice }) }}
+					{% block meta %}{% endblock %}
 
 					{% if allErrors is defined %}
 						{{ forms.errorBlock(allErrors) }}
@@ -112,17 +122,18 @@
 
 						{# Address #}
 						<div class="form-row mb-6">
-							<label for="cardAddressLine1" class="field-label block w-full">Street Address</label>
-							<input required name="cardAddressLine1" id="cardAddressLine1" type="text" class="input-field block w-full" placeholder="Street Address">
+							<label for="meta[addressLine1]" class="field-label block w-full">Street Address</label>
+							<input required name="meta[addressLine1]" id="addressLine1" type="text" class="input-field block w-full" placeholder="Street Address">
 						</div>
+
+							{# Address #}
+							<div class="form-row mb-6">
+								<label for="meta[addressLine2]" class="field-label block w-full">Street Address 2</label>
+								<input name="meta[addressLine2]" id="addressLine2" type="text" class="input-field block w-full" placeholder="Suite">
+							</div>
 
 						{# Split Fields: City & State #}
 						<div class="form-row mb-6 flex justify-between items-center -mx-4">
-
-							<div class="w-1/2 px-4">
-								<label for="cardAddressCity" class="field-label block w-full">City</label>
-								<input required name="cardAddressCity" id="city" type="text" class="input-field block w-full" placeholder="City">
-							</div>
 
 							<div class="w-1/2 px-4">
 								<label for="meta[addressCity]" class="field-label block w-full">City</label>
@@ -130,13 +141,59 @@
 							</div>
 
 							<div class="w-1/2 px-4">
-								<label for="cardAddressState" class="field-label block w-full">State</label>
-								<select name="state" id="cardAddressState" data-module="choices">
-									<option value="CT">CT</option>
-									<option value="AZ">AZ</option>
-									<option value="NM">NM</option>
-									<option value="TX">TX</option>
-									<option value="CA">CA</option>
+								<label for="meta[addressState]" class="field-label block w-full">State</label>
+								<select name="meta[addressState]" id="state" data-module="choices">
+									<option value="AL">Alabama</option>
+									<option value="AK">Alaska</option>
+									<option value="AZ">Arizona</option>
+									<option value="AR">Arkansas</option>
+									<option value="CA">California</option>
+									<option value="CO">Colorado</option>
+									<option value="CT">Connecticut</option>
+									<option value="DE">Delaware</option>
+									<option value="DC">District Of Columbia</option>
+									<option value="FL">Florida</option>
+									<option value="GA">Georgia</option>
+									<option value="HI">Hawaii</option>
+									<option value="ID">Idaho</option>
+									<option value="IL">Illinois</option>
+									<option value="IN">Indiana</option>
+									<option value="IA">Iowa</option>
+									<option value="KS">Kansas</option>
+									<option value="KY">Kentucky</option>
+									<option value="LA">Louisiana</option>
+									<option value="ME">Maine</option>
+									<option value="MD">Maryland</option>
+									<option value="MA">Massachusetts</option>
+									<option value="MI">Michigan</option>
+									<option value="MN">Minnesota</option>
+									<option value="MS">Mississippi</option>
+									<option value="MO">Missouri</option>
+									<option value="MT">Montana</option>
+									<option value="NE">Nebraska</option>
+									<option value="NV">Nevada</option>
+									<option value="NH">New Hampshire</option>
+									<option value="NJ">New Jersey</option>
+									<option value="NM">New Mexico</option>
+									<option value="NY">New York</option>
+									<option value="NC">North Carolina</option>
+									<option value="ND">North Dakota</option>
+									<option value="OH">Ohio</option>
+									<option value="OK">Oklahoma</option>
+									<option value="OR">Oregon</option>
+									<option value="PA">Pennsylvania</option>
+									<option value="RI">Rhode Island</option>
+									<option value="SC">South Carolina</option>
+									<option value="SD">South Dakota</option>
+									<option value="TN">Tennessee</option>
+									<option value="TX" selected="selected">Texas</option>
+									<option value="UT">Utah</option>
+									<option value="VT">Vermont</option>
+									<option value="VA">Virginia</option>
+									<option value="WA">Washington</option>
+									<option value="WV">West Virginia</option>
+									<option value="WI">Wisconsin</option>
+									<option value="WY">Wyoming</option>
 								</select>
 							</div>
 						</div>
@@ -145,8 +202,8 @@
 						<div class="form-row mb-6 flex justify-between items-center -mx-4">
 
 							<div class="w-1/2 px-4">
-								<label for="cardAddressZip" class="field-label block w-full">Zipcode</label>
-								<input required name="cardAddressZip" id="zipcode" type="text" class="input-field block w-full" placeholder="Zipcode">
+								<label for="meta[addressZip]" class="field-label block w-full">Zipcode</label>
+								<input required name="meta[addressZip]" id="zipcode" type="text" class="input-field block w-full" placeholder="Zipcode">
 							</div>
 						</div>
 
@@ -162,7 +219,7 @@
 						</div>
 					</div>
 
-					<div id="step-3" class="step-container" style="display:none">
+					<div id="step-3" class="step-container" style="display:none;">
 
 						{{ craft.charge.setPaymentOptions(options) }}
 						{% if charge is defined and charge.cardToken is not null %}
@@ -197,44 +254,64 @@
 								{{ stripe.card(config) }}
 							</div>
 
-							<div class="form-row mb-6">
-								<label for="cardNumber" class="field-label block w-full">Expiry</label>
-								{{ stripe.expiry({
+
+
+							<div class="form-row mb-6 sm:flex sm:justify-center sm:items-center -mx-4">
+
+								<div class="w-full mb-4 sm:mb-0 sm:w-1/3 px-4">
+									<label for="expMo" class="field-label block w-full">Expiration Month</label>
+								<select class="choices--box" data-stripe="exp_month" id="cardExpMonth" data-module="choices">
+		{% for month in craft.i18n.getLocaleData().getMonthNames() %}
+				<option value="{{ loop.index }}"
+								{% if now.month == loop.index %}selected="selected"{% endif %}>{{ month }}</option>
+		{% endfor %}
+</select>
+								{#{{ stripe.expiry({
 											label: 'Expiry',
 											id: 'cardExpMonth',
 											class: 'cc-expiry'
-									}) }}
-									{{ stripe.expiryYear({
+									}) }}#}
+								</div>
+								<div class="w-full mb-4 sm:mb-0 sm:w-1/3 px-4">
+									<label for="expMo" class="field-label block w-full">Year</label>
+									<select class="choices--box" data-stripe="exp_year" id="cardExpYear" data-module="choices">
+		{% for year in now.year..now.year+10 %}
+				<option value="{{ year }}">{{ year }}</option>
+		{% endfor %}
+</select>
+								{#	{{ stripe.expiryYear({
 											label: 'Expiry Year',
 											id: 'cardExpYear',
 											class: 'cc-expiry'
-									}) }}
-								{% set config = {
+									}) }}#}
+								{#}{% set config = {
 									'data' : { 'stripe' : 'exp'},
 									'class': 'input-field block w-full',
 								} %}
-								{% set configMonth = { name: 'cardExpMonth', data: { stripe : 'exp_month' }} %}
+								{% set configMonth = { name: 'cardExpMonth', data: { stripe : 'exp_month', module : 'choices' }} %}
 								{% set configYear = { name: 'cardExpYear', data: { stripe : 'exp_year' }} %}
 
 								{% if craft.charge.getMode == 'test' and craft.config.devMode %}
 										{% set config = config|merge({ 'value': '12 / 34' }) %}
 										{% set configMonth = configMonth|merge({ 'value': '12' }) %}
 										{% set configYear = configYear|merge({ 'value': '34' }) %}
-								{% endif %}
+								{% endif %}#}
 
+</div>
 
-							</div>
+<div class="w-full mb-4 sm:mb-0 sm:w-1/3 px-4">
 
-							<div class="form-row mb-6">
-								{{ stripe.cvcField({
-									label: 'CVC',
-									id: 'cardCvc',
-									class: 'cc-cvc',
-									placeholder: '•••'
-								}) }}
-							</div>
-							<div class="form-row mb-6">
-								{{ stripe.textField({ label: 'Type', fieldWidth: 'col-sm-2', class:'card-type', readonly: true}) }}
+		<label for="ccv" class="field-label block w-full">CVC</label>
+		<input required name="ccv" id="ccv" autocomplete="cc-csc" class="input-field block w-full" data-stripe="cvc">
+	{#}
+	{{ stripe.cvcField({
+		label: 'CVC',
+		id: 'cardCvc',
+		class: 'cc-cvc',
+		placeholder: '•••'
+	}) }}
+	{{ stripe.textField({ label: 'Type', fieldWidth: 'col-sm-2', class:'card-type', readonly: true}) }}#}
+</div>
 							</div>
 						{% endif %}
 
@@ -374,3 +451,5 @@
 		})();
 {% endset %}
 {% includeJs formJs %}
+
+{% endblock %}

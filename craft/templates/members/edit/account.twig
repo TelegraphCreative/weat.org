@@ -4,7 +4,7 @@
 {% block content %}
 
 {# Breadcrumbs #}
-{% include '_components/fed/nav--breadcrumbs'  %}
+{#% include '_components/fed/nav--breadcrumbs'  %#}
 
 {# Container #}
 <div class="simple-container">
@@ -55,28 +55,11 @@
 			<div class="form-row mb-6">
 				<a href="{{url('members/edit/password')}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
 			</div>
-			{# Field / split #}
-			{#<div class="form-row mb-6 flex justify-center items-center">
-
-				<div class="w-1/2">
-					<label for="password" class="field-label block w-full">Password</label>
-					<input type="password" name="password" id="password" class="input-field block w-full">
-				</div>
-
-				<div class="w-1/2">
-					<a href="{{members/edit/password}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
-				</div>
-			</div>#}
-
-
-
 			{# Buttons #}
 			<div class="form-row mb-6 pt-6 flex items-center">
 					 <input class="submit btn" type="submit" value="Update">
 					<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
 			</div>
-
-
 
 		</form>
 

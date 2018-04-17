@@ -1,9 +1,8 @@
-{% if currentUser and currentUser.isInGroup('subscriber') %}
-{% redirect "members/edit/account?loggedIn=true&isMember=true" %}
-{% endif %}
-{% extends "_layouts/standard" %}
+{% extends '_components/checkout--singlepage.twig' %}
 
-{% block content %}
+{% if currentUser and currentUser.isInGroup('subscriber') %}
+	{% redirect "members/edit/account?loggedIn=true&isMember=true" %}
+{% endif %}
 
 {% set pageHeader = 'Join WEAT' %}
 {% set itemLabel = 'Annual WEAT Membership' %}
@@ -26,9 +25,6 @@
 	}
 %}
 
-{# Breadcrumbs #}
-{% include '_components/fed/nav--breadcrumbs'  %}
-
-{% include '_components/checkout--singlepage.twig' %}
-
+{% block meta %}
+{{ forms.hidden({ name : 'meta[type]', value: 'join' }) }}
 {% endblock %}
