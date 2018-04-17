@@ -13,6 +13,11 @@
 
 namespace Craft;
 
+require_once(CRAFT_PLUGINS_PATH.'constantcontactsubscribe/vendor/autoload.php');
+use Ctct\Components\Contacts\Contact;
+use Ctct\ConstantContact;
+use Ctct\Exceptions\CtctException;
+
 class Weat_RegistrationService extends BaseApplicationComponent
 {
 	protected $registrationRecord;
@@ -65,16 +70,16 @@ class Weat_RegistrationService extends BaseApplicationComponent
 	public function switchSubscription($event)
 	{
 		$charge = new ChargeModel();
-		/*$charge->planAmount = 5.99;
+		$charge->planAmount = 5.99;
 		$charge->planIntervalCount = '1';
 		$charge->planInterval = 'month';
 		$charge->planCurrency = 'usd';
-		$charge->planName = '5.99 USD Monthly';*/
-		$charge->planAmount = 50.00;
+		$charge->planName = '5.99 USD Monthly';
+		/*$charge->planAmount = 50.00;
 		$charge->planIntervalCount = '1';
 		$charge->planInterval = 'year';
 		$charge->planCurrency = 'usd';
-		$charge->planName = '50.00 USD Yearly';
+		$charge->planName = '50.00 USD Yearly';*/
 
 		$subscriptionId = 45;
 		$chargeParam = $event->params['charge'];
@@ -82,10 +87,6 @@ class Weat_RegistrationService extends BaseApplicationComponent
 		$subscriptionId = $charge->subscription->id;
 		//craft()->charge_subscription->updateSubscription($subscriptionId, $charge);
 		$this->updateSubscription($subscriptionId, $charge);
-
-
-
-
 
 
 
@@ -218,6 +219,91 @@ class Weat_RegistrationService extends BaseApplicationComponent
 			}
 			craft()->users->saveUser($user);
 		}
+	}
+
+	public function updateConstantContact($event)
+	{
+		$chargeParam = $event->params['charge'];
+		$charge = craft()->charge->getChargeByHash($chargeParam->hash);
+		$user = craft()->users->getUserById($charge->userId);
+		$meta = $event->params['charge']->meta;
+		if($meta['newsletter'] != 'on') {
+			return;
+		}
+		$first_name = $user->firstName;
+		$last_name = $user->lastName;
+		$addEmail = $user->email;
+		$plugin = craft()->plugins->getPlugin('constantcontactsubscribe');
+		$settings = $plugin->getSettings();
+		define("APIKEY", $settings['constantContactApiKey']);
+		define("ACCESS_TOKEN", $settings['constantContactAccessToken']);
+		$cc = new ConstantContact(APIKEY);
+		$addList = $settings['constantContactList'];
+		$response = $cc->contactService->getContacts(ACCESS_TOKEN, array("email" => $addEmail));
+		//WeatPlugin::log($response);
+		// create a new contact if one does not exist
+		if (empty($response->results)) {
+			$action = "Creating Contact";
+			$contact = new Contact();
+			$contact->addEmail($addEmail);
+			$contact->addList($addList);
+			$contact->first_name = $first_name;
+			$contact->last_name = $last_name;
+			/*
+			* The third parameter of addContact defaults to false, but if this were set to true it would tell Constant
+			* Contact that this action is being performed by the contact themselves, and gives the ability to
+			* opt contacts back in and trigger Welcome/Change-of-interest emails.
+			*
+			* See: http://developer.constantcontact.com/docs/contacts-api/contacts-index.html#opt_in
+			*/
+			$returnContact = $cc->contactService->addContact(ACCESS_TOKEN, $contact, true);
+
+
+			// Respond that the user already exists on the list
+		} elseif (!empty($response->results)) {
+
+			$action = "Updating Contact";
+			$contact = $response->results[0];
+			if ($contact instanceof Contact) {
+					$contact->addList($addList);
+					$contact->first_name = $first_name;
+					$contact->last_name = $last_name;
+					$contact->source = 'Website RSVP Form';
+					/*
+					 * The third parameter of updateContact defaults to false, but if this were set to true it would tell
+					 * Constant Contact that this action is being performed by the contact themselves, and gives the ability to
+					 * opt contacts back in and trigger Welcome/Change-of-interest emails.
+					 *
+					 * See: http://developer.constantcontact.com/docs/contacts-api/contacts-index.html#opt_in
+					 */
+					$returnContact = $cc->contactService->updateContact(ACCESS_TOKEN, $contact, true);
+
+			} else {
+					$e = new CtctException();
+					$e->setErrors(array("type", "Contact type not returned"));
+					throw $e;
+			}
+		}
+/*
+		$data = array(
+			'fields[email]' => 'bo+4@wearetelegraph.com',
+			 craft()->config->csrfTokenName => craft()->request->csrfToken,
+			'addList' => '1916206443'
+
+		);
+		# Create a connection
+		$url = 'https://weat.frb.io/actions/constantContactSubscribe/list/Subscribe';
+		$ch = curl_init($url);
+		# Form data string
+		$postString = http_build_query($data, '', '&');
+		# Setting our options
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		# Get the response
+		$response = curl_exec($ch);
+		WeatPlugin::log($response);
+		curl_close($ch);*/
 	}
 
 		public function getAllRegistrations()
