@@ -1,0 +1,114 @@
+{# 
+	Contact
+#}
+	
+{% extends '_layouts/standard'%}
+
+{% block content %}
+
+{# Page Header #}
+{% include '_components/headers' with {
+	type: 'page-header--standard',
+	Title: 'Contact',
+	classes: ''
+	} 
+%}
+
+{# Page Content #}
+<div class="simple-container">
+	
+	<div class="mb-lg md:-mx-4">
+	
+		{# Main #}
+		<section class="main-content   lg:w-2/3 md:px-4 ">
+
+			{# General Inquiry #}
+			<div class="mb-15">
+				<h2 class="border-b border-grey-lightest mb-10 mt-20 pb-4 leading-tight text-2md text-grey-dark">General Inquiry</h2>
+				
+				{# Email #}
+				{% if about.email %}
+					<div class="mb-6">
+						<p class="leading-loose text-black text-md">Email</p>
+						<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="mailto:{{about.email}}">{{about.email}}</a>
+					</div>
+				{% endif %}
+				
+				
+				<div class="sm:flex">
+					{% if about.phone != '(###) ###-####'%}
+						<div class="mb-6 sm:w-1/2">
+							{# Phone #}
+							<p class="leading-loose text-black text-md">Phone</p>
+							<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="tel:{{about.phone}}">tel:{{about.phone}}</a>
+						</div>
+					{% endif %}
+					
+					{% if about.fax != '(###) ###-####' %}
+						<div class="mb-6 sm:w-1/2">
+							{# Fax #}
+							<p class="leading-loose text-black text-md">Fax</p>
+							<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="tel:{{about.fax}}">{{about.fax}}</a>
+						</div>
+					{% endif %}
+				</div>
+				
+				{# Mailing Address #}
+				{% if about.address|length %}				
+					<div class="mb-6">
+						{# Email #}
+						<p class="leading-loose text-black text-md">Mailing Address</p>
+						<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="https://www.google.com/maps/place/Water+Environment+Association+of+Texas/@30.2300995,-97.7888576,17z/data=!3m1!4b1!4m5!3m4!1s0x865b4b351fab3d3b:0xc8ee8ade1553abea!8m2!3d30.2300995!4d-97.7866689?shorturl=1" target="_blank">
+							<span class="block mb-2">
+								<span class="street">{{about.address.parts.street_number}} {{about.address.parts.route}}, {{about.suite}} {{about.address.parts.subpremise}} </span>
+							</span>
+							
+							<span class="block">
+								<span class="city">{{about.address.parts.locality}} </span>
+								<span class="state">{{about.address.parts.administrative_area_level_1_short}} </span> 
+								<span class="zipcode">{{about.address.parts.postal_code}}</span>
+							</span>
+						</a>
+					</div>
+				{% endif %}
+
+			</div>
+
+			
+			{# Texas WET #}
+			{% if about.email2 or about.phone2 != ' (###) ###-####'%}
+			<div class="lg:mb-xl">
+				<h2 class="border-b border-grey-lightest mb-10 pb-4 leading-tight text-2md text-grey-dark">Texas WET</h2>
+				
+				{# Info #}
+				{% if about.textBarebones|length %}
+					<div class="mb-6">
+						<div class="leading-loose text-black text-md">
+								{{about.textBarebones}}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if about.email2 %}
+					<div class="mb-6 ">
+						{# email2 #}
+						<p class="leading-loose text-black text-md">Email</p>
+						<a class="leading-normal no-underline text-blue hover:text-green text-1md   xs:text-2md   md:text-lg" href="tel:{{about.email2}}">{{about.email2}}</a>
+					</div>
+				{% endif %}
+
+
+				
+
+
+			</div>
+			{% endif %}
+		
+		</section>
+
+	</div>
+
+</div>
+
+{% endblock %}
+
