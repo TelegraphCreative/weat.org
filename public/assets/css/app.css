@@ -1449,6 +1449,12 @@ svg {
   opacity: 0;
 }
 
+.modal__shown {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
 .modal__shown .enterModal {
   background: rgba(255, 255, 255, .5);
   opacity: 1;
