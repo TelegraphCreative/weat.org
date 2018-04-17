@@ -1,31 +1,32 @@
-.enterModal {
-	visibility: hidden;
-	opacity: 0;
-	
-	> div > button { 
-		visibility: hidden;
-		opacity: 0
-	}
-}
-
 .modal__shown {
 	overflow: hidden;
 	position: fixed;
-	width:100%;
+	width:100%
 }
-.modal__shown .enterModal { 
+
+.enterModal { 
 	background: rgba(255,255,255,.5);
 	opacity: 1;
-	transition: all .4s;
 	visibility: visible;
 	
 	> div > button {
 		visibility: visible;
-		transition: all .2s;
 		opacity: 1;
 		
 		&:focus {
 			outline: none
 		}
+	}
+}
+
+.modal__hidden .enterModal {
+	visibility: hidden;
+	opacity: 0;
+	transition: all .4s;
+	
+	> div > button { 
+		visibility: hidden;
+		opacity: 0;
+		transition: all .2s;
 	}
 }

@@ -1439,39 +1439,39 @@ svg {
   content: none;
 }
 
-.enterModal {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.enterModal > div > button {
-  visibility: hidden;
-  opacity: 0;
-}
-
 .modal__shown {
   overflow: hidden;
   position: fixed;
   width: 100%;
 }
 
-.modal__shown .enterModal {
+.enterModal {
   background: rgba(255, 255, 255, .5);
   opacity: 1;
-  -webkit-transition: all .4s;
-  transition: all .4s;
   visibility: visible;
 }
 
-.modal__shown .enterModal > div > button {
+.enterModal > div > button {
   visibility: visible;
-  -webkit-transition: all .2s;
-  transition: all .2s;
   opacity: 1;
 }
 
-.modal__shown .enterModal > div > button:focus {
+.enterModal > div > button:focus {
   outline: none;
+}
+
+.modal__hidden .enterModal {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+}
+
+.modal__hidden .enterModal > div > button {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all .2s;
+  transition: all .2s;
 }
 
 .article h2,
