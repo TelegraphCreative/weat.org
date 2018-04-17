@@ -13,7 +13,7 @@
 
 					<div class="contact text-1xs lg:pl-16">
 
-						{% if about.phone %}
+						{% if about.phone != '(###) ###-####' %}
 							<a href="tel:{{about.phone}}" class="text-white hover:text-blue-light no-underline block mb-2">{{about.phone}}</a>
 						{% endif %}
 												
@@ -22,18 +22,20 @@
 							<a href="mailto:{{about.email}}" class="text-white hover:text-blue-light no-underline block mb-8">{{about.email}}</a>
 						{% endif %}
 						
-						<p class="text-white no-underline block mb-8">
-							<span class="block mb-2">
-								<span class="street">{{about.address.parts.street_number}} {{about.address.parts.route}}, {{about.suite}} {{about.address.parts.subpremise}} </span>
-							</span>
-							
-							<span class="block">
-								<span class="city">{{about.address.parts.locality}} </span>
-								<span class="state">{{about.address.parts.administrative_area_level_1_short}} </span> 
-								<span class="zipcode">{{about.address.parts.postal_code}}</span>
+						{% if about.address|length %}						
+							<p class="text-white no-underline block mb-8">
+								<span class="block mb-2">
+									<span class="street">{{about.address.parts.street_number}} {{about.address.parts.route}}, {{about.suite}} {{about.address.parts.subpremise}} </span>
+								</span>
+								
+								<span class="block">
+									<span class="city">{{about.address.parts.locality}} </span>
+									<span class="state">{{about.address.parts.administrative_area_level_1_short}} </span> 
+									<span class="zipcode">{{about.address.parts.postal_code}}</span>
 
-							</span>
-						</p>
+								</span>
+							</p>
+						{% endif %}
 					</div>
 
 					<div class="social reset-list text-2xs mb-14 sm:mb-18 lg:pl-16">

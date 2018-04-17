@@ -4,7 +4,7 @@
 	
 	{% for block in block.children %}
 
-		<div class="portrait__group   w-full block text-center max-w-xs m-auto mb-18 md:w-1/3 md:w-1/3 md:mb-0 sm:px-2">
+		<div class="portrait__group   mt-0 w-full block text-center max-w-xs m-auto mb-18 md:w-1/3 md:w-1/3 md:mb-0 sm:px-2">
 
 			{% if block.singleImage|length %}
 				<div class="img --1by1 mb-6 w-2/3 sm:w-4/5 m-auto">
@@ -12,20 +12,19 @@
 				</div>
 			{% endif %}
 
-			<h4 class="text-blue text-2md mb-3">{{block.header}}</h4>
+			<h4 class="text-blue text-2md mb-2">{{block.header}}</h4>
 
 			{% if block.role|length %}
-				<h6 class="text-blue-light text-base sm:text-md mb-2 md:mb-4">{{block.role}}</h6>
+				<h6 class="text-blue-light text-base sm:text-md mb-2">{{block.role}}</h6>
 			{% endif %}
 
 			<div class="text-base text-grey-dark m-auto w-full leading-normal">
 				{% if block.phone|length %}
-					<a href="tel:{{block.phone}}" class="mb-3 no-underline text-grey-dark hover:text-blue">{{block.phone}}</a>
+					<a href="tel:{{block.phone}}" class="no-underline text-grey-dark hover:text-blue block">{{block.phone}}</a>
 				{% endif %}
 
-
 				{% if block.phone|length %}
-					<a href="mailto:{{block.email}}" class="mb-3 no-underline text-grey-dark hover:text-blue">{{block.email}}</a>
+					<a href="mailto:{{block.email}}" class="no-underline text-grey-dark hover:text-blue block">{{block.email}}</a>
 				{% endif %}
 				
 			</div>
