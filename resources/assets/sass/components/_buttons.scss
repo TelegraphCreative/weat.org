@@ -105,6 +105,17 @@
 			@apply .bg-blue-dark
 		}
 	}
+	
+	//
+	// Dark Blue
+	//
+	&.--dark-blue {
+		@apply .bg-blue-dark;
+
+		&:hover {
+			@apply .bg-green
+		}
+	}
 
 	//
 	// Large
