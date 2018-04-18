@@ -11,13 +11,16 @@
   {% set currentYear = "now"|date('Y') %}
   {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
 
+  {# yesterday #}
+  {% set yesterday = now|date_modify('-1 day')|date('c') %}
+
   {# The Ghost of Christmas Past #}
   {% set foreverAgo = now|date_modify('-1000 month')|date('c') %}
   
   {#  Get Events for month between prevMonth & nextMonth #}
   {% set allEvents = craft.venti.events() %}
   {% set allGroups = craft.venti.groups() %}
-  {% set allPastEvents = allEvents.between(foreverAgo,current) %}
+  {% set allPastEvents = allEvents.between(foreverAgo,yesterday) %}
 
 
   {# Current Filter #}

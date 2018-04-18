@@ -12,6 +12,8 @@
 
   {# Set the current Year - Month #}
   {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
+  {% set today = now|date('c') %}
+
   {# Set previous and next months #}
   {% set prevMonth = current|date_modify("last day of last month 23:59:00")|date('c') %}
   {% set nextMonth = current|date_modify("first day of next month 00:00:00")|date('c') %}
@@ -22,7 +24,9 @@
   {# Infinity Future #}
   {% set infinity = now|date_modify('+1000 month')|date('c') %}
   
+  
   {% set allUpcomingEvents = allEvents.between(current,infinity) %}
+  {# {% set allUpcomingEvents = allEvents.between(today,infinity) %} #}
   {% set events = allEvents.between(prevMonth,nextMonth|date_modify('last day of last month')|date('c')) %}
 
   {# Current Filter #}
@@ -49,8 +53,7 @@
     classes: ''
     } 
   %}
-
-
+  
 
   {# Container #}
   <div class="simple-container">
@@ -94,7 +97,7 @@
         {# Upcoming Events Header #}
         <header class="pt-6 mb-4 sm:py-8 sm:mt-12 sm:flex sm:justify-between">
           <div class="title md:1/2 mb-3 md:pr-4 sm:mb-0">
-            <h1 class="text-2md sm:text-lg md:text-xl">Upcoming Events</h1>
+            <h1 class="text-2md sm:text-lg md:text-xl">Events</h1>
           </div>
           <div class="max-w-1xs w-full">
             <select data-module="choicesAsLinks" name="" id="">
