@@ -19,10 +19,6 @@ import './modules'
 import smooth from './modules/smoothScroll';
 smooth();
 
-// ## Close Enter Modal
-import {closeModal} from './modules/modalEnter.js'
-closeModal();
-
 // import fieldFormats from './modules/fieldFormats';
 // fieldFormats();
 
