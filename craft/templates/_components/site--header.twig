@@ -12,8 +12,8 @@
 
 		{# Brand #}
 		<div class="main-menu__brand    pl-4  inline-block w-48 md:w-1/4 lg:w-1/3 sm:mr-2 md:pb-0 pb-4">
-			<a href="/" class="inline-block brand-logo text-grey hover:text-blue-light">
-				{% include '_components/svg--weat-brand--grad' %}
+			<a href="/" class="inline-block brand-logo text-blue hover:text-blue-light">
+				{% include '_components/svg--weat-brand--simple' %}
 			</a>
 		</div>
 
@@ -79,7 +79,11 @@
 				<li class="menu__drop   md:inline-block md:py-0 py-1 md:px-3 mb-2 md:mb-0">
 					{% if currentUser %}
 						<a data-module="toggleDrop" class="drop__toggle  tracking-normal text-blue-light md:text-blue hover:text-blue-light no-underline lg:text-1xs md:text-2xs text-xs " href="/members/edit">
-								My Account
+								{% if currentUser.firstName|length %}
+									Hi, {{ currentUser.firstName }}
+								{% else %}
+									My Account
+								{% endif %}
 								{{svg.icon('icon h-2 w-2 inline-flex','arrow-down--solid')}}
 						</a>
 					{% else %}

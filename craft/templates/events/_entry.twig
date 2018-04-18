@@ -62,9 +62,7 @@
       {% set currentYear = "now"|date('Y') %}
       {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
 
-      
-
-      {% if event.startDate() == 'Expired' %}
+      {% if event.startDate < now %}
         <a href="#" class="btn --full-w --lg --disabled">This is a past event</a>
       
       
@@ -116,9 +114,10 @@
           {% if event.location|length %}
             <h6 class="text-black text-xs mb-2">Location</h6>
             {% set location = event.location[0]  %}
-            <a class="leading-normal block no-underline text-grey hover:text-blue mb-6" href="{{ location.getMapUrl() }}">
+            <a class="leading-normal block no-underline text-grey hover:text-blue mb-6"  target="_blank" href="{{ location.getMapUrl() }}">
               {{ location.title }}
-              {% if event.specificLocation %}
+              {{ location.address }}
+              {# {% if event.specificLocation %}
                 | {{event.specificLocation}}
               {% endif %}
               {% if location.address %}
@@ -150,13 +149,18 @@
 
               {% if location.country %}
                 {{location.country}}
-              {% endif %}
+              {% endif %} #}
 
             </a>
           {% endif %}
 
-          {% if event.sponsor %}
+          {% if event.notes|length %}
+            <div class="border-t border-grey-lightest pt-4">
+              {{event.notes}}
+            </div>
           {% endif %}
+          
+
           
           {% set sponsor = event.sponsor %}
           {% if sponsor %}
@@ -187,7 +191,6 @@
           </a>
         {% endif %}
         
-        {#  #}
 
       </div>
     </aside>
