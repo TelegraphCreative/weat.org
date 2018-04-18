@@ -8,7 +8,7 @@
         {{image.single_simple(entry.singleImage[0],'absolute pin-t pin-l')}}  
       {% else %}
         {# Placeholder #}
-        <img src="/assets/img/weat-event-default-img.png" class="absolute pin-t pin-l">
+        <img src="/assets/img/weat-event-default-img.jpg" class="absolute pin-t pin-l">
       {% endif %}
 		</figure>
 
@@ -26,9 +26,17 @@
 		
 	</div>
 
-	<div class="text-left">
-		<a href="{{entry.url}}" class="btn  --auto-w">Register</a>
-	</div>
+	
+		<div class="text-left">
+			<a href="{{entry.url}}" class="btn  --auto-w">
+				{% if entry.registeredEvent > 0 %}
+					Register
+				{% else %}
+					View
+				{% endif %}
+			</a>
+		</div>
+
 
 
 

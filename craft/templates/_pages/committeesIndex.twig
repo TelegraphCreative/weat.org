@@ -39,7 +39,7 @@
 
 		{% for entry in craft.entries.section('committees').relatedTo({
     	targetElement: group
-		}) %}
+		}).order('title asc') %}
 
 		<div class="js-accordion-item   tr-all-3  list-accordion__item    border-grey-lightest border-t pt-8 pb-8">
 
