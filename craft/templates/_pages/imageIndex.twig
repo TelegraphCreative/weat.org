@@ -53,7 +53,7 @@ $('#pub-group-controller').on('change', function() {
 				<figure class="img is552by716">
 
 						{% if publication.singleImage|length %}
-							{{image.single_simple(publication.singleImage[0],'absolute pin-t pin-l')}}
+							{{image.single_transform(publication.singleImage[0],'magazineCover','absolute pin-t pin-l')}}	
 						{% else %}
 							{# Placeholder #}
 							<img src="/assets/img/WEAT-placeholder-img.jpg" class="absolute pin-t pin-l">

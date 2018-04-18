@@ -26,11 +26,12 @@
 	
 			{# Main #}
 			<section class="main-content   lg:w-2/3 md:px-4 ">
-				<div class="js-infScroll  border-t border-grey-lightest mb-14   lg:mb-18" data-module="infScroll">		
+				
+				{% set Structure = craft.entries.section('learn') %}
+				{% paginate Structure.limit(8) as pageInfo, Content %}
+				<div class="js-infScroll  border-t border-grey-lightest mb-14   lg:mb-18" {% if pageInfo.nextUrl %}data-module="infScroll"{% endif %}>		
 					
 					{# Stream #}
-					{% set Structure = craft.entries.section('learn') %}
-					{% paginate Structure.limit(8) as pageInfo, Content %}
 					{% include '_components/list--articles--images' with {
 							content: Content,
 							classes: ''
