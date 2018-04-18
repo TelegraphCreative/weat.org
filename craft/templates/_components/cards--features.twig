@@ -1,11 +1,17 @@
 {# 2 Col Feature Card #}
 <div class="cards--features border-list     m-auto max-w-2xl   sm:pt-10 sm:mb-10"> 
-	<div class="clearfix px-4  pt-10 sm:pt-16 border-t border-b border-grey-lightest">
+	<div class="clearfix sm:flex sm:flex-wrap px-4  pt-10 sm:pt-16 border-t border-b border-grey-lightest">
 		
 		{% for block in block.children %}
+		{% switch block.type %}
+			
 
-			<div class="
+			{% case "featureCard" %}
+			{# Feature Card #}
+
+				<div class="
 				md:float-left
+				sm:flex sm:flex-col
 				feature__card mb-lg md:mb-lg border__item w-full block text-center md:w-1/2 md:mb-0 
 				{% if loop.index == '1' %}md:border-r border-b pb-10 md:border-b-0 border-grey-lightest {% else %} mb-10 border-grey-lightest  {% endif %}
 			">
@@ -26,6 +32,48 @@
 					{% endif %}
 					
 			</div>
+			
+
+		
+			{% case "quoteCard" %}
+			{# Quote Card #}
+
+				<div class="
+				md:float-left
+				md:flex md:flex-col
+				feature__card mb-lg md:mb-lg border__item w-full text-center md:w-1/2 md:mb-0 
+				{% if loop.index == '1' %}md:border-r border-b pb-10 md:pb-0 md:border-b-0 border-grey-lightest {% else %} mb-10 border-grey-lightest  {% endif %}
+				">
+
+						
+
+						<div class="flex-1 text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md">
+							{{block.textBarebones}}
+						</div>
+						
+						<div class="author text-center">
+							{% if block.singleImage|length %}
+								<div class="mb-6 w-24 m-auto">
+									<figure class="img is1by1">
+										{{image.single_transform(block.singleImage[0],'square','rounded-full absolute pin-t pin-l')}}	
+									</figure>
+								</div>
+
+							{% endif %}
+
+							<h4 class="text-blue text-2md mb-1">{{block.committeeChair}}</h4>
+							<span class="block text-blue-light text-base">{{block.description}}</span>
+						</div>
+						
+				</div>
+		
+			{% default %}
+			
+		
+		{% endswitch %}
+		
+
+			
 
 		{% endfor %}
 		
