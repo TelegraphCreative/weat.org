@@ -1,7 +1,79 @@
 {% extends "_layouts/cp" %}
+{% set centered = true %}
+{#% set tabs = {
+	recent: { label: "Registrations"|t, url: url('weat') },
+	new:    { label: "Second tab"|t, url: url('weat/reports') }
+} %#}
 
-{% set title = "Cocktail Recipes"|t %}
+{% set subnav = {
+    registrations: { label: "Event Registrations"|t, url: url('weat/eventregistrations') },
+    subscribers:       { label: "Template Meta"|t, url: url('weat/subscribers') },
+    donations:   { label: "Donations"|t, url: url('weat/donations') },
+    settings:   { label: "Settings"|t, url: url('weat/settings') },
+} %}
+{% set registrations = craft.weat.getAllRegistrations() %}
+{% set title = "Registrations"|t %}
 
 {% set content %}
-	<p>Hello!</p>
+
+<p id="noingredients"{% if registrations|length %} class="hidden"{% endif %}>
+{{ "No ingredients exist yet."|t }}
+</p>
+<table id="ingredients" class="data">
+	<thead>
+		<th scope="col">{{ "First Name"|t }}</th>
+		<th scope="col">{{ "Last Name"|t }}</th>
+		<th scope="col">{{ "Quantity"|t }}</th>
+		<th scope="col">{{ "Title"|t }}</th>
+		{#}<th class="thin"></th>#}
+	</thead>
+	<tbody>
+	{% for registration in registrations %}
+		<tr data-id="{{ registration.id }}" data-name="{{ registration.firstName|t }}">
+			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ registration.firstName }}</a></td>
+			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ registration.lastName }}</a></td>
+			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ registration.numberOfTickets }}</a></td>
+			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ craft.venti.events.id(registration.elementId).first.title }}</a></td>
+			{#}<td><a class="delete icon" title="{{ 'Delete'|t }}"></a></td>#}
+		</tr>
+		{#}<pre>
+		{{dump(registration)}}
+	</pre>#}
+	{% endfor %}
+
+	</tbody>
+</table>
+{#}
+    {% if ingredients|length %}
+        <table id="ingredients" class="data">
+            <thead>
+                <th scope="col">{{ "Name"|t }}</th>
+                <th class="thin"></th>
+            </thead>
+            <tbody>
+
+                {% for ingredient in ingredients %}
+                    <tr data-id="{{ ingredient.id }}" data-name="{{ ingredient.name|t }}">
+                        <td><a href="{{ url('cocktailrecipes/ingredients/'~ingredient.id) }}">{{ ingredient.name }}</a></td>
+                        <td><a class="delete icon" title="{{ 'Delete'|t }}"></a></td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    {% endif %}
+    <div class="buttons">
+        <a href="{{ url('cocktailrecipes/ingredients/new') }}" class="btn add icon">{{ "New Ingredient"|t }}</a>
+    </div>
+#}
+
 {% endset %}
+
+{% set js %}
+    new Craft.AdminTable({
+        tableSelector: '#ingredients',
+        noObjectsSelector: '#noingredients',
+        deleteAction: 'cocktailrecipes/ingredients/deleteIngredient'
+    });
+{% endset %}
+{% includeJs js %}

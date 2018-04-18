@@ -43,8 +43,14 @@
 
 			{# Field #}
 			<div class="form-row mb-6">
-				<label for="fields[userAddressStreet]" class="field-label block w-full">Street Address</label>
-				<input required name="fields[userAddressStreet]" id="fields-userAddressStreet" type="text" class="input-field block w-full" value="{{ currentUser.userAddressStreet }}">
+				<label for="fields[userAddress1]" class="field-label block w-full">Address 1</label>
+				<input required name="fields[userAddress1]" id="fields-userAddress1" type="text" class="input-field block w-full" value="{{ currentUser.userAddress1 }}">
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[userAddress2]" class="field-label block w-full">Address 1</label>
+				<input required name="fields[userAddress2]" id="fields-userAddress2" type="text" class="input-field block w-full" value="{{ currentUser.userAddress2 }}">
 			</div>
 
 			{# Field #}
@@ -60,22 +66,68 @@
 				<div class="w-1/2 px-4">
 					<label for="state" class="field-label block w-full">State</label>
 					<select name="state" id="state" data-module="choices">
-						<option value="CT">CT</option>
-						<option value="AZ">AZ</option>
-						<option value="NM">NM</option>
-						<option value="TX">TX</option>
-						<option value="CA">CA</option>
+						<option value="AL">Alabama</option>
+						<option value="AK">Alaska</option>
+						<option value="AZ">Arizona</option>
+						<option value="AR">Arkansas</option>
+						<option value="CA">California</option>
+						<option value="CO">Colorado</option>
+						<option value="CT">Connecticut</option>
+						<option value="DE">Delaware</option>
+						<option value="DC">District Of Columbia</option>
+						<option value="FL">Florida</option>
+						<option value="GA">Georgia</option>
+						<option value="HI">Hawaii</option>
+						<option value="ID">Idaho</option>
+						<option value="IL">Illinois</option>
+						<option value="IN">Indiana</option>
+						<option value="IA">Iowa</option>
+						<option value="KS">Kansas</option>
+						<option value="KY">Kentucky</option>
+						<option value="LA">Louisiana</option>
+						<option value="ME">Maine</option>
+						<option value="MD">Maryland</option>
+						<option value="MA">Massachusetts</option>
+						<option value="MI">Michigan</option>
+						<option value="MN">Minnesota</option>
+						<option value="MS">Mississippi</option>
+						<option value="MO">Missouri</option>
+						<option value="MT">Montana</option>
+						<option value="NE">Nebraska</option>
+						<option value="NV">Nevada</option>
+						<option value="NH">New Hampshire</option>
+						<option value="NJ">New Jersey</option>
+						<option value="NM">New Mexico</option>
+						<option value="NY">New York</option>
+						<option value="NC">North Carolina</option>
+						<option value="ND">North Dakota</option>
+						<option value="OH">Ohio</option>
+						<option value="OK">Oklahoma</option>
+						<option value="OR">Oregon</option>
+						<option value="PA">Pennsylvania</option>
+						<option value="RI">Rhode Island</option>
+						<option value="SC">South Carolina</option>
+						<option value="SD">South Dakota</option>
+						<option value="TN">Tennessee</option>
+						<option value="TX" selected="selected">Texas</option>
+						<option value="UT">Utah</option>
+						<option value="VT">Vermont</option>
+						<option value="VA">Virginia</option>
+						<option value="WA">Washington</option>
+						<option value="WV">West Virginia</option>
+						<option value="WI">Wisconsin</option>
+						<option value="WY">Wyoming</option>
 					</select>
 				</div>
 
 				<div class="w-1/2 px-4">
-					<label for="country" class="field-label block w-full">Year</label>
+					{#<label for="country" class="field-label block w-full">Year</label>
 					<select required name="country" id="country" data-module="choices" class="choices--box">
 						<option value="U.S.A">U.S.A</option>
 						<option value="France">France</option>
 						<option value="Germany">Germany</option>
 						<option value="Japan">Japan</option>
-					</select>
+					</select>#
 				</div>
 			</div>
 

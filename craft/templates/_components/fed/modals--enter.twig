@@ -1,0 +1,26 @@
+{# Modal #}
+<div class="enterModal   fixed flex items-center overflow-scroll pin-t px-3 z-50   sm:px-8   md:px-15    py-8   pin">
+		
+	<div class="bg-blue max-w-lg px-4 text-center          py-15 m-auto   sm:px-8 md:px-14   lg:px-18">
+		<div class="text-white mb-5 m-auto" style="max-width:10rem;width:100%;">
+			{% include '_components/svg--weat-brand--simple--stacked' %}
+		</div>
+		<h1 class="leading-tight mb-4 text-2md text-white   sm:text-lg md:text-xl lg:text-2xl">Same Organization.<br> New look & feel.</h1>
+		<p class="leading-normal mb-10 text-base text-blue-light   sm:text-md   md:text-1md">At 2,200 strong, WEAT’s members are professionals who have dedicated their careers to protecting and enhancing our state's water resources.</p>
+		<button class="btn --dark-blue" onclick="closeModal()">Enter Site</button>
+	</div>
+	
+</div>
+{# End Modal #}
+
+<script>
+window.onload = function() {
+  document.querySelector('body').className = 'modal__shown';
+};
+
+function closeModal () {
+	var modal = document.querySelector("body");
+	modal.classList.toggle('modal__shown');
+	modal.classList.toggle('modal__hidden');
+}
+</script>

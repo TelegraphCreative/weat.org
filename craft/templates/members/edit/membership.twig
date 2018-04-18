@@ -26,7 +26,7 @@
 
 
 				{% for charge in charges %}
-					{% if charge.subscription.currentPeriodEnd >= date().timestamp %}
+					{% if charge.subscription is not null and charge.subscription.currentPeriodEnd >= date().timestamp %}
 						{# Field #}
 						<div class="form-row mb-6 border-b border-grey-lightest pb-6">
 							{{ forms.hidden({ name: 'subscriptionId', value: charge.subscription.id }) }}
