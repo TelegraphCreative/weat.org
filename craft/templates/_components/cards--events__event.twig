@@ -5,7 +5,7 @@
 	<div class="content">
 		<figure class="img is16by9 bg-grey-lightest mb-4">
 			{% if entry.singleImage|length %}
-        {{image.single_simple(entry.singleImage[0],'absolute pin-t pin-l')}}  
+				{{image.single_transform(entry.singleImage[0],'entryCover16x9','absolute pin-t pin-l')}}	
       {% else %}
         {# Placeholder #}
         <img src="/assets/img/weat-event-default-img.jpg" class="absolute pin-t pin-l">

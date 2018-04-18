@@ -2396,7 +2396,8 @@ http://flickity.metafizzy.co
 
 @media (min-width: 576px) {
   .slider.\--hero .flickity-page-dots {
-    bottom: 30px;
+    bottom: inherit;
+    top: 70%;
     right: 30px;
     left: inherit;
     width: auto;
