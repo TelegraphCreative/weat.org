@@ -1,5 +1,7 @@
 <ul class="list-reset flex items-center justify-center lg:justify-start">
+	
 	{% for item in about.social %}
+	
 		{% if item.channel == 'WEF' %}
 			<li class="inline-block"><a href="{{item.Url}}" class="ml-2 uppercase tracking-wide text-white hover:text-blue-light no-underline inline-block font-bold">Visit {{item.channel}} »</a></li>
 		{% else %}
@@ -9,10 +11,6 @@
 				</a>
 			</li>
 		{% endif %}
-		
-		
-	{% endfor %}
-	
 
-	
+	{% endfor %}	
 </ul>

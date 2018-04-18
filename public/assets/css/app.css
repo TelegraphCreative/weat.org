@@ -1719,13 +1719,14 @@ svg {
 
 [data-tooltip] {
   position: relative;
-  z-index: 0;
+  z-index: 10;
   cursor: pointer;
 }
 
 [data-tooltip]:before,
 [data-tooltip]:after {
   opacity: 0;
+  z-index: 100;
   pointer-events: none;
   -webkit-transition: opacity 150ms ease-in-out;
   transition: opacity 150ms ease-in-out;
@@ -1734,9 +1735,8 @@ svg {
 [data-tooltip]:before {
   content: attr(data-tooltip);
   position: absolute;
-  top: 140%;
+  top: 34px;
   left: 50%;
-  z-index: 100;
   margin-bottom: 5px;
   margin-left: -100px;
   width: 200px;
@@ -1751,9 +1751,9 @@ svg {
 [data-tooltip]:after {
   content: " ";
   position: absolute;
-  top: 140%;
+  top: 0;
   left: 50%;
-  margin-top: -4px;
+  margin-top: -1px;
   margin-left: -5px;
   width: 0;
   font-size: 0;
@@ -1792,6 +1792,7 @@ svg {
   transition: all 150ms ease-in-out;
   text-decoration: none;
   position: relative;
+  z-index: 0;
 }
 
 .calendar_day-num.\--has-event:hover {

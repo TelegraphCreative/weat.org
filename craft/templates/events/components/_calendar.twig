@@ -38,10 +38,12 @@
                                 {% set d = item.events[0] %}
                                 {% set color = d.event.getColor() %}
                                 <style>
-                                    .event-{{ item.day }}[data-tooltip]:before { background-color: {{color}}; }
-                                    .event-{{ item.day }}[data-tooltip]:after { border-bottom: 5px solid {{color}}; }
+                                    .event-tooltip-{{ item.day }}[data-tooltip]:before { background-color: {{color}}; }
+                                    .event-tooltip-{{ item.day }}[data-tooltip]:after { border-bottom: 5px solid {{color}}; }
                                 </style>
-                                <a href="{{ d.event.url }}" data-tooltip="{{ d.event.title }}" class="calendar_day-num  --has-event  event-{{ item.day }} text-xs text-white block rounded-full" style="background-color:{{ color }};">{{ item.day }}</a>
+                                <span class="event-tooltip-{{item.day}}" data-tooltip="{{ d.event.title }}">
+                                    <a href="{{ d.event.url }}"  class="calendar_day-num  --has-event  event-{{ item.day }} text-xs text-white block rounded-full" style="background-color:{{ color }};">{{ item.day }}</a>
+                                </span>
                                 {% else %}                                    
                                 <span class="calendar_day-num text-1xs text-grey-dark">
                                     {{ item.day }}

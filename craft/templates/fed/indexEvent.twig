@@ -228,9 +228,14 @@
 												<span class="calendar_day-num text-1xs text-grey-dark">20</span>
 											</div>
 										</td>
-										<td class="calendar_day">
+										<td class="calendar_day ">
 											<div>
-												<span class="calendar_day-num text-1xs text-grey-dark">21</span>
+												{# Template Notes:
+												- only include first event of the day 
+												#}
+												<span data-tooltip="@you Conference" >
+													<a href="#" class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:#22C79A;">21</a>
+												</span>
 											</div>
 										</td>
 										<td class="calendar_day">
@@ -271,7 +276,9 @@
 												{# Template Notes:
 												- only include first event of the day 
 												#}
-												<a href="#" data-tooltip="Odors and Air Pollutants Conference" class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:#22C79A;">28</a>
+												<span data-tooltip="Odors and Air Pollutants Conference" >
+												<a href="#" class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:#22C79A;">28</a>
+												</span>
 											</div>
 										</td>
 
@@ -279,7 +286,9 @@
 											<div>
 												{# Template Note:
 												only include first event of the day #}
-												<a href="#" data-tooltip="Odors and Air Pollutants Conference" class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:#22C79A;">29</a>
+												<span data-tooltip="Odors and Air Pollutants Conference">
+												<a href="#"  class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:#22C79A;">29</a>
+												</span>
 											</div>
 										</td>
 
@@ -289,7 +298,9 @@
 											<div>
 												{# Template Note:
 												only include first event of the day #}
-												<a href="#" data-tooltip="Texas Water! Regional Meeting" class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:#2466cc;">30</a>
+												<span data-tooltip="Texas Water! Regional Meeting">
+													<a href="#" class="calendar_day-num  --has-event text-xs text-white block rounded-full" style="background-color:#2466cc;">30</a>
+												</span>
 											</div>
 										</td>
 

@@ -23,7 +23,7 @@
 		line-height: 30px;
 		margin-right: auto;
 		margin-left: auto;
-		@apply .cursor-pointer .tr-all .no-underline .relative;
+		@apply .cursor-pointer .tr-all .no-underline .relative .z-0;
 
 		&:hover {
 			transform: scale(1.05);
