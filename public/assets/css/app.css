@@ -1233,6 +1233,14 @@ textarea {
   background-color: #10387a;
 }
 
+.btn.\--dark-blue {
+  background-color: #10387a;
+}
+
+.btn.\--dark-blue:hover {
+  background-color: #22c79a;
+}
+
 @media (min-width: 992px) {
   .btn.\--lg {
     padding-top: 1.25rem;
@@ -1429,6 +1437,41 @@ svg {
 
 .aside__category-tags li:last-of-type a::after {
   content: none;
+}
+
+.modal__shown {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.enterModal {
+  background: rgba(255, 255, 255, .5);
+  opacity: 1;
+  visibility: visible;
+}
+
+.enterModal > div > button {
+  visibility: visible;
+  opacity: 1;
+}
+
+.enterModal > div > button:focus {
+  outline: none;
+}
+
+.modal__hidden .enterModal {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+}
+
+.modal__hidden .enterModal > div > button {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: all .2s;
+  transition: all .2s;
 }
 
 .article h2,
