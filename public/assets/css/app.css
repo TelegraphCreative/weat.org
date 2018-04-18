@@ -1474,6 +1474,11 @@ svg {
   transition: all .2s;
 }
 
+.modalLogo {
+  max-width: 10rem;
+  width: 100%;
+}
+
 .article h2,
 .article h3 {
   max-width: 20rem;
