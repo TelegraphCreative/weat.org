@@ -770,7 +770,7 @@ textarea {
 }
 
 .menu__drop-menu .highlight:hover {
-  color: #5fc3e2;
+  background-color: #2466cc;
 }
 
 @media (min-width: 992px) {

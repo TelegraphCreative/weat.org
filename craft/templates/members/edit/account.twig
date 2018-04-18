@@ -51,10 +51,18 @@
 				<input required name="email" id="email" type="email" class="input-field block w-full" placeholder="hello@mail.com" value="{{ currentUser.email }}">
 			</div>
 
-			{# Field #}
-			<div class="form-row mb-6">
-				<a href="{{url('members/edit/password')}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
+			{# Field / split #}
+			<div class="form-row mb-6 flex justify-center items-center">
+				<div class="w-1/2">
+					<label for="password" class="field-label block w-full">Password</label>
+					<input type="password" name="password" id="password" autocomplete="off" value="bogus" class="pointer-events-none bg-grey-lightest opacity-25 input-field block w-full">
+				</div>
+
+				<div class="w-1/2">
+					<a href="{{url('members/edit/password')}}" class="pl-4 text-sm no-underline hover:text-green block mt-4">Change password</a>
+				</div>
 			</div>
+
 			{# Buttons #}
 			<div class="form-row mb-6 pt-6 flex items-center">
 					 <input class="submit btn" type="submit" value="Update">
