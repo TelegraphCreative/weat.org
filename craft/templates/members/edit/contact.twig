@@ -28,7 +28,7 @@
 				<label for="fields[userPhoneNumber]" class="field-label block w-full">Phone</label>
 				<input required name="fields[userPhoneNumber]" id="fields-userPhoneNumber" type="number" class="input-field --phone-number block w-full" value="{{ currentUser.userPhoneNumber }}">
 			</div>
-			
+
 			<div class="form-row mb-6 flex  items-center -mx-4">
 				{# Field #}
 				<div class="w-1/2 px-4">
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 
-			
+
 			<div class="form-row mb-6 flex  items-center -mx-4">
 				{# Field #}
 				<div class="w-1/2 px-4">
@@ -53,7 +53,7 @@
 
 				{# Field #}
 				<div class="w-1/2 px-4">
-					<label for="fields[userAddress2]" class="field-label block w-full">Address 1</label>
+					<label for="fields[userAddress2]" class="field-label block w-full">Address 2</label>
 					<input required name="fields[userAddress2]" id="fields-userAddress2" type="text" class="input-field block w-full" value="{{ currentUser.userAddress2 }}">
 				</div>
 			</div>
@@ -65,11 +65,11 @@
 					<label for="fields[userAddressCity]" class="field-label block w-full">City</label>
 					<input required name="fields[userAddressCity]" id="fields-userAddressCity" type="text" class="input-field block w-full" value="{{ currentUser.userAddressCity }}">
 				</div>
-				
+
 				{# Field #}
 				<div class="w-1/2 px-4">
-					<label for="state" class="field-label block w-full">State</label>
-					<select name="state" id="state" data-module="choicesSearch">
+					<label for="fields[userAddressState]" class="field-label block w-full">State</label>
+					<select name="fields[userAddressState]" id="state" data-module="choicesSearch">
 						<option value="AL">Alabama</option>
 						<option value="AK">Alaska</option>
 						<option value="AZ">Arizona</option>
@@ -129,7 +129,7 @@
 			{# Field / split #}
 			{#<div class="form-row mb-6 flex  items-center -mx-4">
 
-				
+
 
 				<div class="w-1/2 px-4">
 					<label for="country" class="field-label block w-full">Year</label>
@@ -140,7 +140,7 @@
 						<option value="Japan">Japan</option>
 					</select>
 				</div>
-			</div> 
+			</div>
 		</div>#}
 
 

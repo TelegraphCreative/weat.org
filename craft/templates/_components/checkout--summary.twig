@@ -12,5 +12,13 @@
 			<div class="float-left w-1/2">Qty: {{quantity|default('Unknown')}}</div>
 			<div class="float-left w-1/2 text-right">{{totalPrice|currency('USD')}}</div>
 		</div>
+
+		{% if subscribtionNotification is defined and subscribtionNotification %}
+		<div class="clearfix pt-6">
+			<p>
+				{{ checkout.subscribeNotificationMessage }}
+			</p>
+		</div>
+		{% endif %}
 	</div>
 {% endif %}
