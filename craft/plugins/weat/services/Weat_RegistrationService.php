@@ -217,6 +217,12 @@ class Weat_RegistrationService extends BaseApplicationComponent
 			if(isset($meta['addressZip'])) {
 				$user->getContent()->userAddressZip = $meta['addressZip'];
 			}
+			if(isset($meta['userCompanyName'])) {
+				$user->getContent()->userCompanyName = $meta['userCompanyName'];
+			}
+			if(isset($meta['userPhoneNumber'])) {
+				$user->getContent()->userPhoneNumber = $meta['userPhoneNumber'];
+			}
 			craft()->users->saveUser($user);
 		}
 	}
@@ -227,7 +233,7 @@ class Weat_RegistrationService extends BaseApplicationComponent
 		$charge = craft()->charge->getChargeByHash($chargeParam->hash);
 		$user = craft()->users->getUserById($charge->userId);
 		$meta = $event->params['charge']->meta;
-		if($meta['newsletter'] != 'on') {
+		if(!isset($meta->newsletter) or $meta->newsletter == 'on') {
 			return;
 		}
 		$first_name = $user->firstName;

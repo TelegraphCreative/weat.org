@@ -90,6 +90,18 @@
 							<input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full pageRequired" placeholder="hello@mail.com" value="{{charge is defined ? charge.customerEmail : (currentUser ? currentUser.email : '')}}">
 						</div>
 
+						{# Field #}
+						<div class="form-row mb-6">
+							<label for="meta[userPhoneNumber]" class="field-label block w-full">Phone Number</label>
+							<input name="meta[userPhoneNumber]" id="userPhoneNumber" type="text" class="input-field --phone-number block w-full" placeholder="***-**-****" value="{{charge is defined ? charge.meta[userPhoneNumber] : (currentUser ? currentUser.userPhoneNumber : '')}}">
+						</div>
+
+						{# Field #}
+						<div class="form-row mb-6">
+							<label for="meta[userCompanyName]" class="field-label block w-full">Company Name</label>
+							<input name="meta[userCompanyName]" id="userCompanyName" type="text" class="input-field block w-full" placeholder="" value="{{charge is defined ? charge.meta[userCompanyName] : (currentUser ? currentUser.userCompanyName : '')}}">
+						</div>
+
 						{% if not currentUser and createAccount == 'yes' %}
 						{# Field #}
 						<div class="form-row mb-6">
@@ -101,7 +113,7 @@
 						{# Field #}
 						<div class="form-row mb-6">
 							<label for="meta[newsletter]" class="check-radio-input block w-full text-sm flex items-center">
-								<input type="checkbox" name="meta[newsletter]" id="newsletter" class="check-radio__input" checked>
+								<input type="checkbox" name="meta[newsletter]" id="meta[newsletter]" class="check-radio__input" checked>
 								{{svg.icon('icon --md text-green', 'checkmark')}}
 								<span class="check-radio__label inline-block ml-3  cursor-pointer">Sign up for our newsletter?</span>
 							</label>
