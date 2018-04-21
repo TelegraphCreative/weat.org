@@ -56,6 +56,7 @@
 {{ forms.hidden({ name : 'meta[type]', value: 'registration' }) }}
 {{ forms.hidden({ name : 'meta[eventId]', value: eventId }) }}
 {{ forms.hidden({ name : 'meta[ticketName]', value: pricing.label }) }}
+{{ forms.hidden({ name : 'meta[ticketId]', value: item }) }}
 {{ forms.hidden({ name : 'meta[quantity]', value: quantity }) }}
 {{ forms.hidden({ name : 'meta[individualPrice]', value: individualPrice }) }}
 {{ forms.hidden({ name : 'meta[includeSubscription]', value: pricing.subscription }) }}

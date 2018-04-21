@@ -3,6 +3,10 @@
 {% if createAccount is not defined or createAccount != 'no' %}
 {% set createAccount = 'yes' %}
 {% endif %}
+
+{% if currentUser %}
+{% set createAccount = 'no' %}
+{% endif %}
 {# quantity, individualPrice #}
 
 {% block content %}
@@ -51,7 +55,7 @@
 				We need a different flow here
 			{% else %}
 
-				<form class="form-horizontal" id="charge-form" method="post" accept-charset="UTF-8" data-publicKey="{{ craft.charge.getPublicKey }}">
+				<form class="form-horizontal" id="charge-form" method="post" accept-charset="UTF-8" data-publicKey="{{ craft.charge.getPublicKey }}" data-stripeKey="{{ craft.charge.publicKey }}">
 					{{ getCsrfInput() }}
 					{{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
 					{{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}

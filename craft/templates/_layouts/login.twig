@@ -27,23 +27,17 @@
 </head>
 
 <body class="font-sans text-base text-black">
-	
+
 	<div class="app-wrap" data-module="togglesClose">
 		<main role="main" class="js-app-wrap">
 			{% block content %}{% endblock %}
 		</main>
 	</div>
-	
+
 	{% include '_components/doc-end-assets' %}
 
 	{# <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> #}
 	{% includeJsFile '/assets/static/vendor-js/jquery.3.3.1.min.js' first %}
-	{% includeJsResource('charge/js/jquery.charge.js') %}
-	{% includeJsResource('charge/js/stripe_v2.min.js') %}
-	{% includejs %}
-	    $(this).charge();
-	{% endincludejs %}
-
 
 </body>
 </html>

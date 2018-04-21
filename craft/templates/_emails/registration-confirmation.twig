@@ -3,8 +3,8 @@ Your order has been received.
 
 {{ charge.meta['eventName'] }} ({{ charge.meta['ticketName'] }})
 
-Qty: {{ charge.meta['ticketQuantity'] }}
-Amount: {{ charge.meta['ticketPrice'] }}
+Qty: {{ charge.meta['quantity'] }}
+Amount: {{ charge.meta['individualPrice'] }}
 
 Total: {{ charge.amountFormatted }}
 
