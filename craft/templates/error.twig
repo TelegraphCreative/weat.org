@@ -1,27 +1,36 @@
 {% extends "_layouts/standard" %}
+{% set heading = 'It looks like we ran into an error on this page.' %}
+{% set body = '<p>Please retry what you are trying to do. If you continue to experience issues please <a href="' ~ url('contact-us') ~ '">contact us</a> or return to <a href="' ~ url('/') ~ '">WEAT.org</a></p>' %}
 
+
+{% if message %}
+	{% if message starts with "Invalid verification code. Please " %}
+		{% set heading = 'It looks like your activation link has expired or is incorrect.' %}
+		{% set body = '' %}
+	{% endif %}
+{% endif %}
 {% block content %}
-
 
 {# Page Header #}
 <header class="page-header bg-blue">
 	<div class="md:max-w-2xl m-auto md:px-6 py-10 px-4">
 		{# Landing Page Title: #}
-		<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">Server error</h1>
+		<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">Error</h1>
 	</div>
 </header>
 
 <div class="m-auto md:w-3/5 w-full    sm:pt-10 sm:mb-10">
 
 	{# Group #}
-	<section class="group mb-lg">\
-		<h4 class="text-blue text-2md mb-6 sm:text-lg md:w-4/5 m-auto">It looks like something is broken on this page.</h4>
-		<div class="text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md">
-			<p>Please retry what you are trying to do. If you continue to experience issues please <a href="{{'contact-us'}}">contact us</a> or return to <a href="{{url('/')}}">WEAT.org</a></p>
-			<p>
-				<code>{% filter md %}{{ message }}{% endfilter %}</code>
-			</p>
-		</div>
+	<section class="group mb-lg">
+
+		<h4 class="text-blue text-2md mb-6 sm:text-lg md:w-4/5 m-auto">{{ heading }}</h4>
+		{% if body %}
+		<div class="text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md">{{ body|raw }}</div>
+		{% endif %}
+		{% if message %}
+		<div class="text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md"><code>{% filter md %}{{ message }}{% endfilter %}</code></div>
+		{% endif %}
 	</section>
 
 </div>

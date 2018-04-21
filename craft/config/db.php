@@ -9,15 +9,15 @@ return array(
 	),
 
 	'.test' => array(
-		'user' => 'root',
-		'password' => '',
-		'database' => 'weat_craft_local',
+		'user' => 'homestead',
+		'password' => 'secret',
+		'database' => 'homestead',
     ),
 
     'weat.com' => array(
     	'user' => '',
 			'password' => '',
 			'database' => '',
-    )	
+    )
 
 );
