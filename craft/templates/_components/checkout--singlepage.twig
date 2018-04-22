@@ -77,7 +77,13 @@
 						{% if not currentUser %}
 						{# Field #}
 						<div class="form-row mb-6">
-							<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=/payments/checkout&eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity) }}">Login here</a>
+							{% if pageHeader == 'Join WEAT' %}
+								<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=join') }}">Login here</a>
+							{% elseif eventId is defined and item is defined and quantity is defined %}
+								<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=payments/checkout&eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity) }}">Login here</a>
+							{% else %}
+								<p>Already have an account? <a href="{{ url('members/login') }}">Login here</a>
+							{% endif %}
 						</div>
 						{% endif %}
 

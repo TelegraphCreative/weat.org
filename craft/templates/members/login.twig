@@ -7,7 +7,9 @@
 
 {% set redirectUrl = NULL %}
 {% if returnUrl and eventId and item and quantity %}
-{% set redirectUrl = returnUrl ~ '?eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity %}
+	{% set redirectUrl = returnUrl ~ '?eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity %}
+{% elseif returnUrl %}
+	{% set redirectUrl = returnUrl %}
 {% endif %}
 
 {% block content %}
