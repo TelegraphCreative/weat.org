@@ -3,7 +3,7 @@
 {% set body = '<p>Please retry what you are trying to do. If you continue to experience issues please <a href="' ~ url('contact-us') ~ '">contact us</a> or return to <a href="' ~ url('/') ~ '">WEAT.org</a></p>' %}
 
 
-{% if message %}
+{% if message is defined %}
 	{% if message starts with "Invalid verification code. Please " %}
 		{% set heading = 'It looks like your activation link has expired or is incorrect.' %}
 		{% set body = '' %}
@@ -28,7 +28,7 @@
 		{% if body %}
 		<div class="text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md">{{ body|raw }}</div>
 		{% endif %}
-		{% if message %}
+		{% if message is defined %}
 		<div class="text-base text-grey-dark md:w-4/5 m-auto w-full leading-normal mb-10 sm:mb-18 sm:text-md"><code>{% filter md %}{{ message }}{% endfilter %}</code></div>
 		{% endif %}
 	</section>

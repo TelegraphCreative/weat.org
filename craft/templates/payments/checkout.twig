@@ -1,10 +1,11 @@
 {% set item = craft.request.getParam('item') %}
 {% set quantity = craft.request.getParam('quantity') %}
 {% set eventId = craft.request.getParam('eventId') %}
+
 {% if item is empty or quantity is empty or eventId is empty %}
 {% set eventsUrl = url('events') %}
 {% set message = 'It looks like you came directly to this page. Try visiting the <a href="{{ eventsUrl }}">events</a> page.' %}
-{% redirect('events') %}
+{% redirect('error') %}
 {% endif %}
 
 {% set event = craft.venti.events.id(eventId).first %}
@@ -60,4 +61,7 @@
 {{ forms.hidden({ name : 'meta[quantity]', value: quantity }) }}
 {{ forms.hidden({ name : 'meta[individualPrice]', value: individualPrice }) }}
 {{ forms.hidden({ name : 'meta[includeSubscription]', value: pricing.subscription }) }}
+{{ forms.hidden({ name : 'item', value: item }) }}
+{{ forms.hidden({ name : 'quantity', value: quantity }) }}
+{{ forms.hidden({ name : 'eventId', value: eventId }) }}
 {% endblock %}

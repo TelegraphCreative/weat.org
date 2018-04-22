@@ -74,6 +74,13 @@
 
 					<div id="step-1" class="step-container">
 
+						{% if not currentUser %}
+						{# Field #}
+						<div class="form-row mb-6">
+							<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=/payments/checkout&eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity) }}">Login here</a>
+						</div>
+						{% endif %}
+
 						<div class="form-row mb-6 flex justify-center items-center -mx-4">
 							{# Field #}
 							<div class="w-1/2 px-4">
@@ -97,13 +104,13 @@
 						{# Field #}
 						<div class="form-row mb-6">
 							<label for="meta[userPhoneNumber]" class="field-label block w-full">Phone Number</label>
-							<input name="meta[userPhoneNumber]" id="userPhoneNumber" type="text" class="input-field --phone-number block w-full" placeholder="***-**-****" value="{{charge is defined ? charge.meta[userPhoneNumber] : (currentUser ? currentUser.userPhoneNumber : '')}}">
+							<input name="meta[userPhoneNumber]" id="userPhoneNumber" type="text" class="input-field --phone-number block w-full" placeholder="***-**-****" value="{{charge is defined ? charge.meta.userPhoneNumber : (currentUser ? currentUser.userPhoneNumber : '')}}">
 						</div>
 
 						{# Field #}
 						<div class="form-row mb-6">
 							<label for="meta[userCompanyName]" class="field-label block w-full">Company Name</label>
-							<input name="meta[userCompanyName]" id="userCompanyName" type="text" class="input-field block w-full" placeholder="" value="{{charge is defined ? charge.meta[userCompanyName] : (currentUser ? currentUser.userCompanyName : '')}}">
+							<input name="meta[userCompanyName]" id="userCompanyName" type="text" class="input-field block w-full" placeholder="" value="{{charge is defined ? charge.meta.userCompanyName : (currentUser ? currentUser.userCompanyName : '')}}">
 						</div>
 
 						{% if not currentUser and createAccount == 'yes' %}
@@ -114,6 +121,7 @@
 						</div>
 						{% endif %}
 
+						{% if not currentUser %}
 						{# Field #}
 						<div class="form-row mb-6">
 							<label for="meta[newsletter]" class="check-radio-input block w-full text-sm flex items-center">
@@ -122,6 +130,7 @@
 								<span class="check-radio__label inline-block ml-3  cursor-pointer">Sign up for our newsletter?</span>
 							</label>
 						</div>
+						{% endif %}
 
 						<div class="form-row mb-6 flex justify-center items-center -mx-4">
 							{# Field #}
@@ -139,13 +148,13 @@
 						{# Address #}
 						<div class="form-row mb-6">
 							<label for="meta[addressLine1]" class="field-label block w-full">Street Address</label>
-							<input required name="meta[addressLine1]" id="addressLine1" type="text" class="input-field block w-full" placeholder="Street Address">
+							<input required name="meta[addressLine1]" id="addressLine1" type="text" class="input-field block w-full" placeholder="Street Address" value="{{charge is defined ? charge.meta.addressLine1 : (currentUser ? currentUser.userAddress1 : '')}}">
 						</div>
 
 							{# Address #}
 							<div class="form-row mb-6">
 								<label for="meta[addressLine2]" class="field-label block w-full">Street Address 2</label>
-								<input name="meta[addressLine2]" id="addressLine2" type="text" class="input-field block w-full" placeholder="Suite">
+								<input name="meta[addressLine2]" id="addressLine2" type="text" class="input-field block w-full" placeholder="Suite" value="{{charge is defined ? charge.meta.addressLine2 : (currentUser ? currentUser.userAddress2 : '')}}">
 							</div>
 
 						{# Split Fields: City & State #}
@@ -153,7 +162,7 @@
 
 							<div class="w-1/2 px-4">
 								<label for="meta[addressCity]" class="field-label block w-full">City</label>
-								<input required name="meta[addressCity]" id="city" type="text" class="input-field block w-full" placeholder="City">
+								<input required name="meta[addressCity]" id="city" type="text" class="input-field block w-full" placeholder="City" value="{{charge is defined ? charge.meta.addressCity : (currentUser ? currentUser.userAddressCity : '')}}">
 							</div>
 
 							<div class="w-1/2 px-4">
@@ -219,7 +228,7 @@
 
 							<div class="w-1/2 px-4">
 								<label for="meta[addressZip]" class="field-label block w-full">Zipcode</label>
-								<input required name="meta[addressZip]" id="zipcode" type="text" class="input-field block w-full" placeholder="Zipcode">
+								<input required name="meta[addressZip]" id="zipcode" type="text" class="input-field block w-full" placeholder="Zipcode" value="{{charge is defined ? charge.meta.addressZip : (currentUser ? currentUser.userAddressZip : '')}}">
 							</div>
 						</div>
 
