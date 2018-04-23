@@ -4,6 +4,7 @@
 .input-field {
 	@apply .border .border-grey-light .p-3 .text-black .text-sm .rounded-sm;
 	-webkit-appearance: none;
+	line-height: 1;
 }
 
 .field-label {

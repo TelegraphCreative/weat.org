@@ -1261,6 +1261,7 @@ textarea {
   font-size: .9375rem;
   border-radius: .125rem;
   -webkit-appearance: none;
+  line-height: 1;
 }
 
 .field-label {
