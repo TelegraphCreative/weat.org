@@ -73,3 +73,12 @@
 .grow:hover { transform: scale( 1.05 ) }
 
 .grow:hover .grow:focus { transform: none }
+
+
+//
+// Misc
+//
+.icon-youtube {
+	@apply .relative;
+	top: -2px;
+}

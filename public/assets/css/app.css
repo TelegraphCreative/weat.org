@@ -665,22 +665,6 @@ body {
       flex-shrink: 0;
 }
 
-html.is-ie11 body {
-  display: inherit;
-  height: auto;
-}
-
-html.is-ie11 .js-app-wrap {
-  -webkit-box-flex: inherit;
-      -ms-flex: inherit;
-          flex: inherit;
-}
-
-html.is-ie11 .site-footer {
-  -ms-flex-negative: inherit;
-      flex-shrink: inherit;
-}
-
 h1,
 h2,
 h3,
@@ -1092,6 +1076,11 @@ textarea {
 .grow:hover .grow:focus {
   -webkit-transform: none;
           transform: none;
+}
+
+.icon-youtube {
+  position: relative;
+  top: -2px;
 }
 
 .img {
@@ -18202,4 +18191,24 @@ http://flickity.metafizzy.co
   .xl\:z-auto {
     z-index: auto;
   }
+}
+
+html.is-ie11 body {
+  display: inherit;
+  height: auto;
+}
+
+html.is-ie11 .js-app-wrap {
+  -webkit-box-flex: inherit;
+      -ms-flex: inherit;
+          flex: inherit;
+}
+
+html.is-ie11 .site-footer {
+  -ms-flex-negative: inherit;
+      flex-shrink: inherit;
+}
+
+html.is-ie11 .background-pattern {
+  background-image: none !important;
 }

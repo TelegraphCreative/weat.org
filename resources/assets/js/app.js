@@ -41,5 +41,12 @@ console.log('WEAT, Built by Telegraph');
 //
 var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 if(isIE11){
+	
 	document.querySelector('html').classList.add('is-ie11');
+
+	require("./vendor/svg4everybody.min.js");
+	svg4everybody({
+		polyfill: true // polyfill <use> elements for External Content
+	});
+	
 }
