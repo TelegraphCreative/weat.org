@@ -660,9 +660,25 @@ body {
           flex: 1 0 auto;
 }
 
-.main-footer {
+.site-footer {
   -ms-flex-negative: 0;
       flex-shrink: 0;
+}
+
+html.is-ie11 body {
+  display: inherit;
+  height: auto;
+}
+
+html.is-ie11 .js-app-wrap {
+  -webkit-box-flex: inherit;
+      -ms-flex: inherit;
+          flex: inherit;
+}
+
+html.is-ie11 .site-footer {
+  -ms-flex-negative: inherit;
+      flex-shrink: inherit;
 }
 
 h1,

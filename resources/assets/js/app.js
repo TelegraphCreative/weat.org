@@ -35,3 +35,11 @@ smooth();
 // // require("./vendor/lazysizes.js");
 
 console.log('WEAT, Built by Telegraph');
+
+//
+// If IE 11
+//
+var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+if(isIE11){
+	document.querySelector('html').classList.add('is-ie11');
+}

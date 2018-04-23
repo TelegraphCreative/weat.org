@@ -21,8 +21,26 @@ body {
 .js-app-wrap {
   flex: 1 0 auto; 
 }
-.main-footer {
+.site-footer {
   flex-shrink: 0; 
+}
+
+//
+// IE
+//
+html.is-ie11 {
+	body {
+		display: inherit;
+		height: auto;
+
+	}
+
+	.js-app-wrap {
+	  flex: inherit; 
+	}
+	.site-footer {
+	  flex-shrink: inherit; 
+	}
 }
 
 //
