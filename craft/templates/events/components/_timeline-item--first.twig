@@ -2,12 +2,12 @@
 
     <div class="featured-event__content sm:flex sm:justify-between">
 
-        <time class="featured-event__date sm:border-r sm:border-grey-lightest mb-2 block md:pr-12 sm:pr-8 sm:mb-0 text-blue">
+        <time class="featured-event__date sm:w-1/4 sm:border-r sm:border-grey-lightest mb-2 block md:pr-12 sm:pr-8 sm:mb-0 text-blue">
             <span class="text-md sm:text-lg sm:block">{{event.startDate|date('M')}}</span>
             <span class="text-md sm:text-lg lg:text-4xl sm:block">{{event.startDate|date('d')}}</span>
         </time>
 
-        <div class="featured-event__content sm:flex-1 sm:pl-6 md:pl-8">
+        <div class="featured-event__content sm:w-3/4  sm:flex-1 sm:pl-6 md:pl-8">
 
             {% include 'events/components/_timeline-item-content' %}
 
