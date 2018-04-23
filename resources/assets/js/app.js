@@ -32,9 +32,11 @@ smooth();
 // // import smooth from './modules/smoothScroll';
 
 // // ## Require an entire file:
-// // require("./vendor/lazysizes.js");
 
-console.log('WEAT, Built by Telegraph');
+
+// SVG 4 Everybody
+require("./vendor/svg4everybody.min.js");
+
 
 //
 // If IE 11
@@ -44,9 +46,7 @@ if(isIE11){
 	
 	document.querySelector('html').classList.add('is-ie11');
 
-	require("./vendor/svg4everybody.min.js");
-	svg4everybody({
-		polyfill: true // polyfill <use> elements for External Content
-	});
-	
 }
+
+
+console.log('WEAT, Built by Telegraph');
