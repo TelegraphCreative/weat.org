@@ -39,7 +39,7 @@ tbody {
 	table {
 
 		tbody {
-			@apply .border-r-0 .border-l-0 ;
+			@apply .border-r-0 .border-l-0 .border-b-0;
 
 			td {
 				@apply .border-l .border-t .border-b-0;

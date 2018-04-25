@@ -1857,6 +1857,7 @@ tbody tr:nth-child(even) td {
   table tbody {
     border-right-width: 0;
     border-left-width: 0;
+    border-bottom-width: 0;
   }
 
   table tbody td {
