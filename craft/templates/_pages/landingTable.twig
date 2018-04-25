@@ -1,0 +1,57 @@
+{# Table Complex #}
+
+{% block content %}
+	
+	{# Page Header #}
+	{% include '_components/headers' with {
+		type: 'page-header--standard',
+		Title: entry.pageTitle,
+		classes: ''
+		} 
+	%}
+
+	<section class="landing mb-lg simple-container --wide" >
+
+		{% set Builder = entry.tableContentBuilder %}
+		{% set blockIndex = 0 %}
+		{# Content Builder #}
+		{% for block in Builder %}
+			{% switch block.type %}
+
+				{# Article #}
+				{% case "table" %}
+					{% include '_components/table' with {
+						Table: block.tableBuilder,
+						Title: block.sectionTitle,
+						classes: 'm-auto max-w-2xl     pt-10 pb-8 sm:px-0 px-4'
+						} 
+					%}
+				
+				{# Article #}
+				{% case "article" %}
+					{% set blockIndex = blockIndex+1 %}
+					{% include '_components/article' with {classes: 'm-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10'} %}
+
+				{# CTA Hero #}
+				{% case "ctaHero" %}
+					{% set blockIndex = blockIndex+1 %}
+					{% include '_components/hero--cta' with {
+						Spacing: block.spacing,
+						Header: block.header,
+						Text: block.textBarebones,
+						Button: block.button,
+						Class: '',
+						WrapClass: 'sm:pt-10'
+						} 
+					%}
+				
+				{% default %}
+				
+			{% endswitch %}
+			
+		{% endfor %}
+
+	</section>
+
+
+{% endblock %}

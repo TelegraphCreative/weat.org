@@ -9,9 +9,9 @@ return array(
 	),
 
 	'.test' => array(
-		'user' => 'homestead',
-		'password' => 'secret',
-		'database' => 'homestead',
+		'user' => 'root',
+		'password' => '',
+		'database' => 'weat_craft_local',
     ),
 
     'weat.com' => array(

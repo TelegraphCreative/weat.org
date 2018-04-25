@@ -46,7 +46,7 @@ let colors = {
 
   'black': '#444B4F',
   // 'grey-darkest': '#3d4852',
-  // 'grey-darker': '#606f7b',
+  'grey-darker': '#606f7b',
   'grey-dark': '#86949C', // Dark Grey
   'grey': '#7F8FA4',
   'grey-light': '#D0D6D9', // Light Grey
