@@ -1,0 +1,24 @@
+{#% set registrations = craft.weat.getAllRegistrations().numberOfTickets('2') %#}
+{% set registrations = craft.weat.getRegistrationsByEvent(2) %}
+
+
+{% if options.quantity is defined and options.quantity %}
+{% endif %}
+
+{# addHeaderRow accepts a single array with a comma-separated list of values #}
+{% do craft.sproutReports.addHeaderRow(['First Name',
+'Last Name',
+'Quantity',
+'Event',
+'Ticket']) %}
+
+{# addRows, accepts an array of arrays, where each array includes a comma-separated list of values. Note that there are two levels of opening and closing square brackets. #}
+{% for registration in registrations %}
+{% do craft.sproutReports.addRow([
+  registration.firstName,
+  registration.lastName,
+  registration.numberOfTickets,
+  '<a href="' ~ url('venti/ingredients/'~registration.id) ~ '">' ~  craft.venti.events.status(null).id(registration.elementId).first.title ~ '</a>',
+  '<a href="' ~ url('venti/ingredients/'~registration.id) ~ '">' ~  craft.venti.events.status(null).id(registration.elementId).first.title ~ '</a>'|raw
+]) %}
+{% endfor %}

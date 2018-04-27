@@ -12,12 +12,17 @@ return array(
 		'user' => 'root',
 		'password' => '',
 		'database' => 'weat_craft_local',
-    ),
+	),
 
-    'weat.com' => array(
-    	'user' => '',
-			'password' => '',
-			'database' => '',
-    )
+	'weat.com' => array(
+		'user' => '',
+		'password' => '',
+		'database' => '',
+	),
 
+	'weat.org.test' => array(
+		'user' => 'homestead',
+		'password' => 'secret',
+		'database' => 'homestead',
+	)
 );

@@ -1,0 +1,29 @@
+{% import "_includes/forms" as forms %}
+{{ forms.textField({
+    label: "Quantity"|t,
+    name: "quantity",
+    size: 10,
+    value: options.quantity is defined ? options.quantity : null,
+    first: true
+}) }}
+{{ forms.textField({
+    label: "Limit"|t,
+    name: "limit",
+    size: 10,
+    value: options.quantity is defined ? options.quantity : null
+}) }}
+
+{{ forms.selectField({
+    label: "Region"|t,
+    name: "region",
+    options: {
+        "africa" : "Africa",
+        "antartica" : "Antartica",
+        "asia" : "Asia",
+        "australia" : "Australia",
+        "europe" : "Europe",
+        "northAmerica" : "North America",
+        "southAmerica" : "South America"
+    },
+    value: options.region is defined ? options.region : "Antartica"
+}) }}
