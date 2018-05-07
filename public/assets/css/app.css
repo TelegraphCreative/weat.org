@@ -1806,12 +1806,12 @@ svg {
           transform: scale(1.05);
 }
 
-table {
+.data-table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-thead {
+.data-table thead {
   background-color: #10387a;
   color: #fff;
   font-size: 1rem;
@@ -1821,12 +1821,12 @@ thead {
   border-right-width: 1px;
 }
 
-thead th {
+.data-table thead th {
   padding: 1rem;
   font-weight: 400;
 }
 
-tbody {
+.data-table tbody {
   border-left-width: 1px;
   border-right-width: 1px;
   border-bottom-width: 1px;
@@ -1834,7 +1834,7 @@ tbody {
   line-height: 1.3;
 }
 
-tbody td {
+.data-table tbody td {
   font-size: .8125rem;
   color: #86949c;
   padding: 1rem;
@@ -1843,30 +1843,30 @@ tbody td {
   border-color: #d0d6d9;
 }
 
-tbody tr:nth-child(even) td {
+.data-table tbody tr:nth-child(even) td {
   background-color: #f0f0f0;
 }
 
 @media (min-width: 576px) {
-  tbody tr td:last-child {
+  .data-table tbody tr td:last-child {
     border-right-width: 0;
   }
 }
 
 @media only screen and (max-width: 576px) {
-  table tbody {
+  .data-table tbody {
     border-right-width: 0;
     border-left-width: 0;
     border-bottom-width: 0;
   }
 
-  table tbody td {
+  .data-table tbody td {
     border-left-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 0;
   }
 
-  table thead {
+  .data-table thead {
     border: none;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -1877,14 +1877,14 @@ tbody tr:nth-child(even) td {
     width: 1px;
   }
 
-  table td {
+  .data-table td {
     display: block;
     text-align: right;
     position: relative;
     padding-top: 1.875rem;
   }
 
-  table td:before {
+  .data-table td:before {
     content: attr(data-label);
     float: left;
     font-weight: 700;
@@ -1901,33 +1901,33 @@ tbody tr:nth-child(even) td {
     z-index: 10;
   }
 
-  table td:last-child {
+  .data-table td:last-child {
     border-bottom: 0;
   }
 
-  table tr {
+  .data-table tr {
     display: block;
     margin-bottom: .75rem;
     border-bottom-width: 1px;
     border-color: #d0d6d9;
   }
 
-  table tr:nth-child(even) td:before {
+  .data-table tr:nth-child(even) td:before {
     background-color: #d0d6d9;
     color: #606f7b;
   }
 }
 
 @media (min-width: 768px) {
-  thead {
+  .data-table thead {
     font-size: 1.5rem;
   }
 
-  thead th {
+  .data-table thead th {
     padding: 1.5rem;
   }
 
-  tbody td {
+  .data-table tbody td {
     padding: 1.5rem;
     font-size: .9375rem;
   }
