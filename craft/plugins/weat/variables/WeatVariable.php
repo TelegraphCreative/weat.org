@@ -46,6 +46,12 @@ class WeatVariable
 	{
 		return craft()->weat_registration->getAllRegistrations();
 	}
+
+	public function getRegistrationsByEvent($key)
+	{
+		return craft()->weat_registration->getRegistrationsByEvent($key);
+	}
+
 	public function getSubscriptionDetails($userId = null)
 	{
 		if($userId == null) {
