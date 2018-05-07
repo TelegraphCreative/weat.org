@@ -55,7 +55,7 @@ class Weat_RegistrationService extends BaseApplicationComponent
 		$record->firstName = $user->firstName;
 		$record->lastName = $user->lastName;
 		$record->email = $user->email;
-		$record->ticketId = 2;
+		$record->ticketId = isset($meta['ticketId']) ? $meta['ticketId'] : NULL;
 		$record->numberOfTickets = isset($meta['quantity']) ? $meta['quantity'] : NULL;
 		$record->subscriptionAdded = isset($meta['includeSubscription']) ? $meta['includeSubscription'] : NULL;
 		$record->address1 = isset($meta['addressLine1']) ? $meta['addressLine1'] : NULL;
@@ -322,6 +322,13 @@ class Weat_RegistrationService extends BaseApplicationComponent
 			//$records = Charge_LogRecord::model()->findAll(['order' => 'id desc']);
 
 			//return Charge_LogModel::populateModels($records);
+		 }
+
+		 public function getRegistrationsByEvent($key)
+		 {
+				//$records = Weat_RegistrationRecord::model()->findAllByAttributes(['numberOfTickets' => $key], ['order' => 'id desc', 'limit' => $limit]);
+				$records = Weat_RegistrationRecord::model()->findAllByAttributes(['elementId' => $key], ['order' => 'id desc']);
+				return Weat_RegistrationModel::populateModels($records, 'id');
 		 }
 
 }
