@@ -64,7 +64,7 @@
 							{% if item.level == 1 %}
 								<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">
 									{% if item.url %}
-									<a class="text-blue-light no-underline" href="{{item.url}}" target="{{item.target}}">
+									<a class="text-blue-light no-underline" href="{{item.link}}" target="{{item.target}}">
 									{% endif %}									
 										{{item.title}}
 									{% if item.url %}
@@ -73,7 +73,7 @@
 								</h5>
 							
 							{% else %}
-								<li class="mb-3"><a href="{{item.url}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
+								<li class="mb-3"><a href="{{item.link}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
 							{% endif %}
 
 							{% ifchildren %}
@@ -100,7 +100,7 @@
 							{% if item.level == 1 %}
 								<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">
 									{% if item.url %}
-									<a class="text-blue-light no-underline" href="{{item.url}}" target="{{item.target}}">
+									<a class="text-blue-light no-underline" href="{{item.link}}" target="{{item.target}}">
 									{% endif %}									
 										{{item.title}}
 									{% if item.url %}
@@ -109,7 +109,7 @@
 								</h5>
 							
 							{% else %}
-								<li class="mb-3"><a href="{{item.url}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
+								<li class="mb-3"><a href="{{item.link}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
 							{% endif %}
 
 							{% ifchildren %}
@@ -137,7 +137,7 @@
 							{% if item.level == 1 %}
 								<h5 class="text-blue-light uppercase font-bold mb-5 text-2xs tracking-wide">
 									{% if item.url %}
-									<a class="text-blue-light no-underline" href="{{item.url}}" target="{{item.target}}">
+									<a class="text-blue-light no-underline" href="{{item.link}}" target="{{item.target}}">
 									{% endif %}									
 										{{item.title}}
 									{% if item.url %}
@@ -146,7 +146,7 @@
 								</h5>
 							
 							{% else %}
-								<li class="mb-3"><a href="{{item.url}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
+								<li class="mb-3"><a href="{{item.link}}" target="{{item.target}}" class="text-white hover:text-blue-light no-underline text-1xs">{{item.title}}</a></li>								
 							{% endif %}
 
 							{% ifchildren %}
