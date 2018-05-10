@@ -1,0 +1,162 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Container #}
+<div class="simple-container">
+
+  {# Form #}
+  <section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+    <header class="mb-10 pt-9">
+      <h1 class="text-lg text-blue mb-6">Donate to WEAT</h1>
+    </header>
+    <form class="form-horizontal"
+          id="charge-form"
+          method="post"
+          action=""
+          accept-charset="UTF-8">
+        {{ forms.hidden({ name : 'action', value: 'charge/charge' }) }}
+        {{ forms.hidden({ name : 'redirect', value: 'payments/thanks/{hash}' }) }}
+        {{ forms.hidden({ name : 'createAccount', value: 'no' }) }}
+        {{ forms.hidden({ name : 'description', value: 'Donation' }) }}
+        {{ forms.hidden({ name : 'meta[type]', value: 'donation' }) }}
+        {{ getCsrfInput() }}
+
+        {% set options = {
+          'allowDynamic' : true,
+          'checkoutRequest' : true,
+        } %}
+        {{ craft.charge.setPaymentOptions(options) }}
+
+        {% if allErrors is defined %}
+            {{ forms.errorBlock(allErrors) }}
+        {% endif %}
+
+        <div id="payment-errors" class="alert alert-error"></div>
+
+        {# Field #}
+        <div class="form-row mb-6">
+          <label for="customerName" class="field-label block w-full">Name</label>
+          <input required name="customerName" id="customerName" type="text" class="input-field block w-full" placeholder="Riley Price" value="{{(charge is defined ? charge.customerName : (currentUser is defined ? currentUser.fullName) )}}">
+        </div>
+
+        {# Field #}
+        <div class="form-row mb-6">
+          <label for="customerEmail" class="field-label block w-full">Email</label>
+          <input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full" placeholder="hello@mail.com" value="{{(charge is defined ? charge.customerEmail : (currentUser is defined ? currentUser.email) )}}">
+        </div>
+
+        {# Field #}
+        <div class="form-row mb-6">
+          <label for="planAmount" class="field-label block w-full">Donation amount</label>
+          <input required name="planAmount" id="planAmount" type="text" class="input-field block w-full" placeholder="50.00" value="{{(charge is defined ? charge.planAmount )}}">
+        </div>
+
+        <div class="form-row mb-6">
+          <label for="card-element" class="field-label block w-full">Credit or debit card</label>
+          <div id="card-element" class="input-field">
+            <!-- a Stripe Element will be inserted here. -->
+          </div>
+          <!-- Used to display form errors -->
+          <div id="card-errors" role="alert"></div>
+        </div>
+
+        <div class="form-row mb-6 flex justify-center items-center -mx-4">
+          {# Field #}
+          <div class="w-1/2 px-4">
+          </div>
+          {# Field #}
+          <div class="w-1/2 px-4">
+            <input class="submit btn --auto-w --full-w" type="submit" value="Donate">
+          </div>
+        </div>
+    </form>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+
+{% includeJsFile 'https://js.stripe.com/v3/' %}
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% set formJs %}
+// Create a Stripe client.
+var stripe = Stripe('{{ craft.charge.getPublicKey }}');
+
+// Create an instance of Elements.
+var elements = stripe.elements();
+
+// Custom styling can be passed to options when creating an Element.
+// (Note that this demo uses a wider set of styles than the guide below.)
+var style = {
+  base: {
+    color: '#32325d',
+    lineHeight: '18px',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+}
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
+
+// Handle real-time validation errors from the card Element.
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+// Handle form submission.
+var form = document.getElementById('charge-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the user if there was an error.
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server.
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+
+function stripeTokenHandler(token) {
+  console.log('stripeTokenHandler');
+  // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('charge-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+  var hiddenInput2 = document.createElement('input');
+  hiddenInput2.setAttribute('type', 'hidden');
+  hiddenInput2.setAttribute('name', 'stripeEmail');
+  hiddenInput2.setAttribute('value', document.getElementById('customerEmail').value);
+  form.appendChild(hiddenInput2);
+
+  // Submit the form
+  form.submit();
+}
+{% endset %}
+{% includeJs formJs %}
+
+{% endblock %}
