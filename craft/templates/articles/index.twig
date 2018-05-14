@@ -2,20 +2,22 @@
 {% extends "_layouts/standard" %}
 {% set theCategory = craft.request.firstSegment() %}
 {% block content %}
+{% spaceless %}
 <pre>
 
-{% set groups = craft.categories.group('articleCategory').slug(theCategory).first() %}
+	{% set groups = craft.categories.group('articleCategory').slug(theCategory).first() %}
 
-{% set Structure = craft.entries.section('articles').relatedTo({
-	targetElement: groups
-}) %}
-{% paginate Structure.limit(8) as pageInfo, entries %}
-{#% set entries = craft.entries.section('articles').relatedTo({
-	targetElement: groups
-}) %#}
+	{% set Structure = craft.entries.section('articles').relatedTo({
+		targetElement: groups
+	}) %}
+	{% paginate Structure.limit(8) as pageInfo, entries %}
+	{#% set entries = craft.entries.section('articles').relatedTo({
+		targetElement: groups
+	}) %#}
 
 
 </pre>
+{% endspaceless %}
 {# Page Header #}
 <header class="page-header bg-blue">
 	<div class="simple-container py-8 sm:py-10">
@@ -29,10 +31,13 @@
 
 	{# Article Type Selector #}
 	<div class="max-w-1xs mb-6 mt-5 pt-10">
+
+		{% set entryIds = craft.entries.section('articles').ids() %}
+		{% set categories = craft.categories.relatedTo({ sourceElement: entryIds }).find() %}
 		<select data-module="choicesAsLinks" name="" id="">
-			<option value="https://github.com/jshjohnson/Choices">All Types</option>
-			<option value="https://github.com/TelegraphCreative/bottle-checkout-fed">Type One</option>
-			<option value="https://app.asana.com/0/581664732076036/board">Type Two</option>
+			{% for group in categories %}
+				<option {% if theCategory == group.slug %}selected{% endif %} value="/{{group.slug}}">{{group.title}}</option>
+			{% endfor %}
 		</select>
 	</div>
 
@@ -45,35 +50,37 @@
 			<div class="js-infScroll   border-t border-grey-lightest mb-14   lg:mb-18" data-module="infScroll">
 				{# Article Summary #}
 
-{# Output them #}
-{% for entry in entries %}
-		{# Article Summary #}
-		<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
-			<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
+				{# Output them #}
+				{% for entry in entries %}
+						{# Article Summary #}
+						<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
+							<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
 
-			<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
-				<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
-			</a>
+							<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
+								<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
+							</a>
 
-			<div class="md:flex md:items-end">
-				<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4">{{entry.body}}</div>
+							<div class="md:flex md:items-end">
+								<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4 sm:w-4/5">{{entry.body}}</div>
 
-				{# button #}
-				<a href="{{entry.url}}" class="btn --auto-w --text text-xs --special   whitespace-no-wrap">
-					<span class="text relative text-center">
-						<span class="hover-show opacity-0 tr-all">
-							Read More
-						</span>
+								{# button #}
+								<div class="sm:w-1/5">
+									<a href="{{entry.url}}" class="btn --auto-w --text text-xs --special   whitespace-no-wrap">
+										<span class="text relative text-center">
+											<span class="hover-show opacity-0 tr-all">
+												Read More
+											</span>
 
-						{# Type #}
-						<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
-						   TECQ's Rule Log
-						</span>
-					</span>
-				</a>
-			</div>
-		</article>
-{% endfor %}
+											{# Type #}
+											<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
+											   TECQ's Rule Log
+											</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</article>
+				{% endfor %}
 			</div>
 
 
