@@ -1,0 +1,17 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.checkboxSelectField({
+	label: "User Statuses"|t,
+	instructions: "Select the user statuses to include in your report. All by default."|t,
+	name: "options[userGroups]",
+	options: userGroupOptions,
+	values: options.userGroups is defined ? options.userGroups : null,
+	first: true
+}) }}
+
+{{ forms.lightswitchField({
+	label: "Display User Statuses",
+	instructions: "Display user statuses as columns in your results",
+	name: 'options[displayUserGroupColumns]',
+	on: options.displayUserGroupColumns is defined ? options.displayUserGroupColumns : null
+}) }}
