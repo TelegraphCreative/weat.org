@@ -27,7 +27,7 @@
 
 					{# Standard Slider #}
 					{% case "standardSlider" %}
-						{% include '_components/slider--standard' with {classes: 'm-auto w-full     sm:pt-10 pt-9 mb-14'} %}
+						{% include '_components/slider--standard' with {classes: 'm-auto w-full     sm:pt-10 pt-9 mb-16'} %}
 
 
 					{# Article #}
@@ -37,8 +37,10 @@
 					{# Callout #}
 					{% case "callout" %}
 						<h2 class="leading-normal mb-4 mt-16 text-blue text-lg">{{block.header}}</h2>
-						<div class="leading-normal mb-6 text-grey-dark text-md">
-							{{block.body}}
+						<div class="article ">
+							<div class="leading-normal mb-6 text-grey-dark text-md">
+								{{block.body}}
+							</div>
 						</div>
 
 						{{link.simple(block.button, 'btn   mb-16')}}
