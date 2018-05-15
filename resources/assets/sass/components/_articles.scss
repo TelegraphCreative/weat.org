@@ -37,6 +37,9 @@
 	h5 {
 		@apply .text-left .text-grey-dark  .text-md .mt-8 .mb-4;
 	}
+	h6 {
+		@apply .font-bold .text-base .my-4;
+	}
 	
 	p {
 		@apply .mt-4;

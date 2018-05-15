@@ -1532,6 +1532,13 @@ svg {
   margin-bottom: 1rem;
 }
 
+.article h6 {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .article p {
   margin-top: 1rem;
 }
