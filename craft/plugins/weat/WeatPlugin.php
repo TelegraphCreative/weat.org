@@ -41,13 +41,15 @@ class WeatPlugin extends BasePlugin
 	public function init()
 	{
 		parent::init();
+		Craft::import('plugins.weat.integrations.sproutreports.datasources.*');
 		craft()->on('charge.onCharge', function(Event $event) {
 			//WeatPlugin::log($event);
 			//$type = $event->params['charge']->type;
 			//WeatPlugin::log('Charge type of ' . $type);
 			$meta = $event->params['charge']->meta;
 			//$chargeType = $event->params['charge']->chargeType;
-			switch ($meta['type']) {
+			$type = (array_key_exists('type', $meta)) ? $meta['type'] : '';
+			switch ($type) {
 				case 'registration':
 					craft()->weat_registration->saveRegistration($event);
 					craft()->weat_registration->updateUser($event);
@@ -276,5 +278,13 @@ class WeatPlugin extends BasePlugin
 					}
 					$context['subnav']['settings'] = ['label' => Craft::t('Settings'), 'url' => 'charge/settings'];
 			}*/
+	}
+
+	public function registerSproutReportsDataSources()
+	{
+		return array(
+			new WeatReportsUserStatusDataSource(),
+			new WeatReportsWefDataSource(),
+		);
 	}
 }
