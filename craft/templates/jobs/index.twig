@@ -2,14 +2,14 @@
 {% extends "_layouts/standard" %}
 {% set theCategory = craft.request.segment(2) %}
 {% set sectionSlug = craft.request.firstSegment() %}
-{% set Section = 'jobBank' %}
+{% set Section = 'jobs' %}
 {% set SectionEntries = craft.entries.section(Section) %}
 {% set entryIds = SectionEntries.ids() %}
 {% set categories = craft.categories.relatedTo({ sourceElement: entryIds }).find() %}
 
 {% set postJobUrl = '/[JOB-FORM-URL]' %}
 
-{% set jobsLanding = craft.entries.section('jobs') %}
+{% set jobsLanding = craft.entries.section('jobsLanding') %}
 
 {% block content %}
 
@@ -140,7 +140,7 @@
 	<header class="page-header bg-blue">
 		<div class="simple-container py-8 sm:py-10">
 			{# Landing Page Title: #}
-			<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">Job Bank</h1>
+			<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{jobsLanding[0].pageTitle}}</h1>
 		</div>
 	</header>
 

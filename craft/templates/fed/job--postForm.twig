@@ -1,0 +1,129 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{# {% include '_components/fed/nav--breadcrumbs'  %} #}
+<nav class="site-breadcrumbs border-t border-b border-grey-lightest py-4 lg:py-6">
+	<div class="simple-container text-xs">
+		<ul class="list-reset">
+			
+			<li class="inline-block pr-4"><a href="" class="no-underline pr-4 text-grey-dark hover:text-black">Home</a></li>
+			<li class="inline-block pr-4"><a href="" class="no-underline pr-4 text-grey-dark hover:text-black">Jobs</a></li>
+			<li class="inline-block pr-4"><a href="" class="no-underline pr-4 text-grey-dark hover:text-black">Post a Job</a></li>
+			<li class="inline-block pr-4"><a href="" class="no-underline pr-4 text-grey-dark hover:text-black pointer-events-none">Payment</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+
+{# Container #}
+<div class="simple-container">
+	
+	{# Form #}
+	<section class="form-container mt-10 sm:mt-16 --narrow m-auto md:w-3/5 mb-12 sm:mb-lg ">
+		
+		<form action="#" class="py-4" autocomplete="false">
+			
+			{# Field / Split  #}
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+				
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="positionType" class="field-label block w-full">Position Type</label>
+					<input autocomplete="off" required name="positionType" id="positionType" type="text" class="input-field block w-full" >
+					<span class="text-1xs mt-2 block text-grey-light">E.g.: full-time, part-time, contract</span>
+				</div>
+				
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="positionTitle" class="field-label block w-full">Position Title</label>
+					<input autocomplete="off"  name="positionTitle" id="positionTitle" type="text" class="input-field block w-full" >
+				</div>
+			</div>
+
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="positionDscription" class="field-label block w-full">Position Description</label>
+				<textarea class="input-field block w-full" name="positionDscription" id="positionDscription" rows="4"></textarea>
+			</div>
+			
+
+			{# Field / Split  #}
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+				
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="salary" class="field-label block w-full">Salary</label>
+					<input autocomplete="off" required name="salary" id="salary" type="text" class="input-field block w-full"/>
+				</div>
+				
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="preferredEducation" class="field-label block w-full">Preferred Education</label>
+					<input autocomplete="off"  name="preferredEducation" id="preferredEducation" type="text" class="input-field block w-full">
+				</div>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="minQualifications" class="field-label block w-full">Minimum Qualifications/Experience</label>
+				<textarea class="input-field block w-full" name="minQualifications" id="minQualifications" rows="4"></textarea>
+			</div>
+
+			{# Field / Split  #}
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+				
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="responsibilities" class="field-label block w-full">Scope of Responsibilities</label>
+					<textarea class="input-field block w-full" name="responsibilities" id="responsibilities" rows="4" ></textarea>
+				</div>
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="notes" class="field-label block w-full">Notes to Applicants & Working Conditions</label>
+					<textarea class="input-field block w-full" name="notes" id="notes" rows="4" ></textarea>
+				</div>
+			</div>
+
+		
+			<div class="form-row mb-6">
+				<label for="closingDate" class="field-label block w-full">Application Closing Date</label>
+					<input autocomplete="off" required name="closingDate" id="closingDate" type="text" class="input-field block w-full" >
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="instructions" class="field-label block w-full">Application Instructions</label>
+				<textarea class="input-field block w-full" name="instructions" id="instructions" rows="4" placeholder=""></textarea>
+			</div>
+
+
+
+					{# Buttons #}
+					<div class="form-row mb-6 pt-6 flex items-center">
+						 <input class="submit btn" type="submit" value="Post Job">
+					</div>
+
+
+
+		</form>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}
