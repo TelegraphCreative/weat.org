@@ -1,0 +1,187 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+
+{% set committeeSlug = craft.request.getSegment(3) %}
+{% set committee = craft.entries.section('committees').slug(committeeSlug).first() %}
+
+{# Breadcrumbs #}
+{# {% include '_components/fed/nav--breadcrumbs'  %} #}
+<nav class="site-breadcrumbs border-t border-b border-grey-lightest py-4 lg:py-6">
+	<div class="simple-container text-xs">
+		<ul class="list-reset">
+
+			<li class="inline-block pr-4"><a href="/" class="no-underline pr-4 text-grey-dark hover:text-black">Home</a></li>
+			<li class="inline-block pr-4"><a href="/committees" class="no-underline pr-4 text-grey-dark hover:text-black">Committees</a></li>
+			<li class="inline-block pr-4"><a href="#" class="no-underline pr-4 text-grey-dark hover:text-black">Join</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+
+{# Container #}
+<div class="simple-container">
+
+	{# Form #}
+	<section class="form-container mt-10 sm:mt-16 --narrow m-auto md:w-3/5 mb-12 sm:mb-lg ">
+
+		{% if committeeSlug is not empty and committee is not empty %}
+		<h2 class="border-b border-grey-lightest mb-10 pb-4 leading-tight text-2md text-grey-dark">{{committee.title}}</h2>
+		{% endif %}
+		<h3>WATER ENVIRONMENT ASSOCIATION OF TEXAS (WEAT) COMMITTEE APPLICATION</h3>
+		<form method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="py-4 choices-as-boxes" autocomplete="false">
+			{{ getCsrfInput() }}
+			{{ craft.amForms.displayAntispam() }}
+			<input type="hidden" name="action" value="amForms/submissions/saveSubmission">
+			<input type="hidden" name="redirect" value="committees/join/thanks">
+			<input type="hidden" name="handle" value="joinACommittee">
+
+			{% macro errorList(errors) %}
+				{% if errors %}
+					<ul class="errors">
+						{% for error in errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			{% endmacro %}
+
+			<div class="form-row mb-6">
+			{% from _self import errorList %}
+			</div>
+
+
+
+			{% if committeeSlug is empty or committee is empty %}
+				{% set committees = craft.entries.section('committees').order('title') %}
+				<div class="form-row mb-6">
+					<label for="fields[committee][]" class="field-label block w-full">Select a committee</label>
+					<select name="fields[committee][]" id="committeeSelect" data-module="choices">
+					{% for committee in committees %}
+						<option value="{{committee.id}}">
+							{{committee.title}}
+						</option>
+					{% endfor %}
+					</select>
+					<input type="hidden" name="fields[notificationRecipients]" id="notificationRecipients" value="">
+				</div>
+			{% else %}
+				<input type="hidden" name="fields[committee][]" value="{{committee.id}}">
+				<input type="hidden" name="fields[notificationRecipients]" value="{{committee.email}}">
+			{% endif %}
+
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[fullName]" class="field-label block w-full">Name</label>
+					<input required autocomplete="off" name="fields[fullName]" id="fullName" type="text" class="input-field block w-full" value="{{ joinACommittee.fullName|default(currentUser.fullName|default('')) }}">
+				</div>
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[idNumber]" class="field-label block w-full">WEF/WEAT ID number</label>
+					<input autocomplete="off" name="fields[idNumber]" id="idNumber" type="text" class="input-field block w-full" value="{{ joinACommittee.idNumber|default('') }}">
+				</div>
+			</div>
+
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[emailAddress]" class="field-label block w-full">Email</label>
+					<input required autocomplete="off" name="fields[emailAddress]" id="emailAddress" type="email" class="input-field block w-full" value="{{ joinACommittee.emailAddress|default(currentUser.email|default('')) }}">
+				</div>
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[telephoneNumber]" class="field-label block w-full">Phone number</label>
+					<input autocomplete="off" name="fields[telephoneNumber]" id="telephoneNumber" type="tel" class="input-field block w-full" value="{{ joinACommittee.telephoneNumber|default(currentUser.userPhoneNumber|default('')) }}">
+				</div>
+			</div>
+
+			{% set address = '' %}
+			{% set address = address ~ currentUser.userAddress1 %}
+			{% if currentUser.userAddress2 %}
+			{% set address = address ~ "\n" ~ currentUser.userAddress2 %}
+			{% endif %}
+			{% set address = address ~ "\n" ~ currentUser.userAddressCity ~ ", " ~ currentUser.userAddressState ~ " " ~ currentUser.userAddressZip %}
+			<div class="form-row mb-6">
+				<label for="fields[address]" class="field-label block w-full">Address</label>
+				<textarea class="input-field block w-full" name="fields[address]" id="address" rows="3" placeholder="">{{ joinACommittee.telephoneNumber|default(address|default('')) }}</textarea>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<p>I am available to participate through telephone, e-mail or mail, in ongoing activities, and I am interested in being considered for appointment to one of the following WEAT committees (list no more than THREE, in order of priority).</p>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<p>If all committees listed are filled, your application will be placed in a waiting status for your first choice and you will be notified by WEAT.</p>
+				<h3 class="mb-6 mt-6">WEF ASSOCIATION INVOLVEMENT</h3>
+				<p>WEAT committees may parallel the Water Environment Federation Committees. You are encouraged to become an active participant in WEF committee activities.</p>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[currentCommittees]" class="field-label block w-full">Are you serving (or have you served) on a WEF Committees? If yes, which committees, and when:</label>
+				<textarea class="input-field block w-full" name="fields[currentCommittees]" id="currentCommittees" rows="4" placeholder=""></textarea>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[pastCommittees]" class="field-label block w-full">My current and past service on WEAT committees includes (list dates, if known):</label>
+				<textarea class="input-field block w-full" name="fields[pastCommittees]" id="pastCommittees" rows="4" placeholder=""></textarea>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[expertise]" class="field-label block w-full">My primary area of expertise is: </label>
+				<textarea class="input-field block w-full" name="fields[expertise]" id="expertise" rows="4" placeholder=""></textarea>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[file]" class="field-label block w-full">Resume</label>
+				<input type="file" id="fields-file" name="fields[file]">
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<p>For legal purposes and as evidence of my qualifications and interest in serving on the above indicated committee(s), I AM SUBMITTING A RESUME that includes my educational background, professional experience, present employment, professional registration, past service to professional organizations and societies.</p>
+			</div>
+
+			{# Buttons #}
+			<div class="form-row mb-6 pt-6 flex items-center">
+				 <input class="submit btn" type="submit" value="Submit application">
+			</div>
+
+		</form>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+var committees = [];
+
+{% for committee in committees %}
+committees[{{committee.id}}] = '{{committee.email}}';
+{% endfor %}
+$("form").validate({
+	submitHandler: function(form) {
+		$('#notificationRecipients').val(committees[$('#committeeSelect').val()]);
+		form.submit();
+	}
+});
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}
