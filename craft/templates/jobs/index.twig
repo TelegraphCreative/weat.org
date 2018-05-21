@@ -7,7 +7,7 @@
 {% set entryIds = SectionEntries.ids() %}
 {% set categories = craft.categories.relatedTo({ sourceElement: entryIds }).find() %}
 
-{% set postJobUrl = '/[JOB-FORM-URL]' %}
+{% set postJobUrl = '/jobs/post' %}
 
 {% set jobsLanding = craft.entries.section('jobsLanding') %}
 
