@@ -15,6 +15,7 @@
 
 	<h3 class="leading-tight mb-3 mt-10 text-1md text-grey-dark   sm:mt-18 sm:text-2md">My committees</h3>
 
+	{% if entries|length > 0 %}
 		{% for entry in entries %}
 
 		<div class="tr-all-3 border-grey-lightest border-t pt-8 pb-8">
@@ -59,6 +60,12 @@
 				</div>
 		</div>
 		{% endfor %}
+
+	{% else %}
+
+	<p>You are not a member of any committees. Take a look at the <a href="{{url('committees')}}">WEAT Committees</a> and consider <a href="{{url('committees/join')}}">joining.</a></p>
+
+	{% endif %}
 
 </div>
 

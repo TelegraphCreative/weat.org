@@ -16,6 +16,8 @@
 <div class="m-auto max-w-lg px-6   sm:mb-10  lg:px-3" style="margin-bottom: 320px">
 
 	<h3 class="leading-tight mb-3 mt-10 text-1md text-grey-dark   sm:mt-18 sm:text-2md">My events</h3>
+
+		{% if registrations|length > 0 %}
 		{% for registration in registrations %}
 		{% set event = craft.venti.events.status(null).id(registration.elementId).first %}
 
@@ -53,6 +55,14 @@
 				</div>
 		</div>
 		{% endfor %}
+
+		{% else %}
+
+		<p>
+			You have not signed up for any events but checkout the <a href="{{url('events')}}">upcoming events</a>.
+		</p>
+
+		{% endif %}
 
 </div>
 
