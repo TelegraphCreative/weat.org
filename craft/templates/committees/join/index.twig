@@ -31,8 +31,12 @@
 		{% if committeeSlug is not empty and committee is not empty %}
 		<h2 class="border-b border-grey-lightest mb-10 pb-4 leading-tight text-2md text-grey-dark">{{committee.title}}</h2>
 		{% endif %}
-		<h3>WATER ENVIRONMENT ASSOCIATION OF TEXAS (WEAT) COMMITTEE APPLICATION</h3>
-		<form method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="py-4 choices-as-boxes" autocomplete="false">
+		
+		<header class="pt-9">
+			<h1 class="text-lg text-blue mb-6">WATER ENVIRONMENT ASSOCIATION OF TEXAS (WEAT) COMMITTEE APPLICATION</h1>
+		</header>
+
+		<form method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="pt-1 pb-4 choices-as-boxes" autocomplete="false">
 			{{ getCsrfInput() }}
 			{{ craft.amForms.displayAntispam() }}
 			<input type="hidden" name="action" value="amForms/submissions/saveSubmission">
@@ -112,17 +116,17 @@
 				<textarea class="input-field block w-full" name="fields[address]" id="address" rows="3" placeholder="">{{ joinACommittee.telephoneNumber|default(address|default('')) }}</textarea>
 			</div>
 
-			{# Field #}
-			<div class="form-row mb-6">
+			{# Info #}
+			<div class="text-grey-darker leading-normal border-t border-grey-lightest border-b py-4 my-4">
 				<p>I am available to participate through telephone, e-mail or mail, in ongoing activities, and I am interested in being considered for appointment to one of the following WEAT committees (list no more than THREE, in order of priority).</p>
-			</div>
-
-			{# Field #}
-			<div class="form-row mb-6">
+				<br>
+				<p>I am available to participate through telephone, e-mail or mail, in ongoing activities, and I am interested in being considered for appointment to one of the following WEAT committees (list no more than THREE, in order of priority).</p>
+				<br>
 				<p>If all committees listed are filled, your application will be placed in a waiting status for your first choice and you will be notified by WEAT.</p>
-				<h3 class="mb-6 mt-6">WEF ASSOCIATION INVOLVEMENT</h3>
+				<h3 class="mb-6 mt-6 text-blue text-md">WEF ASSOCIATION INVOLVEMENT</h3>
 				<p>WEAT committees may parallel the Water Environment Federation Committees. You are encouraged to become an active participant in WEF committee activities.</p>
 			</div>
+
 
 			{# Field #}
 			<div class="form-row mb-6">
@@ -149,7 +153,7 @@
 			</div>
 
 			{# Field #}
-			<div class="form-row mb-6">
+			<div class="form-row mb-6 text-sm text-grey-darker border-t border-grey-lightest pt-4 leading-normal">
 				<p>For legal purposes and as evidence of my qualifications and interest in serving on the above indicated committee(s), I AM SUBMITTING A RESUME that includes my educational background, professional experience, present employment, professional registration, past service to professional organizations and societies.</p>
 			</div>
 
