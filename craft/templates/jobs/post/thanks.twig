@@ -1,0 +1,48 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{# {% include '_components/fed/nav--breadcrumbs'  %} #}
+<nav class="site-breadcrumbs border-t border-b border-grey-lightest py-4 lg:py-6">
+	<div class="simple-container text-xs">
+		<ul class="list-reset">
+
+			<li class="inline-block pr-4"><a href="/" class="no-underline pr-4 text-grey-dark hover:text-black">Home</a></li>
+			<li class="inline-block pr-4"><a href="/jobs" class="no-underline pr-4 text-grey-dark hover:text-black">Jobs</a></li>
+			<li class="inline-block pr-4"><a href="/jobs/post" class="no-underline pr-4 text-grey-dark hover:text-black">Post a Job</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+
+{# Container #}
+<div class="simple-container">
+
+	{# Form #}
+	<section class="form-container mt-10 sm:mt-16 --narrow m-auto md:w-3/5 mb-12 sm:mb-lg ">
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<p>
+					Thanks for submitting a job posting.
+				</p>
+			</div>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}

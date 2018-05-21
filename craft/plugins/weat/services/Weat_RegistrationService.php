@@ -331,4 +331,10 @@ class Weat_RegistrationService extends BaseApplicationComponent
 				return Weat_RegistrationModel::populateModels($records, 'id');
 		 }
 
+		 public function getRegistrationsByUser($userId)
+		 {
+				$records = Weat_RegistrationRecord::model()->findAllByAttributes(['userId' => $userId], ['order' => 'id desc']);
+				return Weat_RegistrationModel::populateModels($records, 'id');
+		 }
+
 }

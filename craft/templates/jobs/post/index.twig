@@ -1,0 +1,164 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{# {% include '_components/fed/nav--breadcrumbs'  %} #}
+<nav class="site-breadcrumbs border-t border-b border-grey-lightest py-4 lg:py-6">
+	<div class="simple-container text-xs">
+		<ul class="list-reset">
+
+			<li class="inline-block pr-4"><a href="/" class="no-underline pr-4 text-grey-dark hover:text-black">Home</a></li>
+			<li class="inline-block pr-4"><a href="/jobs" class="no-underline pr-4 text-grey-dark hover:text-black">Jobs</a></li>
+			<li class="inline-block pr-4"><a href="#" class="no-underline pr-4 text-grey-dark hover:text-black">Post a Job</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+
+{# Container #}
+<div class="simple-container">
+
+	{# Form #}
+	<section class="form-container mt-10 sm:mt-16 --narrow m-auto md:w-3/5 mb-12 sm:mb-lg ">
+
+		<form method="post" accept-charset="UTF-8" class="py-4 choices-as-boxes" autocomplete="false">
+			{{ getCsrfInput() }}
+			{% set path = craft.request.path %}
+			{% if not (path ends with '/') %}
+			{% set path = craft.request.path ~ '/' %}
+			{% endif %}
+			<input type="hidden" name="action" value="entries/saveEntry">
+			<input type="hidden" name="redirect" value="{{ path }}thanks">
+			<input type="hidden" name="sectionId" value="14">
+			<input type="hidden" name="enabled" value="0">
+			<input type="hidden" name="postDate" value="{{ 'now'|date('Y-m-d H:i:s') }}">
+			<input type="hidden" name="expiryDate" id="expiryDate" value="0">
+
+			{% macro errorList(errors) %}
+				{% if errors %}
+					<ul class="errors">
+						{% for error in errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			{% endmacro %}
+
+			<div class="form-row mb-6">
+			{% from _self import errorList %}
+			</div>
+
+			{# Field / Split  #}
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[positionType][]" class="field-label block w-full">Position Type</label>
+					{#<input autocomplete="off" required name="positionType" id="positionType" type="text" class="input-field block w-full" >
+					<span class="text-1xs mt-2 block text-grey-light">E.g.: full-time, part-time, contract</span>#}
+					{% set categories = craft.categories.group('jobType') %}
+					<select name="fields[jobType][]" data-module="choices">
+						{% for category in categories %}
+								<option value="{{category.id}}">
+									{{category}}
+								</option>
+						{% endfor %}
+		 			</select>
+				</div>
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[pageTitle]" class="field-label block w-full">Position Title</label>
+					<input required autocomplete="off" name="fields[pageTitle]" id="title" type="text" class="input-field block w-full"{%- if entry is defined %} value="{{ entry.pageTitle}}"{% endif -%}>
+				</div>
+			</div>
+
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[body]" class="field-label block w-full">Position Description</label>
+				<textarea required class="input-field block w-full" name="fields[body]" id="body" rows="4">{%- if entry is defined %}{{ entry.body }}{% endif -%}</textarea>
+			</div>
+
+			{# Field / Split  #}
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[jobsSalary]" class="field-label block w-full">Salary</label>
+					<input autocomplete="off" required name="fields[jobsSalary]" id="salary" type="text" class="input-field block w-full"{%- if entry is defined %} value="{{ entry.jobsSalary }}"{% endif -%}/>
+				</div>
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[jobsEducation]" class="field-label block w-full">Preferred Education</label>
+					<input autocomplete="off" name="fields[jobsEducation]" id="education" type="text" class="input-field block w-full"{%- if entry is defined %} value="{{ entry.jobsEducation }}"{% endif -%}>
+				</div>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[jobsQualifications]" class="field-label block w-full">Minimum Qualifications/Experience</label>
+				<textarea class="input-field block w-full" name="fields[jobsQualifications]" id="qualifications" rows="4">{%- if entry is defined %}{{ entry.jobsQualifications }}{% endif -%}</textarea>
+			</div>
+
+			{# Field / Split  #}
+			<div class="form-row mb-6 flex justify-center -mx-4 items-start">
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[jobsResponsibilities]" class="field-label block w-full">Scope of Responsibilities</label>
+					<textarea class="input-field block w-full" name="fields[jobsResponsibilities]" id="responsibilities" rows="4">{%- if entry is defined %}{{ entry.jobsResponsibilities }}{% endif -%}</textarea>
+				</div>
+
+				{# Field #}
+				<div class="w-1/2 px-4">
+					<label for="fields[jobsNotes]" class="field-label block w-full">Notes to Applicants & Working Conditions</label>
+					<textarea class="input-field block w-full" name="fields[jobsNotes]" id="notes" rows="4">{%- if entry is defined %}{{ entry.jobsNotes }}{% endif -%}</textarea>
+				</div>
+			</div>
+
+
+			<div class="form-row mb-6">
+				<label for="fields[jobsClosingDate]" class="field-label block w-full">Application Closing Date</label>
+					<input autocomplete="off" name="fields[jobsClosingDate]" id="closingDate" type="date" class="input-field block w-full"{%- if entry is defined %} value="{{ entry.jobsClosingDate }}"{% endif -%}>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[jobsApplicationInstructions]" class="field-label block w-full">Application Instructions</label>
+				<textarea class="input-field block w-full" name="fields[jobsApplicationInstructions]" id="instructions" rows="4" placeholder="">{%- if entry is defined %}{{ entry.jobsApplicationInstructions }}{% endif -%}</textarea>
+			</div>
+
+
+
+					{# Buttons #}
+					<div class="form-row mb-6 pt-6 flex items-center">
+						 <input class="submit btn" type="submit" value="Post Job">
+					</div>
+
+
+
+		</form>
+
+	</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+	$('form').submit(function(e){
+		$('#expiryDate').val($('#closingDate').val() + ' 23:59:59');
+	});
+	$("form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}

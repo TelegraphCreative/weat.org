@@ -1,0 +1,40 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{# {% include '_components/fed/nav--breadcrumbs'  %} #}
+<nav class="site-breadcrumbs border-t border-b border-grey-lightest py-4 lg:py-6">
+	<div class="simple-container text-xs">
+		<ul class="list-reset">
+
+			<li class="inline-block pr-4"><a href="/" class="no-underline pr-4 text-grey-dark hover:text-black">Home</a></li>
+			<li class="inline-block pr-4"><a href="/committees" class="no-underline pr-4 text-grey-dark hover:text-black">Committees</a></li>
+			<li class="inline-block pr-4"><a href="/committees/join" class="no-underline pr-4 text-grey-dark hover:text-black">Join</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+
+{# Container #}
+<div class="simple-container">
+
+	{# Form #}
+	<section class="form-container mt-10 sm:mt-16 --narrow m-auto md:w-3/5 mb-12 sm:mb-lg ">
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<p>
+					Thank you for your submission
+				</p>
+			</div>
+
+	</section>
+
+</div>
+
+
+
+{% endblock %}
