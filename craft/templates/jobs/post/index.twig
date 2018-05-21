@@ -25,12 +25,12 @@
 	{# Form #}
 	<section class="form-container  --narrow m-auto md:w-3/5 mb-12 sm:mb-lg ">
 
-		<header class="mb-10 pt-9">
+		<header class="pt-9">
 			<h1 class="text-lg text-blue mb-6">Post a Job</h1>
 		</header>
 
 
-		<form method="post" accept-charset="UTF-8" class="py-4 choices-as-boxes" autocomplete="false">
+		<form method="post" accept-charset="UTF-8" class="pt-1 pb-4 choices-as-boxes" autocomplete="false">
 			{{ getCsrfInput() }}
 			{% set path = craft.request.path %}
 			{% if not (path ends with '/') %}
