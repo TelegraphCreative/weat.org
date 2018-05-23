@@ -1,0 +1,109 @@
+{# Article Index #}
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% set theCommittee = craft.request.segment(2) %}
+{% block content %}
+{% spaceless %}
+<pre>
+
+	{% set committee = craft.entries.section('committees').slug(theCommittee).first() %}
+
+	{% set Structure = craft.entries.section('committeeArticles').relatedTo({
+		targetElement: committee
+	}) %}
+	{% paginate Structure.limit(8) as pageInfo, entries %}
+	{#% set entries = craft.entries.section('articles').relatedTo({
+		targetElement: groups
+	}) %#}
+
+
+</pre>
+{% endspaceless %}
+{# Page Header #}
+<header class="page-header bg-blue">
+	<div class="simple-container py-8 sm:py-10">
+		{# Landing Page Title: #}
+		<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{committee.title}}</h1>
+	</div>
+</header>
+
+{# Container #}
+<div class="simple-container">
+
+	{# Article Type Selector #}
+	<div class="max-w-1xs mb-6 mt-5 pt-10">
+
+	</div>
+
+	<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
+
+		{# Main #}
+		<section class="main-content   lg:w-2/3 md:px-4 ">
+
+			{# Inf Scroll Wrap #}
+			<div class="js-infScroll   border-t border-grey-lightest mb-14   lg:mb-18" data-module="infScroll">
+				{# Article Summary #}
+
+				{# Output them #}
+				{% for entry in entries %}
+						{# Article Summary #}
+						<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
+							<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
+
+							<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
+								<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
+							</a>
+
+							<div class="md:flex md:items-end">
+								<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4 sm:w-4/5">{{entry.body}}</div>
+
+								{# button #}
+								<div class="sm:w-1/5">
+									<a href="{{entry.url}}" class="btn --auto-w --text text-xs --special   whitespace-no-wrap">
+										<span class="text relative text-center">
+											<span class="hover-show opacity-0 tr-all">
+												Read More
+											</span>
+
+											{# Type #}
+											<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
+											   TECQ's Rule Log
+											</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</article>
+				{% endfor %}
+			</div>
+
+
+			{# Inf Scroll Pagination #}
+
+			{% if pageInfo.nextUrl %}
+				<div class="pagination hidden">
+					<a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+				</div>
+				<div class="w-full block">
+					<div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+				</div>
+			{% endif %}
+			{# / End #}
+
+		</section>
+
+
+		{# Aside #}
+		<aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-0 md:px-4 clearfix">
+			<div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
+				<div class="border-grey-lightest border-t leading-normal pt-6 text-xs text-grey-dark">{{committee.committeePurpose}}</div>
+			</div>
+		</aside>
+
+	</div>
+
+</div>
+
+
+{% endblock %}

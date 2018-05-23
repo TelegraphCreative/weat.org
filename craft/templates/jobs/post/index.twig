@@ -82,6 +82,11 @@
 				</div>
 			</div>
 
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[jobsShortDescription]" class="field-label block w-full">Short Description</label>
+				<textarea required class="input-field block w-full" name="fields[jobsShortDescription]" id="shortDescription" rows="2">{%- if entry is defined %}{{ entry.jobsShortDescription }}{% endif -%}</textarea>
+			</div>
 
 			{# Field #}
 			<div class="form-row mb-6">
@@ -137,6 +142,12 @@
 			<div class="form-row mb-6">
 				<label for="fields[jobsApplicationInstructions]" class="field-label block w-full">Application Instructions</label>
 				<textarea class="input-field block w-full" name="fields[jobsApplicationInstructions]" id="instructions" rows="4" placeholder="">{%- if entry is defined %}{{ entry.jobsApplicationInstructions }}{% endif -%}</textarea>
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="fields[jobsApplicationEmail]" class="field-label block w-full">Application email</label>
+					<input autocomplete="off" name="fields[jobsApplicationEmail]" id="applicationEmail" type="email" class="input-field block w-full"{%- if entry is defined %} value="{{ entry.jobsApplicationEmail }}"{% endif -%}>
 			</div>
 
 

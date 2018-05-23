@@ -1,0 +1,25 @@
+{% import "_includes/forms" as forms %}
+{#
+{{ forms.checkboxSelectField({
+	label: "User Statuses"|t,
+	instructions: "Select the user statuses to include in your report. All by default."|t,
+	name: "options[userGroups]",
+	options: userGroupOptions,
+	values: options.userGroups is defined ? options.userGroups : null,
+	first: true
+}) }}
+#}
+{{ forms.lightswitchField({
+	label: "Matching email",
+	instructions: "Display users that have emails that match a user in our database.",
+	name: 'options[displayUserGroupColumns]',
+	on: options.displayUserGroupColumns is defined ? options.displayUserGroupColumns : null
+}) }}
+
+{{ forms.dateField({
+	label: "Begin Date",
+	instructions: "Display user statuses as columns in your results",
+	name: 'options[beginDate]',
+	on: options.beginDate is defined ? options.beginDate : null,
+	value: now|date_modify("-30 days")
+}) }}

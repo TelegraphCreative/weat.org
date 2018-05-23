@@ -3,6 +3,7 @@ namespace Craft;
 
 class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 {
+	//private $_settings = craft()->globals->getSetByHandle('wef');
 	public function getName()
 	{
 		return Craft::t('Users from WEF');
@@ -20,6 +21,7 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 	 */
 	public function getResults(SproutReports_ReportModel &$report, $options = array())
 	{
+		$settings = craft()->globals->getSetByHandle('wef');
 		// First, use dynamic options, fallback to report options
 		if (!count($options))
 		{
@@ -39,11 +41,11 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		}
 
 
-
+		$beginDate = !empty($options['beginDate']['date']) ? $options['beginDate']['date'] : date_format(new \DateTime('now -30 days'), 'Y-m-d H:i:s');
 		$date = '
 		<StoredProcedureParameter>
 		  <Name>@ip_ChangedOnCutOffDate</Name>
-		  <Value>2018-04-01 00:00:00</Value>
+		  <Value>' . $beginDate  .'</Value>
 		  <Direction>1</Direction>
 		</StoredProcedureParameter>
 		';
@@ -56,12 +58,12 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 			<SPParameterList>
 				<StoredProcedureParameter>
 					<Name>@ip_MA_Code</Name>
-					<Value>TX</Value>
+					<Value>' . $settings->wefIpMaCode . '</Value>
 					<Direction>1</Direction>
 				</StoredProcedureParameter>
 				<StoredProcedureParameter>
 					<Name>@ip_Password</Name>
-					<Value>watertable18</Value>
+					<Value>' . $settings->wefIpPassword . '</Value>
 					<Direction>1</Direction>
 				</StoredProcedureParameter>
 		' . $date . '
@@ -69,14 +71,10 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		</StoredProcedureRequest>
 		';
 
-
-		//$url = 'https://weftst3.personifycloud.com/PersonifyDataServices/PersonifyDataWEF.svc/GetStoredProcedureDataXML'; // Test
-		$url = 'https://wefprod2.personifycloud.com/PersonifyDataServices/PersonifyDataWEF.svc/GetStoredProcedureDataXML'; // Production
-
-		$xmlresult = $this->sendXmlOverPost($url, $xml);
+		$xmlresult = $this->sendXmlOverPost($xml);
 		$xmlelement = new \SimpleXMLElement($xmlresult);
-		$username = 'MADATA';
-		$password = 'w3Fb@ks0^ce';
+		$username = $settings->wefUsername;
+		$password = $settings->wefPassword;
 
 		$xmlelement2 = new \SimpleXMLElement($xmlelement->Data[0]);
 		$userArray = array();
@@ -94,7 +92,7 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 			if((string)$obj->RECORD_TYPE == 'C') {
 				continue;
 			}
-			if(!in_array((string)$obj->Email_Address, $emails)) {
+			if(in_array((string)$obj->Email_Address, $emails) != $options['displayUserGroupColumns']) {
 				continue;
 			}
 			$lastName = '';
@@ -128,12 +126,14 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 				'email' => (string)$obj->Email_Address,
 				'status' => (string)$obj->Status,
 				'recordType' => (string)$obj->RECORD_TYPE,
-				'WEF_Join_Date' => (string)$obj->WEF_Join_Date,
-				'Membership_Paid_Through_Date' => (string)$obj->Membership_Paid_Through_Date,
-				'Delinquent_Date' => (string)$obj->Delinquent_Date,
-				'GRACE_DATE' => (string)$obj->GRACE_DATE,
+				'WEF_Join_Date' => $this->formatDate($obj->WEF_Join_Date),
+				'Membership_Paid_Through_Date' => $this->formatDate($obj->Membership_Paid_Through_Date),
+				'Delinquent_Date' => $this->formatDate($obj->Delinquent_Date),
+				'GRACE_DATE' => $this->formatDate($obj->GRACE_DATE),
 				'ReinstateDate' => (string)$obj->ReinstateDate,
 				'WEF_Membership_Product' => (string)$obj->WEF_Membership_Product,
+				'CHANGED_ON_DATE' => $this->formatDate($obj->CHANGED_ON_DATE),
+
 				//'' => (string)$obj->,
 		/*
 		    UPP
@@ -171,6 +171,11 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		return $userArray;
 	}
 
+	private function formatDate($date) {
+		$dt = new DateTime($date, new \DateTimeZone("America/Chicago"));
+		return $dt->format("Y-m-d");
+	}
+
 	/**
 	 * @param array $options
 	 *
@@ -191,7 +196,7 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		$optionErrors = $this->report->getErrors('options');
 		$optionErrors = array_shift($optionErrors);
 
-		return craft()->templates->render('weat/datasources/_options/users', array(
+		return craft()->templates->render('weat/datasources/_options/wef', array(
 			'userGroupOptions' => $userStatusOptions,//$userStatuses->settings->options, //$userGroupOptions,
 			'options'          => count($options) ? $options : $this->report->getOptions(),
 			'errors'           => $optionErrors
@@ -206,20 +211,29 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 	 */
 	public function validateOptions(array $options = array(), array &$errors = array())
 	{
-		if (empty($options['userGroups']))
+		/*if (empty($options['userGroups']))
 		{
 			$errors['userGroups'][] = Craft::t('Select at least one User Group.');
 
 			return false;
-		}
+		}*/
 
 		return true;
 	}
 
 
-	private function sendXmlOverPost($url, $xml) {
-		$username = 'MADATA';
-		$password = 'w3Fb@ks0^ce';
+	private function sendXmlOverPost($xml) {
+
+		$settings = craft()->globals->getSetByHandle('wef');
+		$username = $settings->wefUsername;
+		$password = $settings->wefPassword;
+		if($settings->wefLive) {
+			$url = $settings->wefDataServiceLiveUrl;
+		} else {
+			$url = $settings->wefDataServiceTestUrl;
+		}
+		//$url = 'https://weftst3.personifycloud.com/PersonifyDataServices/PersonifyDataWEF.svc/GetStoredProcedureDataXML'; // Test
+		//$url = 'https://wefprod2.personifycloud.com/PersonifyDataServices/PersonifyDataWEF.svc/GetStoredProcedureDataXML'; // Production
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 

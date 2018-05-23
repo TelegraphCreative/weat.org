@@ -2,7 +2,6 @@
 {% extends "_layouts/standard" %}
 
 {% set Builder = entry.articleContentBuilder %}
-{% set defaultPlaceholder = '-' %}
 
 {% block content %}
 {# Breadcrumbs #}
@@ -11,6 +10,7 @@
 {# Container #}
 <div class="simple-container">
 
+	{% if currentUser.isInGroup('boardMember') %}
 	<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
 
 		{# Main #}
@@ -22,43 +22,13 @@
 					<h4 class="text-2md sm:text-xl">{{entry.pageTitle}}</h4>
 				</a>
 			</header>
-
-			<div class="article-detail__article article mb-16">
-				<p>{{entry.jobsShortDescription|nl2br}}</p>
-				<h4>The Details</h4>
-				<h6>Position Type (Heading 5)</h6>
-				<p>{% for group in entry.jobType %}
-					{{group.title}}{% if not loop.last %}<br />{% endif %}
-				{% endfor %}</p>
-
-				<h6>Position Title</h6>
-				{{entry.pageTitle}}
-
-				<h6>Position Description</h6>
-				<p>{{entry.body|default(defaultPlaceholder)|nl2br}}</p>
-				<h6>Position Salary</h6>
-				<p>{{entry.jobsSalary|default(defaultPlaceholder)|nl2br}}</p>
-
-				<h4>Qualifications</h4>
-				<h6>Preferred Education</h6>
-				<p>{{entry.jobsEducation|default(defaultPlaceholder)|nl2br}}</p>
-
-				<h6>Scope of Responsibilities</h6>
-				<p>{{entry.jobsResponsibilities|default(defaultPlaceholder)|nl2br}}</p>
-
-				<h6>Application Closing Date</h6>
-				<p>{{entry.jobsClosingDate|date("F j, Y")|default(defaultPlaceholder)}}</p>
-
-				<h6>Application Instructions</h6>
-				<p>{{entry.jobsApplicationInstructions|default(defaultPlaceholder)|nl2br}}</p>
-			</div>
 			{# Content Builder #}
 			{% for block in Builder %}
 				{% switch block.type %}
 
 					{# Standard Slider #}
 					{% case "standardSlider" %}
-						{% include '_components/slider--standard' with {classes: 'm-auto w-full     sm:pt-10 pt-9 mb-16'} %}
+						{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 pt-9 mb-14'} %}
 
 
 					{# Article #}
@@ -68,10 +38,8 @@
 					{# Callout #}
 					{% case "callout" %}
 						<h2 class="leading-normal mb-4 mt-16 text-blue text-lg">{{block.header}}</h2>
-						<div class="article">
 						<div class="leading-normal mb-6 text-grey-dark text-md">
 							{{block.body}}
-						</div>
 						</div>
 
 						{{link.simple(block.button, 'btn   mb-16')}}
@@ -131,20 +99,28 @@
 					{% endif %}
 
 					{# Article Categories #}
-					<ul class="aside__category-tags   leading-normal list-reset mb-6 inline-block">
-						{% for group in entry.jobType %}
+					{#}<ul class="aside__category-tags   leading-normal list-reset mb-6 inline-block">
+						{% for group in entry.articleGroup %}
 							<li class="inline">
 								<a class="no-underline text-blue-light hover:text-blue" href="/{{group.slug}}">{{group.title}}</a>
 							</li>
 						{% endfor %}
-					</ul>
+					</ul>#}
 				</div>
+
+
 
 			</div>
 
 		</aside>
 
 	</div>
+
+		{% else %}
+
+		You must be a board member to see this
+
+		{% endif %}
 
 </div>
 
