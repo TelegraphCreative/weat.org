@@ -284,6 +284,7 @@ class WeatPlugin extends BasePlugin
 	{
 		return array(
 			new WeatReportsUserStatusDataSource(),
+			new WeatReportsUserExpireDataSource(),
 			new WeatReportsWefDataSource(),
 		);
 	}
