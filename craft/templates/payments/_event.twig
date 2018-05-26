@@ -13,8 +13,11 @@
 
 {% set showJoinPricing = true %}
 {% set individualPrice = 0 %}
+
+{% set isMember = false %}
 {% if currentUser and currentUser.isInGroup('subscriber') %}
   {% set showJoinPricing = false %}
+  {% set isMember = true %}
 {% endif %}
 
 {% if event is empty %}
@@ -35,9 +38,14 @@
     <form method="post" action="{{ url('payments/checkout')}}" class="py-4">
 
         {{ getCsrfInput() }}
-
         <input type="hidden" name="eventId" value="{{event.id}}" />
-      {# Field / split #}
+
+        {% if not currentUser %}
+        <div class="form-row mb-6 pt-6 flex items-center ">
+          <p>Already have an account? <a href="{{ url('members/login', 'returnUrl=' ~ craft.request.path) }}">Login here</a>
+        </div>
+        {% endif %}
+    {# Field / split #}
       <div class="form-row mb-4 sm:mb-0 px-4 lg:px-0 md:flex justify-center -mx-4">
 
         <div class="w-full md:w-3/5 ">
@@ -50,7 +58,7 @@
                 {% if loop.first %}
                   {% set individualPrice = price.price %}
                 {% endif %}
-                {% if not price.subscription or showJoinPricing %}
+                {% if (isMember and not price.subscription) or (not isMember and price.availableToNonMembers) %}
                 <option value="{{price.id}}" customProperties="{price:{{price.price}}}">{{ price.label }} - ${{ price.price }}</option>
                 {% endif %}
               {% endfor %}
