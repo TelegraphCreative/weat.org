@@ -31,7 +31,7 @@
 		{% if committeeSlug is not empty and committee is not empty %}
 		<h2 class="border-b border-grey-lightest mb-10 pb-4 leading-tight text-2md text-grey-dark">{{committee.title}}</h2>
 		{% endif %}
-		
+
 		<header class="pt-9">
 			<h1 class="text-lg text-blue mb-6">WATER ENVIRONMENT ASSOCIATION OF TEXAS (WEAT) COMMITTEE APPLICATION</h1>
 		</header>
@@ -40,7 +40,7 @@
 			{{ getCsrfInput() }}
 			{{ craft.amForms.displayAntispam() }}
 			<input type="hidden" name="action" value="amForms/submissions/saveSubmission">
-			<input type="hidden" name="redirect" value="committees/join/thanks">
+			<input type="hidden" name="redirect" value="committees/join-thanks">
 			<input type="hidden" name="handle" value="joinACommittee">
 
 			{% macro errorList(errors) %}
@@ -118,11 +118,9 @@
 
 			{# Info #}
 			<div class="text-grey-darker leading-normal border-t border-grey-lightest border-b py-4 my-4">
-				<p>I am available to participate through telephone, e-mail or mail, in ongoing activities, and I am interested in being considered for appointment to one of the following WEAT committees (list no more than THREE, in order of priority).</p>
+				<p>I am available to participate through telephone, e-mail or mail, in ongoing activities, and I am interested in being considered for appointment to the selected WEAT committee.</p>
 				<br>
-				<p>I am available to participate through telephone, e-mail or mail, in ongoing activities, and I am interested in being considered for appointment to one of the following WEAT committees (list no more than THREE, in order of priority).</p>
-				<br>
-				<p>If all committees listed are filled, your application will be placed in a waiting status for your first choice and you will be notified by WEAT.</p>
+				<p>If the committee listed is filled, your application will be placed in a waiting status for your choice and you will be notified by WEAT.</p>
 				<h3 class="mb-6 mt-6 text-blue text-md">WEF ASSOCIATION INVOLVEMENT</h3>
 				<p>WEAT committees may parallel the Water Environment Federation Committees. You are encouraged to become an active participant in WEF committee activities.</p>
 			</div>

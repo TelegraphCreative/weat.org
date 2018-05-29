@@ -12,7 +12,7 @@
 {% block content %}
 
 {% set showJoinPricing = true %}
-{% set individualPrice = 0 %}
+{% set individualPrice = null %}
 
 {% set isMember = false %}
 {% if currentUser and currentUser.isInGroup('subscriber') %}
@@ -55,10 +55,10 @@
               {#{{ event.title }}
               {{ event.membersOnly }}#}
               {% for price in event.pricing %}
-                {% if loop.first %}
-                  {% set individualPrice = price.price %}
-                {% endif %}
                 {% if (isMember and not price.subscription) or (not isMember and price.availableToNonMembers) %}
+                  {% if not individualPrice %}
+                    {% set individualPrice = price.price %}
+                  {% endif %}
                 <option value="{{price.id}}" customProperties="{price:{{price.price}}}">{{ price.label }} - ${{ price.price }}</option>
                 {% endif %}
               {% endfor %}
@@ -128,18 +128,19 @@ $('#item').on('change', function() {
     console.log($quantity.val());
 });
 
-$quantity.on('change', function() {
+$('.spinner-group').on('click', function() {
   console.log('changing');
   updatePricingValues();
 });
 
 function updatePricingValues() {
-  var ticketLabel = $(this).children(":selected").text();
+  var ticketLabel = $('#item').children(":selected").text();
   var ticketArray = ticketLabel.split(' - $');
   var ticketPrice = ticketArray[1];
   $singleAmount.text('$' + parseFloat(ticketPrice).toFixed(2));
   $totalAmount.text('$' + parseFloat($quantity.val() * ticketPrice).toFixed(2));
 }
+
 {% endset %}
 
 {% includeJs myJs %}
