@@ -1,11 +1,23 @@
-Thank you!
-Your order has been received.
+{% extends "_emails/templateblock" %}
 
-{{ charge.meta['eventName'] }} ({{ charge.meta['ticketName'] }})
+{% block content %}
+<h3>Thank you!</h3>
+<p>Your order has been received.</p>
 
-Qty: {{ charge.meta['quantity'] }}
-Amount: {{ charge.meta['individualPrice'] }}
+{% if charge.meta['eventId'] is defined %}
+  {% set event = craft.venti.events.status(null).id(charge.meta['eventId']).first %}
+  {% if event is defined %}
+    {{ event.eventEmailContent }}
+  {% endif %}
+{% endif %}
 
-Total: {{ charge.amountFormatted }}
+<p>Event: {{ charge.meta['eventName'] }}<br />
+  Ticket: {{ charge.meta['ticketName'] }}</p>
 
-Charge ID : {{ charge.id }}
+<p>Qty: {{ charge.meta['quantity'] }}<br />
+Amount: {{ charge.meta['individualPrice'] }}<br />
+
+Total: {{ charge.amountFormatted }}<br />
+
+Charge ID : {{ charge.id }}</p>
+{% endblock %}
