@@ -15,7 +15,8 @@
 
 <div class="m-auto max-w-lg mt-16 px-4   sm:px-6   md:mt-20   lg:px-3">
 	<h2 class="font-light leading-tight mb-4 text-blue text-center text-2md   sm:text-lg   md:text-xl">{{entry.header}}</h2>
-	<p class="leading-normal mb-12 text-center text-grey-dark   md:mb-18 md:text-md">{{entry.tagline}}</p>
+	<p class="leading-normal mb-4 text-center text-grey-dark   md:mb-4 md:text-md">{{entry.tagline}}</p>
+	<p class="leading-normal mb-12 text-center text-grey-dark   md:mb-18 md:text-md"><a href="{{url('committees/join/' ~ entry.slug)}}"class="btn   mb-4 mt-8">Join Committee</a></p>
 
 	<div class="flex flex-wrap justify-between -mx-2 pb-4   sm:-mx-3">
 		{% for group in groups %}
@@ -86,7 +87,7 @@
 		        </div>
 
 
-						<a href="{{url('committees/join/' ~ entry.slug)}}"class="btn   mb-4 mt-8">Join Committee</a>
+						<a href="{{url('committees/' ~ entry.slug)}}"class="btn   mb-4 mt-8">Committee Page</a>
 		    </div>
 		</div>
 		{% endfor %}
