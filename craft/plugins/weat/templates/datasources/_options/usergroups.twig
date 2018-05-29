@@ -1,0 +1,43 @@
+{% import "_includes/forms" as forms %}
+
+{% if handle ends with '30' %}
+{% set beginOffset = 30 %}
+{% set endOffset = 0 %}
+{% else %}
+{% set beginOffset = 90 %}
+{% set endOffset = 60 %}
+{% endif %}
+
+{{ forms.checkboxSelectField({
+	label: "User Statuses"|t,
+	instructions: "Select the user statuses to include in your report. All by default."|t,
+	name: "options[userGroups]",
+	options: userGroupOptions,
+	values: options.userGroups is defined ? options.userGroups : null,
+	showAllOption: false,
+	first: true
+}) }}
+
+
+{{ forms.checkboxSelectField({
+	label: "User Types"|t,
+	instructions: "Select the user membership types to include in your report. All by default."|t,
+	name: "options[userMembershipTypes]",
+	options: userMembershipTypeOptions,
+	values: options.userMembershipTypes is defined ? options.userMembershipTypes : null,
+	showAllOption: false
+}) }}
+
+{{ forms.dateField({
+	label: "Begin Date",
+	name: 'options[beginDate]',
+	id: 'beginDate',
+	value: options.beginDate is defined and craft.request.urlReferrer == craft.request.url ? now|date_modify(options.beginDate.date) : now|date_modify("-" ~ beginOffset ~ " days")
+}) }}
+
+{{ forms.dateField({
+	label: "End Date",
+	name: 'options[endDate]',
+	id: 'endDate',
+	value: options.endDate is defined and craft.request.urlReferrer == craft.request.url ? now|date_modify(options.endDate.date)  : now|date_modify("-" ~ endOffset ~ " days")
+}) }}

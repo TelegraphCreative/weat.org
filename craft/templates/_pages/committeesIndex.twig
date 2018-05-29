@@ -85,9 +85,8 @@
 		            </div>
 		        </div>
 
-		        {# Hide Until Live
-						<a class="btn   mb-4 mt-8">Join Committee</a>
-						#}
+
+						<a href="{{url('committees/join/' ~ entry.slug)}}"class="btn   mb-4 mt-8">Join Committee</a>
 		    </div>
 		</div>
 		{% endfor %}

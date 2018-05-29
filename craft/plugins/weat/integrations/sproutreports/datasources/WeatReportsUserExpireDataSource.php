@@ -32,7 +32,10 @@ class WeatReportsUserExpireDataSource extends SproutReportsBaseDataSource
 		}
 
 		$userGroupIds            = $options['userGroups'];
-		$displayUserGroupColumns = $options['displayUserGroupColumns'];
+		//$displayUserGroupColumns = $options['displayUserGroupColumns'];
+		$beginDate               = date('Y-m-d', strtotime($options['beginDate']['date']));
+		$endDate                 = date('Y-m-d', strtotime($options['endDate']['date']));
+		$userMembershipTypeIds   = implode("','", $options['userMembershipTypes']);
 
 		$includeAdmins = false;
 
@@ -69,11 +72,11 @@ class WeatReportsUserExpireDataSource extends SproutReportsBaseDataSource
 //AND craft_content.field_userStatus NOT IN('delinquent')
 //AND craft_content.field_userSubscriptionEndDate >= (CURDATE() - INTERVAL 30 DAY)
 //AND craft_content.field_userSubscriptionEndDate <= CURDATE();
-
+/*
 		if ($displayUserGroupColumns)
 		{
 			$selectQueryString = $selectQueryString . ',{{content.field_userStatus}} AS Status';
-		}
+		}*/
 
 		/*$userQuery = craft()->db->createCommand()
 			->select($selectQueryString)
@@ -87,14 +90,16 @@ class WeatReportsUserExpireDataSource extends SproutReportsBaseDataSource
 			craft_users.firstName AS 'First Name', `craft_users`.lastName AS 'Last Name',
 			CONCAT('<a href=\"mailto:', craft_users.email, '\">',  craft_users.email, '</a>') AS 'Email',
 			DATE_FORMAT(craft_content.field_userSubscriptionEndDate, \"%M %d, %Y\") AS 'End date',
+			craft_content.field_userMembershipType AS 'Membership Type',
 			craft_content.field_userStatus AS 'Status',
 			CURDATE()
 FROM craft_users
 JOIN craft_content ON craft_users.id = craft_content.elementId
 WHERE craft_content.field_userStatus NOT IN('delinquent')
-AND craft_content.field_userSubscriptionEndDate >= (CURDATE() + INTERVAL 12 DAY - INTERVAL 30 DAY)
-AND craft_content.field_userSubscriptionEndDate <= (CURDATE() + INTERVAL 12 DAY)
-");
+AND craft_content.field_userMembershipType IN('" . $userMembershipTypeIds . "')
+AND craft_content.field_userSubscriptionEndDate >= '" . $beginDate . "'
+AND craft_content.field_userSubscriptionEndDate <= '" . $endDate . "'"
+);
 
 /*
 			$entries = craft()->db->createCommand()
@@ -149,17 +154,33 @@ AND craft_content.field_userSubscriptionEndDate <= (CURDATE() + INTERVAL 12 DAY)
 			);
 		}
 
+
+		$userMembershipTypes = craft()->fields->getFieldByHandle('userMembershipType');
+
+		foreach ($userMembershipTypes->settings['options'] as $userMembershipType)
+		{
+			//print_r($userMembershipType);
+			$userMembershipTypeOptions[] = array(
+				'label' => $userMembershipType['label'],
+				'value' => $userMembershipType['value']
+			);
+		}
+
 		$optionErrors = $this->report->getErrors('options');
 		$optionErrors = array_shift($optionErrors);
 
-		return craft()->templates->render('weat/datasources/_options/users', array(
+		return craft()->templates->render('weat/datasources/_options/usergroups', array(
 			'userGroupOptions' => $userStatusOptions,//$userStatuses->settings->options, //$userGroupOptions,
+			'userMembershipTypeOptions' => $userMembershipTypeOptions,
 			'options'          => count($options) ? $options : $this->report->getOptions(),
-			'errors'           => $optionErrors
+			'errors'           => $optionErrors,
+			'handle'           => $this->report->handle
 		));
 	}
 
-	/**
+
+
+		/**
 	 * Validate our data source options
 	 *
 	 * @param array $options
