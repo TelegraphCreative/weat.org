@@ -1,0 +1,42 @@
+{# Article Entry #}
+{% extends "_layouts/standard" %}
+
+
+{% block content %}
+{# Breadcrumbs #}
+{% include '_components/nav--breadcrumbs' %}
+
+{# Container #}
+<div class="simple-container">
+
+		{# Main #}
+		<section class="main-content --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg">
+
+			{# Header #}
+			<header class="article-detail__header   mb-16 mt-12">
+				<a class="no-underline hover:text-green" href="#">
+					<h4 class="text-2md sm:text-xl">{{entry.pageTitle}}</h4>
+				</a>
+			</header>
+
+			<div class="article article-detail__article article mb-16">
+
+				{{entry.body}}
+
+			</div>
+
+			<div>
+				<h3>Award Recipients</h3>
+				{% for recipients in entry.awardRecipients %}
+
+						{{recipients.awardRecipient.first().fullName}}
+						{{recipients.awardDate|date('Y')}}
+				{% endfor %}
+			</div>
+		</section>
+
+	</div>
+
+</div>
+
+{% endblock %}
