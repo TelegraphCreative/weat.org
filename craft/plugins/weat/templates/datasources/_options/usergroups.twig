@@ -1,11 +1,17 @@
 {% import "_includes/forms" as forms %}
 
 {% if handle ends with '30' %}
-{% set beginOffset = 30 %}
-{% set endOffset = 0 %}
+	{% set beginOffset = 30 %}
+	{% set endOffset = 0 %}
+{% elseif handle ends with '60' %}
+	{% set beginOffset = 60 %}
+	{% set endOffset = 30 %}
+{% elseif handle ends with '90' %}
+	{% set beginOffset = 90 %}
+	{% set endOffset = 60 %}
 {% else %}
-{% set beginOffset = 90 %}
-{% set endOffset = 60 %}
+	{% set beginOffset = 30 %}
+	{% set endOffset =60 %}
 {% endif %}
 
 {{ forms.checkboxSelectField({

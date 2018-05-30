@@ -91,8 +91,7 @@ class WeatReportsUserExpireDataSource extends SproutReportsBaseDataSource
 			CONCAT('<a href=\"mailto:', craft_users.email, '\">',  craft_users.email, '</a>') AS 'Email',
 			DATE_FORMAT(craft_content.field_userSubscriptionEndDate, \"%M %d, %Y\") AS 'End date',
 			craft_content.field_userMembershipType AS 'Membership Type',
-			craft_content.field_userStatus AS 'Status',
-			CURDATE()
+			craft_content.field_userStatus AS 'Status'
 FROM craft_users
 JOIN craft_content ON craft_users.id = craft_content.elementId
 WHERE craft_content.field_userStatus NOT IN('delinquent')
