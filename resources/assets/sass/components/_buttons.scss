@@ -14,6 +14,12 @@
 		@apply .bg-green;
 	}
 
+	// Small
+	&.btn--sm {
+		@apply .px-5 .text-1xs .w-auto;
+		max-width: inherit;
+	}
+
 	//
 	// Text
 	//

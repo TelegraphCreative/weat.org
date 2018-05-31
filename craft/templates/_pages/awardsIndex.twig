@@ -1,0 +1,78 @@
+{# Commitees Index #}
+
+{% block content %}
+
+{% set groups = craft.categories.group('committeeGroup') %}
+
+{# Page Header #}
+<header class="page-header bg-blue">
+	<div class="simple-container py-8 sm:py-10">
+		{# Landing Page Title: #}
+		<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{entry.pageTitle}}</h1>
+	</div>
+</header>
+
+
+<div class="m-auto max-w-lg mt-16 px-4   sm:px-6   md:mt-20   lg:px-3">
+	<h2 class="font-light leading-tight mb-4 text-blue text-center text-2md   sm:text-lg   md:text-xl">{{entry.header}}</h2>
+	<p class="leading-normal mb-4 text-center text-grey-dark   md:mb-4 md:text-md">{{entry.tagline}}</p>
+
+	<div class="leading-normal mb-4 text-center">{{entry.body}}</div>
+	{% if entry.button is defined %}<p class="leading-normal mb-12 text-center text-grey-dark   md:mb-18 md:text-md">{{link.simple(entry.button, 'btn   mb-16')}}</p>{% endif %}
+
+
+</div>
+
+
+{# List: Accordion Link/Doc/Info #}
+{# Template note: only include data-module="accordion" 1x per page #}
+<div class="list-accordion   m-auto max-w-lg px-6   sm:mb-10  lg:px-3" style="margin-bottom: 320px" data-module="accordion">
+
+
+		{% for entry in craft.entries.section('awards').order('title asc') %}
+
+		<div class="js-accordion-item   tr-all-3  list-accordion__item    border-grey-lightest border-t pt-8 pb-8">
+
+				{# Header #}
+				<header class="js-accordion-toggle  text-grey-dark hover:text-blue-light cursor-pointer flex justify-between  item__header items-center">
+						<h4 class="text-blue text-1md sm:text-2md tr-all capitalize">{{entry.title|capitalize}}</h4>
+
+						<div class="relative">
+								{{svg.icon('icon --add --md ml-1 tr-all-3', 'add')}}
+								{{svg.icon('icon --subtract --md ml-1 absolute pin-t tr-all-3', 'subtract')}}
+						</div>
+				</header>
+
+				{# Content #}
+				<div class="item__content  tr-all-3">
+						<div class="sm:flex sm:flex-sm:justify pt-8">
+								<div class="content__col sm:w-1/2 sm:pr-6 sm:border-r border-grey-lightest      md:w-1/2">
+										<h6 class="uppercase tracking-wide text-blue-light mb-3">Description</h6>
+										<div class="text-xs mb-6 text-grey-dark leading-normal">
+												<p>{{entry.body}}
+												</p>
+										</div>
+								</div>
+								<div class="content__col sm:w-1/2 sm:pl-8      md:w-1/2">
+										<h6 class="uppercase tracking-wide text-blue-light mb-3">Award Recipients</h6>
+
+										{% for block in entry.awardRecipients %}
+										{#<h6 class="uppercase tracking-wide text-blue-light mb-3">Award Winners</h6>#}
+										{# Template Note: no mb-6 here #}
+										<div class="mb-6 text-xs text-grey-dark leading-normal   sm:mb-0">
+												<p>{{block.awardRecipient.first().fullName}} - {{block.awardDate|date('Y')}}</p>
+										</div>
+										{% endfor %}
+								</div>
+						</div>
+
+
+						{#<a href="{{url('awards/' ~ entry.slug)}}"class="btn   mb-4 mt-8">Award Page</a>#}
+				</div>
+		</div>
+		{% endfor %}
+
+</div>
+
+
+{% endblock %}

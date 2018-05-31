@@ -1,0 +1,48 @@
+
+<h2 class="md:text-xl md:pt-6 md:mb-14 mt-12 mb-10 text-center sm:text-lg text-2md text-blue">Recent Articles</h2>
+
+{# Recent Learn Articles #}
+{% set learn = craft.entries.section('learn').limit(3) %}
+{% if learn|length>1 %}
+
+	<div class="sm:flex sm:flex-wrap sm:justify-center sm:-mx-2 sm:flex-wrap">
+
+			{% for entry in learn %}
+			<div class="card w-full sm:w-1/2 lg:w-1/3 px-4 mb-10 sm:mb-16 lg:mb-4 flex flex-col justify-between">
+				<div class="content">
+					<figure class="img is16by9 bg-grey-lightest mb-4">
+						{{image.single_simple(entry.singleImage[0],'absolute pin-t pin-l')}}
+					</figure>
+					<h2 class="text-2md mb-4 text-blue">
+					<a class="text-blue hover:text-green no-underline" href="{{entry.url}}">{{entry.title}}</a>
+					</h2>								
+					<div class="text-base text-grey-dark leading-normal mb-8">
+						{{entry.body}}
+					</div>
+
+				</div>
+				
+				<div class="text-left">
+					<a href="{{entry.url}}" class="btn  --auto-w">
+						More
+					</a>
+				</div>
+
+			</div>
+			{% endfor %}
+
+	</div>
+{% endif %}
+
+
+{# Become a Member #}
+{% set homeContent =  craft.entries.section('homepage') %}
+{% include '_components/hero--cta' with {
+	Spacing: false,
+	Header: homeContent[0].header,
+	Text: homeContent[0].textBarebones,
+	Button: homeContent[0].button2,
+	Class: 'border-6 border-white',
+	WrapClass: 'md:pt-10 '
+	}
+	%}

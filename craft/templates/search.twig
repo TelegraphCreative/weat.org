@@ -1,0 +1,145 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+{# Content #}
+{% set query = craft.request.getParam('q') %}
+{# {% set results = craft.entries.section('articles,committeeArticles,committees,jobs,learn,pages').search(query).order('score') %} #}
+{% set results = craft.entries({
+	section: 'articles,committeeArticles,committees,jobs,learn,pages,awards',
+	search: {
+	  query: query,
+	  subLeft: true,
+	  subRight: true
+	},
+	order: 'score',
+}) %}
+
+
+{# Page Header #}
+<header class="page-header bg-blue">
+	<div class="simple-container py-8 sm:py-10">
+
+			{# Landing Page Title: #}
+			<div class="text-center">
+				<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">Search</h1>
+			</div>
+
+			{# Search Up Form #}
+			<form action="/search" id="search-form" class="flex mx-auto my-6 w-full md:w-1/2" >
+				<input type="search" name="q" class="leading-none required flex-1 rounded-full bg-white text-black mr-1 text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" placeholder="">
+				<button type="submit" class="btn bg-blue-light w-1/3 text-xs py-3 px-4 sm:text-sm sm:py-4 ">
+						Search
+						{# flex justify-center items-center #}
+						{# {{svg.icon('icon --md ml-2', 'search')}} #}
+				</button>
+
+			</form>
+
+	</div>
+</header>
+
+{# Search Events #}
+<section class="bg-blue-lighter py-6 px-4 sm:py-8 sm:px-6">
+	<div class="simple-container md:flex justify-between">
+		<header>
+			<h2 class="text-md font-bold text-blue mb-2">Looking for an Event?</h2>
+			<div class="text-1xs font-medium text-blue">
+				<p>Browse upcoming and past events</p>
+			</div>
+		</header>
+		
+		<nav class="actions mt-4 md:mt-0 ">
+			<a href="events" class="btn btn--sm sm:mr-2">Upcoming Events</a>
+			<a href="events" class="btn btn--sm">Past Events</a>
+		</nav>
+	</div>
+</section>
+
+
+{# Container #}
+<div class="simple-container">	
+	<div class="mb-lg md:-mx-4">
+		
+		{# Has Query #}
+		{% if query %}
+			{% if results|length %}
+				
+				{# Has Results #}
+				<section class="m-auto md:w-2/3 w-full pt-12 md:px-0 px-6">
+
+					<header class="section-header text-1md sm:text-2md text-grey-dark py-4 border-b border-grey-lightest ">
+						<h4>Here's what we found about <b><u>{{query}}</u></b></h4>
+					</header>
+
+
+					{% set entriesBySection = results|group('section') %}
+
+					{% for section, entriesInSection in entriesBySection %}
+
+					    <header class="section-header text-xs text-blue-light pb-4 mt-6">
+								<h4 class="uppercase font-bold tracking-wide">
+									{{ section }}			
+								</h4>
+							</header>
+
+							{% if section == 'Pages' %}
+								{% for entry in entriesInSection %}
+			            {% include '_components/list-search-results' with {content: entry.body} %}					
+				        {% endfor %}
+
+							
+							{% elseif section == 'Committees' %}
+								{% for entry in entriesInSection %}
+			            {% include '_components/list-search-results' with {content: entry.committeePurpose} %}					
+				        {% endfor %}
+							
+							{% elseif section == 'Jobs' %}
+								{% for entry in entriesInSection %}
+			            {% include '_components/list-search-results' with {content: entry.body} %}					
+				        {% endfor %}
+							
+							{% elseif section == 'Articles' %}
+								{% for entry in entriesInSection %}
+			            {% include '_components/list-search-results' with {content: entry.body} %}					
+				        {% endfor %}
+
+				      {% elseif section == 'Awards' %}
+								{% for entry in entriesInSection %}
+			            {% include '_components/list-search-results' with {content: entry.body} %}					
+				        {% endfor %}
+
+							{% endif %}
+			        
+
+					{% endfor %}
+	        
+        </section>
+
+			{% else %}
+				{# No Results #}
+
+				<section class="m-auto md:w-2/3 w-full pt-12 md:px-0 px-6">
+
+					<header class="section-header text-1md sm:text-2md text-grey-dark py-4 border-b border-grey-lightest ">
+						<h4>We didn't find anything related to <b><u>{{query}}</u></b></h4>
+					</header>
+	        
+        </section>
+
+        {% include '_components/search-blank-slate' %}
+
+		 	{% endif %}
+			
+		{% else %}
+		{# Blank #}
+
+			{% include '_components/search-blank-slate' %}
+
+		{% endif %}
+		
+
+
+	</div>
+</div>
+{% endblock %}

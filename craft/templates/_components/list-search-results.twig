@@ -1,0 +1,21 @@
+{# List - Featured Article #}
+<article class="featured-article border-b border-grey-lightest  py-6 mb-6">
+
+	<a class="no-underline hover:text-grey-dark" href="{{entry.url}}">
+		<h4 class="text-md sm:text-2md mb-6 capitalize">{{entry.pageTitle|capitalize}}</h4>
+	</a>
+
+	{% if content %}
+	<div class="featured-article__content mb-4">
+		<div class="text-xs text-grey-dark md:w-4/5 w-full leading-normal">
+			{{content|hacksaw(limit='1')}}
+		</div>
+	</div>
+	{% endif %}
+	
+
+	{# <a href="/{{entry.url}}" class="block text-right text-blue-light hover:text-grey-dark no-underline text-sm">
+		View
+	</a> #}
+	
+</article>

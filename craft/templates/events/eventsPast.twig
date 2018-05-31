@@ -20,7 +20,7 @@
   {#  Get Events for month between prevMonth & nextMonth #}
   {% set allEvents = craft.venti.events() %}
   {% set allGroups = craft.venti.groups() %}
-  {% set allPastEvents = allEvents.between(foreverAgo,yesterday) %}
+  {% set allPastEvents = allEvents.between(foreverAgo,yesterday).order('startDate desc') %}
 
 
   {# Current Filter #}
@@ -142,7 +142,7 @@
         <div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
           <div class="sm:border-b border-grey-lightest  sm:py-6">
 
-            <a href="/events" class="btn">Browse All Events</a>
+            <a href="/events" class="btn --auto-w">Browse Current Events</a>
 
 
           </div>

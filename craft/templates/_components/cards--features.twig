@@ -24,7 +24,7 @@
 					
 					{% if block.button|length %}
 						{% if block.buttonType == 'standard' %}
-							{{link.simple(block.button, 'btn')}}
+							{{link.simple(block.button, 'btn mx-auto')}}
 						{% else %}
 							{{link.icon(block.button, 'btn --text', 'arrow-right')}}
 						{% endif %}
