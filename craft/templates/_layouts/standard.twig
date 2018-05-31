@@ -1,4 +1,5 @@
- {# == Layout == #}
+{% minify %}
+{# == Layout == #}
 
 {# Macros #}
 {# {% import '_utilities/macros' as utils %} #}
@@ -41,11 +42,11 @@
 
 	{% include '_components/doc-end-assets' %}
 
-	{# <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> #}
 	{% includeJsFile '/assets/static/vendor-js/jquery.3.3.1.min.js' first %}
 
 </body>
 </html>
+{% endminify %}
 {# Note:
 In Prod, with Minify plugin installed, wrap this template in these tags:
 {% minify %}{% endminify %}

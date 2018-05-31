@@ -43,7 +43,7 @@
 <section class="bg-blue-lighter py-6 px-4 sm:py-8 sm:px-6">
 	<div class="simple-container md:flex justify-between">
 		<header>
-			<h2 class="text-md font-bold text-blue mb-2">Looking for an Event?</h2>
+			<h2 class="text-md text-blue mb-2">Looking for an Event?</h2>
 			<div class="text-1xs font-medium text-blue">
 				<p>Browse upcoming and past events</p>
 			</div>
@@ -69,7 +69,7 @@
 				<section class="m-auto md:w-2/3 w-full pt-12 md:px-0 px-6">
 
 					<header class="section-header text-1md sm:text-2md text-grey-dark py-4 border-b border-grey-lightest ">
-						<h4>Here's what we found about <b><u>{{query}}</u></b></h4>
+						<h4>Here's what we found about <u>{{query}}</u></h4>
 					</header>
 
 
@@ -78,12 +78,17 @@
 					{% for section, entriesInSection in entriesBySection %}
 
 					    <header class="section-header text-xs text-blue-light pb-4 mt-6">
-								<h4 class="uppercase font-bold tracking-wide">
+								<h4 class="uppercase tracking-wide">
 									{{ section }}			
 								</h4>
 							</header>
 
 							{% if section == 'Pages' %}
+								{% for entry in entriesInSection %}
+			            {% include '_components/list-search-results' with {content: entry.body} %}					
+				        {% endfor %}
+
+				       {% elseif section == 'Learn' %}
 								{% for entry in entriesInSection %}
 			            {% include '_components/list-search-results' with {content: entry.body} %}					
 				        {% endfor %}
@@ -122,7 +127,7 @@
 				<section class="m-auto md:w-2/3 w-full pt-12 md:px-0 px-6">
 
 					<header class="section-header text-1md sm:text-2md text-grey-dark py-4 border-b border-grey-lightest ">
-						<h4>We didn't find anything related to <b><u>{{query}}</u></b></h4>
+						<h4>We didn't find anything related to <u>{{query}}</u></h4>
 					</header>
 	        
         </section>
