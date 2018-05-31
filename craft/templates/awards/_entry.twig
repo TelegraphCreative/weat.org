@@ -10,28 +10,31 @@
 <div class="simple-container">
 
 		{# Main #}
-		<section class="main-content --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg">
+		<section class="main-content lg:w-2/3 md:px-4 sm:mb-16">
 
 			{# Header #}
 			<header class="article-detail__header   mb-16 mt-12">
 				<a class="no-underline hover:text-green" href="#">
-					<h4 class="text-2md sm:text-xl">{{entry.pageTitle}}</h4>
+					<h4 class="text-2md sm:text-xl capitalize">{{entry.pageTitle | capitalize}}</h4>
 				</a>
 			</header>
 
-			<div class="article article-detail__article article mb-16">
+			<div class=" mb-16 pb-8">
+				<h6 class="uppercase tracking-wide text-1xs text-blue-light mb-3">Description</h6>
+				<div class="text-sm text-grey-darker leading-normal  leading-normal">
+					<p>{{entry.body}}</p>
+				</div>
 
-				{{entry.body}}
+				{% if entry.awardRecipients|length %}
+				
+				<h6 class="mt-8 uppercase tracking-wide text-1xs text-blue-light mb-3">Award Recipients</h6>
+					{% for recipients in entry.awardRecipients %}
+							<div class="mb-6 text-sm text-grey-darker leading-normal   sm:mb-0">
+								{{recipients.awardRecipient.first().fullName}} - {{recipients.awardDate|date('Y')}}
+							</div>
+					{% endfor %}
 
-			</div>
-
-			<div>
-				<h3>Award Recipients</h3>
-				{% for recipients in entry.awardRecipients %}
-
-						{{recipients.awardRecipient.first().fullName}}
-						{{recipients.awardDate|date('Y')}}
-				{% endfor %}
+				{% endif %}
 			</div>
 		</section>
 
