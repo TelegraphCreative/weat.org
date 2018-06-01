@@ -82,11 +82,11 @@ class WeatPlugin extends BasePlugin
 					$userRecord->verificationCode = null;
 					$userRecord->verificationCodeIssuedDate = null;
 					$userRecord->save();
+					craft()->userSession->loginByUserId($user->id);
 				}
 
 				// If they have an unverified email address, now is the time to set it to their primary email address
 				//craft()->users->verifyEmailForUser($user);
-				craft()->userSession->loginByUserId($user->id);
 			}
 			/*if($user->getStatus() != 'active') {
 				$user->pending = false;

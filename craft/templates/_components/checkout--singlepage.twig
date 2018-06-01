@@ -79,13 +79,13 @@
 
 					{% if not currentUser %}
 					{# Field #}
-					<div class="form-row mb-6">
+					<div class="form-row mb-12 items-center">
 						{% if pageHeader == 'Join WEAT' %}
-							<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=join') }}">Login here</a>
+							<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=join') }}">Login here</a></p>
 						{% elseif eventId is defined and item is defined and quantity is defined %}
-							<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=payments/checkout&eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity) }}">Login here</a>
+							<h3>Already have an account or looking for WEAT Member Pricing? <a href="{{ url('members/login', 'returnUrl=payments/checkout&eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity) }}">Login here</a></h3>
 						{% else %}
-							<p>Already have an account? <a href="{{ url('members/login') }}">Login here</a>
+							<h3>Already have an account or looking for WEAT Member Pricing? <a href="{{ url('members/login') }}">Login here</a></h3>
 						{% endif %}
 					</div>
 					{% endif %}
@@ -364,13 +364,13 @@
 
 						{% if not currentUser %}
 						{# Field #}
-						<div class="form-row mb-6">
+						<div class="form-row mb-12 items-center">
 							{% if pageHeader == 'Join WEAT' %}
-								<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=join') }}">Login here</a>
+								<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=join') }}">Login here</a></p>
 							{% elseif eventId is defined and item is defined and quantity is defined %}
-								<p>Already have an account? <a href="{{ url('members/login', 'returnUrl=payments/checkout&eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity) }}">Login here</a>
+								<h3>Already have an account or looking for WEAT Member Pricing? <a href="{{ url('members/login', 'returnUrl=payments/checkout&eventId=' ~ eventId ~ '&item=' ~ item ~ '&quantity=' ~ quantity) }}">Login here</a></h3>
 							{% else %}
-								<p>Already have an account? <a href="{{ url('members/login') }}">Login here</a>
+								<h3>Already have an account or looking for WEAT Member Pricing? <a href="{{ url('members/login') }}">Login here</a></h3>
 							{% endif %}
 						</div>
 						{% endif %}

@@ -33,6 +33,7 @@ class WeatReportsAllUsersDataSource extends SproutReportsBaseDataSource
 
 
 				$selectQueryString = '{{users.id}} AS ID,
+					{{content.field_userWefId}} AS Internal ID,
 					{{content.field_userSalutation}} AS Salutation,
 					{{users.firstName}} AS First Name,
 					{{users.lastName}} AS Last Name,
@@ -57,7 +58,8 @@ class WeatReportsAllUsersDataSource extends SproutReportsBaseDataSource
 					{{content.field_licenseProfessionalEngineer}} AS License Professional Engineer,
 					{{content.field_licenseGroundWater}} AS License Ground Water,
 					{{content.field_licenseSurfaceWater}} AS License Surface Water,
-					{{content.field_abilaId}} AS Abila ID
+					{{content.field_abilaId}} AS Abila ID,
+					{{users.pending}} AS Pending
 					';
 					//field_email	field_social
 					//	field_groupType	field_sponsor		field_chargeType	field_chargeAddress1	field_chargeAddress2	field_chargeCity	field_chargeState	field_fax	field_phone2	field_email2	field_notes	field_userPhoneExtension			uid
