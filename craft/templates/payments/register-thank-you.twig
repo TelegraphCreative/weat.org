@@ -1,0 +1,45 @@
+{% extends "_layouts/standard" %}
+
+{% block content %}
+
+  {# Container #}
+  <div class="simple-container">
+
+    {# Header #}
+    <header class="text-center ml-auto mr-auto text-blue text-md sm:text-lg lg:text-xl mt-18 mb-14 sm:mt-xl sm:mb-18">
+      <h2>
+        Thank you! <br>
+        Your registration has been received.
+      </h2>
+    </header>
+
+    {# Form #}
+    <section class="form-container --narrow m-auto w-full lg:w-2/3 mb-12 sm:mb-lg choices-as-boxes">
+
+      <form action="#" class="py-4">
+
+
+        {# Field / split #}
+        <div class="form-row mb-4 sm:mb-0 px-4 lg:px-0 md:flex justify-center -mx-4">
+
+          <div class="w-full md:w-3/5 ">
+            <label class="field-label md:text-md block w-full pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest sm:mb-6 px-4">Item</label>
+
+            <span class="block text-left px-4 sm:mt-6 sm:mt-8 mb-6 sm:mb-8 sm:text-md text-base">{{  craft.session.getFlash('registerThankYouItem') }}</span>
+          </div>
+
+          <div class="w-full  md:w-2/5 md:max-w-tiny">
+            <label class="field-label md:text-md block w-full pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest sm:mb-6 px-4">Amount</label>
+
+            <span class="block text-left px-4 sm:mt-6 sm:mt-8 mb-6 sm:mb-8 sm:text-md text-base md:w-1/2">$0</span>
+          </div>
+
+
+        </div>
+
+      </form>
+
+    </section>
+
+  </div>
+{% endblock %}

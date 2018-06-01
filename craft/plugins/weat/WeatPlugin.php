@@ -67,6 +67,34 @@ class WeatPlugin extends BasePlugin
 			//craft()->weat_payments->exampleService();
 		});
 
+		craft()->on('users.setPassword', function(Event $event) {
+			$user = $event->params['user'];
+			if($user->getStatus() != 'active') {
+				//$user->pending = false;
+
+
+				//$user->setActive();
+				//craft()->users->saveUser($user);
+				$userRecord = UserRecord::model()->findById($user->id);
+				//$user->unverifiedEmail = $user->email;
+				$userRecord->setActive();
+				$userRecord->verificationCode = null;
+				$userRecord->verificationCodeIssuedDate = null;
+				$userRecord->save();
+
+				// If they have an unverified email address, now is the time to set it to their primary email address
+				//craft()->users->verifyEmailForUser($user);
+				craft()->userSession->loginByUserId($user->id);
+			}
+			/*if($user->getStatus() != 'active') {
+				$user->pending = false;
+				$user->unverifiedEmail = '';
+				craft()->users->saveUser($user);
+				//craft()->users->verifyEmailForUser($user);
+				craft()->users->activateUser($user);
+			}*/
+		});
+
 		/*craft()->on('charge.onBeforeCharge', function(Event $event) {
 			WeatPlugin::log('onBeforeCharge');
 			//WeatPlugin::log($event);
@@ -286,6 +314,7 @@ class WeatPlugin extends BasePlugin
 			new WeatReportsUserStatusDataSource(),
 			new WeatReportsUserExpireDataSource(),
 			new WeatReportsWefDataSource(),
+			new WeatReportsAllUsersDataSource(),
 		);
 	}
 }

@@ -67,6 +67,44 @@ class Weat_RegistrationService extends BaseApplicationComponent
 		$record->save(false);
 	}
 
+
+
+ public function freeEventRegistration()
+ {
+	$record = new Weat_RegistrationRecord();
+	$user = craft()->userSession->getUser();
+	$record->chargeId = NULL;
+	$record->userId = $user->id;
+	$record->elementId = craft()->request->getPost('meta.eventId');
+	$record->firstName = craft()->request->getPost('meta.firstName');
+	$record->lastName = craft()->request->getPost('meta.lastName');
+	$record->email = craft()->request->getPost('meta.customerEmail');
+	$record->ticketId = craft()->request->getPost('meta.ticketId');
+	$record->numberOfTickets = craft()->request->getPost('meta.quantity');
+	$record->subscriptionAdded = craft()->request->getPost('meta.includeSubscription');
+	$record->address1 = craft()->request->getPost('meta.addressLine1');
+	$record->address2 = craft()->request->getPost('meta.addressLine2');
+	$record->city = craft()->request->getPost('meta.addressCity');
+	$record->state = craft()->request->getPost('meta.addressState');
+	$record->zip = craft()->request->getPost('meta.addressZip');
+	$record->meta = serialize(craft()->request->getPost('meta'));
+	craft()->userSession->setFlash('registerThankYouItem', craft()->request->getPost('meta.eventName') . ' -  ' . craft()->request->getPost('meta.ticketName'));
+	$email = new EmailModel();
+	$event = craft()->venti_events->getEventById($record->elementId);
+
+	$email->toEmail = $user->email;
+	$email->subject = 'Thank you for registering';
+	$email->htmlBody    = '<h3>Thank you!</h3>' .
+	'<p>Your order has been received.</p>' .
+	'<p>' . $event->eventEmailContent . '</p>' .
+	'<p>Event: ' . craft()->request->getPost('meta.eventName')  . '<br />' .
+	'Registration type: ' . craft()->request->getPost('meta.ticketName') . '</p>';
+
+	craft()->email->sendEmail($email);
+
+	return $record->save(false);
+ }
+
 	public function switchSubscription($event)
 	{
 		$charge = new ChargeModel();
@@ -222,6 +260,21 @@ class Weat_RegistrationService extends BaseApplicationComponent
 			}
 			if(isset($meta['userPhoneNumber'])) {
 				$user->getContent()->userPhoneNumber = $meta['userPhoneNumber'];
+			}
+			if($event->params['charge']->createAccount == 'yes') {
+				$user->getContent()->userStatus = 'new';
+				$user->getContent()->userMembershipType = 'weat';
+				$subscription = $charge->subscription();
+				if($subscription) {
+					$beginDate = $subscription->currentPeriodStart;
+					$endDate = $subscription->currentPeriodEnd;
+				} else {
+					$beginDate = date("Y-m-d H:i:s");
+					$endDate = date("Y-m-d H:i:s", strtotime('+1 year'));
+				}
+				$user->getContent()->userSubscriptionStartDate = $beginDate;
+				$user->getContent()->userStartDate = $beginDate;
+				$user->getContent()->userSubscriptionEndDate = $endDate;
 			}
 			craft()->users->saveUser($user);
 		}
