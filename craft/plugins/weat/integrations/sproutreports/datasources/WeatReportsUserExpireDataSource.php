@@ -86,9 +86,9 @@ class WeatReportsUserExpireDataSource extends SproutReportsBaseDataSource
 			->andWhere(['between', "{{content.field_userSubscriptionEndDate}}", '(CURDATE() - INTERVAL 30 DAY)','CURDATE()']);*/
 
 			$userQuery = craft()->db->createCommand("
-			SELECT craft_users.id, CONCAT('<a href=\"admin/users/', craft_users.id, '\">Edit</a>') AS 'Edit',
+			SELECT craft_users.id,
 			craft_users.firstName AS 'First Name', `craft_users`.lastName AS 'Last Name',
-			CONCAT('<a href=\"mailto:', craft_users.email, '\">',  craft_users.email, '</a>') AS 'Email',
+			craft_users.email AS 'Email',
 			DATE_FORMAT(craft_content.field_userSubscriptionEndDate, \"%M %d, %Y\") AS 'End date',
 			craft_content.field_userMembershipType AS 'Membership Type',
 			craft_content.field_userStatus AS 'Status'

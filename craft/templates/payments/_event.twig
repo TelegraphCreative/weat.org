@@ -66,13 +66,11 @@
           </div>
         </div>
 
-        <div class="w-full md:w-1/5 md:max-w-tiny" data-module="spinners">
-          <label for="qty" class="field-label md:text-md block w-full pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest mb-6 px-4">Qty</label>
+        <div class="w-full md:w-1/5 md:max-w-tiny">
+          <label for="qty" class="field-label md:text-md block w-full pb-4 md:border-b md:pt-0 pt-4 md:border-t-0 border-t border-grey-lightest mb-6 px-4"></label>
           <div class="px-4 mb-6 clearfix">
-            <div class="spinner-group relative flex text-sm ">
-                <div class="spinner__decr inline-block border-t border-b border-l py-3 px-2 cursor-pointer text-grey-light hover:text-grey tr-all-1">-</div>
-                <input type="number" name="quantity" id="quantity" max="24" value="1" class="spinner border text-center w-10 bg-transparent py-3 pointer-events-none">
-                <div class="spinner__incr inline-block border-t border-b border-r py-3 px-2 cursor-pointer text-grey-light hover:text-grey tr-all-1">+</div>
+            <div class="relative flex text-sm ">
+                <input type="hidden"name="quantity" id="quantity" value="1">
             </div>
           </div>
         </div>
@@ -86,6 +84,7 @@
       </div>
 
       {# Field / split #}
+      {#
       <div class="form-row mb-6 px-4  lg:px-0 flex md:justify-center md:-mx-4 md:border-t-0 border-t border-grey-lightest ">
         <div class="w-full md:w-3/5  md:border-t border-grey-lightest"></div>
 
@@ -98,6 +97,7 @@
         </div>
 
       </div>
+      #}
 
       {# Buttons #}
       <div class="form-row mb-6 pt-6 flex items-center ">
@@ -113,7 +113,7 @@
 </div>
 
 {% set myJs %}
-var $totalAmount = $('#total-amount');
+//var $totalAmount = $('#total-amount');
 var $quantity = $('#quantity');
 var $singleAmount = $('#single-amount');
 $('#item').on('change', function() {
@@ -122,7 +122,7 @@ $('#item').on('change', function() {
   var ticketArray = ticketLabel.split(' - $');
   var ticketPrice = ticketArray[1];
   $singleAmount.text('$' + parseFloat(ticketPrice).toFixed(2));
-  $totalAmount.text('$' + parseFloat($quantity.val() * ticketPrice).toFixed(2));
+  //$totalAmount.text('$' + parseFloat($quantity.val() * ticketPrice).toFixed(2));
 
     console.log(ticketPrice);
     console.log($quantity.val());
@@ -138,7 +138,7 @@ function updatePricingValues() {
   var ticketArray = ticketLabel.split(' - $');
   var ticketPrice = ticketArray[1];
   $singleAmount.text('$' + parseFloat(ticketPrice).toFixed(2));
-  $totalAmount.text('$' + parseFloat($quantity.val() * ticketPrice).toFixed(2));
+  //$totalAmount.text('$' + parseFloat($quantity.val() * ticketPrice).toFixed(2));
 }
 
 {% endset %}

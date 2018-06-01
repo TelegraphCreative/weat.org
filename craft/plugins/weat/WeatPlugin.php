@@ -76,11 +76,13 @@ class WeatPlugin extends BasePlugin
 				//$user->setActive();
 				//craft()->users->saveUser($user);
 				$userRecord = UserRecord::model()->findById($user->id);
-				//$user->unverifiedEmail = $user->email;
-				$userRecord->setActive();
-				$userRecord->verificationCode = null;
-				$userRecord->verificationCodeIssuedDate = null;
-				$userRecord->save();
+				if($userRecord) {
+					//$user->unverifiedEmail = $user->email;
+					$userRecord->setActive();
+					$userRecord->verificationCode = null;
+					$userRecord->verificationCodeIssuedDate = null;
+					$userRecord->save();
+				}
 
 				// If they have an unverified email address, now is the time to set it to their primary email address
 				//craft()->users->verifyEmailForUser($user);

@@ -1,5 +1,6 @@
 {#% set registrations = craft.weat.getAllRegistrations().numberOfTickets('2') %#}
-{% set registrations = craft.weat.getRegistrationsByEvent(options.event) %}
+
+{% set registrations = craft.weat.getRegistrationsByEvent(1112) %}
 
 {# addHeaderRow accepts a single array with a comma-separated list of values #}
 {% do craft.sproutReports.addHeaderRow(['First Name',

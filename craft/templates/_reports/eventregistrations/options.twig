@@ -2,23 +2,13 @@
 {% set events = craft.venti.events.registeredEvent(1) %}
 {% set optionValues = {} %}
 {% for event in events %}
-  {% set optionValues = optionValues|merge({(event.id): event.title}) %}
+  {#% set optionValues = optionValues|merge({(event.elementId): event.title}) %#}
+  {% set optionValues = optionValues|merge([{ label: event.title, value: event.elementId }]) %}
 {% endfor %}
-
-{#% set optionValues = {
-    139 : 139,
-    "antartica" : "Antartica",
-    "asia" : "Asia",
-    "australia" : "Australia",
-    "europe" : "Europe",
-    "northAmerica" : "North America",
-    "southAmerica" : "South America"
-}
-%#}
 
 {{ forms.selectField({
     label: "Event"|t,
-    name: "event",
+    name: "options[event]",
     options: optionValues,
-    value: options.event is defined ? options.event : "Antartica"
+    value: options.event is defined ? options.event : NULL
 }) }}

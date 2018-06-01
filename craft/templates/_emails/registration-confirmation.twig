@@ -14,10 +14,7 @@
 <p>Event: {{ charge.meta['eventName'] }}<br />
   Registration type: {{ charge.meta['ticketName'] }}</p>
 
-<p>Qty: {{ charge.meta['quantity'] }}<br />
-Amount: {{ charge.meta['individualPrice'] }}<br />
-
-Total: {{ charge.amountFormatted }}<br />
+<p>Total: {{ charge.amountFormatted }}<br />
 
 Charge ID : {{ charge.id }}</p>
 {% endblock %}
