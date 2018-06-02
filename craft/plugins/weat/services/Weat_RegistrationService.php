@@ -390,4 +390,9 @@ class Weat_RegistrationService extends BaseApplicationComponent
 				return Weat_RegistrationModel::populateModels($records, 'id');
 		 }
 
+		 public function unserializeData($data)
+		 {
+			 return unserialize($data);
+		 }
+
 }
