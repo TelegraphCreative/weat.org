@@ -1,0 +1,52 @@
+{# Article Content Builder #}
+{% for block in Builder %}
+	{% switch block.type %}
+
+		{# Standard Slider #}
+		{% case "standardSlider" %}
+			{% include '_components/slider--standard' with {classes: 'pt-9 mb-16'} %}
+
+		{# Article #}
+		{% case "article" %}
+			{% include '_components/article' with {classes: 'article-detail__article article mb-16'} %}
+
+		{# Callout #}
+		{% case "callout" %}
+			<h2 class="leading-normal mb-4 mt-16 text-blue text-lg">{{block.header}}</h2>
+			<div class="leading-normal mb-6 text-grey-dark text-md">
+				{{block.body}}
+			</div>
+
+			{{link.simple(block.button, 'btn   mb-16')}}
+		
+		{# Resources List #}
+		{% case "resourcesList" %}
+
+			<div class="list-accordion list--resources md:px-0 px-6 mb-10 sm:mb-14 ">
+	
+				{# Section Header #}
+				{% include '_components/headers' with {
+						type: 'section-header--divider', 
+						'title': block.header
+					} 
+				%}
+
+				{% set list = block.listLinks %}
+				{% for block in list %}
+					{% switch block.type %}
+					
+						{% case "linkDownload" %}
+							{% include '_components/list--resources__download' %}
+
+					{% endswitch %}
+					
+				{% endfor %}
+
+			</div>
+			
+
+		{% default %}
+
+	{% endswitch %}
+
+{% endfor %}

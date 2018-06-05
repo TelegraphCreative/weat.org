@@ -21,33 +21,11 @@
 					<h4 class="text-2md sm:text-xl">{{entry.pageTitle}}</h4>
 				</a>
 			</header>
-			{# Content Builder #}
-			{% for block in Builder %}
-				{% switch block.type %}
+			
 
-					{# Standard Slider #}
-					{% case "standardSlider" %}
-						{% include '_components/slider--standard' with {classes: 'm-auto md:w-3/5 w-full     sm:pt-10 pt-9 mb-14'} %}
-
-
-					{# Article #}
-					{% case "article" %}
-						{% include '_components/article' with {classes: 'article-detail__article article mb-16'} %}
-
-					{# Callout #}
-					{% case "callout" %}
-						<h2 class="leading-normal mb-4 mt-16 text-blue text-lg">{{block.header}}</h2>
-						<div class="leading-normal mb-6 text-grey-dark text-md">
-							{{block.body}}
-						</div>
-
-						{{link.simple(block.button, 'btn   mb-16')}}
-
-					{% default %}
-
-				{% endswitch %}
-
-			{% endfor %}
+			{# Article Content Builder #}
+			{% include '_components/content-builder--article' %}
+			
 
 			{# Citations #}
 			{% if entry.description %}
