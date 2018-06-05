@@ -1,0 +1,61 @@
+{# My Awards #}
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+{% set entries = craft.entries.section( 'awards' ).relatedTo({
+	targetElement: currentUser,
+	field: 'awardRecipients.awardRecipient'
+}) %}
+
+<div class="m-auto max-w-lg px-6   sm:mb-10  lg:px-3" style="margin-bottom: 320px">
+
+	<h3 class="leading-tight mb-3 mt-10 text-1md text-grey-dark   sm:mt-18 sm:text-2md">My Awards</h3>
+
+	{% if entries|length > 0 %}
+		{% for entry in entries %}
+
+		<div class="tr-all-3 border-grey-lightest border-t pt-8 pb-8">
+
+				{# Header #}
+				<header class="text-grey-dark hover:text-blue-light flex justify-between item__header items-center">
+						<h4 class="text-blue text-1md sm:text-2md tr-all">{{entry.title}}</h4>
+				</header>
+
+				{# Content #}
+				<div class="item__content  tr-all-3">
+						<div class="sm:flex sm:flex-sm:justify pt-8">
+								<div class="content__col sm:w-1/2 sm:pr-6 sm:border-r border-grey-lightest      md:w-1/2">
+										<h6 class="uppercase tracking-wide text-blue-light mb-3">Description</h6>
+										<div class="text-xs mb-6 text-grey-dark leading-normal">
+												<p>{{entry.body}}
+												</p>
+										</div>
+								</div>
+								<div class="content__col sm:w-1/2 sm:pl-8      md:w-1/2">
+										<h6 class="uppercase tracking-wide text-blue-light mb-3">Award Recipients</h6>
+
+										{% for block in entry.awardRecipients %}
+										{#<h6 class="uppercase tracking-wide text-blue-light mb-3">Award Winners</h6>#}
+										{# Template Note: no mb-6 here #}
+										<div class="mb-6 text-xs text-grey-dark leading-normal   sm:mb-0">
+												<p>{{block.awardRecipient.first().fullName}} - {{block.awardDate|date('Y')}}</p>
+										</div>
+										{% endfor %}
+								</div>
+						</div>
+
+				</div>
+		</div>
+		{% endfor %}
+
+	{% else %}
+
+	<p>You are have not received any awards yet. Take a look at the <a href="{{url('award')}}">WEAT and WEF awards</a>.</p>
+
+	{% endif %}
+
+</div>
+
+{% endblock %}

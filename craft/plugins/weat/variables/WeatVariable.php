@@ -56,7 +56,10 @@ class WeatVariable
 	{
 		return craft()->weat_registration->getRegistrationsByEvent($key);
 	}
-
+	public function unserializeData($data)
+	{
+		return craft()->weat_registration->unserializeData($data);
+	}
 	public function getSubscriptionDetails($userId = null)
 	{
 		if($userId == null) {

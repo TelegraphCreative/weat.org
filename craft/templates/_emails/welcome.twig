@@ -1,1 +1,15 @@
-Thank you for joining WEAT!
+{% extends "_emails/templateblock" %}
+
+{% block content %}
+<p>Dear {{user.fullName}},</p>
+
+<p>On behalf of the Water Environment Association of Texas (WEAT), I am excited and pleased to welcome you as a new member to our organization. WEAT is the <b>resource</b> for water quality issues in Texas. Our focus includes legislative education and participation, public education, and our flagship conference, Texas Water, the largest regional water and environmental show in North America. The annual Texas Water conference showcases our mission of educational excellence on water issues and environmental stewardship.</p>
+
+<p>As you have recently become a member of WEAT, I encourage you to visit our website (<a href="http://www.weat.org">www.weat.org</a>). Investigate your WEAT section’s activities, find a committee, area or interest that you are passionate about and become involved along with other individuals like you. Regardless of your background and interest, I am confident that your involvement and activity in WEAT will be a life changing and career enlightening experience. In that regard, I am available for questions or discussion on ideas about your involvement in WEAT; contact me through the officers tab on our website at <a href="http://www.weat.org">www.weat.org</a>.</p>
+
+<p>Once again, I am truly pleased to have you with us and I look forward to hearing from you soon.</p>
+
+<p>Sincerely,<br />
+Leigh Cerda<br />
+WEAT President 2018-2019</p>
+{% endblock %}

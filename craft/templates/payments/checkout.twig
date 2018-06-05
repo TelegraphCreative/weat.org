@@ -27,7 +27,8 @@
 
 {% set options = {
 		'planAmount' : totalPrice,
-		'description' : event.title ~ ' Ticket' ~ ' | ' ~ pricing.label,
+		'description' : event.title ~ ' | ' ~ pricing.label,
+		'checkoutRequest' : true,
 	}
 %}
 {% if pricing.subscription %}

@@ -37,7 +37,7 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		$users = $userQuery->queryAll();
 		$emails = array();
 		foreach($users as $user) {
-			$emails[] = $user['email'];
+			$emails[] = strtolower($user['email']);
 		}
 
 
@@ -92,7 +92,7 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 			if((string)$obj->RECORD_TYPE == 'C') {
 				continue;
 			}
-			if(in_array((string)$obj->Email_Address, $emails) != $options['displayUserGroupColumns']) {
+			if(in_array(strtolower((string)$obj->Email_Address), $emails) != $options['displayUserGroupColumns']) {
 				continue;
 			}
 			$lastName = '';
@@ -111,21 +111,21 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		    $phone = (string)$obj->Business_Fax;
 		  }
 		  $userArray[] = array(
-				'customerId' => (string)$obj->MASTER_CUSTOMER_ID,
-				'firstName' => (string)$obj->FIRST_NAME,
-				'middleName' => (string)$obj->MIDDLE_NAME,
-				'lastName'=> $lastName,
-				'jobTitle' => (string)$obj->Organization_Name, //PRIMARY_JOB_TITLE,
-				'companyName' => (string)$obj->COMPANY_NAME,
-				'address1' => (string)$obj->ADDRESS_1,
-				'address2' => (string)$obj->ADDRESS_2,
-				'city' => (string)$obj->CITY,
-				'state' => (string)$obj->STATE,
-				'zip' => (string)$obj->POSTAL_CODE,
-				'phone' => $phone,
-				'email' => (string)$obj->Email_Address,
-				'status' => (string)$obj->Status,
-				'recordType' => (string)$obj->RECORD_TYPE,
+				'Email' => (string)$obj->Email_Address,
+				'WEF ID' => (string)$obj->MASTER_CUSTOMER_ID,
+				'First Name' => (string)$obj->FIRST_NAME,
+				//'middleName' => (string)$obj->MIDDLE_NAME,
+				'Last Name'=> $lastName,
+				'Title' => (string)$obj->Organization_Name, //PRIMARY_JOB_TITLE,
+				'Company name' => (string)$obj->COMPANY_NAME,
+				'Address 1' => (string)$obj->ADDRESS_1,
+				'Address 2 ' => (string)$obj->ADDRESS_2,
+				'City' => (string)$obj->CITY,
+				'State' => (string)$obj->STATE,
+				'Zip' => (string)$obj->POSTAL_CODE,
+				'Phone number' => $phone,
+				'Status' => (string)$obj->Status,
+				//'recordType' => (string)$obj->RECORD_TYPE,
 				'WEF_Join_Date' => $this->formatDate($obj->WEF_Join_Date),
 				'Membership_Paid_Through_Date' => $this->formatDate($obj->Membership_Paid_Through_Date),
 				'Delinquent_Date' => $this->formatDate($obj->Delinquent_Date),
@@ -163,10 +163,10 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		    CHANGED_ON_DATE*/
 			);
 		}
-		//$userArray = array_map("unserialize", array_unique(array_map("serialize", $userArray)));
+		/*$userArray = array_map("unserialize", array_unique(array_map("serialize", $userArray)));
 		usort($userArray, function($a, $b) {
-			return strcmp($a['customerId'], $b['customerId']);
-		});
+			return strcmp($a['WEF ID'], $b['WEF ID']);
+		});*/
 
 		return $userArray;
 	}
