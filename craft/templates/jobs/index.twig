@@ -13,236 +13,258 @@
 
 {% block content %}
 
+{# Show Jobs if Current User #}
+{% if currentUser %}
 
-{% if theCategory %}
-	{# Jobs by Type #}
+	{# Show Jobs by Filter #}
+	{% if theCategory %}
+		{# Jobs by Type #}
 
-	{% spaceless %}
-		{% set groups = craft.categories.group('jobType').slug(theCategory).first() %}
+		{% spaceless %}
+			{% set groups = craft.categories.group('jobType').slug(theCategory).first() %}
 
-		{% set Structure = SectionEntries.relatedTo({
-			targetElement: groups
-		}) %}
-		{% paginate Structure.limit(8) as pageInfo, entries %}
-	{% endspaceless %}
-	
-	{# Page Header #}
-	<header class="page-header bg-blue">
-		<div class="simple-container py-8 sm:py-10">
-			{# Landing Page Title: #}
-			<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{craft.categories.slug(theCategory).first().title}}</h1>
-		</div>
-	</header>
+			{% set Structure = SectionEntries.relatedTo({
+				targetElement: groups
+			}) %}
+			{% paginate Structure.limit(8) as pageInfo, entries %}
+		{% endspaceless %}
+		
+		{# Page Header #}
+		<header class="page-header bg-blue">
+			<div class="simple-container py-8 sm:py-10">
+				{# Landing Page Title: #}
+				<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{craft.categories.slug(theCategory).first().title}}</h1>
+			</div>
+		</header>
 
-	{# Container #}
-	<div class="simple-container">
+		{# Container #}
+		<div class="simple-container">
 
-		{# Article Type Selector #}
-		<div class="mb-6 w-full mt-5 pt-10 sm:flex sm:justify-between">
-			
-			<div class="sm:w-1/2">
-				<div class="max-w-1xs ">
-				<select data-module="choicesAsLinks" name="" id="">
-					{% for group in categories %}
-						<option {% if theCategory == group.slug %}selected{% endif %} value="{{group.url}}">{{group.title}}</option>
-					{% endfor %}
-					<option value="/{{sectionSlug}}">All Job Types</option>
-				</select>
+			{# Article Type Selector #}
+			<div class="mb-6 w-full mt-5 pt-10 sm:flex sm:justify-between">
+				
+				<div class="sm:w-1/2">
+					<div class="max-w-1xs ">
+					<select data-module="choicesAsLinks" name="" id="">
+						{% for group in categories %}
+							<option {% if theCategory == group.slug %}selected{% endif %} value="{{group.url}}">{{group.title}}</option>
+						{% endfor %}
+						<option value="/{{sectionSlug}}">All Job Types</option>
+					</select>
+					</div>
 				</div>
+
+				<div class="sm:w-1/2">
+					<a href="{{postJobUrl}}" class="btn">Post a Job</a>
+				</div>
+
 			</div>
 
-			<div class="sm:w-1/2">
-				<a href="{{postJobUrl}}" class="btn">Post a Job</a>
-			</div>
+			<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
 
-		</div>
+				{# Main #}
+				<section class="main-content   lg:w-2/3 md:px-4 ">
 
-		<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
+					{# Inf Scroll Wrap #}
+					<div class="js-infScroll   border-t border-grey-lightest mb-14   lg:mb-18" data-module="infScroll">
+						{# Article Summary #}
 
-			{# Main #}
-			<section class="main-content   lg:w-2/3 md:px-4 ">
+						{# Output them #}
+						{% for entry in entries %}
+								{# Article Summary #}
+								<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
+									<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
 
-				{# Inf Scroll Wrap #}
-				<div class="js-infScroll   border-t border-grey-lightest mb-14   lg:mb-18" data-module="infScroll">
-					{# Article Summary #}
+									<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
+										<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
+									</a>
 
-					{# Output them #}
-					{% for entry in entries %}
-							{# Article Summary #}
-							<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
-								<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
+									<div class="md:flex md:items-end">
+										<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4 sm:w-4/5">{{entry.body}}</div>
 
-								<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
-									<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
-								</a>
+										{# button #}
+										<div class="sm:w-1/5">
+											<a href="{{entry.url}}" class="btn --auto-w --text px-8 text-xs --special   whitespace-no-wrap">
+												<span class="text relative text-center">
+													<span class="hover-show opacity-0 tr-all">
+														Read More
+													</span>
 
-								<div class="md:flex md:items-end">
-									<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4 sm:w-4/5">{{entry.body}}</div>
-
-									{# button #}
-									<div class="sm:w-1/5">
-										<a href="{{entry.url}}" class="btn --auto-w --text px-8 text-xs --special   whitespace-no-wrap">
-											<span class="text relative text-center">
-												<span class="hover-show opacity-0 tr-all">
-													Read More
+													{# Type #}
+													<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
+													   {{entry.jobType[0].title}}
+													</span>
 												</span>
-
-												{# Type #}
-												<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
-												   {{entry.jobType[0].title}}
-												</span>
-											</span>
-										</a>
+											</a>
+										</div>
 									</div>
-								</div>
-							</article>
-					{% endfor %}
-				</div>
-
-
-				{# Inf Scroll Pagination #}
-
-				{% if pageInfo.nextUrl %}
-					<div class="pagination hidden">
-						<a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+								</article>
+						{% endfor %}
 					</div>
-					<div class="w-full block">
-						<div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
-					</div>
-				{% endif %}
-				{# / End #}
-
-			</section>
 
 
-			{# Aside #}
-			<aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-0 md:px-4 clearfix">
-				<div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
-					<div class="border-grey-lightest border-t leading-normal pt-6 text-xs text-grey-dark">
-						{{craft.categories.slug(theCategory).first().textBarebones}}
-					</div>
-				</div>
-			</aside>
+					{# Inf Scroll Pagination #}
 
-		</div>
-
-	</div>
-
-{% else %}
-	{# All Available Jobs #}
-	
-	{% spaceless %}
-
-		{% paginate SectionEntries.limit(8) as pageInfo, entries %}
-	{% endspaceless %}
-	
-	{# Page Header #}
-	<header class="page-header bg-blue">
-		<div class="simple-container py-8 sm:py-10">
-			{# Landing Page Title: #}
-			<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{jobsLanding[0].pageTitle}}</h1>
-		</div>
-	</header>
-
-	{# Container #}
-	<div class="simple-container">
-
-		{# Article Type Selector #}
-		<div class="mb-6 w-full mt-5 pt-10 sm:flex sm:justify-between">
-			
-			<div class="sm:w-1/2">
-				<div class="max-w-1xs ">
-				<select data-module="choicesAsLinks" name="" id="">
-					<option value="/{{sectionSlug}}">All Job Types</option>
-					{% for group in categories %}
-						<option {% if theCategory == group.slug %}selected{% endif %} value="{{group.url}}">{{group.title}}</option>
-					{% endfor %}
-					
-				</select>
-				</div>
-			</div>
-
-			<div class="sm:w-1/2">
-				<a href="{{postJobUrl}}" class="btn">Post a Job</a>
-			</div>
-
-		</div>
-
-		<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
-
-			{# Main #}
-			<section class="main-content   lg:w-2/3 md:px-4 ">
-
-				{# Inf Scroll Wrap #}
-				<div class="js-infScroll   border-t border-grey-lightest mb-14   lg:mb-18" data-module="infScroll">
-					{# Article Summary #}
-
-					{# Output them #}
-					{% for entry in SectionEntries %}
-							{# Article Summary #}
-							<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
-								<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
-
-								<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
-									<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
-								</a>
-
-								<div class="md:flex md:items-end">
-									<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4 sm:w-4/5">{{entry.body}}</div>
-
-									{# button #}
-									<div class="sm:w-1/5">
-										<a href="{{entry.url}}" class="btn --auto-w --text px-8 text-xs --special   whitespace-no-wrap">
-											<span class="text relative text-center">
-												<span class="hover-show opacity-0 tr-all">
-													Read More
-												</span>
-
-												{# Type #}
-												<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
-												   {{entry.jobType[0].title}}
-												</span>
-											</span>
-										</a>
-									</div>
-								</div>
-							</article>
-					{% endfor %}
-				</div>
-
-
-				{# Inf Scroll Pagination #}
-
-				{% if pageInfo.nextUrl %}
-					<div class="pagination hidden">
-						<a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
-					</div>
-					<div class="w-full block">
-						<div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
-					</div>
-				{% endif %}
-				{# / End #}
-
-			</section>
-
-
-			{# Aside #}
-			<aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-0 md:px-4 clearfix">
-				<div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
-					{% if jobsLanding[0].description %}
-						<p class="border-grey-lightest border-t leading-normal pt-6 text-xs text-grey-dark">{{jobsLanding[0].description}}</p>
+					{% if pageInfo.nextUrl %}
+						<div class="pagination hidden">
+							<a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+						</div>
+						<div class="w-full block">
+							<div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+						</div>
 					{% endif %}
-				</div>
-			</aside>
+					{# / End #}
+
+				</section>
+
+
+				{# Aside #}
+				<aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-0 md:px-4 clearfix">
+					<div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
+						<div class="border-grey-lightest border-t leading-normal pt-6 text-xs text-grey-dark">
+							{{craft.categories.slug(theCategory).first().textBarebones}}
+						</div>
+					</div>
+				</aside>
+
+			</div>
 
 		</div>
 
-	</div>
+	{# All Available Jobs #}
+	{% else %}
+	
+		{% spaceless %}
 
+			{% paginate SectionEntries.limit(8) as pageInfo, entries %}
+		{% endspaceless %}
+		
+		{# Page Header #}
+		<header class="page-header bg-blue">
+			<div class="simple-container py-8 sm:py-10">
+				{# Landing Page Title: #}
+				<h1 class="text-white font-medium md:text-3xl sm:text-xl text-lg">{{jobsLanding[0].pageTitle}}</h1>
+			</div>
+		</header>
+
+		{# Container #}
+		<div class="simple-container">
+
+			{# Article Type Selector #}
+			<div class="mb-6 w-full mt-5 pt-10 sm:flex sm:justify-between">
+				
+				<div class="sm:w-1/2">
+					<div class="max-w-1xs ">
+					<select data-module="choicesAsLinks" name="" id="">
+						<option value="/{{sectionSlug}}">All Job Types</option>
+						{% for group in categories %}
+							<option {% if theCategory == group.slug %}selected{% endif %} value="{{group.url}}">{{group.title}}</option>
+						{% endfor %}
+						
+					</select>
+					</div>
+				</div>
+
+				<div class="sm:w-1/2">
+					<a href="{{postJobUrl}}" class="btn">Post a Job</a>
+				</div>
+
+			</div>
+
+			<div class="lg:flex lg:flex-wrap mb-lg md:-mx-4">
+
+				{# Main #}
+				<section class="main-content   lg:w-2/3 md:px-4 ">
+
+					{# Inf Scroll Wrap #}
+					<div class="js-infScroll   border-t border-grey-lightest mb-14   lg:mb-18" data-module="infScroll">
+						{# Article Summary #}
+
+						{# Output them #}
+						{% for entry in SectionEntries %}
+								{# Article Summary #}
+								<article class="inf-card   border-b border-grey-lightest mt-12 pb-6">
+									<time class="block leading-normal mb-2 text-grey-dark text-xs">{{date.simple(entry.postDate)}}</time>
+
+									<a class="no-underline hover:text-green mt-8 md:mt-12" href="{{entry.url}}">
+										<h1 class="mb-5 text-2md tefxt-blue   sm:text-lg   md:text-2md   lg:text-lg">{{entry.title}}</h1>
+									</a>
+
+									<div class="md:flex md:items-end">
+										<div class="leading-normal mb-6 text-xs text-grey-dark   md:pr-4 sm:w-4/5">{{entry.body}}</div>
+
+										{# button #}
+										<div class="sm:w-1/5">
+											<a href="{{entry.url}}" class="btn --auto-w --text px-8 text-xs --special   whitespace-no-wrap">
+												<span class="text relative text-center">
+													<span class="hover-show opacity-0 tr-all">
+														Read More
+													</span>
+
+													{# Type #}
+													<span class="blue-light hover-hide tr-all  absolute pin-t pin-l  -ml-6 text-xs   md:pin-r">
+													   {{entry.jobType[0].title}}
+													</span>
+												</span>
+											</a>
+										</div>
+									</div>
+								</article>
+						{% endfor %}
+					</div>
+
+
+					{# Inf Scroll Pagination #}
+
+					{% if pageInfo.nextUrl %}
+						<div class="pagination hidden">
+							<a class="pagination__next" href="{{ pageInfo.nextUrl }}">Next page</a>
+						</div>
+						<div class="w-full block">
+							<div class="btn --full-w sm:py-6 --outline load-more-cards">Show More</div>
+						</div>
+					{% endif %}
+					{# / End #}
+
+				</section>
+
+
+				{# Aside #}
+				<aside class="aside-content w-full lg:w-1/3 mt-14 lg:mt-0 md:px-4 clearfix">
+					<div class="max-w-sm lg:max-w-xs w-full m-auto lg:float-right ">
+						{% if jobsLanding[0].description %}
+							<p class="border-grey-lightest border-t leading-normal pt-6 text-xs text-grey-dark">{{jobsLanding[0].description}}</p>
+						{% endif %}
+					</div>
+				</aside>
+
+			</div>
+
+		</div>
+
+
+	{% endif %}
+
+{# Show Public Welcome if Anon User #}
+{% else %}
+	{# Page Header #}
+	{% include '_components/headers' with {
+		type: 'page-header--standard',
+		Title: jobsLanding[0].pageTitle,
+		classes: ''
+		} 
+	%}
+	<section class="landing mb-lg simple-container --wide">
+		{# Article #}
+		<div class="article m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
+
+			{{jobsLanding[0].body}}
+			
+			{{link.simple(jobsLanding[0].button, 'btn mt-10')}}
+
+		</div>
+	</section>
 
 {% endif %}
-
-
-
 
 {% endblock %}
