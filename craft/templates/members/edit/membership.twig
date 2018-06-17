@@ -24,9 +24,10 @@
 					{{ forms.errorBlock(allErrors) }}
 				{% endif %}
 
-
+				{% set activeCharge = false %}
 				{% for charge in charges %}
 					{% if charge.subscription is not null and charge.subscription.currentPeriodEnd >= date().timestamp %}
+						{% set activeCharge = true %}
 						{# Field #}
 						<div class="form-row mb-6 border-b border-grey-lightest pb-6">
 							{{ forms.hidden({ name: 'subscriptionId', value: charge.subscription.id }) }}
@@ -54,14 +55,30 @@
 								<p>Unknow status {{ charge.subscription.status }}</p>
 							{% endif %}
 						</div>
+
 					{% endif %}
 				{% endfor %}
 
-				{# Buttons #}
-				<div class="form-row mb-6 pt-6 flex items-center">
-						 <input id="endSubscriptionSubmit" class="submit btn --disabled" type="submit" value="Update" disabled>
-						<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
-				</div>
+				{% if activeCharge %}
+
+					{# Buttons #}
+					<div class="form-row mb-6 pt-6 flex items-center">
+							 <input id="endSubscriptionSubmit" class="submit btn --disabled" type="submit" value="Update" disabled>
+							<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
+					</div>
+				{% else %}
+
+					{# Field #}
+					<div class="form-row mb-6 border-b border-grey-lightest pb-6">
+						<h4 class="mb-4 text-md">WEAT</h4>
+						<div class="text-xs text-grey-dark leading-normal">
+							<p>Start Date: {{ date.simple(currentUser.userSubscriptionStartDate) }}</p>
+							<p>Expiry Date: {{ date.simple(currentUser.userSubscriptionStartDate) }}</p>
+							<p>Join Date: {{ date.simple(currentUser.userStartDate) }}</p>
+						</div>
+					</div>
+				{% endif %}
+
 
 			</form>
 {# Form Validation #}

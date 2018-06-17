@@ -1,0 +1,19 @@
+{% extends "_emails/templateblock" %}
+
+{% block content %}
+<p>Dear {{user.fullName}},</p>
+
+<p>Thank you for your continued support and membership to the Water Environment Association of Texas!
+We’re happy to have you on board for another year.</p>
+
+<p>Membership renewal: {insert renewal date}<br />
+Membership expiration: {insert expiration date}</p>
+
+<p>Your $50 payment allows for savings on all conferences, FREE webinar registration, subscriptions to Texas WET magazine and e-news, as well as savings on Texas Water registration and access to countless professional development and networking events. If you haven’t already done so, please check out our <a href="https://www.weat.org/events">upcoming events</a> and plan your next WEAT event. And lastly, if you would like to help contribute to the production of technical articles, present at conferences, or participate in webinars, consider <a href="https://www.weat.org/committees">joining a committee</a>.</p>
+
+<p>Thank you again for continuing forward with your WEAT community and helping to protect and enhance the water environment of Texas.</p>
+
+<p>Best regards,</p>
+
+<p>Your WEAT team</p>
+{% endblock %}

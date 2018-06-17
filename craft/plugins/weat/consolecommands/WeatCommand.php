@@ -567,6 +567,9 @@ Your WEAT Team';
     //$criteria->limit = 1;
     $users = $criteria->find();
     foreach($users as $user) {
+      if($user->id == 5534 || $user->id == 3474 || $user->id == 1270) {
+        continue;
+      }
       echo($user->fullName . ',' . $user->userSubscriptionEndDate . ',' . $user->userMembershipType . ',' . $user->userWefId . "\n");
       $this->actionExpired($user->id);
     }

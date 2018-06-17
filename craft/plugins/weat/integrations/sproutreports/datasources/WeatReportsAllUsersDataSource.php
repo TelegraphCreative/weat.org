@@ -70,6 +70,23 @@ class WeatReportsAllUsersDataSource extends SproutReportsBaseDataSource
 					->select($selectQueryString)
 					->from('users')
 					->join('content', '{{users.id}} = {{content.elementId}}');
+					$userStatusIds            = $options['userGroups'];
+					$userMembershipIds            = $options['userMembershipTypes'];
+					//print_r($userGroupIds);
+					if (is_array($userMembershipIds))
+					{
+						$userQuery->where(array('in', '{{content.field_userMembershipType}}', $userMembershipIds));
+					}
+					if (is_array($userStatusIds))
+					{
+						$userQuery->andWhere(array('in', '{{content.field_userStatus}}', $userStatusIds));
+					}
+
+					/*if (is_array($userGroupIds))
+					{
+						$userQuery->where(array('in', '{{content.field_userMembershipType}}', array('weat')));
+					}*/
+					//AND craft_content.field_userMembershipType IN('" . $userMembershipTypeIds . "')
 /*
 				if (is_array($userGroupIds))
 				{
