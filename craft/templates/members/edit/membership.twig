@@ -72,9 +72,10 @@
 					<div class="form-row mb-6 border-b border-grey-lightest pb-6">
 						<h4 class="mb-4 text-md">WEAT</h4>
 						<div class="text-xs text-grey-dark leading-normal">
-							<p>Start Date: {{ date.simple(currentUser.userSubscriptionStartDate) }}</p>
-							<p>Expiry Date: {{ date.simple(currentUser.userSubscriptionStartDate) }}</p>
-							<p>Join Date: {{ date.simple(currentUser.userStartDate) }}</p>
+							{{ post.published_at is empty ? "" : post.published_at|date("m/d/Y") }}
+							<p>Start Date: {{ currentUser.userSubscriptionStartDate is empty ? "-" :  date.simple(currentUser.userSubscriptionStartDate) }}</p>
+							<p>Expiry Date: {{ currentUser.userSubscriptionEndDate is empty ? "-" : date.simple(currentUser.userSubscriptionEndDate) }}</p>
+							<p>Join Date: {{ currentUser.userStartDate is empty ? "-" : date.simple(currentUser.userStartDate) }}</p>
 						</div>
 					</div>
 				{% endif %}
