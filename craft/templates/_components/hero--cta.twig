@@ -29,17 +29,18 @@
 		</div>
 
 		{# Pattern #}
-		<div 
-			class="background-pattern absolute pin-t pin-l w-full h-full opacity-25 hidden sm:block"
-			style="
-				background-image: url(/assets/svg/pattern_02.svg);
-			  background-repeat: no-repeat;
-			  background-size: 120%;
-			  background-position: 10% -20%;
-		">
-			
-		</div>
-
+		{% if block.pattern > 0 %}
+			<div 
+				class="background-pattern absolute pin-t pin-l w-full h-full opacity-25 hidden sm:block"
+				style="
+					background-image: url(/assets/svg/pattern_02.svg);
+				  background-repeat: no-repeat;
+				  background-size: 120%;
+				  background-position: 10% -20%;
+			">
+				
+			</div>
+		{% endif %}
 
 
 
