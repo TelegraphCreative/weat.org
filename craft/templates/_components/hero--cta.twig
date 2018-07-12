@@ -17,6 +17,10 @@
 		<div class="content relative z-10">
 
 			<header class="text-2md md:text-lg sm:text-xl mb-6">
+				{% if block.subheading %}
+					<h6 class="text-blue-light text-md mb-3">{{block.subheading}}</h6>
+				{% endif %}
+				
 				<h4>{{Header}}</h4>
 			</header>
 
