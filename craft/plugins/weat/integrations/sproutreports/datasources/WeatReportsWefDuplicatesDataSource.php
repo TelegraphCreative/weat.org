@@ -1,12 +1,12 @@
 <?php
 namespace Craft;
 
-class WeatReportsWefDataSource extends SproutReportsBaseDataSource
+class WeatReportsWefDuplicatesDataSource extends SproutReportsBaseDataSource
 {
 	//private $_settings = craft()->globals->getSetByHandle('wef');
 	public function getName()
 	{
-		return Craft::t('Users from WEF');
+		return Craft::t('Users from WEF that are in WEAT DB');
 	}
 
 	public function getDescription()
@@ -23,27 +23,9 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 	{
 		$settings = craft()->globals->getSetByHandle('wef');
 		// First, use dynamic options, fallback to report options
-		if (!count($options))
-		{
+		if (!count($options)) {
 			$options = $report->getOptions();
 		}
-
-
-		$selectQueryString = '{{users.email}},
-		{{content.field_userWefId}} AS wefId';
-
-		$userQuery = craft()->db->createCommand()
-			->select($selectQueryString)
-			->from('users')
-			->join('content', '{{users.id}} = {{content.elementId}}');
-		$users = $userQuery->queryAll();
-		$emails = array();
-		$wefIds = array();
-		foreach($users as $user) {
-			$emails[] = strtolower($user['email']);
-			$wefIds[] = $user['wefId'];
-		}
-
 
 		$beginDate = !empty($options['beginDate']['date']) ? $options['beginDate']['date'] : date_format(new \DateTime('now -30 days'), 'Y-m-d H:i:s');
 		$date = '
@@ -84,14 +66,24 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		$userArray = array();
 		$count = count($xmlelement2);
 		for($i = 0; $i<$count; $i++) {
-		  $obj = $xmlelement2->Table[$i];
-			/*if((string)$obj->Email_Address == 'jim.clarno@att.net') {
-				echo '<pre>';
-				print_r($obj);
-				echo '</pre>';
-			} else {
-				continue;
-			}*/
+			$obj = $xmlelement2->Table[$i];
+
+			$selectQueryString = '
+			{{content.field_userWefId}} AS wefId,
+			{{users.email}},
+			{{users.firstName}},
+			{{users.lastName}},
+			{{content.field_userPhoneNumber}} AS phone
+			';
+
+			$userQuery = craft()->db->createCommand()
+				->select($selectQueryString)
+				->from('users')
+				->where('craft_content.field_userWefId=:wefId', array(':wefId'=>(string)$obj->MASTER_CUSTOMER_ID))
+				->join('content', '{{users.id}} = {{content.elementId}}');
+			$users = $userQuery->queryAll();
+			$emails = array();
+			$wefIds = array();
 			// Skip the companies
 			if((string)$obj->RECORD_TYPE == 'C') {
 				continue;
@@ -105,7 +97,7 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 			$lastName = '';
 			$lastName .= (string)$obj->LAST_NAME;
 			if((string)$obj->NAME_SUFFIX) {
-				$lastName .= ' ' . (string)$obj->NAME_SUFFIX;
+				$lastName .= (string)$obj->NAME_SUFFIX;
 		  }
 		  $phone = '';
 		  if((string)$obj->Business_Phone) {
@@ -117,60 +109,14 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		  } else if((string)$obj->Business_Fax) {
 		    $phone = (string)$obj->Business_Fax;
 		  }
-
-			switch((string)$obj->WEF_Membership_Product) {
-				case 'Professional Member':
-					$membershipType = 'professional';
-					break;
-				case 'Young Professional':
-					$membershipType = 'youngProfessional';
-					break;
-				case 'Life Member':
-					$membershipType = 'life';
-					break;
-				case 'PWO Member':
-					$membershipType = 'professionalOperator';
-					break;
-				case 'Executive Member':
-					$membershipType = 'executive';
-					break;
-				case 'Student Member':
-					$membershipType = 'student';
-					break;
-				/*case 'Retired Member':
-					$membershipType = '';
-					break;*/
-				/*case '':
-					$membershipType = '';
-					break;*/
-				default:
-					$membershipType = 'COULD NOT FIND: ' . (string)$obj->WEF_Membership_Product;
-			}
-
-			switch((string)$obj->Status) {
-				case 'Current':
-					$status = 'current';
-					break;
-				case 'Reinstate':
-					$status = 'reinstate';
-					break;
-				case 'Delinquent':
-					$status = 'delinquent';
-					break;
-				case 'New':
-					$status = 'new';
-					break;
-				default:
-					$status = 'COULD NOT FIND: ' . (string)$obj->Status;
-			}
+			/*
 		  $userArray[] = array(
 				'Email' => (string)$obj->Email_Address,
 				'WEF ID' => (string)$obj->MASTER_CUSTOMER_ID,
 				'First Name' => (string)$obj->FIRST_NAME,
 				//'middleName' => (string)$obj->MIDDLE_NAME,
 				'Last Name'=> $lastName,
-				'Title' => (string)$obj->PRIMARY_JOB_TITLE,
-				'Organization Name' => (string)$obj->Organization_Name,
+				'Title' => (string)$obj->Organization_Name, //PRIMARY_JOB_TITLE,
 				'Company name' => (string)$obj->COMPANY_NAME,
 				'Address 1' => (string)$obj->ADDRESS_1,
 				'Address 2 ' => (string)$obj->ADDRESS_2,
@@ -178,18 +124,18 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 				'State' => (string)$obj->STATE,
 				'Zip' => (string)$obj->POSTAL_CODE,
 				'Phone number' => $phone,
-				'Status' => $status,
+				'Status' => (string)$obj->Status,
 				//'recordType' => (string)$obj->RECORD_TYPE,
-				'Start Date' => $this->formatDate($obj->WEF_Join_Date),
-				'Subscription End Date' => $this->formatDate($obj->Membership_Paid_Through_Date),
-				//'Delinquent_Date' => $this->formatDate($obj->Delinquent_Date),
-				//'GRACE_DATE' => $this->formatDate($obj->GRACE_DATE),
+				'WEF_Join_Date' => $this->formatDate($obj->WEF_Join_Date),
+				'Membership_Paid_Through_Date' => $this->formatDate($obj->Membership_Paid_Through_Date),
+				'Delinquent_Date' => $this->formatDate($obj->Delinquent_Date),
+				'GRACE_DATE' => $this->formatDate($obj->GRACE_DATE),
 				'ReinstateDate' => (string)$obj->ReinstateDate,
-				'Membership Type' => $membershipType,
-				//'CHANGED_ON_DATE' => $this->formatDate($obj->CHANGED_ON_DATE),
+				'WEF_Membership_Product' => (string)$obj->WEF_Membership_Product,
+				'CHANGED_ON_DATE' => $this->formatDate($obj->CHANGED_ON_DATE),
 
 				//'' => (string)$obj->,
-		/*
+		/
 		    UPP
 
 
@@ -214,8 +160,37 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 		    Sponsor,
 		    CommitteFlag,
 		    CHANGED_BY_USER,
-		    CHANGED_ON_DATE*/
-			);
+		    CHANGED_ON_DATE/
+			);*/
+
+			$duplicate = false;
+			foreach($users as $user) {
+				if(
+					$user['email'] != (string)$obj->Email_Address
+					|| $user['firstName'] != (string)$obj->FIRST_NAME
+					|| $user['lastName'] != (string)$obj->LAST_NAME
+					|| $user['phone'] != $phone
+				) {
+					$duplicate = true;
+				}
+				$emails[] = strtolower($user['email']);
+				$wefIds[] = $user['wefId'];
+				if($duplicate) {
+					$userArray[] = array(
+						'Email' => $user['email'],
+						'First Name' => $user['firstName'],
+						'Last Name' => $user['lastName'],
+						'Phone' => $user['phone']
+					);
+					$userArray[] = array(
+						'Email' => (string)$obj->Email_Address,
+						'First Name' => (string)$obj->FIRST_NAME,
+						'Last Name' => (string)$obj->LAST_NAME,
+						'Phone' => $phone
+					);
+				}
+			}
+
 		}
 		/*$userArray = array_map("unserialize", array_unique(array_map("serialize", $userArray)));
 		usort($userArray, function($a, $b) {

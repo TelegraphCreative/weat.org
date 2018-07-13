@@ -8,7 +8,7 @@ namespace Craft;
  * Provides a read-only object representing an ingredient, which is returned
  * by our service class and can be used in our templates and controllers.
  */
-class Weat_RegistrationModel extends BaseModel
+class Weat_RegistrationModel extends BaseElementModel
 {
 /**
 	 * Defines what is returned when someone puts {{ ingredient }} directly
@@ -28,7 +28,7 @@ class Weat_RegistrationModel extends BaseModel
 	 */
 	public function defineAttributes()
 	{
-		return array(
+		return array_merge(parent::defineAttributes(), array(
 			'id' => AttributeType::Number,
 			'ticketId' => AttributeType::Number,
 			'firstName' => AttributeType::String,
@@ -48,7 +48,7 @@ class Weat_RegistrationModel extends BaseModel
 			'user' => [AttributeType::Mixed],
 			'charge' => [AttributeType::Mixed],
 			'event' => [AttributeType::Mixed],
-		);
+		));
 	}
 
 	public static function populateModels($data, $indexBy = null)

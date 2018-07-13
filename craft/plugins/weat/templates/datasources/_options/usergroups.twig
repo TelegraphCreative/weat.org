@@ -10,8 +10,8 @@
 	{% set beginOffset = 61 %}
 	{% set endOffset = 90 %}
 {% else %}
-	{% set beginOffset = 30 %}
-	{% set endOffset = 60 %}
+	{% set beginOffset = null %}
+	{% set endOffset = null %}
 {% endif %}
 
 {{ forms.checkboxSelectField({
@@ -38,12 +38,12 @@
 	label: "Begin Date",
 	name: 'options[beginDate]',
 	id: 'beginDate',
-	value: options.beginDate is defined and craft.request.urlReferrer == craft.request.url ? now|date_modify(options.beginDate.date) : now|date_modify("+" ~ beginOffset ~ " days")
+	value: options.beginDate.date is not empty and craft.request.urlReferrer == craft.request.url ? now|date_modify(options.beginDate.date) : beginOffset is not null ? now|date_modify("+" ~ beginOffset ~ " days") : ''
 }) }}
 
 {{ forms.dateField({
 	label: "End Date",
 	name: 'options[endDate]',
 	id: 'endDate',
-	value: options.endDate is defined and craft.request.urlReferrer == craft.request.url ? now|date_modify(options.endDate.date)  : now|date_modify("+" ~ endOffset ~ " days")
+	value: options.endDate.date is not empty and craft.request.urlReferrer == craft.request.url ? now|date_modify(options.endDate.date) : endOffset is not null ? now|date_modify("+" ~ endOffset ~ " days") : ''
 }) }}
