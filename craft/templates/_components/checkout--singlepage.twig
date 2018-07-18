@@ -379,13 +379,13 @@
 							{# Field #}
 							<div class="w-1/2 px-4">
 								<label for="firstName" class="field-label block w-full">First Name</label>
-								<input required name="firstName" id="firstName" type="text" class="input-field block w-full pageRequired" placeholder="Your First Name" value="{{charge is defined and charge.user ? charge.user.firstName : (currentUser ? currentUser.firstName : '')}}">
+								<input required name="firstName" id="firstName" type="text" class="input-field block w-full pageRequired" placeholder="Your First Name" value="{{charge is defined and charge.user ? charge.user.firstName : (currentUser ? currentUser.firstName : craft.request.getPost('firstName'))}}">
 							</div>
 
 							{# Field #}
 							<div class="w-1/2 px-4">
 								<label for="lastName" class="field-label block w-full">Last Name</label>
-								<input required name="lastName" id="lastName" type="text" class="input-field block w-full pageRequired" placeholder="Your Last Name" value="{{charge is defined and charge.user ? charge.user.lastName : (currentUser ? currentUser.lastName : '')}}">
+								<input required name="lastName" id="lastName" type="text" class="input-field block w-full pageRequired" placeholder="Your Last Name" value="{{charge is defined and charge.user ? charge.user.lastName : (currentUser ? currentUser.lastName : craft.request.getPost('lastName'))}}">
 							</div>
 						</div>
 
