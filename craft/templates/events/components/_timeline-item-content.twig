@@ -65,7 +65,7 @@
             {% if event.membersOnly > 0 %}
                 {# User is Logged In Member #}
                 {% if currentUser and craft.weat.isWeatMember %}
-                    {% set Url = '/payments/checkout/event/'~event.id %}
+                    {% set Url = '/payments/event/'~event.id %}
                     {% set Target = '' %}
                     {% set Text = 'Register' %}
 
@@ -80,7 +80,7 @@
             {% else %}
 
                 {# Event for Everyone #}
-                {% set Url = '/payments/checkout/event/'~event.id %}
+                {% set Url = '/payments/event/'~event.id %}
                 {% set Target = '' %}
                 {% set Text = 'Register' %}
 
