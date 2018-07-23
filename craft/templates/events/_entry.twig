@@ -62,7 +62,7 @@
       {% set currentYear = "now"|date('Y') %}
       {% set current = currentYear  ~ "-" ~ currentMonth ~ "-1" %}
 
-      {% if event.startDate <= now %}
+      {% if event.startDate < now %}
         <a href="#" class="btn --full-w --lg --disabled">This is a past event</a>
 
 
