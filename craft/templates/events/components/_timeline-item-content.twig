@@ -19,7 +19,7 @@
 	        <a class="text-xs mb-3 block no-underline text-grey-dark hover:text-blue" target="_blank" href="{{event.location[0].getMapUrl()}}">{{event.location[0]}}</a>
 	    </div>
     {% endif %}
-    
+
     {# Info #}
     <div class="flex sm:mb-2">
         {# {{svg.icon('icon --map --sm mr-3 top-2 relative tr-all','calendar')}} #}
@@ -29,15 +29,15 @@
                 <path fill="currentColor" d="M23,2h-4V0h-2v2h-4V0h-2v2H7V0H5v2H1C0.448,2,0,2.448,0,3v3h24V3C24,2.448,23.552,2,23,2z"/>
             </svg>
         </span>
-        
+
         <div class="text-xs mb-3 block leading-normal">
             {% if event.eventDays|length %}
             <p>{{event.eventDays}}
             {% else %}
-            <p>{{ event.startDate|date('M') }} {{ event.startDate|date('d') }}, 
+            <p>{{ event.startDate|date('M') }} {{ event.startDate|date('d') }},
             {% endif %}
             {{ event.startDate|date('Y') }}</p>
-            
+
             {% if event.allDay %}
                 All Day
             {% else %}
@@ -46,12 +46,12 @@
 
 
 
-        </div> 
+        </div>
     </div>
 
 </div>
 
-<div class="text-right"> 
+<div class="text-right">
 
     {# Defaults #}
     {% set Url = event.url %}
@@ -60,12 +60,12 @@
 
         {# Registered Event #}
         {% if event.registeredEvent > 0 %}
-            
+
             {# For Members #}
             {% if event.membersOnly > 0 %}
                 {# User is Logged In Member #}
-                {% if currentUser and currentUser.isInGroup('subscriber') %}
-                    {% set Url = '/payments/checkout/event/'~event.id %}
+                {% if currentUser and craft.weat.isWeatMember %}
+                    {% set Url = '/payments/event/'~event.id %}
                     {% set Target = '' %}
                     {% set Text = 'Register' %}
 
@@ -76,20 +76,20 @@
                     {% set Text = 'Join Now' %}
 
                 {% endif %}
-            
+
             {% else %}
 
                 {# Event for Everyone #}
-                {% set Url = '/payments/checkout/event/'~event.id %}
+                {% set Url = '/payments/event/'~event.id %}
                 {% set Target = '' %}
                 {% set Text = 'Register' %}
 
-            {% endif %}           
+            {% endif %}
 
         {% else %}
 
-            
-            
+
+
         {% endif %}
 
     <a href="{{Url}}" target="{{Target}}" class="btn --auto-w --text text-xs --special">
@@ -97,7 +97,7 @@
             <span class="hover-show opacity-0 tr-all">
                 {{Text}}
             </span>
-            
+
             {# Type #}
             <span style="color:{{ event.getColor() }}" class="hover-hide tr-all  absolute pin-t pin-r text-xs">
                 {{ event.getGroup() }}
@@ -105,6 +105,6 @@
         </span>
     </a>
 
-        
+
 
 </div>

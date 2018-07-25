@@ -20,6 +20,6 @@
 	label: "Begin Date",
 	instructions: "Display user statuses as columns in your results",
 	name: 'options[beginDate]',
-	on: options.beginDate is defined ? options.beginDate : null,
-	value: now|date_modify("-30 days")
+	id: 'beginDate',
+	value: options.beginDate is defined and options.beginDate.date is not empty ? now|date_modify(options.beginDate.date) : now|date_modify("-30 days")
 }) }}

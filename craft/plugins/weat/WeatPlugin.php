@@ -61,6 +61,8 @@ class WeatPlugin extends BasePlugin
 					craft()->weat_registration->updateConstantContact($event);
 					//craft()->weat_registration->switchSubscription($event);
 					break;
+				//case 'onrenew':
+					//update the expiration date, not the join date
 				default:
 					WeatPlugin::log('Charge type does not match anything. ' . $type);
 			}
@@ -316,7 +318,10 @@ class WeatPlugin extends BasePlugin
 			new WeatReportsUserStatusDataSource(),
 			new WeatReportsUserExpireDataSource(),
 			new WeatReportsWefDataSource(),
+			new WeatReportsWefDuplicatesDataSource(),
 			new WeatReportsAllUsersDataSource(),
+			new WeatReportsCommitteeDataSource(),
+			new WeatReportsAwardsDataSource()
 		);
 	}
 }

@@ -40,7 +40,7 @@ class WeatVariable
 		}
 
 		//if(subscriber or expires in < 90 days) {
-		if ($user->isInGroup('subscriber') or $user->userSubscriptionEndDate >= date('Y-m-d H:i:s')) {
+		if ($user->userSubscriptionEndDate >= date('Y-m-d H:i:s', strtotime('-3 month'))) {
 			return true;
 		}
 

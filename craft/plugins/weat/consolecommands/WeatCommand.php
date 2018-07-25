@@ -830,29 +830,61 @@ We’d like to take this opportunity to thank you for choosing to be a WEAT memb
 
 It is that time of the year again that we ask that you consider the value and benefit of a WEAT membership and renew as your membership **expires on ' .  date('F j, Y', strtotime($user->userSubscriptionEndDate)) . '**. An annual WEAT membership remains only $50, which allows for discounts to conferences, free WEAT webinars, section membership, and a $200 savings on Texas Water registration. Your WEAT team has worked diligently to develop a new website and database that provides for a much easier renewal process and an annual auto-renewal function! Please go to www.weat.org and login to renew your membership today.
 
-' . $user->fullName . '  ' . '
-' . ($user->userCompanyName ? $user->userCompanyName .'  ' . '' : '') . '
-' . ($user->userAddress1 ? $user->userAddress1 . '  ' . '' : '') . '
-' . ($user->userAddress2 ? $user->userAddress2 . '  ' . '' : '') . '
-' . $user->userAddressCity . ', ' . $user->userAddressState . ' ' . $user->userAddressZip . '
-
 **INVOICE**
 
-Customer ID: ' . $user->userWefId . '  ' . '
-Invoice Number: ' . $user->id . '  ' . '
-Invoice Date: ' . date("F j, Y") . '  ' . '
+<table cellpadding="5" width="100%">
+  <tr>
+    <td>
+' . $user->fullName . '  ' . '<br />
+' . ($user->userCompanyName ? $user->userCompanyName .'<br />  ' . '' : '') . '
+' . ($user->userAddress1 ? $user->userAddress1 . '<br />  ' . '' : '') . '
+' . ($user->userAddress2 ? $user->userAddress2 . '<br />  ' . '' : '') . '
+' . ($user->userAddressCity ? $user->userAddressCity : '') . ', ' . ($user->userAddressState ? $user->userAddressState : '') . ' ' . ($user->userAddressZip ? $user->userAddressZip : '') . '
+    </td>
+    <td>
+Customer ID: ' . ($user->userWefId ? $user->userWefId : $user->id) . '<br />  ' . '
+Invoice Number: ' . $user->id . '<br />  ' . '
+Invoice Date: ' . date("F j, Y") . '<br />  ' . '
 Notes: Renewal invoice
+    </td>
+  </tr>
+</table>
 
-Item: MA - WEAT ONLY  ' . '
-Unit Price: $50.00  ' . '
-Quantity: 1  ' . '
-Amount: $50.00  ' . '
-Term: ' . date('F j, Y', strtotime($user->userSubscriptionEndDate)) . ' - ' . date('F j, Y', strtotime(date('F j, Y', strtotime($user->userSubscriptionEndDate)) . " + 365 day")) . '
-
-**Subtotal:** $50.00  ' . '
-Discount: $0.00  ' . '
-**Invoice Total:** $50.00  ' . '
-**Balance Due:** $50.00
+<table border="1" cellpadding="5" width="100%">
+  <tr>
+    <th>Item</th>
+    <th>Misc Product Notes</th>
+    <th>Unit Price</th>
+    <th>Quantity</th>
+    <th>Amount</th>
+  </tr>
+  <tr>
+    <td>MA - WEAT ONLY</td>
+    <td></td>
+    <td>$50.00</td>
+    <td>1</td>
+    <td>$50.00</td>
+  </tr>
+  <tr>
+    <td colspan="5">Term: ' . date('F j, Y', strtotime($user->userSubscriptionEndDate)) . ' - ' . date('F j, Y', strtotime(date('F j, Y', strtotime($user->userSubscriptionEndDate)) . " + 365 day")) . '</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right"><strong>Subtotal</strong></td>
+    <td>$50.00</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right">Discount</td>
+    <td>$0.00</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right"><strong>Invoice Total</strong></td>
+    <td>$50.00</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right"><strong>Balance Due</strong></td>
+    <td>$50.00</td>
+  </tr>
+</table>
 
 WEAT cannot be the leading water quality organization in Texas without you and your input. So please consider renewing and remaining part of the WEAT community. We need your help in continuing to protect and enhance the water quality of Texas!
 
@@ -892,29 +924,60 @@ your professional needs. We’d like your feedback to improve our services.
 
 WEAT ONLY MEMBERSHIP INVOICE
 
-' . $user->fullName . '  ' . '
-' . ($user->userCompanyName ? $user->userCompanyName .'  ' . '' : '') . '
-' . ($user->userAddress1 ? $user->userAddress1 . '  ' . '' : '') . '
-' . ($user->userAddress2 ? $user->userAddress2 . '  ' . '' : '') . '
-' . $user->userAddressCity . ', ' . $user->userAddressState . ' ' . $user->userAddressZip . '
-
-**INVOICE**
-
-Customer ID: ' . $user->userWefId . '  ' . '
-Invoice Number: ' . $user->id . '  ' . '
-Invoice Date: ' . date("F j, Y") . '  ' . '
+<table cellpadding="5" width="100%">
+  <tr>
+    <td>
+' . $user->fullName . '  ' . '<br />
+' . ($user->userCompanyName ? $user->userCompanyName .'<br />  ' . '' : '') . '
+' . ($user->userAddress1 ? $user->userAddress1 . '<br />  ' . '' : '') . '
+' . ($user->userAddress2 ? $user->userAddress2 . '<br />  ' . '' : '') . '
+' . ($user->userAddressCity ? $user->userAddressCity : '') . ', ' . ($user->userAddressState ? $user->userAddressState : '') . ' ' . ($user->userAddressZip ? $user->userAddressZip : '') . '
+    </td>
+    <td>
+Customer ID: ' . ($user->userWefId ? $user->userWefId : $user->id) . '<br />  ' . '
+Invoice Number: ' . $user->id . '<br />  ' . '
+Invoice Date: ' . date("F j, Y") . '<br />  ' . '
 Notes: Renewal invoice
+    </td>
+  </tr>
+</table>
 
-Item: MA - WEAT ONLY  ' . '
-Unit Price: $50.00  ' . '
-Quantity: 1  ' . '
-Amount: $50.00  ' . '
-Term: ' . date('F j, Y', strtotime($user->userSubscriptionEndDate)) . ' - ' . date('F j, Y', strtotime(date('F j, Y', strtotime($user->userSubscriptionEndDate)) . " + 365 day")) . '
 
-**Subtotal:** $50.00  ' . '
-Discount: $0.00  ' . '
-**Invoice Total:** $50.00  ' . '
-**Balance Due:** $50.00
+<table border="1" cellpadding="5" width="100%">
+  <tr>
+    <th>Item</th>
+    <th>Misc Product Notes</th>
+    <th>Unit Price</th>
+    <th>Quantity</th>
+    <th>Amount</th>
+  </tr>
+  <tr>
+    <td>MA - WEAT ONLY</td>
+    <td></td>
+    <td>$50.00</td>
+    <td>1</td>
+    <td>$50.00</td>
+  </tr>
+  <tr>
+    <td colspan="5">Term: ' . date('F j, Y', strtotime($user->userSubscriptionEndDate)) . ' - ' . date('F j, Y', strtotime(date('F j, Y', strtotime($user->userSubscriptionEndDate)) . " + 365 day")) . '</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right"><strong>Subtotal</strong></td>
+    <td>$50.00</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right">Discount</td>
+    <td>$0.00</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right"><strong>Invoice Total</strong></td>
+    <td>$50.00</td>
+  </tr>
+  <tr>
+    <td colspan="4" align="right"><strong>Balance Due</strong></td>
+    <td>$50.00</td>
+  </tr>
+</table>
 
 Best regards,  ' . '
 Your WEAT Team';

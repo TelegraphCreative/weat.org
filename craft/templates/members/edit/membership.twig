@@ -18,6 +18,19 @@
 	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg choices-as-boxes">
 		{% if craft.weat.isWeatMember %}
 
+		{# Field #}
+		<div class="form-row mb-6 border-b border-grey-lightest pb-6">
+			<h4 class="mb-4 text-md">{{ currentUser.userMembershipType.label }}</h4>
+			<div class="text-xs text-grey-dark leading-normal">
+				{{ post.published_at is empty ? "" : post.published_at|date("m/d/Y") }}
+				<p>Start Date: {{ currentUser.userSubscriptionStartDate is empty ? "-" :  date.simple(currentUser.userSubscriptionStartDate) }}</p>
+				{% if currentUser.userMembershipType not in ['life', 'complimentary'] %}
+				<p>Expiry Date: {{ currentUser.userSubscriptionEndDate is empty ? "-" : date.simple(currentUser.userSubscriptionEndDate) }}</p>
+				{% endif %}
+				<p>Join Date: {{ currentUser.userStartDate is empty ? "-" : date.simple(currentUser.userStartDate) }}</p>
+			</div>
+		</div>
+
 			<form method="post" id="endSubscriptionForm" accept-charset="UTF-8" class="py-4">
 				{{ getCsrfInput() }}
 				{% if allErrors is defined %}
@@ -31,10 +44,10 @@
 						{# Field #}
 						<div class="form-row mb-6 border-b border-grey-lightest pb-6">
 							{{ forms.hidden({ name: 'subscriptionId', value: charge.subscription.id }) }}
-							<h4 class="mb-4 text-md">{{ charge.subscription.planName }}</h4>
+							<h4 class="mb-4 text-md">Subscription details<br />{{ charge.subscription.planName }}</h4>
 							<div class="text-xs text-grey-dark leading-normal">
-								<p>Start Date: {{ date.simple(charge.subscription.currentPeriodStart) }}</p>
-								<p>Expiry Date: {{ date.simple(charge.subscription.currentPeriodEnd) }}</p>
+								<p>Recurring subscription paid date: {{ date.simple(charge.subscription.currentPeriodStart) }}</p>
+								<p>Recurring subsciption end date: {{ date.simple(charge.subscription.currentPeriodEnd) }}</p>
 							</div>
 						</div>
 
@@ -65,18 +78,6 @@
 					<div class="form-row mb-6 pt-6 flex items-center">
 							 <input id="endSubscriptionSubmit" class="submit btn --disabled" type="submit" value="Update" disabled>
 							<a href="#" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
-					</div>
-				{% else %}
-
-					{# Field #}
-					<div class="form-row mb-6 border-b border-grey-lightest pb-6">
-						<h4 class="mb-4 text-md">WEAT</h4>
-						<div class="text-xs text-grey-dark leading-normal">
-							{{ post.published_at is empty ? "" : post.published_at|date("m/d/Y") }}
-							<p>Start Date: {{ currentUser.userSubscriptionStartDate is empty ? "-" :  date.simple(currentUser.userSubscriptionStartDate) }}</p>
-							<p>Expiry Date: {{ currentUser.userSubscriptionEndDate is empty ? "-" : date.simple(currentUser.userSubscriptionEndDate) }}</p>
-							<p>Join Date: {{ currentUser.userStartDate is empty ? "-" : date.simple(currentUser.userStartDate) }}</p>
-						</div>
 					</div>
 				{% endif %}
 

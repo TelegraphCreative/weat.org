@@ -22,10 +22,10 @@ class Weat_RegistrationService extends BaseApplicationComponent
 {
 	protected $registrationRecord;
 	/**
-	 * Create a new instance of the Cocktail Recpies Service.
-	 * Constructor allows IngredientRecord dependency to be injected to assist with unit testing.
+	 * Create a new instance of the Registration Service.
+	 * Constructor allows RegistrationtRecord dependency to be injected to assist with unit testing.
 	 *
-	 * @param @ingredientRecord IngredientRecord The ingredient record to access the database
+	 * @param @registratotionRecord RegistrationRecord The registration record to access the database
 	 */
 	public function __construct($registrationRecord = null)
 	{
@@ -104,6 +104,75 @@ class Weat_RegistrationService extends BaseApplicationComponent
 
 	return $record->save(false);
  }
+
+	public function adminSaveRegistration(Weat_RegistrationModel $registration) {
+		// Get the submission record
+		if ($registration->id) {
+			$registrationRecord = Weat_RegistratonRecord::model()->findById($registration->id);
+
+			if (! $registrationRecord) {
+				throw new Exception(Craft::t('No submission exists with the ID “{id}”.', array('id' => $registration->id)));
+			}
+		}
+		else {
+			$registrationRecord = new Weat_RegistrationRecord();
+		}
+
+		// Submission attributes
+		$registrationRecord->setAttributes($registration->getAttributes(), false);
+
+		// Validate the attributes
+		$registrationRecord->validate();
+		$registration->addErrors($registrationRecord->getErrors());
+
+		if (! $registration->hasErrors()) {
+			$this->emailConfirmation($registration);
+			return $registrationRecord->save(false);
+		}
+
+		return false;
+	}
+
+
+	public function emailConfirmation(Weat_RegistrationModel $registration)
+	{
+		$email = new EmailModel();
+		$user = craft()->users->getUserById($registration->userId);
+		$event = craft()->venti_events->getEventById($registration->elementId);
+		$meta = unserialize($registration->meta);
+
+		$email->toEmail = $user->email;
+		$email->subject = 'Thank you for registering';
+		$email->body    =
+'<h3>Thank you!</h3>
+
+Your registration has been received.
+
+' . $event->eventEmailContent . '
+Event: ' . $meta['eventName']  . '
+
+Registration type: ' . $meta['ticketName'];
+		if (!$email->htmlBody) {
+			// Auto-generate the HTML content
+			$email->htmlBody = StringHelper::parseMarkdown($email->body);
+		}
+
+		$oldPath = craft()->path->getTemplatesPath();
+		/*$newPath = craft()->path->getSiteTemplatesPath();*/
+		$newPath = craft()->path->getPluginsPath() . 'weat/templates/';
+		craft()->path->setTemplatesPath($newPath);
+		$email->htmlBody = craft()->templates->render( '_emails/template', array(
+			'body' => $email->htmlBody
+		) );
+		/*
+		$email->htmlBody = "{% extends '_emails/template' %}\n".
+"{% set body %}\n".
+$email->htmlBody.
+"{% endset %}\n";
+*/
+		craft()->path->setTemplatesPath($oldPath);
+		craft()->email->sendEmail($email);
+	}
 
 	public function switchSubscription($event)
 	{
@@ -273,7 +342,9 @@ class Weat_RegistrationService extends BaseApplicationComponent
 					$endDate = date("Y-m-d H:i:s", strtotime('+1 year'));
 				}
 				$user->getContent()->userSubscriptionStartDate = $beginDate;
-				$user->getContent()->userStartDate = $beginDate;
+				if(empty($user->getContent()->userStartDate)) {
+					$user->getContent()->userStartDate = $beginDate;
+				}
 				$user->getContent()->userSubscriptionEndDate = $endDate;
 			}
 			craft()->users->saveUser($user);
@@ -286,7 +357,7 @@ class Weat_RegistrationService extends BaseApplicationComponent
 		$charge = craft()->charge->getChargeByHash($chargeParam->hash);
 		$user = craft()->users->getUserById($charge->userId);
 		$meta = $event->params['charge']->meta;
-		if(!isset($meta->newsletter) or $meta->newsletter == 'on') {
+		if(!isset($meta['newsletter']) or $meta['newsletter'] != 'on') {
 			return;
 		}
 		$first_name = $user->firstName;

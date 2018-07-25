@@ -1,15 +1,23 @@
 {% extends "_layouts/cp" %}
+{% redirect "weat/events/add" %}
 {% set centered = true %}
 {#% set tabs = {
 	recent: { label: "Registrations"|t, url: url('weat') },
 	new:    { label: "Second tab"|t, url: url('weat/reports') }
 } %#}
 
+{#
 {% set subnav = {
-    registrations: { label: "Event Registrations"|t, url: url('weat/eventregistrations') },
-    subscribers:       { label: "Template Meta"|t, url: url('weat/subscribers') },
-    donations:   { label: "Donations"|t, url: url('weat/donations') },
-    settings:   { label: "Settings"|t, url: url('weat/settings') },
+  registrations: { label: "Event Registrations"|t, url: url('weat/eventregistrations') },
+  subscribers:       { label: "Template Meta"|t, url: url('weat/subscribers') },
+  donations:   { label: "Donations"|t, url: url('weat/donations') },
+  settings:   { label: "Settings"|t, url: url('weat/settings') },
+} %}
+#}
+
+{% set subnav = {
+  registrations: { label: "Event Registrations"|t, url: url('weat/eventregistrations') },
+  addRegistration:       { label: "Manual registration"|t, url: url('weat/events/add') },
 } %}
 {% set registrations = craft.weat.getAllRegistrations() %}
 {% set title = "Registrations"|t %}
@@ -24,22 +32,47 @@
 		<th scope="col">{{ "First Name"|t }}</th>
 		<th scope="col">{{ "Last Name"|t }}</th>
 		<th scope="col">{{ "Quantity"|t }}</th>
-		<th scope="col">{{ "Title"|t }}</th>
+		<th scope="col">{{ "Event"|t }}</th>
+		<th scope="col">{{ "Ticket"|t }}</th>
 		{#}<th class="thin"></th>#}
 	</thead>
 	<tbody>
 	{% for registration in registrations %}
 		<tr data-id="{{ registration.id }}" data-name="{{ registration.firstName|t }}">
-			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ registration.firstName }}</a></td>
-			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ registration.lastName }}</a></td>
-			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ registration.numberOfTickets }}</a></td>
-			<td><a href="{{ url('cocktailrecipes/ingredients/'~registration.id) }}">{{ craft.venti.events.id(registration.elementId).first.title }}</a></td>
+			<td>{{ registration.firstName }}</td>
+			<td>{{ registration.lastName }}</td>
+			<td>{{ registration.numberOfTickets }}</td>
+			<td><a href="{{ url('venti/ingredients/'~registration.id) }}">{{ craft.venti.events.status(null).id(registration.elementId).first.title }}</a></td>
+			<td><a href="{{ url('venti/ingredients/'~registration.id) }}">{{ craft.venti.events.status(null).id(registration.elementId).first.title }}</a></td>
 			{#}<td><a class="delete icon" title="{{ 'Delete'|t }}"></a></td>#}
 		</tr>
 		{#}<pre>
 		{{dump(registration)}}
 	</pre>#}
 	{% endfor %}
+
+{#
+
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`userId` int(11) DEFAULT NULL,
+`chargeId` int(11) DEFAULT NULL,
+`elementId` int(11) DEFAULT NULL,
+`ticketId` int(10) DEFAULT NULL,
+`firstName` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+`lastName` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+`address1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+`address2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+`city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+`state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+`zip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+`email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+`numberOfTickets` int(10) DEFAULT '1',
+`subscriptionAdded` tinyint(1) unsigned NOT NULL DEFAULT '0',
+`meta` mediumtext COLLATE utf8_unicode_ci,
+`dateCreated` datetime NOT NULL,
+`dateUpdated` datetime NOT NULL,
+`uid` char(36) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+#}
 
 	</tbody>
 </table>

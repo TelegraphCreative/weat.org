@@ -15,7 +15,7 @@
 {% set individualPrice = null %}
 
 {% set isMember = false %}
-{% if currentUser and (currentUser.isInGroup('subscriber') or currentUser.userSubscriptionEndDate >= now) %}
+{% if currentUser and craft.weat.isWeatMember %}
   {% set showJoinPricing = false %}
   {% set isMember = true %}
 {% endif %}

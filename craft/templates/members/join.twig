@@ -1,6 +1,6 @@
 {% extends '_components/checkout--singlepage.twig' %}
 
-{% if currentUser and currentUser.isInGroup('subscriber') %}
+{% if currentUser and craft.weat.isWeatMember %}
 	{% redirect "members/edit/account?loggedIn=true&isMember=true" %}
 {% endif %}
 
