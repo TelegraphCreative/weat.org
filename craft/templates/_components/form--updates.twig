@@ -2,15 +2,17 @@
 <div class="bg-blue-lighter text-blue">
 	<div class="max-w-xl m-auto py-8 px-4 sm:pt-10 sm:pb-12 md:flex md:items-center md:justify-between">
 
-		<header class="w-full md:w-1/2">
-			<h4 class="text-2md mb-4 md:mb-0 sm:text-lg">Get our Updates</h4>
+		<header id="email-subscribe-header" class="w-full md:w-1/2">
+			<h4 id="email-subscribe-header__title" class="text-2md mb-4 md:mb-0 sm:text-lg">Get our Updates</h4>
 		</header>
 
 		<div class="signup w-full md:w-1/2">
-			<form action="#" id="email-subscribe" class="flex" method="post" accept-charset="UTF-8">
+			<form action="#" id="email-subscribe" class="flex relative" method="post" accept-charset="UTF-8">
 				{{ getCsrfInput() }}
 				<input type="email" id="email-subscribe-email" name="fields[email]" class="leading-none required flex-1 rounded-full bg-white text-black mr-1 text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" placeholder="Email Address">
-				<input type="submit" class="btn text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" value="Subscribe">
+				{# <input type="submit" class="btn text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" value="Subscribe"> #}
+
+				<button type="submit" class="btn text-xs py-3 px-4 sm:text-sm sm:py-4 sm:px-6" value="Subscribe">Subscribe</button>
 			</form>
 
 		</div>
@@ -18,26 +20,48 @@
 	</div>
 </div>
 
-{% set subscribeJs %}
-var $form = $("form#email-subscribe");
-$form.validate();
 
-$form.submit(function(event){
-	$.ajax({
-		type: 'POST',
-		url: '/actions/constantContactSubscribe/list/Subscribe',
-		data: $form.serialize(),
-		complete: function(data){
-			if (data.responseJSON.responseCode == 201){
-				alert('Thanks for subscribing!');
-				$('#email-subscribe-email').val('');
-			} else {
-				alert('We could not subscribe you at this time. Please try again later.');
-			}
+{% set subscribeCss %}
+#email-subscribe-email-error {
+    position: absolute;
+    bottom: -24px;
+}
+{% endset %}	
+{% includeCss subscribeCss %}
+{% set subscribeJs %}
+	var $form = $("form#email-subscribe");
+	$form.validate({
+		submitHandler: function(form, event) {
+			
+			var Form = $(form),
+					Button = $(form).find('.btn'),
+					Header = $('#email-subscribe-header'),
+					Header__title = $('#email-subscribe-header__title'),
+					Input = $('#email-subscribe-email');
+
+			Form.addClass('submitting');
+			Button.addClass('btn--active');
+
+			$.ajax({
+				type: 'POST',
+				url: '/actions/constantContactSubscribe/list/Subscribe',
+				data: $form.serialize(),
+				complete: function(data){
+					if (data.responseJSON.responseCode == 201){
+						Button.removeClass('btn--active');
+						Input.val('');
+						Header__title.html('Thanks for subscribing!');
+					} else {
+						Header.append('<p class="text-sm max-w-xs mt-1">We could not subscribe you at this time. Please try again later.</p>');
+					}
+				}
+			});
+			event.preventDefault();
+			
+			
 		}
 	});
-	event.preventDefault();
-});
+
 {% endset %}
 
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}

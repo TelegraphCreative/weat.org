@@ -52,7 +52,8 @@
 
 			{# Buttons #}
 			<div class="form-row mb-6 pt-6 flex items-center">
-				 <input class="submit btn" type="submit" value="Register">
+				 {# <input class="submit btn" type="submit" value="Register"> #}
+				 <button class="submit btn" type="submit" value="Register">Register</button>
 			</div>
 		</form>
 
@@ -62,7 +63,15 @@
 
 {# Form Validation #}
 {% set formJs %}
-	$("form").validate();
+	$("form").validate({
+		submitHandler: function(form) {
+
+			$(form).addClass('submitting');
+			$(form).find('.btn').addClass('btn--active');
+			
+			form.submit();
+		}
+	});
 {% endset %}
 
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}

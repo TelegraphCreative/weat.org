@@ -81,7 +81,7 @@
 
 			{# Buttons #}
 			<div class="form-row mb-6 pt-6 flex items-center">
-				 <input class="submit btn --auto-w --full-w" type="submit" value="Login">
+				<button class="submit btn --auto-w --full-w" type="submit" value="Login">Login</button>
 			</div>
 
 			<small class="text-1xs sm:text-xs text-grey-dark block mt-6 text-center block">
@@ -99,7 +99,15 @@
 
 {# Form Validation #}
 {% set formJs %}
-	$("form").validate();
+	$("form").validate({
+		submitHandler: function(form) {
+
+			$(form).addClass('submitting');
+			$(form).find('.btn').addClass('btn--active');
+			
+			form.submit();
+		}
+	});
 {% endset %}
 
 {% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
