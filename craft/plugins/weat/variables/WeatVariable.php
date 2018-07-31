@@ -137,5 +137,10 @@ class WeatVariable
 */
 	}
 
+	public function getConstantContactLists()
+	{
+		return craft()->constantContactSubscribe->getConstantContactLists();
+	}
+
 
 }

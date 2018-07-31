@@ -53,12 +53,12 @@ class WeatPlugin extends BasePlugin
 				case 'registration':
 					craft()->weat_registration->saveRegistration($event);
 					craft()->weat_registration->updateUser($event);
-					craft()->weat_registration->updateConstantContact($event);
+					//craft()->weat_registration->updateConstantContact($event);
 					//craft()->weat_registration->switchSubscription($event);
 					break;
 				case 'join':
 					craft()->weat_registration->updateUser($event);
-					craft()->weat_registration->updateConstantContact($event);
+					//craft()->weat_registration->updateConstantContact($event);
 					//craft()->weat_registration->switchSubscription($event);
 					break;
 				//case 'onrenew':
@@ -99,52 +99,33 @@ class WeatPlugin extends BasePlugin
 			}*/
 		});
 
-		/*craft()->on('charge.onBeforeCharge', function(Event $event) {
-			WeatPlugin::log('onBeforeCharge');
-			//WeatPlugin::log($event);
-			//$type = $event->params['charge']->type;
-			//WeatPlugin::log('Charge type of ' . $type);
-			$meta = $event->params['charge']->meta;
-			//$chargeType = $event->params['charge']->chargeType;
-			switch ($meta['type']) {
-				case 'registration':
-					craft()->weat_registration->saveRegistration($event);
-					craft()->weat_registration->saveUser($user);
-					craft()->weat_registration->updateConstantContact($event);
-					break;
-				case 'join':
-					WeatPlugin::log('join');
-					//echo "Your favorite color is blue!";
-					craft()->weat_registration->updateConstantContact($event);
-					if(craft()->userSession->isGuest()) {
-						WeatPlugin::log('Is a guest');
-						craft()->weat_registration->updateUser($event);
-					}
-					break;
-				default:
-					WeatPlugin::log('Charge type does not match anything. ' . $type);
-			}
-			//craft()->weat_payments->exampleService();
-		});*/
+
 		craft()->on('users.onSaveUser', function(Event $event) {
-
-			//craft()->weat_registration->updateConstantContact($event);
-			//craft()->weat_registration->saveRegistration($event);
-			//craft()->weat_registration->switchSubscription($event);
-		});
-
-		/*
-		craft()->on('users.onSaveUser', function (Event $event) {
+		//craft()->on('users.onActivateUser', function(Event $event) {
 			$user = $event->params['user'];
 			$isNewUser = $event->params['isNewUser'];
-			if ($user->talentJobFamily->value != '') {
-				$user->getContent()->setAttributes([
-					'talentStage' => 'engage',
-				]);
-				craft()->users->saveUser($user);
+			if(craft()->request->isCpRequest() && $user && $isNewUser && $user->userOptInEmail) {
+			//if($user && $user->userOptInEmail) {
+				craft()->weat_registration->addUserToConstantContact($user);
 			}
 		});
-		*/
+		craft()->on('users.onUnsuspendUser', function(Event $event) {
+			$user = $event->params['user'];
+			if($user && $user->userOptInEmail) {
+				craft()->weat_registration->addUserToConstantContact($user);
+			}
+		});
+
+
+
+
+		/*craft()->on('charge.onBeforeCharge', function(Event $event) {
+			//$event->params['charge']->subscription()->currentPeriodStart = 1543708800;
+			//$charge = $event->params['charge'];
+			$meta = $event->params['charge']->getSubscription();
+			//$charge->getContent()->description = 'Test from DEV';
+			WeatPlugin::log('WEAT plugin ' . serialize($meta));
+		});*/
 
 		// If this is a CP request, register the commerce.prepCpTemplate hook
 		if (craft()->request->isCpRequest()) {

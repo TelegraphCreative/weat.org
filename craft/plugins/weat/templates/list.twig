@@ -1,0 +1,16 @@
+{% extends "_layouts/cp" %}
+{% set centered = true %}
+
+{% set title = "Registrations"|t %}
+
+{% set lists = craft.weat.getConstantContactLists() %}
+{% set content %}
+{% for list in lists %}
+<div style="padding-bottom: 2em;">
+{{list.name}}<br />
+{{ list.id }}<br />
+{#{list.status}#}
+</div>
+{% endfor %}
+
+{% endset %}

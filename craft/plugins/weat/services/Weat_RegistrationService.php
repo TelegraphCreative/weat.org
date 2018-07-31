@@ -360,80 +360,56 @@ $email->htmlBody.
 		if(!isset($meta['newsletter']) or $meta['newsletter'] != 'on') {
 			return;
 		}
-		$first_name = $user->firstName;
-		$last_name = $user->lastName;
+		$this->addUserToConstantContact($user);
+	}
+
+	public function addUserToConstantContact(UserModel $user, $listId = null)
+	{
 		$addEmail = $user->email;
 		$plugin = craft()->plugins->getPlugin('constantcontactsubscribe');
 		$settings = $plugin->getSettings();
-		define("APIKEY", $settings['constantContactApiKey']);
-		define("ACCESS_TOKEN", $settings['constantContactAccessToken']);
+		if(!defined('APIKEY')) define('APIKEY', $settings['constantContactApiKey']);
+		if(!defined('ACCESS_TOKEN')) define('ACCESS_TOKEN', $settings['constantContactAccessToken']);
 		$cc = new ConstantContact(APIKEY);
-		$addList = $settings['constantContactList'];
+		if($listId) {
+			$addList = $listId;
+		} else {
+			$addList = $settings['constantContactList'];
+		}
 		$response = $cc->contactService->getContacts(ACCESS_TOKEN, array("email" => $addEmail));
-		//WeatPlugin::log($response);
 		// create a new contact if one does not exist
 		if (empty($response->results)) {
 			$action = "Creating Contact";
 			$contact = new Contact();
 			$contact->addEmail($addEmail);
 			$contact->addList($addList);
-			$contact->first_name = $first_name;
-			$contact->last_name = $last_name;
-			/*
-			* The third parameter of addContact defaults to false, but if this were set to true it would tell Constant
-			* Contact that this action is being performed by the contact themselves, and gives the ability to
-			* opt contacts back in and trigger Welcome/Change-of-interest emails.
-			*
-			* See: http://developer.constantcontact.com/docs/contacts-api/contacts-index.html#opt_in
-			*/
+			$this->_addUserInfoToContact($contact, $user);
 			$returnContact = $cc->contactService->addContact(ACCESS_TOKEN, $contact, true);
-
 
 			// Respond that the user already exists on the list
 		} elseif (!empty($response->results)) {
-
 			$action = "Updating Contact";
 			$contact = $response->results[0];
 			if ($contact instanceof Contact) {
 					$contact->addList($addList);
-					$contact->first_name = $first_name;
-					$contact->last_name = $last_name;
-					$contact->source = 'Website RSVP Form';
-					/*
-					 * The third parameter of updateContact defaults to false, but if this were set to true it would tell
-					 * Constant Contact that this action is being performed by the contact themselves, and gives the ability to
-					 * opt contacts back in and trigger Welcome/Change-of-interest emails.
-					 *
-					 * See: http://developer.constantcontact.com/docs/contacts-api/contacts-index.html#opt_in
-					 */
+					$this->_addUserInfoToContact($contact, $user);
 					$returnContact = $cc->contactService->updateContact(ACCESS_TOKEN, $contact, true);
-
 			} else {
 					$e = new CtctException();
 					$e->setErrors(array("type", "Contact type not returned"));
 					throw $e;
 			}
 		}
-/*
-		$data = array(
-			'fields[email]' => 'bo+4@wearetelegraph.com',
-			 craft()->config->csrfTokenName => craft()->request->csrfToken,
-			'addList' => '1916206443'
+	}
 
-		);
-		# Create a connection
-		$url = 'https://weat.frb.io/actions/constantContactSubscribe/list/Subscribe';
-		$ch = curl_init($url);
-		# Form data string
-		$postString = http_build_query($data, '', '&');
-		# Setting our options
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		# Get the response
-		$response = curl_exec($ch);
-		WeatPlugin::log($response);
-		curl_close($ch);*/
+	private function _addUserInfoToContact(Contact $contact, UserModel $user)
+	{
+		$contact->first_name = $user->firstName;
+		$contact->last_name = $user->lastName;
+		$contact->company_name = $user->userCompanyName;
+		$contact->work_phone = $user->userPhoneNumber;
+		$contact->job_title = $user->userTitle;
+		$contact->source = 'WEAT.org new user';
 	}
 
 		public function getAllRegistrations()

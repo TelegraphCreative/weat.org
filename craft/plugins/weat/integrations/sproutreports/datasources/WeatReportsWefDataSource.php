@@ -135,11 +135,12 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 					$membershipType = 'executive';
 					break;
 				case 'Student Member':
+				case 'SJWP':
 					$membershipType = 'student';
 					break;
-				/*case 'Retired Member':
-					$membershipType = '';
-					break;*/
+				case 'Retired Member':
+					$membershipType = 'retired';
+					break;
 				/*case '':
 					$membershipType = '';
 					break;*/
@@ -164,7 +165,7 @@ class WeatReportsWefDataSource extends SproutReportsBaseDataSource
 					$status = 'COULD NOT FIND: ' . (string)$obj->Status;
 			}
 		  $userArray[] = array(
-				'Email' => (string)$obj->Email_Address,
+				'Email' => trim((string)$obj->Email_Address),
 				'WEF ID' => (string)$obj->MASTER_CUSTOMER_ID,
 				'First Name' => (string)$obj->FIRST_NAME,
 				//'middleName' => (string)$obj->MIDDLE_NAME,

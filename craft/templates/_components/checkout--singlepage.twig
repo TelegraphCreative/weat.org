@@ -392,7 +392,7 @@
 						{# Field #}
 						<div class="form-row mb-6">
 							<label for="customerEmail" class="field-label block w-full">Email</label>
-							<input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full pageRequired" placeholder="hello@mail.com" value="{{charge is defined ? charge.customerEmail : (currentUser ? currentUser.email : '')}}">
+							<input required name="customerEmail" id="customerEmail" type="email" class="input-field block w-full pageRequired" placeholder="hello@mail.com" value="{{charge is defined ? charge.customerEmail : (currentUser ? currentUser.email : craft.request.getPost('customerEmail'))}}">
 						</div>
 
 						{# Field #}
@@ -418,8 +418,8 @@
 						{% if not currentUser %}
 						{# Field #}
 						<div class="form-row mb-6">
-							<label for="meta[newsletter]" class="check-radio-input block w-full text-sm flex items-center">
-								<input type="checkbox" name="meta[newsletter]" id="meta[newsletter]" value="on" class="check-radio__input" checked>
+							<label for="user[userOptInEmail]" class="check-radio-input block w-full text-sm flex items-center">
+								<input type="checkbox" name="user[userOptInEmail]" id="user[userOptInEmail]" value="on" class="check-radio__input" {{(craft.request.getPost('checkoutRequest') and not craft.request.getPost('user.userOptInEmail')) ? '' : 'checked'}}>
 								{{svg.icon('icon --md text-green', 'checkmark')}}
 								<span class="check-radio__label inline-block ml-3  cursor-pointer">Sign up for our newsletter?</span>
 							</label>
@@ -559,7 +559,7 @@
 								</div>
 								{# Field #}
 								<div class="w-1/2 px-4">
-									<input class="submit btn --auto-w --full-w" type="submit" value="Checkout">
+									<button class="submit btn --auto-w --full-w checkout" type="submit" value="Checkout">Checkout</button>
 								</div>
 							</div>
 
@@ -571,182 +571,153 @@
 
 			{% includeJsFile 'https://js.stripe.com/v3/' %}
 			{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
-			{% set formJsCharge %}
-			// Create a Stripe client.
-			var stripe = Stripe('{{ craft.charge.getPublicKey }}');
+{% set formJsCharge %}
+// Create a Stripe client.
+var stripe = Stripe('{{ craft.charge.getPublicKey }}');
 
-			// Create an instance of Elements.
-			var elements = stripe.elements();
+// Create an instance of Elements.
+var elements = stripe.elements();
 
-			// Custom styling can be passed to options when creating an Element.
-			// (Note that this demo uses a wider set of styles than the guide below.)
-			var style = {
-			  base: {
-			    color: '#32325d',
-			    lineHeight: '18px',
-			    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-			    fontSmoothing: 'antialiased',
-			    fontSize: '16px',
-			    '::placeholder': {
-			      color: '#aab7c4'
-			    }
-			  },
-			  invalid: {
-			    color: '#fa755a',
-			    iconColor: '#fa755a'
-			  }
-			};
+// Custom styling can be passed to options when creating an Element.
+var style = {
+	base: {
+		color: '#32325d',
+		lineHeight: '18px',
+		fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+		fontSmoothing: 'antialiased',
+		fontSize: '16px',
+		'::placeholder': {
+			color: '#aab7c4'
+		}
+	},
+	invalid: {
+		color: '#fa755a',
+		iconColor: '#fa755a'
+	}
+};
 
-			// Create an instance of the card Element.
-			var card = elements.create('card', {style: style});
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
 
-			// Add an instance of the card Element into the `card-element` <div>.
-			card.mount('#card-element');
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
 
-			// Handle real-time validation errors from the card Element.
-			card.addEventListener('change', function(event) {
-			  var displayError = document.getElementById('card-errors');
-			  if (event.error) {
-			    displayError.textContent = event.error.message;
-			  } else {
-			    displayError.textContent = '';
-			  }
+// Handle real-time validation errors from the card Element.
+card.addEventListener('change', function(event) {
+	var displayError = document.getElementById('card-errors');
+	if (event.error) {
+		displayError.textContent = event.error.message;
+	} else {
+		displayError.textContent = '';
+	}
+});
+
+function stripeTokenHandler(token) {
+	// Insert the token ID into the form so it gets submitted to the server
+	var form = document.getElementById('charge-form');
+	var hiddenInput = document.createElement('input');
+	hiddenInput.setAttribute('type', 'hidden');
+	hiddenInput.setAttribute('name', 'stripeToken');
+	hiddenInput.setAttribute('value', token.id);
+	form.appendChild(hiddenInput);
+	var hiddenInput2 = document.createElement('input');
+	hiddenInput2.setAttribute('type', 'hidden');
+	hiddenInput2.setAttribute('name', 'stripeEmail');
+	hiddenInput2.setAttribute('value', document.getElementById('customerEmail').value);
+	form.appendChild(hiddenInput2);
+
+	// Submit the form
+	form.submit();
+}
+(function () {
+	var $step1 = $('#step-1');
+	var $step2 = $('#step-2');
+	var $step3 = $('#step-3');
+	$step2.hide();
+	$step3.hide();
+
+	var $firstName = $('#firstName');
+	var $lastName = $('#lastName');
+	var $hiddenName = $('#hiddenName');
+
+	var current = 0;
+
+	$.validator.addMethod("pageRequired", function(value, element) {
+		var $element = $(element);
+
+		function match(index) {
+			return current == index && $(element).parents("#step-" + (index + 1)).length;
+		}
+		if (match(0) || match(1) || match(2)) {
+			return !this.optional(element);
+		}
+		return "dependency-mismatch";
+	}, $.validator.messages.required);
+
+	var validator = $('form#charge-form').validate({
+		errorClass: "warning",
+		onkeyup: false,
+		onfocusout: false,
+		submitHandler: function(form, event) {
+			console.log('submitting');
+			$(form).addClass('submitting');
+			$(form).find('.btn.checkout').addClass('btn--active').attr('disabled', 'disabled');
+			event.preventDefault();
+			stripe.createToken(card).then(function(result) {
+				if (result.error) {
+					// Inform the user if there was an error.
+					var errorElement = document.getElementById('card-errors');
+					errorElement.textContent = result.error.message;
+					$(form).removeClass('submitting');
+					$(form).find('.btn.checkout').removeClass('btn--active').removeAttr('disabled');
+				} else {
+					// Send the token to your server.
+					stripeTokenHandler(result.token);
+					// ^ takes care of the submit
+				}
 			});
+		}
+	});
 
-			// Handle form submission.
-			var form = document.getElementById('charge-form');
-			form.addEventListener('submit', function(event) {
-			  event.preventDefault();
+	// back buttons do not need to run validation
 
-			  stripe.createToken(card).then(function(result) {
-			    if (result.error) {
-			      // Inform the user if there was an error.
-			      var errorElement = document.getElementById('card-errors');
-			      errorElement.textContent = result.error.message;
-			    } else {
-			      // Send the token to your server.
-			      stripeTokenHandler(result.token);
-			    }
-			  });
-			});
+	$step2.find('.prev').click(function() {
+		$('.step-container').hide();
+		$('.account-nav').removeClass('active').addClass('inactive');
+		$('#step-nav-1').removeClass('inactive').addClass('active');
+		$step1.show();
+		current = 0;
+	});
+	$step3.find('.prev').click(function() {
+		$('.step-container').hide();
+		$('.account-nav').removeClass('active').addClass('inactive');
+		$('#step-nav-2').removeClass('inactive').addClass('active');
+		$step2.show();
+		current = 1;
+	});
 
-			function stripeTokenHandler(token) {
-			  // Insert the token ID into the form so it gets submitted to the server
-			  var form = document.getElementById('charge-form');
-			  var hiddenInput = document.createElement('input');
-			  hiddenInput.setAttribute('type', 'hidden');
-			  hiddenInput.setAttribute('name', 'stripeToken');
-			  hiddenInput.setAttribute('value', token.id);
-			  form.appendChild(hiddenInput);
-			  var hiddenInput2 = document.createElement('input');
-			  hiddenInput2.setAttribute('type', 'hidden');
-			  hiddenInput2.setAttribute('name', 'stripeEmail');
-			  hiddenInput2.setAttribute('value', document.getElementById('customerEmail').value);
-			  form.appendChild(hiddenInput2);
-
-			  // Submit the form
-			  form.submit();
-			}
-			(function () {
-				//$(this).charge();
-				//var validator = $('form#charge-form').validate();
-				var $step1 = $('#step-1');
-				var $step2 = $('#step-2');
-				var $step3 = $('#step-3');
-				$step2.hide();
-				$step3.hide();
-
-				var $firstName = $('#firstName');
-				var $lastName = $('#lastName');
-				var $hiddenName = $('#hiddenName');
-
-
-							var current = 0;
-
-							$.validator.addMethod("pageRequired", function(value, element) {
-								var $element = $(element)
-
-									function match(index) {
-										return current == index && $(element).parents("#step-" + (index + 1)).length;
-									}
-								if (match(0) || match(1) || match(2)) {
-									return !this.optional(element);
-								}
-								return "dependency-mismatch";
-							}, $.validator.messages.required)
-
-							var v = $('form#charge-form').validate({
-								errorClass: "warning",
-								onkeyup: false,
-								onfocusout: false
-							});
-
-							// back buttons do not need to run validation
-
-							$step2.find('.prev').click(function() {
-								$('.step-container').hide();
-								$('.account-nav').removeClass('active').addClass('inactive');
-								$('#step-nav-1').removeClass('inactive').addClass('active');
-								$step1.show();
-								current = 0;
-							});
-							$step3.find('.prev').click(function() {
-								$('.step-container').hide();
-								$('.account-nav').removeClass('active').addClass('inactive');
-								$('#step-nav-2').removeClass('inactive').addClass('active');
-								$step2.show();
-								current = 1;
-							});
-
-							// these buttons all run the validation, overridden by specific targets above
-							$step1.find('.next').click(function() {
-								if (v.form()) {
-									$('.step-container').hide();
-									$('.account-nav').removeClass('active').addClass('inactive');
-									$('#step-nav-2').removeClass('inactive').addClass('active');
-									$step2.show();
-									$hiddenName.val($firstName.val() + ' ' + $lastName.val());
-									current = 1;
-								}
-							});
-							$step2.find('.next').click(function() {
-								if (v.form()) {
-									$('.step-container').hide();
-									$('.account-nav').removeClass('active').addClass('inactive');
-									$('#step-nav-3').removeClass('inactive').addClass('active');
-									$step3.show();
-									current = 2;
-								}
-							});
-							/*$(".open-1").click(function() {
-								if (v.form()) {
-									//accordion.accordion("option", "active", 0);
-									current = 0;
-								}
-							});*/
-			/*			});
-
-
-
-							$('#step-account-next').on('click', function() {
-
-								validator.element($stepAccount)({
-									success: function() {
-										$('.step-container').hide();
-										$('.account-nav').removeClass('active').addClass('inactive');
-										$('#step-address-nav').removeClass('inactive').addClass('active');
-										$stepAddress.show();
-									}
-								});
-							});
-							$('#step-address-next').on('click', function() {
-								$('.step-container').hide();
-								$('.account-nav').removeClass('active').addClass('inactive');
-								$('#step-billing-nav').removeClass('inactive').addClass('active');
-								$stepBilling.show();
-							});*/
-					})();
-			{% endset %}
+	// these buttons all run the validation, overridden by specific targets above
+	$step1.find('.next').click(function() {
+		if (validator.form()) {
+			$('.step-container').hide();
+			$('.account-nav').removeClass('active').addClass('inactive');
+			$('#step-nav-2').removeClass('inactive').addClass('active');
+			$step2.show();
+			$hiddenName.val($firstName.val() + ' ' + $lastName.val());
+			current = 1;
+		}
+	});
+	$step2.find('.next').click(function() {
+		if (validator.form()) {
+			$('.step-container').hide();
+			$('.account-nav').removeClass('active').addClass('inactive');
+			$('#step-nav-3').removeClass('inactive').addClass('active');
+			$step3.show();
+			current = 2;
+		}
+	});
+})();
+{% endset %}
 			{% includeJs formJsCharge %}
 		{% endif %}
 	</section>
