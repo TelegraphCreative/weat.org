@@ -1,0 +1,86 @@
+{% extends "_layouts/standard" %}
+{% requireLogin %}
+
+{% block content %}
+
+{# Breadcrumbs #}
+{#% include '_components/fed/nav--breadcrumbs'  %#}
+
+{# Container #}
+<div class="simple-container">
+
+	{# Logged In Menu #}
+	{% include '_components/fed/nav--logged-in' %}
+
+	{# Form #}
+	<section class="form-container --narrow m-auto md:w-3/4 lg:w-1/2 mb-12 sm:mb-lg ">
+<h3>
+		{% set message = craft.session.getFlash('notice') %}
+		{% if message == 'User saved.' %}
+		Your email address has been updated.
+		{% else %}
+		{{ message }}
+		{% endif %}
+		{% if craft.request.getParam( 'loggedIn' ) %}
+		You are already logged in.
+		{% endif %}
+		{% if craft.request.getParam( 'isMember' ) %}
+		And you have an active subscription so there is no need to Join again.
+		{% endif %}</h3>
+		<form method="post" id="action-form" accept-charset="UTF-8" class="py-4" enctype="multipart/form-data">
+			{{ getCsrfInput() }}
+			<input type="hidden" name="action" value="users/saveUser">
+			<input type="hidden" name="userId" value="{{ currentUser.id }}">
+			{% if allErrors is defined %}
+				{{ forms.errorBlock(allErrors) }}
+			{% endif %}
+			{% macro errorList(errors) %}
+				{% if errors %}
+					{% for error in errors %}
+						<div class="error icon-cancel-circled">{{ error }}</div>
+					{% endfor %}
+				{% endif %}
+			{% endmacro %}
+			{% from _self import errorList %}
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="email" class="field-label block w-full">Email</label>
+				<input required name="email" id="email" type="email" class="input-field block w-full" placeholder="hello@mail.com" value="{{ currentUser.email }}">
+				{% if account is defined %}
+		{{ errorList(account.getErrors('email')) }}
+{% endif %}
+			</div>
+
+			{# Field #}
+			<div class="form-row mb-6">
+				<label for="password" class="field-label block w-full">Current Password</label>
+				<input required name="password" id="currentPassword" type="password" class="input-field block w-full" />
+				{% if account is defined %}
+	{{ errorList(account.getErrors('currentPassword')) }}
+{% endif %}
+			</div>
+
+			{# Buttons #}
+			<div class="form-row mb-6 pt-6 flex items-center">
+					 <input class="submit btn" type="submit" value="Update">
+					<a href="{{url('members/edit/account')}}" class="ml-6 px-3 text-sm no-underline text-grey-dark hover:text-green block">Cancel</a>
+			</div>
+		</form>
+
+</section>
+
+</div>
+
+{# Form Validation #}
+{% set formJs %}
+// Validate New Password + Confirmed Password Match
+$("form#action-form").validate();
+{% endset %}
+
+{% includeJsFile '/assets/static/validate/jquery.validate.min.js' %}
+{% includeJs formJs %}
+
+
+
+{% endblock %}
