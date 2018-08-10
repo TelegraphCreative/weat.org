@@ -26,7 +26,7 @@
 			<div class="article-detail__article article mb-16">
 				<p>{{entry.jobsShortDescription|nl2br}}</p>
 				<h4>The Details</h4>
-				<h6>Position Type (Heading 5)</h6>
+				<h6>Position Type</h6>
 				<p>{% for group in entry.jobType %}
 					{{group.title}}{% if not loop.last %}<br />{% endif %}
 				{% endfor %}</p>
