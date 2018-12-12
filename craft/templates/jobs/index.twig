@@ -13,8 +13,6 @@
 
 {% block content %}
 
-{# Show Jobs if Current User #}
-{% if currentUser or 1 == 1 %} {# show the job board to everyone #}
 
 	{# Show Jobs by Filter #}
 	{% if theCategory %}
@@ -245,26 +243,5 @@
 
 	{% endif %}
 
-{# Show Public Welcome if Anon User #}
-{% else %}
-	{# Page Header #}
-	{% include '_components/headers' with {
-		type: 'page-header--standard',
-		Title: jobsLanding[0].pageTitle,
-		classes: ''
-		}
-	%}
-	<section class="landing mb-lg simple-container --wide">
-		{# Article #}
-		<div class="article m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
-
-			{{jobsLanding[0].body}}
-
-			{{link.simple(jobsLanding[0].button, 'btn mt-10')}}
-
-		</div>
-	</section>
-
-{% endif %}
 
 {% endblock %}
