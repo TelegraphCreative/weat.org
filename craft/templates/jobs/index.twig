@@ -14,7 +14,7 @@
 {% block content %}
 
 {# Show Jobs if Current User #}
-{% if currentUser %}
+{% if currentUser or 1 == 1 %} {# show the job board to everyone #}
 
 	{# Show Jobs by Filter #}
 	{% if theCategory %}
@@ -28,7 +28,7 @@
 			}) %}
 			{% paginate Structure.limit(8) as pageInfo, entries %}
 		{% endspaceless %}
-		
+
 		{# Page Header #}
 		<header class="page-header bg-blue">
 			<div class="simple-container py-8 sm:py-10">
@@ -42,7 +42,7 @@
 
 			{# Article Type Selector #}
 			<div class="mb-6 w-full mt-5 pt-10 sm:flex sm:justify-between">
-				
+
 				<div class="sm:w-1/2">
 					<div class="max-w-1xs ">
 					<select data-module="choicesAsLinks" name="" id="">
@@ -133,12 +133,12 @@
 
 	{# All Available Jobs #}
 	{% else %}
-	
+
 		{% spaceless %}
 
 			{% paginate SectionEntries.limit(8) as pageInfo, entries %}
 		{% endspaceless %}
-		
+
 		{# Page Header #}
 		<header class="page-header bg-blue">
 			<div class="simple-container py-8 sm:py-10">
@@ -152,7 +152,7 @@
 
 			{# Article Type Selector #}
 			<div class="mb-6 w-full mt-5 pt-10 sm:flex sm:justify-between">
-				
+
 				<div class="sm:w-1/2">
 					<div class="max-w-1xs ">
 					<select data-module="choicesAsLinks" name="" id="">
@@ -160,7 +160,7 @@
 						{% for group in categories %}
 							<option {% if theCategory == group.slug %}selected{% endif %} value="{{group.url}}">{{group.title}}</option>
 						{% endfor %}
-						
+
 					</select>
 					</div>
 				</div>
@@ -252,14 +252,14 @@
 		type: 'page-header--standard',
 		Title: jobsLanding[0].pageTitle,
 		classes: ''
-		} 
+		}
 	%}
 	<section class="landing mb-lg simple-container --wide">
 		{# Article #}
 		<div class="article m-auto md:w-3/5 w-full    md:px-0 px-6  sm:pt-10 sm:mb-10">
 
 			{{jobsLanding[0].body}}
-			
+
 			{{link.simple(jobsLanding[0].button, 'btn mt-10')}}
 
 		</div>
