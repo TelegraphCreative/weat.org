@@ -23,6 +23,7 @@ class ChargeController extends Charge_BaseController
     }
 
 
+    // Added 12/17/19 to allow member's to update saved card details
     public function actionUpdateCard()
 	{
         $this->requirePostRequest();
