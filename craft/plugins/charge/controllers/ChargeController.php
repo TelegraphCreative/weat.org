@@ -23,6 +23,20 @@ class ChargeController extends Charge_BaseController
     }
 
 
+    public function actionUpdateCard()
+	{
+        $this->requirePostRequest();
+        $customer = craft()->charge_customer->find();
+        $cardToken = craft()->request->getRequiredPost('cardToken');
+
+        if ($customer->addCard($cardToken)) {
+            $this->redirectToPostedUrl();
+        } else {
+            $this->redirectToPostedUrl();
+        }
+	}
+
+
     public function actionEndSubscription()
     {
         $this->requirePostRequest();
