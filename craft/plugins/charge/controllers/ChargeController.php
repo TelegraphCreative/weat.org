@@ -23,6 +23,21 @@ class ChargeController extends Charge_BaseController
     }
 
 
+    // Added 12/17/19 to allow member's to update saved card details
+    public function actionUpdateCard()
+	{
+        $this->requirePostRequest();
+        $customer = craft()->charge_customer->find();
+        $cardToken = craft()->request->getRequiredPost('cardToken');
+
+        if ($customer->addCard($cardToken)) {
+            $this->redirectToPostedUrl();
+        } else {
+            $this->redirectToPostedUrl();
+        }
+	}
+
+
     public function actionEndSubscription()
     {
         $this->requirePostRequest();
