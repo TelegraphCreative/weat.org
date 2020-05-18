@@ -1,7 +1,7 @@
 {% if totalPrice is defined %}
 	<div class="lg:max-w-xs max-w-sm lg:ml- m-auto md:float-right w-full">
 		<header class="text-center border-b border-grey-lightest text-grey">
-		<h4 class="text-md pb-6">Your Order</h4>
+			<h4 class="text-md pb-6">Your Order</h4>
 		</header>
 
 		<div class="text-base font-medium my-3">
@@ -14,11 +14,11 @@
 		</div>
 
 		{% if subscribtionNotification is defined and subscribtionNotification %}
-		<div class="clearfix pt-4 border-t border-grey-lightest mt-6">
-			<p class="text-sm text-grey w-3/4 ">
-				{{ checkout.subscribeNotificationMessage }}
-			</p>
-		</div>
+			<div class="clearfix border-t border-grey-lightest mt-8 border border-grey rounded p-4">
+				<h4 class="text-md mb-2 font-bold">Auto-Renewal</h4>
+				<p class="text-sm text-grey">
+					{{ checkout.subscribeNotificationMessage }}
+			</div>
 		{% endif %}
 	</div>
 {% endif %}
